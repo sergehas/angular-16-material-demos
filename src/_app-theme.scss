@@ -3,6 +3,7 @@
 @use "sass:map";
 @use "./app/shared/components/table-expandable-rows/table-expandable-rows.component-theme"
 	as table-expandable-rows;
+@use "./app/shared/components/tabs-nav/tabs-nav.component-theme" as tabs-nav;
 html {
 	--app-gap: 16px;
 }
@@ -23,4 +24,5 @@ body {
 	$foreground: map.get($theme, foreground);
 
 	@include table-expandable-rows.theme($theme);
+	@include tabs-nav.theme($theme);
 }

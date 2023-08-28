@@ -1,4 +1,10 @@
-<nav mat-tab-nav-bar [tabPanel]="tabPanel">
+<nav
+	mat-tab-nav-bar
+	[tabPanel]="tabPanel"
+	mat-stretch-tabs="false"
+	mat-align-tabs="center"
+	class="tabs-nav"
+>
 	<a
 		mat-tab-link
 		*ngFor="let link of navLinks"
@@ -10,4 +16,13 @@
 		{{ link.name }}
 	</a>
 </nav>
-<mat-tab-nav-panel #tabPanel><router-outlet></router-outlet></mat-tab-nav-panel>
+<mat-tab-nav-panel
+	#tabPanel
+	[@routeAnimations]="
+		outlet &&
+		outlet.activatedRouteData &&
+		outlet.activatedRouteData['animation']
+	"
+>
+	<router-outlet #outlet="outlet"></router-outlet>
+</mat-tab-nav-panel>

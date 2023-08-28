@@ -8,15 +8,18 @@ const routes: Routes = [
 	{
 		path: "demo",
 		component: DemoComponent,
+		data: { animation: "slideLeft" },
 		children: [
 			// list "sub" pages from this demo feature components
 			{
 				path: "demo-table",
 				component: DemoTableComponent,
+				data: { animation: "slideRight" },
 			},
 			{
 				path: "demo-datasource",
 				component: DemoDatasourceComponent,
+				data: { animation: "slideLeft" },
 			},
 		],
 	},
