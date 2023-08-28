@@ -15,6 +15,8 @@ import { AppComponent } from "./app.component";
 import { DemoModule } from "./demo/demo.module";
 import { AppRoutingModule } from "./app-routing.module";
 
+import { SharedModule } from "./shared/shared.module";
+
 @NgModule({
 	declarations: [AppComponent],
 	imports: [
@@ -34,6 +36,7 @@ import { AppRoutingModule } from "./app-routing.module";
 		MatButtonModule,
 		MatIconModule,
 
+		SharedModule,
 		AppRoutingModule,
 		DemoModule,
 	],

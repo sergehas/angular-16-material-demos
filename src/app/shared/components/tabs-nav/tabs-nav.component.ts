@@ -10,15 +10,7 @@ import {
 	RouterOutlet,
 } from "@angular/router";
 import { MenuNode, NavBuilder } from "./models/nav-builder";
-import {
-	animate,
-	animateChild,
-	group,
-	query,
-	style,
-	transition,
-	trigger,
-} from "@angular/animations";
+
 import { slideInAnimation } from "../../animations/route-animation";
 
 @Component({
