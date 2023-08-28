@@ -26,6 +26,20 @@
 .root-sidenav-container {
 	.root-sidenav {
 		min-width: 220px;
+		.menu-node {
+			position: relative;
+
+			&.active-list-item:before {
+				content: "";
+				position: absolute;
+				height: 100%;
+				width: 100%;
+				opacity: calc(
+					var(--mdc-list-list-item-focus-state-layer-opacity) / 2
+				);
+				//background-color: #a73fb5 !important; /* Note: You could also use a custom theme */
+			}
+		}
 	}
 	.root-content {
 		margin: 0 var(--app-gap);
