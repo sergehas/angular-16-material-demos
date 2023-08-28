@@ -1,0 +1,110 @@
+<h2>This demo illustrate http service compatible data source</h2>
+<h3>Overview</h3>
+<p>
+	This datasouce support (optinal) <b>natively sorting & paging.</b><br />
+	It implements native Angular native datasource, & so can be used in any
+	datasource awre component (such as table)<br />
+	It is design to avoid extra underlyling (http) service call to preserve
+	response time & API cosumption plan.<br />
+	key benefit: it requrire a simple service injection... nothing else!
+</p>
+<h3>Events</h3>
+<p>It emmits events while starting/ending to load & count.<br /></p>
+<mat-divider></mat-divider>
+<div class="demo-options">
+	<mat-slide-toggle
+		[(ngModel)]="paginatorEnabled"
+		(change)="
+			dataSource.paginator = paginatorEnabled ? paginator : undefined
+		"
+		>Enable paginiator</mat-slide-toggle
+	>
+	<mat-slide-toggle
+		[(ngModel)]="sortEnabled"
+		(change)="dataSource.sort = sortEnabled ? sort : undefined"
+		>Enable sort</mat-slide-toggle
+	>
+	<mat-divider></mat-divider>
+</div>
+
+<section class="mat-elevation-z8">
+	<table
+		mat-table
+		[dataSource]="dataSource"
+		matSort
+		[matSortActive]="sortEnabled ? 'created' : ''"
+		matSortDisableClear
+		[matSortDirection]="sortEnabled ? 'desc' : ''"
+	>
+		<!-- Number Column -->
+		<ng-container matColumnDef="number">
+			<th mat-header-cell *matHeaderCellDef>#</th>
+			<td mat-cell *matCellDef="let row">{{ row.number }}</td>
+		</ng-container>
+
+		<!-- Title Column -->
+		<ng-container matColumnDef="title">
+			<th mat-header-cell *matHeaderCellDef>Title</th>
+			<td mat-cell *matCellDef="let row">{{ row.title }}</td>
+		</ng-container>
+
+		<!-- State Column -->
+		<ng-container matColumnDef="state">
+			<th mat-header-cell *matHeaderCellDef>State</th>
+			<td mat-cell *matCellDef="let row">{{ row.state }}</td>
+		</ng-container>
+
+		<!-- Created Column -->
+		<ng-container matColumnDef="created">
+			<th
+				mat-header-cell
+				*matHeaderCellDef
+				mat-sort-header
+				[disabled]="!sortEnabled"
+				disableClear
+			>
+				Created
+			</th>
+			<td mat-cell *matCellDef="let row">{{ row.created | date }}</td>
+		</ng-container>
+
+		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+	</table>
+	<mat-paginator
+		[hidden]="!paginatorEnabled"
+		[pageSizeOptions]="[5, 10, 20, 100]"
+		showFirstLastButtons
+		[length]="dataSource.length$ | async"
+		aria-label="Select page"
+	>
+	</mat-paginator>
+</section>
+<section class="demo-options">
+	<mat-divider></mat-divider>
+	<div class="demo-log">
+		<h3>Datasource event log</h3>
+
+		<button
+			mat-flat-button
+			color="accent"
+			matBadgePosition="below before"
+			[matBadgeHidden]="dataSourceEvents.length === 0"
+			[matBadge]="dataSourceEvents.length"
+			matBadgeColor="accent"
+			(click)="dataSourceEvents = []"
+		>
+			CLEAR
+		</button>
+	</div>
+
+	<div *ngIf="!dataSourceEvents.length">
+		Datasource events will be logged here
+	</div>
+
+	<ul style="height: 100px;overflow-y: scroll;font-family: monospace">
+		<li *ngFor="let event of dataSourceEvents.slice().reverse()">
+			{{ event }}
+		</li>
+	</ul>
+</section>

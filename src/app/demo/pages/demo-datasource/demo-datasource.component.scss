@@ -1,0 +1,28 @@
+.demo-options {
+	margin: 20px 10px 0;
+
+	display: flex;
+	flex-direction: column;
+	& > * {
+		margin-bottom: 16px;
+	}
+
+	.label-container {
+		display: flex;
+		justify-content: space-between;
+		margin: 20px 10px 0;
+		.value-label {
+			font-weight: 600;
+		}
+	}
+}
+
+.demo-log {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+[hidden] {
+	display: none !important;
+}

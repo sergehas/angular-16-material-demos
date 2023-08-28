@@ -1,0 +1,26 @@
+@use "@angular/material" as mat;
+
+@use "sass:map";
+@use "./app/shared/components/table-expandable-rows/table-expandable-rows.component-theme"
+	as table-expandable-rows;
+html {
+	--app-gap: 16px;
+}
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+// Styles for the docs app that are based on the current theme.
+@mixin theme($theme) {
+	$primary: map.get($theme, primary);
+	$accent: map.get($theme, accent);
+	$warn: map.get($theme, warn);
+	$background: map.get($theme, background);
+	$foreground: map.get($theme, foreground);
+
+	@include table-expandable-rows.theme($theme);
+}

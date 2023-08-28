@@ -1,0 +1,42 @@
+<div class="options-editor">
+	<section class="toggle-options">
+		<mat-slide-toggle
+			[(ngModel)]="options.responsive"
+			(click)="prevent($event)"
+			>responsive</mat-slide-toggle
+		>
+		<mat-slide-toggle
+			[(ngModel)]="options.stickyHeader"
+			(click)="prevent($event)"
+			>sticky header</mat-slide-toggle
+		>
+	</section>
+	<div
+		cdkDropList
+		[cdkDropListData]="options.columns.columns"
+		class="column-list"
+		[cdkDropListSortPredicate]="sortPredicate"
+		(cdkDropListDropped)="drop($event)"
+	>
+		<div
+			class="column-item"
+			*ngFor="let c of options.columns.columns"
+			[cdkDragData]="c"
+			cdkDrag
+		>
+			<div class cdkDragHandle class="drag-handler">
+				<mat-icon>drag_indicator</mat-icon><span> {{ c.name }}</span>
+			</div>
+			<div class="colunm-attributes">
+				<button mat-icon-button (click)="toggleSticky($event, c)">
+					<mat-icon *ngIf="c.sticky">lock</mat-icon>
+					<mat-icon *ngIf="!c.sticky">lock_open</mat-icon>
+				</button>
+				<button mat-icon-button (click)="toggleVisibility($event, c)">
+					<mat-icon *ngIf="c.hidden">visibility_off</mat-icon>
+					<mat-icon *ngIf="!c.hidden">visibility</mat-icon>
+				</button>
+			</div>
+		</div>
+	</div>
+</div>

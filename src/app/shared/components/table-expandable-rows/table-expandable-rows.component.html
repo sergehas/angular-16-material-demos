@@ -1,0 +1,111 @@
+<div class="progress-container" *ngIf="dataSource.loading$ | async">
+	<mat-progress-bar mode="query"></mat-progress-bar>
+</div>
+<div class="table-container">
+	<div class="config-button" matRipple>
+		<button [matMenuTriggerFor]="columnMenu">
+			<mat-icon>more_vert</mat-icon>
+		</button>
+		<mat-menu #columnMenu="matMenu" xPosition="before">
+			<app-table-config-editor
+				[options]="options!"
+			></app-table-config-editor>
+		</mat-menu>
+	</div>
+	<mat-table
+		[dataSource]="dataSource"
+		multiTemplateDataRows
+		fixedLayout="true"
+		matSort
+		matSortDisableClear
+		matSortDirection="asc"
+		class="table"
+		[class.autohide]="options!.responsive"
+		[style.max-height]="maxHeight"
+	>
+		<!-- Checkbox Column (header)-->
+		<ng-container
+			*ngFor="let column of options!.columns.columns"
+			[matColumnDef]="column.name"
+			[sticky]="column.sticky && !column.hidden"
+		>
+			<ng-container *ngIf="column.selector">
+				<mat-header-cell
+					*matHeaderCellDef
+					class="selector-column"
+					[hidden]="column.hidden"
+				>
+					<mat-checkbox
+						(change)="$event ? toggleAllRows() : null"
+						[checked]="selection!.hasValue() && isAllSelected()"
+						[indeterminate]="
+							selection!.hasValue() && !isAllSelected()
+						"
+					>
+					</mat-checkbox>
+				</mat-header-cell>
+				<mat-cell
+					*matCellDef="let row"
+					class="selector-column"
+					[hidden]="column.hidden"
+				>
+					<mat-checkbox
+						(click)="$event.stopPropagation()"
+						(change)="$event ? selection!.toggle(row) : null"
+						[checked]="selection!.isSelected(row)"
+					>
+					</mat-checkbox>
+				</mat-cell>
+			</ng-container>
+
+			<ng-container *ngIf="!column.selector">
+				<mat-header-cell
+					[mat-sort-header]="column.name"
+					[disabled]="!column.sortable"
+					[hidden]="column.hidden"
+					*matHeaderCellDef
+				>
+					{{ column.name }}
+				</mat-header-cell>
+				<mat-cell *matCellDef="let row" [hidden]="column.hidden">
+					<span
+						*ngIf="
+							row[column.name] | instanceof: Date;
+							then dateSpan;
+							else regularSpan
+						"
+					></span>
+					<ng-template #dateSpan>{{
+						row[column.name] | date: "YYYY-MM-dd"
+					}}</ng-template>
+					<ng-template #regularSpan>{{
+						row[column.name]
+					}}</ng-template>
+				</mat-cell>
+			</ng-container>
+		</ng-container>
+
+		<mat-header-row
+			*matHeaderRowDef="
+				options!.columns.names;
+				sticky: options!.stickyHeader
+			"
+		></mat-header-row>
+		<mat-row
+			matRipple
+			*matRowDef="let row; columns: options!.columns.names"
+		></mat-row>
+	</mat-table>
+</div>
+<div class="progress-container" *ngIf="dataSource.counting$ | async">
+	<mat-progress-bar mode="query"></mat-progress-bar>
+</div>
+<mat-paginator
+	*ngIf="options!.paginator"
+	class="paginator"
+	[pageSizeOptions]="[5, 10, 20, 100]"
+	showFirstLastButtons
+	[length]="dataSource.length$ | async"
+	aria-label="Select page"
+>
+</mat-paginator>

@@ -1,0 +1,71 @@
+<div class="root-container" [class.root-is-mobile]="isHandset$ | async">
+	<mat-toolbar color="primary" class="root-toolbar">
+		<button
+			type="button"
+			aria-label="Toggle sidenav"
+			mat-icon-button
+			(click)="snav.toggle()"
+			*ngIf="isHandset$ | async"
+		>
+			<mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+		</button>
+
+		<h1 class="root-app-name">{{ title }}</h1>
+	</mat-toolbar>
+
+	<mat-sidenav-container class="root-sidenav-container">
+		<mat-sidenav
+			class="root-sidenav"
+			#snav
+			[attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+			[mode]="(isHandset$ | async) ? 'over' : 'side'"
+			[opened]="(isHandset$ | async) === false"
+			[fixedInViewport]="(isHandset$ | async) === true"
+			fixedTopGap="56"
+		>
+			<mat-nav-list>
+				<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+					<!-- This is the tree node template for leaf nodes -->
+					<mat-tree-node
+						*matTreeNodeDef="let node"
+						matTreeNodePadding
+					>
+						<!-- use a disabled button to provide padding for tree leaf -->
+						<button mat-icon-button disabled></button>
+						<a mat-list-item [routerLink]="node.path">{{
+							node.name
+						}}</a>
+					</mat-tree-node>
+					<!-- This is the tree node template for expandable nodes -->
+					<mat-tree-node
+						*matTreeNodeDef="let node; when: hasChild"
+						matTreeNodePadding
+					>
+						<button
+							mat-icon-button
+							matTreeNodeToggle
+							[attr.aria-label]="'Toggle ' + node.name"
+						>
+							<mat-icon class="mat-icon-rtl-mirror">
+								{{
+									treeControl.isExpanded(node)
+										? "expand_more"
+										: "chevron_right"
+								}}
+							</mat-icon>
+						</button>
+						<a mat-list-item [routerLink]="node.path">{{
+							node.name
+						}}</a>
+					</mat-tree-node>
+				</mat-tree>
+			</mat-nav-list>
+		</mat-sidenav>
+
+		<mat-sidenav-content>
+			<div class="root-content">
+				<router-outlet></router-outlet>
+			</div>
+		</mat-sidenav-content>
+	</mat-sidenav-container>
+</div>

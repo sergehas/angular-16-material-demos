@@ -1,0 +1,99 @@
+<section>
+	<h2>This demo illustrate really responsive & configuarable data table</h2>
+	<h3>Overview</h3>
+	<p>
+		use http datasouce supporting <b>natively sorting & paging.</b><br />
+		based on mat table, is comes with custimizable header (sticky) & columns
+		(ordering, visibility, stickiness ...& addtional conf), and the
+		capability to automaticaly "hide" columns not fitting within the veiw
+		port. A real table, but (really ) responsive!
+	</p>
+	<p>Column widths can be defin by css or by config</p>
+
+	<h3>TODO</h3>
+	<ul>
+		<li>
+			add i18n support to TableColumn (add a attr i18n, if attr present
+			then set col. title using
+			<code>column.i18n | translate</code> (easy)
+		</li>
+		<li>
+			refactor(??) component to inherit from MataTable so that this
+			component could support nested &lt;ng-container&gt; (allowing to
+			custo. each column) (complex)
+		</li>
+		<li>
+			review scss so the min/max height of row is same in responsive / non
+			responsive mode
+		</li>
+		<li>
+			implement a method in table component to know if a columns is visble
+			or not (in responsive mode, see (
+			<a
+				target="_blank"
+				href="https://stackoverflow.com/questions/40012428/how-to-detect-css-flex-wrap-event"
+				>here</a
+			>
+			or
+			<a
+				target="_blank"
+				href="https://stackoverflow.com/questions/4863363/any-way-to-determine-if-an-element-is-wrapped"
+				>here</a
+			>
+			) (complex)
+		</li>
+		<li>
+			externalize / make theme-able the config editor component (easy)
+		</li>
+		<li>add "MatNoDataRow" feature (native MatTable) (easy)</li>
+	</ul>
+
+	<mat-divider></mat-divider>
+</section>
+<section class="demo-options">
+	<mat-slide-toggle [(ngModel)]="options.responsive"
+		>Responsive</mat-slide-toggle
+	>
+	<div class="label-container">
+		<label>width</label>
+		<label class="value-label">{{ sliderW.value }}%</label>
+	</div>
+	<mat-slider class="example-margin" min="20">
+		<input type="range" value="100" matSliderThumb #sliderW />
+	</mat-slider>
+	<div class="label-container">
+		<label>height</label>
+		<label class="value-label">{{ sliderH.value }}px</label>
+	</div>
+	<mat-slider class="example-margin" min="100" max="1000">
+		<input type="range" value="340" matSliderThumb #sliderH />
+	</mat-slider>
+
+	<div class="label-container" style="justify-content: flex-start;">
+		<label>Selected items</label>
+		<label class="value-label"
+			>:&nbsp;{{ selection.selected.length }}</label
+		>
+	</div>
+	<mat-divider></mat-divider>
+</section>
+
+<section
+	class="variable-width-container mat-elevation-z8"
+	[style.width]="sliderW.value + '%'"
+	[style.height]="sliderH.value + 'px'"
+>
+	<table-expandable-rows
+		style="display:block"
+		[max-height]="sliderH.value + 'px'"
+		[dataSource]="dataSource"
+		[options]="options"
+		[selection]="selection"
+	>
+	</table-expandable-rows>
+</section>
+
+<section class="demo-options">
+	<mat-divider></mat-divider>
+	<p>other example to come...</p>
+</section>
