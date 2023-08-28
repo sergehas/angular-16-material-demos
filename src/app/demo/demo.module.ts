@@ -19,6 +19,7 @@ import { DemoComponent } from "./pages/demo.component";
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { TableExpandableRowsComponent } from "../shared/components/table-expandable-rows/table-expandable-rows.component";
 import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource.component";
+import { TabsNavComponent } from "../shared/components/tabs-nav/tabs-nav.component";
 
 @NgModule({
 	declarations: [DemoComponent, DemoTableComponent, DemoDatasourceComponent],
@@ -38,6 +39,7 @@ import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource
 		MatFormFieldModule,
 		MatSliderModule,
 
+		TabsNavComponent,
 		TableExpandableRowsComponent,
 		DemoRoutingModule,
 	],
