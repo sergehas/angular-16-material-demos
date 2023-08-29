@@ -6,48 +6,54 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
-	.root-app-name {
-		display: block;
-		white-space: nowrap;
-		overflow: hidden;
-		text-overflow: ellipsis;
-	}
-}
-
-.root-toolbar {
-	position: sticky;
-	/* Make sure the toolbar will stay on top of the content as it scrolls past. */
-	z-index: 2;
-	h1.root-app-name {
-		margin-left: 8px;
-	}
-}
-
-.root-sidenav-container {
-	.root-sidenav {
-		min-width: 220px;
-		.menu-node {
-			position: relative;
-
-			&.active-list-item:before {
-				content: "";
-				position: absolute;
-				height: 100%;
-				width: 100%;
-				opacity: calc(
-					var(--mdc-list-list-item-focus-state-layer-opacity) / 2
-				);
-				//background-color: #a73fb5 !important; /* Note: You could also use a custom theme */
-			}
+	.root-toolbar {
+		position: sticky;
+		/* Make sure the toolbar will stay on top of the content as it scrolls past. */
+		z-index: 2;
+		.root-app-name {
+			display: block;
+			white-space: nowrap;
+			overflow: hidden;
+			text-overflow: ellipsis;
+		}
+		h1.root-app-name {
+			margin-left: 8px;
 		}
 	}
-	.root-content {
-		margin: 0 var(--app-gap);
-	}
+	.root-sidenav-container {
+		.root-sidenav {
+			min-width: 220px;
+			.menu-node {
+				position: relative;
+				&.active-menu-node:before {
+					content: "";
+					position: absolute;
+					height: 100%;
+					width: 100%;
+					opacity: calc(
+						var(--mdc-list-list-item-focus-state-layer-opacity) / 2
+					);
+				}
+				.tree-button.mat-mdc-icon-button {
+					width: calc(var(--mdc-icon-button-state-layer-size) / 2);
+					border-radius: 0;
+					padding-right: 0;
+					padding-left: 0;
+				}
+				.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+					background-color: green;
+					border-radius: 0;
+				}
+			}
+		}
+		.root-content {
+			margin: 0 var(--app-gap);
+		}
 
-	/* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
-     causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
-	flex: 1;
+		/* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This
+			 causes `<mat-sidenav-content>` to act as our scrolling element for desktop layouts. */
+		flex: 1;
+	}
 }
 
 .root-is-mobile .root-sidenav-container {

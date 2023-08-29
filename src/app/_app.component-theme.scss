@@ -13,7 +13,7 @@
 	.root-sidenav-container {
 		.root-sidenav {
 			.menu-node {
-				&.active-list-item:before {
+				&.active-menu-node:before {
 					background-color: $indicator-color;
 				}
 			}

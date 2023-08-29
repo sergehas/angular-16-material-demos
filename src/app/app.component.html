@@ -33,15 +33,20 @@
 		>
 			<mat-nav-list>
 				<mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
-					<!-- This is the tree node template for leaf nodes -->
+					<!-- This is the tree node template for leaf nodes. dive default padding by 2 -->
 					<mat-tree-node
 						class="menu-node"
 						*matTreeNodeDef="let node"
 						matTreeNodePadding
-						routerLinkActive="active-list-item"
+						matTreeNodePaddingIndent="10"
+						routerLinkActive="active-menu-node"
 					>
 						<!-- use a disabled button to provide padding for tree leaf -->
-						<button mat-icon-button disabled></button>
+						<button
+							mat-icon-button
+							disabled
+							class="tree-button"
+						></button>
 						<a mat-list-item [routerLink]="node.path">{{
 							node.name
 						}}</a>
@@ -51,12 +56,13 @@
 						class="menu-node"
 						*matTreeNodeDef="let node; when: hasChild"
 						matTreeNodePadding
-						routerLinkActive="active-list-item"
+						routerLinkActive="active-menu-node"
 					>
 						<button
 							mat-icon-button
 							matTreeNodeToggle
 							[attr.aria-label]="'Toggle ' + node.name"
+							class="tree-button"
 						>
 							<mat-icon class="mat-icon-rtl-mirror">
 								{{
