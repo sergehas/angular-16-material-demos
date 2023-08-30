@@ -25,7 +25,7 @@
 	}
 	.root-sidenav-container {
 		.root-sidenav {
-			min-width: 220px;
+			min-width: 200px;
 			.menu-node {
 				position: relative;
 				&.active-menu-node:before {
@@ -47,6 +47,9 @@
 					border-radius: 0;
 				}
 			}
+		}
+		.notif-sidenav {
+			min-width: 250px;
 		}
 		.root-content {
 			margin: 0 var(--app-gap);

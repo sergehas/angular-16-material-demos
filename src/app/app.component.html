@@ -21,14 +21,14 @@
 		</button>
 
 		<span class="spacer"></span>
-		<button mat-icon-button>
+		<button mat-icon-button (click)="snotif.toggle()">
 			<mat-icon matBadge="7" [matBadgeHidden]="false" matBadgeColor="warn"
 				>notifications</mat-icon
 			>
 		</button>
 	</mat-toolbar>
 
-	<mat-sidenav-container class="root-sidenav-container">
+	<mat-sidenav-container class="root-sidenav-container" autosize>
 		<mat-sidenav
 			class="root-sidenav"
 			#snav
@@ -92,5 +92,15 @@
 				<router-outlet></router-outlet>
 			</div>
 		</mat-sidenav-content>
+		<mat-sidenav
+			class="notif-sidenav"
+			#snotif
+			position="end"
+			mode="over"
+			[fixedInViewport]="(isHandset$ | async) === true"
+			fixedTopGap="56"
+		>
+			<div>Notifs</div>
+		</mat-sidenav>
 	</mat-sidenav-container>
 </div>
