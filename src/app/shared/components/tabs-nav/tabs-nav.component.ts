@@ -46,9 +46,8 @@ export class TabsNavComponent {
 	}
 	ngOnInit(): void {
 		console.debug("router config", this.router);
-		let children = this.router.config.find(
-			(p) => p.path === this.path
-		)!.children;
+		const root = this.router.config.find((p) => p.path === this.path);
+		const children = root ? root.children : undefined;
 		if (!children || children.length <= 0) {
 			this.snackBar.open(`${this.path} has no menu entry`, "dismiss", {
 				horizontalPosition: "center",

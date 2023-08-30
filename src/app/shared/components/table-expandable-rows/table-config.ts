@@ -76,6 +76,6 @@ export class TableConfig {
 		this.responsive = conf.responsive ?? true;
 		this.stickyHeader = conf.stickyHeader ?? true;
 		this.paginator = conf.paginator ?? true;
-		this.columns = new ColumnConfig(conf.columns!);
+		this.columns = new ColumnConfig(conf.columns ?? []);
 	}
 }

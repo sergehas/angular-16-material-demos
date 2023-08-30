@@ -5,7 +5,6 @@ import {
 	OnInit,
 	ViewEncapsulation,
 } from "@angular/core";
-import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { Issue } from "src/app/core/github/models/issue";
 import { GithubService } from "src/app/core/github/services/github.service";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";

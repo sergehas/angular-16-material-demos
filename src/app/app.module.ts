@@ -10,6 +10,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatTreeModule } from "@angular/material/tree";
+import { MatBadgeModule } from "@angular/material/badge";
 
 import { SharedModule } from "./shared/shared.module";
 
@@ -38,6 +39,7 @@ import { StorageService } from "./core/services/storage.service";
 		MatTreeModule,
 		MatButtonModule,
 		MatIconModule,
+		MatBadgeModule,
 
 		SharedModule,
 		ServicesModule,
