@@ -3,6 +3,7 @@ import { RouterModule, Routes } from "@angular/router";
 import { DemoComponent } from "./pages/demo.component";
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource.component";
+import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 
 const routes: Routes = [
 	{
@@ -22,6 +23,11 @@ const routes: Routes = [
 				data: { animation: "slideLeft" },
 			},
 		],
+	},
+	{
+		path: "void-nav",
+		component: VoidNavComponent,
+		data: { animation: "slideLeft" },
 	},
 ];
 

@@ -20,9 +20,10 @@ import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { TableExpandableRowsComponent } from "../shared/components/table-expandable-rows/table-expandable-rows.component";
 import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource.component";
 import { TabsNavComponent } from "../shared/components/tabs-nav/tabs-nav.component";
+import { VoidNavComponent } from './pages/void-nav/void-nav.component';
 
 @NgModule({
-	declarations: [DemoComponent, DemoTableComponent, DemoDatasourceComponent],
+	declarations: [DemoComponent, DemoTableComponent, DemoDatasourceComponent, VoidNavComponent],
 	imports: [
 		CommonModule,
 		MatProgressBarModule,

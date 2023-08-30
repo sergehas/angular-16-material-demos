@@ -11,11 +11,12 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatListModule } from "@angular/material/list";
 import { MatTreeModule } from "@angular/material/tree";
 
+import { SharedModule } from "./shared/shared.module";
+
 import { AppComponent } from "./app.component";
 import { DemoModule } from "./demo/demo.module";
 import { AppRoutingModule } from "./app-routing.module";
-
-import { SharedModule } from "./shared/shared.module";
+import { ArtInstituteModule } from "./art-institute/art-institute.module";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -39,6 +40,7 @@ import { SharedModule } from "./shared/shared.module";
 		SharedModule,
 		AppRoutingModule,
 		DemoModule,
+		ArtInstituteModule,
 	],
 	providers: [],
 	bootstrap: [AppComponent],

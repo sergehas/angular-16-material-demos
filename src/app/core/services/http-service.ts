@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map } from "rxjs";
@@ -12,23 +12,20 @@ export type Page = {
 	providedIn: "root",
 })
 export abstract class HttpService<T> {
+	protected headers: HttpHeaders = new HttpHeaders({
+		accept: "application/json",
+	});
+
 	constructor(readonly http: HttpClient, protected baseUrl: string) {}
 
 	count(filter = ""): Observable<number> {
-		// const requestUrl = `${
-		// 	GithubService.href
-		// }?q=repo:angular/components&sort=${sort}&order=${order}&per_page=${pageSize}&page=${
-		// 	pageNumber + 1
-		// }`;
-		//there is no dedicated API for count, only the search api is available ==> to count, trigger a search, with result page size=1
 		return this.http
-			.get<{ total_count: number; items: T[] }>(this.baseUrl, {
-				headers: {
-					accept: "application/json",
-				},
-				params: new HttpParams().set("per_page", 1),
+			.get<{ totalCount: number; items: T[] }>(this.baseUrl, {
+				headers: this.headers,
+				//TODO: handle filter
+				//params: new HttpParams().set("filter", filter),
 			})
-			.pipe(map((res) => res.total_count));
+			.pipe(map((res) => res.totalCount));
 	}
 
 	find(
@@ -47,11 +44,14 @@ export abstract class HttpService<T> {
 				.set("pageSize", page!.pageSize)
 				.set("page", page!.pageNumber + 1);
 		}
+		//TODO: handle filter
+		// if (filter) {
+		// 	params = params
+		// 		.set("filter", filter);
+		// }
 		return this.http
 			.get<{ total_count: number; items: T[] }>(this.baseUrl, {
-				headers: {
-					accept: "application/json",
-				},
+				headers: this.headers,
 				params: params,
 			})
 			.pipe(map((res) => res.items));

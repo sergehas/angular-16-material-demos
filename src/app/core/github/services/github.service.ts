@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, map } from "rxjs";
 import { Issue } from "../models/issue";
@@ -13,6 +13,10 @@ export class GithubService extends HttpService<Issue> {
 	static repo = "repo:angular/components";
 	constructor(http: HttpClient) {
 		super(http, GithubService.href);
+		this.headers = this.headers.set(
+			"accept",
+			"application/vnd.github+json"
+		);
 	}
 
 	override count(filter = ""): Observable<number> {
@@ -24,9 +28,7 @@ export class GithubService extends HttpService<Issue> {
 		//there is no dedicated API for count, only the search api is available ==> to count, trigger a search, with result page size=1
 		return this.http
 			.get<{ total_count: number; items: Issue[] }>(GithubService.href, {
-				headers: {
-					accept: "application/vnd.github+json",
-				},
+				headers: this.headers,
 				params: new HttpParams()
 					.set("q", GithubService.repo)
 					.set("per_page", 1),
@@ -62,9 +64,7 @@ export class GithubService extends HttpService<Issue> {
 
 		return this.http
 			.get<{ total_count: number; items: Issue[] }>(GithubService.href, {
-				headers: {
-					accept: "application/vnd.github+json",
-				},
+				headers: this.headers,
 				params: params,
 			})
 			.pipe(

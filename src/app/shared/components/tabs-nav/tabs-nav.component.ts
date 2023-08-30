@@ -12,6 +12,7 @@ import {
 import { MenuNode, NavBuilder } from "./models/nav-builder";
 
 import { slideInAnimation } from "../../animations/route-animation";
+import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 
 @Component({
 	selector: "app-tabs-nav",
@@ -22,6 +23,7 @@ import { slideInAnimation } from "../../animations/route-animation";
 		CommonModule,
 		RouterModule,
 		MatTabsModule,
+		MatSnackBarModule,
 		RouterLink,
 		RouterOutlet,
 	],
@@ -31,10 +33,10 @@ export class TabsNavComponent {
 	@Input("path") path: string = "";
 	navLinks: MenuNode[] = [];
 	activeLinkIndex = -1;
-
 	constructor(
 		private router: Router,
-		private contexts: ChildrenOutletContexts
+		private contexts: ChildrenOutletContexts,
+		private snackBar: MatSnackBar
 	) {}
 	getRouteAnimationData() {
 		console.log("getRouteAnimationData");
@@ -43,17 +45,21 @@ export class TabsNavComponent {
 		];
 	}
 	ngOnInit(): void {
-		console.log("router config", this.router);
+		console.debug("router config", this.router);
+		let children = this.router.config.find(
+			(p) => p.path === this.path
+		)!.children;
+		if (!children || children.length <= 0) {
+			this.snackBar.open(`${this.path} has no menu entry`, "dismiss", {
+				horizontalPosition: "center",
+				verticalPosition: "top",
+				duration: 5000,
+			});
+			return;
+		}
 
-		this.navLinks = this.router.config
-			.find((p) => p.path === this.path)!
-			.children!.map((c) => NavBuilder.nodeFromPath(".", c.path));
-
-		console.log("links", this.navLinks);
-		// this.router.events.subscribe((res) => {
-		// 	this.activeLinkIndex = this.navLinks.indexOf(
-		// 		this.navLinks.find((tab) => tab.path === "." + this.router.url)
-		// 	);
-		// });
+		this.navLinks = children.map((c) =>
+			NavBuilder.nodeFromPath(".", c.path)
+		);
 	}
 }
