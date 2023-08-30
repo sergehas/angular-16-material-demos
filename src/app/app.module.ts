@@ -17,6 +17,8 @@ import { AppComponent } from "./app.component";
 import { DemoModule } from "./demo/demo.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { ArtInstituteModule } from "./art-institute/art-institute.module";
+import { ServicesModule } from "./core/services/services.module";
+import { StorageService } from "./core/services/storage.service";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -38,11 +40,12 @@ import { ArtInstituteModule } from "./art-institute/art-institute.module";
 		MatIconModule,
 
 		SharedModule,
+		ServicesModule,
 		AppRoutingModule,
 		DemoModule,
 		ArtInstituteModule,
 	],
-	providers: [],
+	providers: [StorageService],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
