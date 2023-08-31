@@ -15,6 +15,7 @@ import {
 	MenuNode,
 	NavBuilder,
 } from "./shared/components/tabs-nav/models/nav-builder";
+import { NotificationService } from "./core/services/notification.service";
 
 @Component({
 	selector: "app-root",
@@ -31,6 +32,7 @@ export class AppComponent {
 			map((result) => result.matches),
 			shareReplay()
 		);
+	notifications$ = this.service.notifications$;
 
 	//menu
 	private _transformer = (node: MenuNode, level: number): MenuFlatNode => {
@@ -58,7 +60,7 @@ export class AppComponent {
 		this.treeControl,
 		this.treeFlattener
 	);
-	constructor(private router: Router) {
+	constructor(private router: Router, private service: NotificationService) {
 		//menu content
 		this.dataSource.data = NavBuilder.buildTree("", this.router.config);
 		console.info("menu datasource", this.dataSource.data);

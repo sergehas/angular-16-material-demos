@@ -20,6 +20,8 @@ import { AppRoutingModule } from "./app-routing.module";
 import { ArtInstituteModule } from "./art-institute/art-institute.module";
 import { ServicesModule } from "./core/services/services.module";
 import { StorageService } from "./core/services/storage.service";
+import { NotificationService } from "./core/services/notification.service";
+import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
 
 @NgModule({
 	declarations: [AppComponent],
@@ -46,8 +48,9 @@ import { StorageService } from "./core/services/storage.service";
 		AppRoutingModule,
 		DemoModule,
 		ArtInstituteModule,
+		NotificationCenterComponent,
 	],
-	providers: [StorageService],
+	providers: [StorageService, NotificationService],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

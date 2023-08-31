@@ -19,23 +19,23 @@
 				var(--mat-table-background-color)
 			);
 		}
-		$stiky-border-style: var(--mat-table-row-item-outline-width) solid
+		$sticky-border-style: var(--mat-table-row-item-outline-width) solid
 			var(--mat-table-row-item-outline-color);
 
 		.mat-mdc-table-sticky-border-elem-top {
-			border-bottom: $stiky-border-style;
+			border-bottom: $sticky-border-style;
 		}
 
 		.mat-mdc-table-sticky-border-elem-right {
-			border-left: $stiky-border-style;
+			border-left: $sticky-border-style;
 		}
 
 		.mat-mdc-table-sticky-border-elem-bottom {
-			border-top: $stiky-border-style;
+			border-top: $sticky-border-style;
 		}
 
 		.mat-mdc-table-sticky-border-elem-left {
-			border-right: $stiky-border-style;
+			border-right: $sticky-border-style;
 		}
 	}
 }

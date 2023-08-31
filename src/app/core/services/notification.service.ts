@@ -1,11 +1,30 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
-export interface Notification {
-	severity: "info" | "warn" | "sever";
+export type NotificationSeverity = "info" | "warn" | "sever";
+export interface NotificationDef {
+	severity: NotificationSeverity;
 	message: string;
+	date?: Date;
 	ref?: string;
 	persisent?: boolean;
+}
+
+export class Notification implements NotificationDef {
+	readonly severity: NotificationSeverity;
+	readonly message: string;
+	readonly date?: Date;
+	readonly ref?: string;
+	readonly persisent?: boolean;
+	constructor(def: NotificationDef) {
+		this.severity=def.severity;
+		this.message=def.message;
+		this.date = def.date ?? new Date();
+		this.ref=def.ref;
+		this.persisent=def.persisent ?? false;
+
+
+	}
 }
 
 @Injectable({
@@ -16,19 +35,16 @@ export class NotificationService {
 	public notifications$ = new BehaviorSubject(this.cache).asObservable();
 	constructor() {}
 	notify(notif: Notification): Notification {
-    console.log("notif")
+		console.log("Notif: ", notif);
 		this.cache.add(notif);
-    return notif;
-
+		return notif;
 	}
 
 	dismiss(notif: Notification): void {
-    console.log("dismiss")
 		this.cache.delete(notif);
 	}
 
 	clear(): void {
-    console.log("clear")
 		this.cache.clear();
 	}
 }

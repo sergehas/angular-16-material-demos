@@ -1,11 +1,12 @@
 @use "@angular/material" as mat;
-
 @use "sass:map";
 @use "./app//app.component-theme" as app;
 
 @use "./app/shared/components/table-expandable-rows/table-expandable-rows.component-theme"
 	as table-expandable-rows;
 @use "./app/shared/components/tabs-nav/tabs-nav.component-theme" as tabs-nav;
+@use "./app/shared/components/notification-center/notification-center.component-theme"
+	as notification-center;
 html {
 	--app-gap: 16px;
 }
@@ -28,4 +29,5 @@ body {
 	@include app.theme($theme);
 	@include table-expandable-rows.theme($theme);
 	@include tabs-nav.theme($theme);
+	@include notification-center.theme($theme);
 }

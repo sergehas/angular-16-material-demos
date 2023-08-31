@@ -1,6 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { DragDropModule } from "@angular/cdk/drag-drop";
+//import { NotificationCenterComponent } from './components/notification-center/notification-center.component';
 // import { InstanceofPipe } from "./pipes/instanceof.pipe";
 // import { TableExpandableRowsComponent } from "./components/table-expandable-rows/table-expandable-rows.component";
 // import { TableConfigEditorComponent } from "./components/table-config-editor/table-config-editor.component";
@@ -12,7 +13,9 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
 		// InstanceofPipe,
 		// TableConfigEditorComponent,
 		// TabsNavComponent,
-	],
+	
+    //NotificationCenterComponent
+  ],
 	imports: [CommonModule, DragDropModule],
 })
 export class SharedModule {}

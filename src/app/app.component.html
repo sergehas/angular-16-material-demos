@@ -22,7 +22,10 @@
 
 		<span class="spacer"></span>
 		<button mat-icon-button (click)="snotif.toggle()">
-			<mat-icon matBadge="7" [matBadgeHidden]="false" matBadgeColor="warn"
+			<mat-icon
+				[matBadge]="(notifications$ | async)!.size"
+				[matBadgeHidden]="(notifications$ | async)!.size === 0"
+				matBadgeColor="warn"
 				>notifications</mat-icon
 			>
 		</button>
@@ -47,6 +50,7 @@
 						matTreeNodePadding
 						matTreeNodePaddingIndent="10"
 						routerLinkActive="active-menu-node"
+						#rla="routerLinkActive"
 					>
 						<!-- use a disabled button to provide padding for tree leaf -->
 						<button
@@ -54,9 +58,12 @@
 							disabled
 							class="tree-button"
 						></button>
-						<a mat-list-item [routerLink]="node.path">{{
-							node.name
-						}}</a>
+						<a
+							mat-list-item
+							[routerLink]="node.path"
+							[activated]="rla.isActive"
+							>{{ node.name }}</a
+						>
 					</mat-tree-node>
 					<!-- This is the tree node template for expandable nodes -->
 					<mat-tree-node
@@ -64,6 +71,7 @@
 						*matTreeNodeDef="let node; when: hasChild"
 						matTreeNodePadding
 						routerLinkActive="active-menu-node"
+						#rla="routerLinkActive"
 					>
 						<button
 							mat-icon-button
@@ -79,9 +87,12 @@
 								}}
 							</mat-icon>
 						</button>
-						<a mat-list-item [routerLink]="node.path">{{
-							node.name
-						}}</a>
+						<a
+							mat-list-item
+							[routerLink]="node.path"
+							[activated]="rla.isActive"
+							>{{ node.name }}</a
+						>
 					</mat-tree-node>
 				</mat-tree>
 			</mat-nav-list>
@@ -100,7 +111,7 @@
 			[fixedInViewport]="(isHandset$ | async) === true"
 			fixedTopGap="56"
 		>
-			<div>Notifs</div>
+			<app-notification-center></app-notification-center>
 		</mat-sidenav>
 	</mat-sidenav-container>
 </div>

@@ -34,7 +34,7 @@
 					height: 100%;
 					width: 100%;
 					opacity: calc(
-						var(--mdc-list-list-item-focus-state-layer-opacity) / 2
+						var(--mdc-list-list-item-focus-state-layer-opacity)
 					);
 				}
 				.tree-button.mat-mdc-icon-button {
@@ -50,6 +50,7 @@
 		}
 		.notif-sidenav {
 			min-width: 250px;
+			max-width: 300px;
 		}
 		.root-content {
 			margin: 0 var(--app-gap);
