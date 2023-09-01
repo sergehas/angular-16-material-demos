@@ -1,0 +1,14 @@
+:host {
+	display: flex;
+}
+
+.snack-label {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	.mat-icon {
+		display: table;
+		padding-right: var(--app-gap);
+	}
+}

@@ -5,7 +5,7 @@
 <section>
 	<mat-card
 		class="notification-card zzmat-elevation-z8"
-		*ngFor="let notif of notifications$ | async; index as i"
+		*ngFor="let notif of notifications$ | async; trackBy: trackItem"
 		[class]="'notification-' + notif.severity"
 	>
 		<mat-card-header class="notification-header">
@@ -27,8 +27,8 @@
 		<mat-card-content class="notification-content">
 			{{ notif.message }}
 		</mat-card-content>
-		<mat-card-actions align="end">
-			<button mat-button (click)="dismiss(notif)">DISMISS</button>
-		</mat-card-actions>
+		<!-- <mat-card-actions align="end">
+			<button mat-stroked-button (click)="dismiss(notif)"><mat-icon>delete_forever</mat-icon></button>
+		</mat-card-actions> -->
 	</mat-card>
 </section>

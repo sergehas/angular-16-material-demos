@@ -15,8 +15,8 @@ describe("NotificationService", () => {
 	});
 	it("should send a notif", () => {
 		let count = 0;
-		service.notify({ severity: "info", message: "msg" });
-		service.notify({ severity: "info", message: "msg2" });
+		service.notify(new Notification({ severity: "info", message: "msg" }));
+		service.notify(new Notification({ severity: "info", message: "msg2" }));
 		service.notifications$.subscribe((n) => {
 			count = n.size;
 			expect(count).toEqual(2);
@@ -24,9 +24,9 @@ describe("NotificationService", () => {
 	});
 	it("should remove a notif", () => {
 		let count = 0;
-		const n1 = service.notify({ severity: "info", message: "msg" });
-		const n2 = service.notify({ severity: "info", message: "msg2" });
-		const n3 = service.notify({ severity: "info", message: "msg3" });
+		const n1 = service.notify(new Notification({ severity: "info", message: "msg" }));
+		const n2 = service.notify(new Notification({ severity: "info", message: "msg2" }));
+		const n3 = service.notify(new Notification({ severity: "info", message: "msg3" }));
 		service.dismiss(n2);
 		service.notifications$.subscribe((n) => {
 			count = n.size;
@@ -37,17 +37,17 @@ describe("NotificationService", () => {
 	});
 	it("should clear all notifs", () => {
 		let count = 0;
-		const n1 = service.notify({ severity: "info", message: "msg" });
-		const n2 = service.notify({ severity: "info", message: "msg2" });
-		const n3 = service.notify({ severity: "info", message: "msg3" });
+		const n1 = service.notify(new Notification({ severity: "info", message: "msg" }));
+		const n2 = service.notify(new Notification({ severity: "info", message: "msg2" }));
+		const n3 = service.notify(new Notification({ severity: "info", message: "msg3" }));
 		service.clear();
 		service.notifications$.subscribe((n) => {
 			expect(n.size).toEqual(0);
 		});
 	});
 	it("should publish all event", fakeAsync(() => {
-		const n1 = { severity: "info", message: "msg" } as Notification;
-		const n2 = { severity: "info", message: "msg2" } as Notification;
+		const n1 = new Notification({ severity: "info", message: "msg" });
+		const n2 = new Notification({ severity: "info", message: "msg2" });
 		let x = new Set<Notification>();
 		service.notifications$.subscribe((s) => (x = s));
 		expect(x.size).toEqual(0);
