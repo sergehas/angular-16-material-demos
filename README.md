@@ -109,11 +109,16 @@ Tips: The commonly required angular modules like ( CommonModule, FormsModule, et
 
 ### add new shared module (if not exist)
 
+If you don't plan to use recommened standalone component,
 add a `shared` module : `ng generate module shared`
 
 ### add new shared component
 
-add a component in `shared` folder : `ng generate component shared/components/table-expandable-rows -m shared`
+add a component in `shared` folder/module : `ng generate component shared/components/table-expandable-rows -m shared`
+
+or (for standalone component)
+
+add a component in `shared` folder : `ng generate component shared/components/table-expandable-rows`
 
 ---
 
