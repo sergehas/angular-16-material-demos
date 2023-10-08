@@ -1,25 +1,42 @@
-import { readdir, readFile, writeFile } from "fs/promises";
-import { join } from "path";
+const { resolve, extname, join } = require("node:path");
+const { readdir, readFile, writeFile } = require("node:fs/promises");
 
-const BASE_PATH = "src/assets";
+// root folder to build relative paths from
+const RELATIVE_PATH = "src";
+// base bas to walk
+const BASE_PATH = join(RELATIVE_PATH, "assets");
+// icon exctension
 const EXTENSION = ".svg";
-const ICON_LIB = `${BASE_PATH}/parameter-icons.json`;
+const ICON_LIB = join(BASE_PATH, "iconlib.json");
 
 class Category {
 	name = null;
 	icons = [];
 	categories = [];
 
+	static from(obj) {
+		return Object.assign(new Category(), obj);
+	}
+
 	addCategory(name) {
-		console.log(`adding cat ${name} to ${this.name}`);
+		console.debug(`adding cat ${name} to ${this.name}`);
+		const existing = this.categories.find((i) => i.name === name);
+		existing instanceof Category;
+		if (existing) {
+			return Category.from(existing);
+		}
 		const cat = new Category();
 		cat.name = name;
 		this.categories.push(cat);
 		return cat;
 	}
-	addIcon(name) {
-		console.log(`adding icon ${name} to ${this.name}`);
-		this.icons.push(name);
+	addIcon(iconPath) {
+		console.debug(`adding icon ${iconPath} to ${this.name}`);
+		let p = iconPath.substring(RELATIVE_PATH.length + 1);
+		const existing = this.icons.find((i) => i.name === p);
+		if (!existing) {
+			this.icons.push(p);
+		}
 		return this;
 	}
 }
@@ -32,13 +49,16 @@ async function openIconLib() {
 		} catch (error) {
 			console.log("unparsable lib");
 			iconlib = new Category();
+			iconlib.name = "root";
 		}
-		console.log(`read: ${iconlib}`);
-		return iconlib as Category;
+		console.log("read: ", iconlib);
+		return Category.from(iconlib);
 	});
 }
 async function writeIconLib(iconlib) {
-	return writeFile(ICON_LIB, JSON.stringify(iconlib), { flag: "w" }).then(
+	return writeFile(ICON_LIB, JSON.stringify(iconlib, null, 2), {
+		flag: "w",
+	}).then(
 		() => {
 			console.log(`[${ICON_LIB}] written`);
 		},
@@ -50,33 +70,27 @@ async function writeIconLib(iconlib) {
 
 async function ls(path = BASE_PATH, cat = new Category()) {
 	//	yield path;
-	for (const dirent of await readdir(path, { withFileTypes: true }))
+	console.log(`populating ${cat.name}`);
+	for (const dirent of await readdir(path, { withFileTypes: true })) {
 		if (dirent.isDirectory()) {
 			let curCat = cat.addCategory(dirent.name);
 			//			yield* ls(join(path, dirent.name), curCat);
-			ls(join(path, dirent.name), curCat);
+			await ls(join(path, dirent.name), curCat);
 		} else {
-			if (dirent.isFile() && dirent.name.endsWith(EXTENSION)) {
+			if (dirent.isFile() && EXTENSION === extname(dirent.name)) {
 				cat.addIcon(join(path, dirent.name));
 				//				yield join(path, dirent.name);
 				join(path, dirent.name);
 			}
 		}
+	}
+	return cat;
 }
 
-async function* empty() {}
-
-async function toArray(iter = empty(), lib) {
-	let r = [];
-	//for await (const x of iter) r.push(x);
-	await iter;
-	await writeIconLib(lib);
-	console.log(`lib2: ${lib}`);
-	return r;
-}
-openIconLib()
-	.then((lib) => {
-		console.log(`lib1: ${lib}`);
-		toArray(ls("src/assets", lib), lib);
-	})
-	.then(console.log, console.error);
+(async () => {
+	let lib = await openIconLib();
+	// lib = await ls(join(BASE_PATH, "countries"), lib);
+	// lib = await ls(join(BASE_PATH, "brands"), lib);
+	lib = await ls(join(BASE_PATH, "/"), lib);
+	writeIconLib(lib).then(console.log, console.error);
+})();
