@@ -1,0 +1,20 @@
+.icon-btn {
+	.mat-icon,
+	.placeholder {
+		height: 24px;
+		width: 24px;
+	}
+	.placeholder {
+		display: block;
+		margin-left: 0px;
+		margin-right: 8px;
+		overflow-x: hidden;
+		overflow-y: hidden;
+		position: relative;
+	}
+
+	.mat-mdc-select-arrow {
+		display: flex;
+		align-items: center;
+	}
+}
