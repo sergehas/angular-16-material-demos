@@ -2,26 +2,33 @@
 	display: none;
 }
 .icon-tree {
-	background-color: aliceblue;
-	max-width: 200px;
+		max-width: 200px;
 	--node-padding: 30px;
-}
-.icon-tree ul,
-.icon-tree li {
-	margin-top: 0;
-	margin-bottom: 0;
-	list-style-type: none;
-	.selectable-icon {
-		margin: auto;
+	.icon-tree-node {
+		.icon-list {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.icon-list-item {
+			display: flex;
+			padding: 4px;
+			border-radius: 4px;
+			// make icon bigger
+			&[selected="true"] {
+				background-color: var(--mat-option-selected-state-layer-color);
+			}
+			&:hover {
+				padding: 0;
+				.selectable-icon {
+					width: 32px;
+					height: 32px;
+				}
+			}
+		}
 	}
 }
-.icon-list {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	column-gap: 8px;
-	row-gap: 8px;
-}
+
 .icon-tree-node {
 	flex-direction: column;
 	display: flex;
