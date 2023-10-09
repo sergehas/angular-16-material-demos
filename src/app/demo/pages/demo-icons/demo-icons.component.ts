@@ -9,4 +9,5 @@ import { Component, ViewEncapsulation } from "@angular/core";
 })
 export class DemoIconsComponent {
 	//constructor(private service: IconsService) {}
+	selected: string | null = "parameter:brands-azure";
 }

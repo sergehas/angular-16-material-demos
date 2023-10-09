@@ -23,24 +23,33 @@
 	<p>Column widths can be defin by css or by config</p>
 </section>
 <mat-divider></mat-divider>
-
-<div class="icon-demo-container">
-	<div
-		class="label-icon"
-		*ngFor="
-			let icon of [
-				'brands-gcp',
-				'countries-Europe-European_Union-se',
-				'countries-Australia-au'
-			]
-		"
-	>
-		<mat-label
-			>icon <code>parameter:{{ icon }}</code>
-		</mat-label>
-		<mat-icon [svgIcon]="'parameter:' + icon"></mat-icon>
+<section class="mat-elevation-z8">
+	<div class="icon-demo-container">
+		<div
+			class="label-icon"
+			*ngFor="
+				let icon of [
+					'brands-gcp',
+					'countries-Europe-European_Union-se',
+					'countries-Australia-au'
+				]
+			"
+		>
+			<mat-label
+				>icon <code>parameter:{{ icon }}</code>
+			</mat-label>
+			<mat-icon [svgIcon]="'parameter:' + icon"></mat-icon>
+		</div>
 	</div>
-</div>
+</section>
 <mat-divider></mat-divider>
 
-<app-icon-select class="mat-elevation-z4"></app-icon-select>
+<section>
+	selected icon: <code>{{ selected }}</code>
+</section>
+<section class="mat-elevation-z8">
+	<app-icon-select
+		class="mat-elevation-z4"
+		[(value)]="selected"
+	></app-icon-select>
+</section>

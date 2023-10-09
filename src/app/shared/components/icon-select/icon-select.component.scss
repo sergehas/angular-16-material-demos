@@ -2,9 +2,10 @@
 	display: none;
 }
 .icon-tree {
-		max-width: 200px;
+	max-width: 200px;
 	--node-padding: 30px;
-	.icon-tree-node {
+	.icon-tree-node,
+	.mat-nested-tree-node {
 		.icon-list {
 			display: flex;
 			flex-direction: row;
@@ -18,7 +19,8 @@
 			&[selected="true"] {
 				background-color: var(--mat-option-selected-state-layer-color);
 			}
-			&:hover {
+			&:hover,
+			&[selected="true"] {
 				padding: 0;
 				.selectable-icon {
 					width: 32px;
@@ -26,6 +28,9 @@
 				}
 			}
 		}
+	}
+	.mat-nested-tree-node div[role="group"] {
+		padding-left: var(--node-padding);
 	}
 }
 
@@ -42,13 +47,6 @@
 	flex: 1;
 	word-wrap: break-word;
 }
-/*
- * This padding sets alignment of the nested nodes.
- */
-.icon-tree .mat-nested-tree-node div[role="group"] {
-	padding-left: var(--node-padding);
-}
-
 /*
  * Padding for leaf nodes.
  * Leaf nodes need to have padding so as to align with other non-leaf nodes

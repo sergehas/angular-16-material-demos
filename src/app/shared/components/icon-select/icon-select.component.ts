@@ -1,5 +1,5 @@
 import { NestedTreeControl } from "@angular/cdk/tree";
-import { Component } from "@angular/core";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { MatTreeNestedDataSource, MatTreeModule } from "@angular/material/tree";
 import { MatIconModule } from "@angular/material/icon";
@@ -22,11 +22,22 @@ import { IconsService } from "src/app/core/icons/services/icons.service";
 	],
 })
 export class IconSelectComponent {
+	@Input() value: string | null = null;
+	@Output() valueChange = new EventEmitter<string | null>();
+
 	treeControl = new NestedTreeControl<Category>((node) => node.categories);
 	dataSource = new MatTreeNestedDataSource<Category>();
 
 	constructor(private service: IconsService) {
 		this.dataSource.data = service.getIconslib().categories;
+	}
+
+	/**
+	 * toggle selected item
+	 */
+	select(item: string) {
+		this.value = item === this.value ? null : item;
+		this.valueChange.emit(this.value);
 	}
 
 	hasChild = (_: number, node: Category) =>
