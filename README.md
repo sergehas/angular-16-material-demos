@@ -10,6 +10,7 @@ bookmarks:
 -   https://stackblitz.com/github/janders/angular-tab-router-with-children
 -   https://m3.material.io/develop/web
 -   https://blog.angular-university.io/angular-material-data-table/
+-   https://www.vitamindev.com/angular/how-to-initialize-a-service-on-startup/
 
 ### Basics
 

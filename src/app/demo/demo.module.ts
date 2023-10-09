@@ -15,15 +15,24 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSliderModule } from "@angular/material/slider";
 
 import { DemoRoutingModule } from "./demo-routing.module";
+import { TableExpandableRowsComponent } from "../shared/components/table-expandable-rows/table-expandable-rows.component";
+import { TabsNavComponent } from "../shared/components/tabs-nav/tabs-nav.component";
+import { IconSelectComponent } from "../shared/components/icon-select/icon-select.component";
+
 import { DemoComponent } from "./pages/demo.component";
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
-import { TableExpandableRowsComponent } from "../shared/components/table-expandable-rows/table-expandable-rows.component";
 import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource.component";
-import { TabsNavComponent } from "../shared/components/tabs-nav/tabs-nav.component";
-import { VoidNavComponent } from './pages/void-nav/void-nav.component';
+import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
+import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 
 @NgModule({
-	declarations: [DemoComponent, DemoTableComponent, DemoDatasourceComponent, VoidNavComponent],
+	declarations: [
+		DemoComponent,
+		DemoTableComponent,
+		DemoDatasourceComponent,
+		VoidNavComponent,
+		DemoIconsComponent,
+	],
 	imports: [
 		CommonModule,
 		MatProgressBarModule,
@@ -42,6 +51,8 @@ import { VoidNavComponent } from './pages/void-nav/void-nav.component';
 
 		TabsNavComponent,
 		TableExpandableRowsComponent,
+		IconSelectComponent,
+
 		DemoRoutingModule,
 	],
 })

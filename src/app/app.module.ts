@@ -21,6 +21,10 @@ import { ArtInstituteModule } from "./art-institute/art-institute.module";
 import { ServicesModule } from "./core/services/services.module";
 import { StorageService } from "./core/services/storage.service";
 import { NotificationService } from "./core/services/notification.service";
+
+import { IconsModule } from "./core/icons/icons.module";
+
+
 import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
 
 @NgModule({
@@ -45,6 +49,7 @@ import { NotificationCenterComponent } from "./shared/components/notification-ce
 
 		SharedModule,
 		ServicesModule,
+		IconsModule,
 		AppRoutingModule,
 		DemoModule,
 		ArtInstituteModule,
