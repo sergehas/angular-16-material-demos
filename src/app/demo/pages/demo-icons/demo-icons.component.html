@@ -48,8 +48,13 @@
 	selected icon: <code>{{ selected }}</code>
 </section>
 <section class="mat-elevation-z8">
-	<app-icon-select
+	<app-icon-tree
 		class="mat-elevation-z4"
+		[expanded]="true"
 		[(value)]="selected"
-	></app-icon-select>
+	></app-icon-tree>
+</section>
+
+<section class="mat-elevation-z8">
+	<app-icon-select></app-icon-select>
 </section>

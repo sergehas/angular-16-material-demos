@@ -18,6 +18,7 @@ import { DemoRoutingModule } from "./demo-routing.module";
 import { TableExpandableRowsComponent } from "../shared/components/table-expandable-rows/table-expandable-rows.component";
 import { TabsNavComponent } from "../shared/components/tabs-nav/tabs-nav.component";
 import { IconSelectComponent } from "../shared/components/icon-select/icon-select.component";
+import { IconTreeComponent } from "../shared/components/icon-tree/icon-tree.component";
 
 import { DemoComponent } from "./pages/demo.component";
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
@@ -52,6 +53,7 @@ import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 		TabsNavComponent,
 		TableExpandableRowsComponent,
 		IconSelectComponent,
+		IconTreeComponent,
 
 		DemoRoutingModule,
 	],
