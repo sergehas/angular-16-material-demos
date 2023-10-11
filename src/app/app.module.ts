@@ -27,6 +27,7 @@ import { NotificationService } from "./core/services/notification.service";
 import { IconsModule } from "./core/icons/icons.module";
 
 import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
+import { DatePipe } from "@angular/common";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -69,7 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ArtInstituteModule,
 		NotificationCenterComponent,
 	],
-	providers: [StorageService, NotificationService],
+	providers: [StorageService, NotificationService, DatePipe],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}

@@ -28,6 +28,7 @@ import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource
 import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
+import { LocalizedDatePipe } from "../shared/pipes/translation/localized-date.pipe";
 
 @NgModule({
 	declarations: [
@@ -55,6 +56,7 @@ import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
 		MatSliderModule,
 
 		TranslateModule,
+		LocalizedDatePipe,
 
 		TabsNavComponent,
 		TableExpandableRowsComponent,

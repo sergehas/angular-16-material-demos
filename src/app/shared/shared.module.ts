@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { LocalizedDatePipe } from './pipes/translation/localized-date.pipe';
+import { LocalizedDatePipe } from "./pipes/translation/localized-date.pipe";
 // import { IconTreeComponent } from "./components/icon-tree/icon-tree.component";
 //import { IconSelectComponent } from './components/icon-select/icon-select.component';
 //import { NotificationCenterComponent } from './components/notification-center/notification-center.component';
@@ -19,9 +19,8 @@ import { LocalizedDatePipe } from './pipes/translation/localized-date.pipe';
 		// NotificationCenterComponent
 		// IconSelectComponent
 		// IconTreeComponent
-	
-    LocalizedDatePipe
-  ],
+		//LocalizedDatePipe
+	],
 	imports: [CommonModule, DragDropModule],
 })
 export class SharedModule {}

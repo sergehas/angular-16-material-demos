@@ -4,5 +4,16 @@
 <button mat-flat-button (click)="setLanguage('en-US')" color="primary">
 	EN
 </button>
+<p>raw date: {{ today }}</p>
 
 <p>dateFormat.day: {{ "dateFormat.day" | translate }}</p>
+
+<p>formatted date: {{ today | localizedDate: "dateFormat.day" }}</p>
+<p>
+	dateFormat.day (force en-US): today | localizedDate:
+	"dateFormat.day":"en-US" | async
+</p>
+<p>
+	dateFormat.day (force en-US): today | localizedDate:
+	"dateFormat.day":"fr-FR" | async
+</p>
