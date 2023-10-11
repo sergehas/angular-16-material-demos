@@ -1,7 +1,9 @@
 import { NgModule } from "@angular/core";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { HttpClientModule } from "@angular/common/http";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
@@ -24,8 +26,12 @@ import { NotificationService } from "./core/services/notification.service";
 
 import { IconsModule } from "./core/icons/icons.module";
 
-
 import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
+
+// AoT requires an exported function for factories
+export function HttpLoaderFactory(http: HttpClient) {
+	return new TranslateHttpLoader(http, "/assets/i18n/", ".json");
+}
 
 @NgModule({
 	declarations: [AppComponent],
@@ -34,6 +40,14 @@ import { NotificationCenterComponent } from "./shared/components/notification-ce
 		BrowserAnimationsModule,
 		// import HttpClientModule after BrowserModule.
 		HttpClientModule,
+		TranslateModule.forRoot({
+			defaultLanguage: "en-US",
+			loader: {
+				provide: TranslateLoader,
+				useFactory: HttpLoaderFactory,
+				deps: [HttpClient],
+			},
+		}),
 
 		MatButtonModule,
 		MatSnackBarModule,

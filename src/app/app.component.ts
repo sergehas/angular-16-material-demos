@@ -2,6 +2,7 @@ import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
 import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { VERSION as CDK_VERSION } from "@angular/cdk";
 import { VERSION as MAT_VERSION } from "@angular/material/core";
+import { TranslateService } from "@ngx-translate/core";
 
 import { FlatTreeControl } from "@angular/cdk/tree";
 import {
@@ -60,7 +61,16 @@ export class AppComponent {
 		this.treeControl,
 		this.treeFlattener
 	);
-	constructor(private router: Router, private service: NotificationService) {
+	constructor(
+		private router: Router,
+		private service: NotificationService,
+		translate: TranslateService
+	) {
+		// this language will be used as a fallback when a translation isn't found in the current language
+		translate.setDefaultLang("en-US");
+
+		// the lang to use, if the lang isn't available, it will use the current loader to get them
+		translate.use("en");
 		//menu content
 		this.dataSource.data = NavBuilder.buildTree("", this.router.config);
 		console.info("menu datasource", this.dataSource.data);
