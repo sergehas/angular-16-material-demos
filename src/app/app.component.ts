@@ -70,7 +70,7 @@ export class AppComponent {
 		translate.setDefaultLang("en-US");
 
 		// the lang to use, if the lang isn't available, it will use the current loader to get them
-		translate.use("en");
+		translate.use("en-US");
 		//menu content
 		this.dataSource.data = NavBuilder.buildTree("", this.router.config);
 		console.info("menu datasource", this.dataSource.data);

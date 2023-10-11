@@ -5,6 +5,7 @@ import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource.component";
 import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
+import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
 
 const routes: Routes = [
 	{
@@ -26,6 +27,11 @@ const routes: Routes = [
 			{
 				path: "demo-icons",
 				component: DemoIconsComponent,
+				data: { animation: "slideLeft" },
+			},
+			{
+				path: "demo-i18n",
+				component: DemoI18nComponent,
 				data: { animation: "slideLeft" },
 			},
 		],

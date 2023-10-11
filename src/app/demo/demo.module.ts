@@ -14,6 +14,8 @@ import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSliderModule } from "@angular/material/slider";
 
+import { TranslateModule } from "@ngx-translate/core";
+
 import { DemoRoutingModule } from "./demo-routing.module";
 import { TableExpandableRowsComponent } from "../shared/components/table-expandable-rows/table-expandable-rows.component";
 import { TabsNavComponent } from "../shared/components/tabs-nav/tabs-nav.component";
@@ -25,6 +27,7 @@ import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource.component";
 import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
+import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
 
 @NgModule({
 	declarations: [
@@ -33,6 +36,7 @@ import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 		DemoDatasourceComponent,
 		VoidNavComponent,
 		DemoIconsComponent,
+		DemoI18nComponent,
 	],
 	imports: [
 		CommonModule,
@@ -49,6 +53,8 @@ import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 		MatInputModule,
 		MatFormFieldModule,
 		MatSliderModule,
+
+		TranslateModule,
 
 		TabsNavComponent,
 		TableExpandableRowsComponent,
