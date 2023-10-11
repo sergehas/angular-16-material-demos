@@ -1,9 +1,13 @@
-<button mat-flat-button (click)="setLanguage('fr-FR')" color="accent">
+<button mat-flat-button (click)="setLanguage('en-US')" color="accent">
+	EN (default, fallback)
+</button>
+<button mat-flat-button (click)="setLanguage('fr-FR')" color="primary">
 	FR
 </button>
-<button mat-flat-button (click)="setLanguage('en-US')" color="primary">
-	EN
+<button mat-flat-button (click)="setLanguage('pt-PT')" color="warn">
+	PT (no translation)
 </button>
+
 <p>
 	<button mat-stroked-button (click)="updateDate()">UPDATE</button>raw date:
 	{{ today }}
