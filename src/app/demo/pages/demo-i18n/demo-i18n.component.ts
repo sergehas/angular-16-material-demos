@@ -7,9 +7,13 @@ import { TranslateService } from "@ngx-translate/core";
 	styleUrls: ["./demo-i18n.component.scss"],
 })
 export class DemoI18nComponent {
-	today = new Date();
+	today: Date | number = new Date();
 
 	constructor(private translateService: TranslateService) {}
+
+	updateDate() {
+		this.today = Date.now();
+	}
 
 	setLanguage(locale: string) {
 		this.translateService.use(locale);

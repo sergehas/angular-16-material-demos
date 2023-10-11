@@ -1,5 +1,6 @@
 {
 	"dateFormat": {
-		"day": "dd/MM/YYYY"
+		"day": "dd/MM/YYYY",
+		"datetime": "dd/MM/YYYY HH:mm:ss"
 	}
 }

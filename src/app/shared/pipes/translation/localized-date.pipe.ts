@@ -21,17 +21,6 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
 		private _ref: ChangeDetectorRef
 	) {}
 
-	transform1(
-		value: string | Date | number,
-		format: string
-	): Observable<string | null> {
-		return this.translateService.get(format).pipe(
-			map((response) => {
-				return this.datePipe.transform(value, response);
-			})
-		);
-	}
-
 	value: string = "";
 	lastKey: string | null = null;
 	lastData: string | Date | number | null = null;
