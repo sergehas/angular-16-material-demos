@@ -1,19 +1,18 @@
-<button mat-flat-button (click)="setLanguage('en-US')" color="accent">
-	EN (default, fallback)
-</button>
-<button mat-flat-button (click)="setLanguage('fr-FR')" color="primary">
-	FR
-</button>
-<button mat-flat-button (click)="setLanguage('pt-PT')" color="warn">
-	PT (no translation)
-</button>
-
-<p>
-	<button mat-stroked-button (click)="updateDate()">UPDATE</button>raw date:
-	{{ today }}
-</p>
-
-<p>dateFormat.day: {{ "dateFormat.day" | translate }}</p>
-
-<p>formatted date: {{ today | localizedDate: "dateFormat.day" }}</p>
-<p>formatted date: {{ today | localizedDate: "dateFormat.datetime" }}</p>
+<section class="demo-options">
+	<div class="label-container">
+		<button mat-flat-button (click)="setLanguage('en-US')" color="accent">
+			EN (default, fallback)
+		</button>
+		<button mat-flat-button (click)="setLanguage('fr-FR')" color="primary">
+			FR
+		</button>
+		<button mat-flat-button (click)="setLanguage('pt-PT')" color="warn">
+			PT (no translation)
+		</button>
+		<button mat-stroked-button (click)="updateDate()">UPDATE</button>
+	</div>
+	<p>raw date: {{ today }}</p>
+	<p>dateFormat.day: {{ "dateFormat.day" | translate }}</p>
+	<p>formatted date: {{ today | localizedDate: "dateFormat.day" }}</p>
+	<p>formatted date: {{ today | localizedDate: "dateFormat.datetime" }}</p>
+</section>
