@@ -13,6 +13,8 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatSliderModule } from "@angular/material/slider";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MomentDateAdapter } from "@angular/material-moment-adapter";
 
 import { TranslateModule } from "@ngx-translate/core";
 
@@ -54,6 +56,7 @@ import { LocalizedDatePipe } from "../shared/pipes/translation/localized-date.pi
 		MatInputModule,
 		MatFormFieldModule,
 		MatSliderModule,
+		MatDatepickerModule,
 
 		TranslateModule,
 		LocalizedDatePipe,

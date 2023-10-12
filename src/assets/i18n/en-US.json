@@ -1,6 +1,7 @@
 {
-	"dateFormat": {
+	"format": {
 		"day": "MM/dd/YYYY",
-		"datetime": "MM/dd/YYYY hh:mm:ss aa"
+		"datetime": "MM/dd/YYYY hh:mm:ss aa",
+		"weekYear": "W/YYYY"
 	}
 }

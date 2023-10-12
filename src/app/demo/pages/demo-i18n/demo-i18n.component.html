@@ -12,7 +12,24 @@
 		<button mat-stroked-button (click)="updateDate()">UPDATE</button>
 	</div>
 	<p>raw date: {{ today }}</p>
-	<p>dateFormat.day: {{ "dateFormat.day" | translate }}</p>
-	<p>formatted date: {{ today | localizedDate: "dateFormat.day" }}</p>
-	<p>formatted date: {{ today | localizedDate: "dateFormat.datetime" }}</p>
+	<p>dateFormat.day: {{ "format.day" | translate }}</p>
+	<p>formatted date: {{ today | localizedDate: "format.day" }}</p>
+	<p>formatted date: {{ today | localizedDate: "format.datetime" }}</p>
+
+	<mat-form-field>
+		<mat-label>Enter a date range</mat-label>
+		<mat-date-range-input [rangePicker]="picker">
+			<input matStartDate placeholder="Start date" />
+			<input matEndDate placeholder="End date" />
+		</mat-date-range-input>
+		<mat-hint
+			>{{ "format.weekYear" | translate }} –
+			{{ "format.weekYear" | translate }}</mat-hint
+		>
+		<mat-datepicker-toggle
+			matIconSuffix
+			[for]="picker"
+		></mat-datepicker-toggle>
+		<mat-date-range-picker #picker></mat-date-range-picker>
+	</mat-form-field>
 </section>
