@@ -9,19 +9,18 @@
 	as notification-center;
 
 //@use "@material/theme/mdc-theme";
-@use "@material/theme/mixins";
 
-// html {
-// 	--app-gap: 16px;
-// }
-// html,
-// body {
-// 	height: 100%;
-// }
-// body {
-// 	margin: 0;
-// 	font-family: Roboto, "Helvetica Neue", sans-serif;
-// }
+html {
+	--app-gap: 16px;
+}
+html,
+body {
+	height: 100%;
+}
+body {
+	margin: 0;
+	font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 // Styles for the docs app that are based on the current theme.
 @mixin theme($theme) {
 	// $primary: map.get($theme, primary);
