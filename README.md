@@ -120,7 +120,7 @@ add a component in `shared` folder/module : `ng generate component shared/compon
 
 or (for standalone component)
 
-add a component in `shared` folder : `ng generate component shared/components/table-expandable-rows`
+add a component in `shared` folder : `ng generate component shared/components/table-expandable-rows --standalone --view-encapsulation None`
 
 ---
 

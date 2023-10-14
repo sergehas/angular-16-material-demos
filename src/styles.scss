@@ -2,20 +2,25 @@
 @use '@angular/material' as mat;
 @use './app-theme';
 
+// Include material core styles.
+@include mat.core();
 
 // Define the light theme.
 $primary: mat.define-palette(mat.$indigo-palette);
 $accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+// The warn palette is optional (defaults to red).
+$warn: mat.define-palette(mat.$red-palette);
 $theme: mat.define-light-theme((
   color: (
     primary: $primary,
-    accent: $accent
+    accent: $accent,
+    warn: $warn,
+
   ),
   typography: mat.define-typography-config(),
 ));
 
-// Include material core styles.
-@include mat.core();
+
 
 @include mat.all-component-themes($theme);
 @include app-theme.theme($theme);

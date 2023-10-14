@@ -1,0 +1,12 @@
+.kpi {
+	--kpi-size: 80px;
+	width: var(--kpi-size);
+	aspect-ratio: 1 / 1;
+	border-radius: 50%;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
+  font-size: calc( var(--kpi-size) * .6 );
+	background-color: red;
+}
