@@ -19,7 +19,7 @@ export class GithubService extends HttpService<Issue> {
 		);
 	}
 
-	override count(filter = ""): Observable<number> {
+	override count(filter?: Partial<Issue>): Observable<number> {
 		// const requestUrl = `${
 		// 	GithubService.href
 		// }?q=repo:angular/components&sort=${sort}&order=${order}&per_page=${pageSize}&page=${
@@ -41,7 +41,7 @@ export class GithubService extends HttpService<Issue> {
 	 *
 	 */
 	override find(
-		filter = "",
+		filter: Partial<Issue>,
 		sort: Sort | undefined,
 		page: Page | undefined
 	): Observable<Issue[]> {

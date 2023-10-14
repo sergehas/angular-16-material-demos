@@ -13,7 +13,7 @@ import {
 	auditTime,
 	Subscription,
 } from "rxjs";
-import { HttpService, Page } from "../services/http-service";
+import { Filter, HttpService, Page } from "../services/http-service";
 import { MatPaginator, PageEvent } from "@angular/material/paginator";
 import { MatSort, Sort } from "@angular/material/sort";
 
@@ -66,6 +66,10 @@ export class PageableDataSource<
 		this.updateChangeSubscription();
 	}
 
+	private _filter: Filter | undefined;
+	set filter(filter: Filter) {
+		this._filter = filter;
+	}
 	constructor(protected service: HttpService<T>) {
 		super();
 		this.updateChangeSubscription();
@@ -140,7 +144,7 @@ export class PageableDataSource<
 	protected loadPage() {
 		console.debug("load page");
 		this.load(
-			"",
+			this._filter,
 			this._sort,
 			this._paginator
 				? {
@@ -150,7 +154,11 @@ export class PageableDataSource<
 				: undefined
 		);
 	}
-	private load(filter = "", sort: Sort | undefined, page: Page | undefined) {
+	private load(
+		filter: Filter | undefined,
+		sort: Sort | undefined,
+		page: Page | undefined
+	) {
 		this.loadingSubject.next(true);
 		this.service
 			.find(filter, sort, page)
@@ -161,7 +169,7 @@ export class PageableDataSource<
 			.subscribe((models) => this.modelsSubject.next(models));
 	}
 
-	count(filter = "") {
+	count(filter?: Filter) {
 		this.countingSubject.next(true);
 		this.service
 			.count(filter)

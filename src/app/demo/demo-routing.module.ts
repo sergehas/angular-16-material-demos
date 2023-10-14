@@ -27,7 +27,7 @@ const routes: Routes = [
 			{
 				path: "demo-icons",
 				component: DemoIconsComponent,
-				data: { animation: "slideLeft" },
+				data: { animation: "slideRight" },
 			},
 			{
 				path: "demo-i18n",

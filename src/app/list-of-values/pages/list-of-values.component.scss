@@ -16,6 +16,12 @@
 		align-items: center;
 		&[ng-reflect-router-link] {
 			cursor: pointer;
+			.kpi {
+				border-color: var(--mdc-checkbox-selected-focus-icon-color);
+				&:hover {
+					border-width: 5px;
+				}
+			}
 		}
 	}
 	.kpi {
@@ -26,12 +32,6 @@
 		border-radius: 50%;
 		border: 3px solid;
 		border-color: var(--mat-badge-background-color);
-		// background: linear-gradient(
-		// 	0deg,
-		// 	var(--mat-badge-background-color) 0%,
-		// 	transparent 50%
-		// );
-
 		display: flex;
 		align-content: center;
 		justify-content: center;

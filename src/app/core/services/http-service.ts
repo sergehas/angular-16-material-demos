@@ -8,6 +8,11 @@ export type Page = {
 	pageSize: number;
 };
 
+export type Filter = Record<
+	string,
+	string | boolean | number | Date | (string | boolean | number | Date)
+>;
+
 @Injectable({
 	providedIn: "root",
 })
@@ -18,18 +23,25 @@ export abstract class HttpService<T> {
 
 	constructor(readonly http: HttpClient, protected baseUrl: string) {}
 
-	count(filter = ""): Observable<number> {
+	protected encodeFilter(f: Filter | undefined): string {
+		if (!f) return "";
+		return encodeURIComponent(JSON.stringify(f));
+	}
+	count(criteria?: Filter): Observable<number> {
+		let params = new HttpParams();
+		if (criteria) {
+			params = params.set("filter", this.encodeFilter(criteria));
+		}
 		return this.http
 			.get<{ totalCount: number; items: T[] }>(this.baseUrl, {
 				headers: this.headers,
-				//TODO: handle filter
-				//params: new HttpParams().set("filter", filter),
+				params: params,
 			})
 			.pipe(map((res) => res.totalCount));
 	}
 
 	find(
-		filter = "",
+		criteria: Filter | undefined,
 		sort: Sort | undefined,
 		page: Page | undefined
 	): Observable<T[]> {
@@ -44,11 +56,9 @@ export abstract class HttpService<T> {
 				.set("pageSize", page!.pageSize)
 				.set("page", page!.pageNumber + 1);
 		}
-		//TODO: handle filter
-		// if (filter) {
-		// 	params = params
-		// 		.set("filter", filter);
-		// }
+		if (criteria) {
+			params = params.set("filter", this.encodeFilter(criteria));
+		}
 		return this.http
 			.get<{ total_count: number; items: T[] }>(this.baseUrl, {
 				headers: this.headers,
