@@ -8,8 +8,6 @@
 @use "./app/shared/components/notification-center/notification-center.component-theme"
 	as notification-center;
 
-//@use "@material/theme/mdc-theme";
-
 html {
 	--app-gap: 16px;
 }
@@ -19,7 +17,6 @@ body {
 }
 body {
 	margin: 0;
-	font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 // Styles for the docs app that are based on the current theme.
 @mixin theme($theme) {

@@ -1,12 +1,41 @@
-.kpi {
-	--kpi-size: 80px;
-	width: var(--kpi-size);
-	aspect-ratio: 1 / 1;
-	border-radius: 50%;
+.list-of-values-dashboard {
+	margin-top: var(--app-gap);
 	display: flex;
-	align-content: center;
+	flex-direction: row;
+	column-gap: var(--app-gap);
+	row-gap: var(--app-gap);
 	justify-content: center;
 	align-items: center;
-  font-size: calc( var(--kpi-size) * .6 );
-	background-color: red;
+
+	.kpi-card {
+		padding-top: var(--app-gap);
+		display: flex;
+		flex-direction: column;
+		row-gap: var(--app-gap);
+		justify-content: center;
+		align-items: center;
+		&[ng-reflect-router-link] {
+			cursor: pointer;
+		}
+	}
+	.kpi {
+		--kpi-size: 80px;
+		margin: var(--app-gap);
+		width: var(--kpi-size);
+		aspect-ratio: 1 / 1;
+		border-radius: 50%;
+		border: 3px solid;
+		border-color: var(--mat-badge-background-color);
+		// background: linear-gradient(
+		// 	0deg,
+		// 	var(--mat-badge-background-color) 0%,
+		// 	transparent 50%
+		// );
+
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		align-items: center;
+		font-size: calc(var(--kpi-size) * 0.6);
+	}
 }

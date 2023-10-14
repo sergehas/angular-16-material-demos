@@ -11,7 +11,48 @@
 		{
 			"group": "countries",
 			"name": "US",
-			"label": "United Statis",
+			"label": "United States",
+			"icon": "fr",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "IT",
+			"label": "Italia",
+			"icon": "fr",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "ES",
+			"label": "Spain",
+			"icon": "fr",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "IN",
+			"label": "India",
+			"icon": "fr",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "SK",
+			"label": "Slovakia",
+			"icon": "fr",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "CZ",
+			"label": " Czechia ",
+			"icon": "fr",
 			"created": "2023-10-14T02:00:00Z",
 			"userId": "John DOE"
 		}
