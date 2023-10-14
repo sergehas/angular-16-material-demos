@@ -1,1 +1,15 @@
 <p>TODO: list + filter + sort + add popin</p>
+
+<mat-accordion multi class="example-headers-align">
+	<mat-expansion-panel *ngFor="let g of groups$ | async">
+		<mat-expansion-panel-header>
+			<mat-panel-title>
+				{{ g.name }}
+			</mat-panel-title>
+			<mat-panel-description>
+				{{ g.label }}
+			</mat-panel-description>
+		</mat-expansion-panel-header>
+		<p>content here</p>
+	</mat-expansion-panel>
+</mat-accordion>
