@@ -1,0 +1,43 @@
+.value-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    row-gap: var(--app-gap);
+    column-gap: var(--app-gap);
+
+    .value-item {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        column-gap: calc(var(--app-gap)/2);
+        align-items: center;
+        justify-content: flex-start;
+
+        .mat-icon {
+            // force size when in mat-button
+            width: 24px;
+            height: 24px;
+            margin-right: 0;
+        }
+
+        .no-icon {
+            opacity: 0.1;
+        }
+
+        .value-code {
+            font-weight: 700;
+        }
+
+        .value-label {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 150px;
+
+        }
+    }
+}
+
+.spacer {
+    flex: 1 1 auto;
+}

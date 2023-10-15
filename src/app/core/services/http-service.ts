@@ -30,7 +30,7 @@ export abstract class HttpService<T> {
 	count(criteria?: Filter): Observable<number> {
 		let params = new HttpParams();
 		if (criteria) {
-			params = params.set("filter", this.encodeFilter(criteria));
+			params = params.set("q", this.encodeFilter(criteria));
 		}
 		return this.http
 			.get<{ totalCount: number; items: T[] }>(this.baseUrl, {
@@ -57,7 +57,7 @@ export abstract class HttpService<T> {
 				.set("page", page!.pageNumber + 1);
 		}
 		if (criteria) {
-			params = params.set("filter", this.encodeFilter(criteria));
+			params = params.set("q", this.encodeFilter(criteria));
 		}
 		return this.http
 			.get<{ total_count: number; items: T[] }>(this.baseUrl, {

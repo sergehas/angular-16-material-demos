@@ -141,7 +141,7 @@ export class PageableDataSource<
 		this.countSubject.complete();
 		this.countingSubject.complete();
 	}
-	protected loadPage() {
+	public loadPage() {
 		console.debug("load page");
 		this.load(
 			this._filter,
@@ -169,10 +169,10 @@ export class PageableDataSource<
 			.subscribe((models) => this.modelsSubject.next(models));
 	}
 
-	count(filter?: Filter) {
+	count() {
 		this.countingSubject.next(true);
 		this.service
-			.count(filter)
+			.count(this._filter)
 			.pipe(
 				catchError(() => of(0)),
 				finalize(() => this.countingSubject.next(false))

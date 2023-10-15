@@ -82,7 +82,7 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
 	private _page: T[] = [];
 
 	get page(): T[] {
-		return this.page;
+		return this._page;
 	}
 
 	@ViewChild(MatPaginator) paginator: MatPaginator | undefined;

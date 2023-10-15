@@ -1,4 +1,9 @@
-.example-headers-align .mat-expansion-panel-header-description {
-	justify-content: space-between;
-	align-items: center;
+.group-list {
+	.mat-expansion-panel-header-title {
+		font-weight: 700;
+	}
+	.mat-expansion-panel-header-description {
+		justify-content: space-between;
+		align-items: center;
+	}
 }
