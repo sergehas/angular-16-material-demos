@@ -1,6 +1,19 @@
-import { AfterViewInit, Component, Inject, Input, OnDestroy, OnInit, ViewChild, inject } from "@angular/core";
+import {
+	AfterViewInit,
+	Component,
+	Inject,
+	Input,
+	OnDestroy,
+	OnInit,
+	ViewChild,
+	inject,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialog } from "@angular/material/dialog";
+import {
+	MAT_DIALOG_DATA,
+	MatDialog,
+	MatDialogRef,
+} from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
 import { tap } from "rxjs";
@@ -46,63 +59,84 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
 		console.log("set pager");
 		this.dataSource.paginator = this.paginator;
 		//sorting fires event, which is fireing page loading
-		this.dataSource.sort.sort({ id: "name", start: 'asc' } as MatSortable)
+		this.dataSource.sort.sort({ id: "name", start: "asc" } as MatSortable);
 		this.dataSource.connect().subscribe((data) => {
 			//as data is readonly, we must clone it to be able to set _page
 			this._page = data.map((i) => i);
 		});
-
 	}
 
 	ngOnDestroy(): void {
 		this.dataSource.disconnect();
 	}
 
-	create() {
-		const dialogRef = this.dialog.open(ValueEditDialog, {
-			data: {
-				mode: EditMode.CREATE,
-				entity: {group:this.group, label: "" } as Value
-			},
+	createOrEdit(entity?: Value) {
+		let dialogRef!: MatDialogRef<ValueEditDialog, Value>;
+		if (entity) {
+			dialogRef = this.dialog.open(ValueEditDialog, {
+				data: {
+					mode: EditMode.EDIT,
+					entity: entity,
+				},
+			});
+		} else {
+			dialogRef = this.dialog.open(ValueEditDialog, {
+				data: {
+					mode: EditMode.CREATE,
+					entity: { group: this.group, label: "" } as Value,
+				},
+			});
+		}
+		dialogRef.afterClosed().subscribe((result) => {
+			console.log("The dialog was closed with:", result);
 		});
-		dialogRef.afterClosed().subscribe(result => {
-			console.log('The dialog was closed with:', result);
-		});
-
 	}
 }
 
 export enum EditMode {
-	CREATE, EDIT
+	CREATE,
+	EDIT,
 }
 
 @Component({
-	selector: 'app-value-edit-dialog',
-	templateUrl: 'value-edit.dialog.html',
+	selector: "app-value-edit-dialog",
+	templateUrl: "value-edit.dialog.html",
 	styleUrls: ["./value-edit.dialog.scss"],
-
 })
 export class ValueEditDialog {
 	private _fb = inject(FormBuilder);
 	valueForm: FormGroup;
 
-	constructor(@Inject(MAT_DIALOG_DATA) public data: { mode: EditMode, entity: Value }) {
+	constructor(
+		@Inject(MAT_DIALOG_DATA) public data: { mode: EditMode; entity: Value }
+	) {
 		console.log("ent", data.entity);
 		this.valueForm = this._fb.group({
-			name: [null, Validators.compose([
-				Validators.required, Validators.minLength(1), Validators.maxLength(10)])],
-			label: [null, Validators.compose([
-				Validators.required, Validators.minLength(1), Validators.maxLength(100)])],
-			icon: [null],
-			group: [{value: data.entity.group, disabled: true}, Validators.required],
+			name: [
+				data.entity.name,
+				Validators.compose([
+					Validators.required,
+					Validators.minLength(1),
+					Validators.maxLength(10),
+				]),
+			],
+			label: [
+				data.entity.label,
+				Validators.compose([
+					Validators.required,
+					Validators.minLength(1),
+					Validators.maxLength(100),
+				]),
+			],
+			icon: [data.entity.icon],
+			group: [
+				{ value: data.entity.group, disabled: true },
+				Validators.required,
+			],
 		});
-	
 
 		if (data.mode === EditMode.EDIT) {
-				this.valueForm.get("name")?.disable();
-			}
-
-
+			this.valueForm.get("name")?.disable();
+		}
 	}
-
 }

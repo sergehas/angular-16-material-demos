@@ -29,12 +29,11 @@ import { IconsModule } from "./core/icons/icons.module";
 import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
 import { DatePipe } from "@angular/common";
 import { ListOfValuesModule } from "./list-of-values/list-of-values.module";
-import { BaseformComponent } from './lis-of-values/pages/baseform/baseform.component';
-import { MatInputModule } from '@angular/material/input';
-import { MatSelectModule } from '@angular/material/select';
-import { MatRadioModule } from '@angular/material/radio';
-import { MatCardModule } from '@angular/material/card';
-import { ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from "@angular/material/input";
+import { MatSelectModule } from "@angular/material/select";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatCardModule } from "@angular/material/card";
+import { ReactiveFormsModule } from "@angular/forms";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -42,7 +41,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-	declarations: [AppComponent, BaseformComponent],
+	declarations: [AppComponent],
 	imports: [
 		BrowserModule,
 		BrowserAnimationsModule,
@@ -77,11 +76,11 @@ export function HttpLoaderFactory(http: HttpClient) {
 		ArtInstituteModule,
 		NotificationCenterComponent,
 		ListOfValuesModule,
-  MatInputModule,
-  MatSelectModule,
-  MatRadioModule,
-  MatCardModule,
-  ReactiveFormsModule,
+		MatInputModule,
+		MatSelectModule,
+		MatRadioModule,
+		MatCardModule,
+		ReactiveFormsModule,
 	],
 	providers: [StorageService, NotificationService, DatePipe],
 	bootstrap: [AppComponent],
