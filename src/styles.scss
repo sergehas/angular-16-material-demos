@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
-@use '@angular/material' as mat;
-@use './app-theme';
+@use "@angular/material" as mat;
+@use "./app-theme";
 
 // Include material core styles.
 @include mat.core();
@@ -10,17 +10,33 @@ $primary: mat.define-palette(mat.$indigo-palette);
 $accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
 // The warn palette is optional (defaults to red).
 $warn: mat.define-palette(mat.$red-palette);
-$theme: mat.define-light-theme((
-  color: (
-    primary: $primary,
-    accent: $accent,
-    warn: $warn,
+$theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $primary,
+      accent: $accent,
+      warn: $warn
+    ),
+    typography: mat.define-typography-config()
+  )
+);
 
-  ),
-  typography: mat.define-typography-config(),
-));
-
-
+//define few utility classes
+.mdc-button {
+  & > .mdc-button__label {
+    text-transform: uppercase;
+  }
+  &.icon-only {
+    width: 48px;
+    max-width: 48px;
+    & > .mdc-button__label {
+      display: none;
+    }
+    & > mat-icon {
+      margin: 0;
+    }
+  }
+}
 
 @include mat.all-component-themes($theme);
 @include app-theme.theme($theme);

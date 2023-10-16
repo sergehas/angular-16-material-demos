@@ -86,15 +86,16 @@
 		<h3>Datasource event log</h3>
 
 		<button
-			mat-flat-button
+			mat-flat-button class="icon-only"
 			color="accent"
 			matBadgePosition="below before"
 			[matBadgeHidden]="dataSourceEvents.length === 0"
 			[matBadge]="dataSourceEvents.length"
-			matBadgeColor="accent"
+			matBadgeColor="primary"
 			(click)="dataSourceEvents = []"
 		>
-			CLEAR
+		<mat-icon>delete</mat-icon>
+		clear
 		</button>
 	</div>
 
