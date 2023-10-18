@@ -25,11 +25,11 @@ export class DemoTableComponent implements OnInit {
 		name: "",
 		responsive: true,
 		columns: [
-			{ name: "select", sticky: true, selector: true },
-			{ name: "number", sticky: true },
-			{ name: "title" },
-			{ name: "state" },
-			{ name: "created", defaultSort: "asc" },
+			// { name: "select", sticky: true, selector: true, group: "UI feature" },
+			{ name: "number", sticky: true, group: "UI feature" },
+			{ name: "title", group: "Issue" },
+			{ name: "state", group: "Issue" },
+			{ name: "created", defaultSort: "asc", hidden: true, group: "Meta" },
 		],
 	});
 
@@ -39,5 +39,5 @@ export class DemoTableComponent implements OnInit {
 		this.dataSource = new PageableDataSource<Issue>(this.service);
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 }
