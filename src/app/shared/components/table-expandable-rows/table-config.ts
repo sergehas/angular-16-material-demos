@@ -13,6 +13,7 @@ interface TableColumnDef {
 	hidden?: boolean;
 	minWidth?: number;
 	selector?: boolean;
+	group?: string;
 }
 
 export class TableColumn implements TableColumnDef {
@@ -23,6 +24,7 @@ export class TableColumn implements TableColumnDef {
 	hidden?: boolean = false;
 	minWidth?: number;
 	selector?: boolean;
+	group?: string;
 
 	constructor(def: TableColumnDef) {
 		this.name = def.name;
@@ -33,6 +35,7 @@ export class TableColumn implements TableColumnDef {
 		this.hidden = def.hidden ?? false;
 		this.minWidth = def.minWidth ?? 0;
 		this.selector = def.selector ?? false;
+		this.group = def.group ?? "";
 	}
 }
 
@@ -51,6 +54,13 @@ export class ColumnConfig {
 		// 	name: "action",
 		// 	sortable: false,
 		// });
+	}
+	get groups(): string[] {
+		let g: string[] = [];
+		return this.columns.reduce<string[]>((g: string[], c) => {
+			return g.includes(c.group!) ? g : g.concat(c.group!)
+		}, g);
+
 	}
 }
 
