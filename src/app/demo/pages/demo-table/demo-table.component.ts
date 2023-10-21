@@ -25,8 +25,8 @@ export class DemoTableComponent implements OnInit {
 		name: "",
 		responsive: true,
 		columns: [
-			// { name: "select", sticky: true, selector: true, group: "UI feature" },
-			{ name: "number", sticky: true, group: "UI feature" },
+			{ name: "select", sticky: true, selector: true, group: "UI feature" },
+			{ name: "number", sticky: true, group: "Issue" },
 			{ name: "title", group: "Issue" },
 			{ name: "state", group: "Issue" },
 			{ name: "created", defaultSort: "asc", hidden: true, group: "Meta" },
