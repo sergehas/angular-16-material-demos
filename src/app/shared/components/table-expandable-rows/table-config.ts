@@ -48,6 +48,7 @@ export class ColumnConfig {
 	get defaultSort(): TableColumn | undefined {
 		return this.columns.find((c) => c.defaultSort !== undefined);
 	}
+	
 	constructor(cols: TableColumnDef[]) {
 		this.columns = cols.map((c) => new TableColumn(c));
 		// this.columns.push({
