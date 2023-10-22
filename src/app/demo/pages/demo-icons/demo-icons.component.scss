@@ -19,3 +19,11 @@ section {
 		column-gap: 16px;
 	}
 }
+
+.field-demo-container {
+	display: flex;
+	flex-direction: row;
+	row-gap: 16px;
+	column-gap: 16px;
+	margin: 16px 0;
+}

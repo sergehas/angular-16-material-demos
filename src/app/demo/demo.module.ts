@@ -8,7 +8,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatDividerModule } from "@angular/material/divider";
-import { FormsModule } from "@angular/forms";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatInputModule } from "@angular/material/input";
 import { MatFormFieldModule } from "@angular/material/form-field";
@@ -31,6 +31,7 @@ import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
 import { LocalizedDatePipe } from "../shared/pipes/translation/localized-date.pipe";
+import { MatSelectModule } from "@angular/material/select";
 
 @NgModule({
 	declarations: [
@@ -57,6 +58,8 @@ import { LocalizedDatePipe } from "../shared/pipes/translation/localized-date.pi
 		MatFormFieldModule,
 		MatSliderModule,
 		MatDatepickerModule,
+		ReactiveFormsModule,
+		MatSelectModule,
 
 		TranslateModule,
 		LocalizedDatePipe,

@@ -1,4 +1,25 @@
-.icon-btn {
+button.icon-btn {
+	border: none;
+	background: none;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	padding: 0;
+	width: 100%;
+	&:focus,
+	&:focus-visible,
+	&:focus-within {
+		outline: none;
+	}
+	.icon-value {
+		width: 100%;
+
+		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-content: center;
+		justify-content: space-between;
+	}
 	.mat-icon,
 	.placeholder {
 		height: 24px;
@@ -17,4 +38,7 @@
 		display: flex;
 		align-items: center;
 	}
+}
+.clear-button {
+	float: inline-end;
 }

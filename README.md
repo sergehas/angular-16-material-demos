@@ -6,14 +6,15 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 bookmarks:
 
--   https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/
--   https://stackblitz.com/github/janders/angular-tab-router-with-children
--   https://m3.material.io/develop/web
--   https://blog.angular-university.io/angular-material-data-table/
--   https://www.vitamindev.com/angular/how-to-initialize-a-service-on-startup/
--   http://www.prideparrot.com/blog/archive/2019/3/how_to_create_custom_dropdown_cdk
--   [country codes ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
--   [Language codes ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+- <https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/>
+- <https://stackblitz.com/github/janders/angular-tab-router-with-children>
+- <https://m3.material.io/develop/web>
+- <https://blog.angular-university.io/angular-material-data-table/>
+- <https://www.vitamindev.com/angular/how-to-initialize-a-service-on-startup/>
+- <http://www.prideparrot.com/blog/archive/2019/3/how_to_create_custom_dropdown_cdk>
+- <https://stackblitz.com/edit/custom-mat-form-field-control?file=app%2Fcustom-input%2Fabstract-mat-form-field.ts>
+- [country codes ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+- [Language codes ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 
 ### Basics
 
@@ -134,10 +135,10 @@ As services (& associated models) could be related to feature module ( i.e. `Ord
 
 #### initializing
 
--   add a `github` module: `ng generate module core/github`
--   add a service to `github`: `ng generate service core/github/services/github`
+- add a `github` module: `ng generate module core/github`
+- add a service to `github`: `ng generate service core/github/services/github`
 
-    -   then, add it to module:
+    - then, add it to module:
 
     ```typescript
     @NgModule({
@@ -151,8 +152,8 @@ As services (& associated models) could be related to feature module ( i.e. `Ord
     })
     ```
 
--   add a model to `github`: `ng generate interface core/github/models/issue`
--   add a datasource for issues to `github`: `ng generate class core/github/models/IssuesDataSource`
+- add a model to `github`: `ng generate interface core/github/models/issue`
+- add a datasource for issues to `github`: `ng generate class core/github/models/IssuesDataSource`
 
 ---
 
