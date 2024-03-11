@@ -1,10 +1,11 @@
 import { AfterViewInit, Component } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
+import { ProgressBarMode } from '@angular/material/progress-bar';
 import { BehaviorSubject } from 'rxjs';
 import { Item } from 'src/app/core/item/models/item';
 import { ItemService } from 'src/app/core/item/services/item.service';
 import { PageableDataSource, Paginator } from 'src/app/core/models/pageable-data-source';
-import { ExcelExportService } from 'src/app/core/services/excel-export.service';
+import { ExcelExportService, STAGE } from 'src/app/core/services/excel-export.service';
 
 type LogItem = {
   timestamp: Date, message: string
@@ -20,6 +21,9 @@ export class DemoExportComponent implements AfterViewInit {
 
   exportEvents: LogItem[] = [];
   exportEvents$ = new BehaviorSubject<LogItem[]>(this.exportEvents);
+  progressMode: ProgressBarMode = "determinate";
+  progressColor = "primary";
+  progressValue = 0;
 
   constructor(readonly exportService: ExcelExportService, readonly dataService: ItemService) {
     //console.debug(`initializing datasource`);
@@ -40,7 +44,24 @@ export class DemoExportComponent implements AfterViewInit {
     })
 
     this.exportService.export(dataSource, this.dataService.itemHeaders).subscribe(e => {
-      this.exportEvents.push({ timestamp: new Date(), message: `progress  ${Math.ceil((e.progress.value / e.progress.total) * 100)}% (${JSON.stringify(e)})` });
+      switch (e.stage) {
+        case STAGE.PENDING:
+        case STAGE.PAUSE:
+          this.progressMode = "indeterminate";
+          break;
+        case STAGE.SUCCESS:
+          this.progressColor = "primary";
+          break;
+        case STAGE.ERROR:
+        case STAGE.PARTIAL:
+          this.progressColor = "warn";
+          break;
+        case STAGE.PROGRESS:
+          this.progressColor = "accent";
+          break;
+      }
+      this.progressValue = Math.ceil((e.progress.value / e.progress.total) * 100);
+      this.exportEvents.push({ timestamp: new Date(), message: `progress  ${this.progressValue}% (${JSON.stringify(e)})` });
       this.exportEvents$.next(this.exportEvents);
     });
   }

@@ -80,7 +80,6 @@ export class ExcelExportService {
       // }
       data.forEach(r => {
         worksheet.addRow(r);
-
       });
       if (source.paginator?.hasNextPage()) {
         console.info(`export next page`);
@@ -90,7 +89,6 @@ export class ExcelExportService {
         // await workbook.commit();
         console.info(`no more page. Last page was ${source.paginator?.pageIndex}`);
         finalizeWorkbook(workbook);
-
       }
 
     })

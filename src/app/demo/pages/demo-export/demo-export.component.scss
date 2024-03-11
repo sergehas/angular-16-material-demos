@@ -19,6 +19,17 @@
 	align-items: center;
 	justify-content: space-between;
 }
+.logs {
+	height: 100px;
+	overflow-y: scroll;
+	font-family: monospace;
+	display: flex;
+	flex-direction: column-reverse;
+
+	li {
+		flex: 0 0 auto;
+	}
+}
 
 [hidden] {
 	display: none !important;
