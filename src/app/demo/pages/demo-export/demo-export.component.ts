@@ -32,7 +32,16 @@ export class DemoExportComponent implements AfterViewInit {
   rows = new FormControl(37, [Validators.required]);
   pageSize = new FormControl(10, [Validators.required]);
 
+  resetProgress(): void {
+    this.progressMode = "determinate";
+    this.progressColor = "primary";
+    this.progressValue = 0;
+    this.exportEvents = [];
+    this.exportEvents$.next(this.exportEvents);
+  }
+
   export(): void {
+    this.resetProgress();
     let dataSource = new PageableDataSource<Item, Paginator>(this.dataService);
     const p = new Paginator(this.pageSize.value!);
     this.dataService.itemCount = this.rows.value!;

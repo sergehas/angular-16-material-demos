@@ -45,7 +45,7 @@
 
 		<button mat-flat-button class="icon-only" color="accent" matBadgePosition="below before"
 			[matBadgeHidden]="exportEvents.length === 0" [matBadge]="exportEvents.length" matBadgeColor="primary"
-			(click)="exportEvents = []; exportEvents$.next([])">
+			(click)="resetProgress()">
 			<mat-icon>delete</mat-icon>
 			clear
 		</button>

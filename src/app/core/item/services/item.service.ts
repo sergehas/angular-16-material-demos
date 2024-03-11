@@ -11,7 +11,7 @@ import { Item } from '../models/item';
 export class ItemService extends HttpService<Item> {
 
   itemCount = 37;
-  attributeCount = 5;
+  _attributeCount = 5;
 
   private attributeHeaders: string[];
 
@@ -21,7 +21,7 @@ export class ItemService extends HttpService<Item> {
   }
 
   private generateHeaders(): string[] {
-    return Array.from(Array(10).keys()).map(i => `attr${i}`);
+    return Array.from(Array(this._attributeCount).keys()).map(i => `attr${i}`);
   }
 
   private generateItem(v: number): Item {
@@ -33,8 +33,8 @@ export class ItemService extends HttpService<Item> {
 
   }
 
-  set attibuteCount(c: number) {
-    this.attibuteCount = c;
+  set attributeCount(c: number) {
+    this._attributeCount = c;
     this.attributeHeaders = this.generateHeaders();
   }
 
