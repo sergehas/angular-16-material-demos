@@ -34,7 +34,7 @@ export class ExcelExportService {
     console.log(`starting export`);
 
     /**
-     *  centralize the workboo finalization
+     *  centralize the workbook finalization
      * @param workbook 
      * @param stage 
      * @returns 
@@ -63,7 +63,7 @@ export class ExcelExportService {
     source.loadPage();
     source.connect().subscribe((data) => {
       //wehnever data are available, add them to export 
-      console.info(`exporting page: ${source.paginator?.pageIndex}`);
+      console.info(`exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`);
       if (source.paginator) {
         status.progress.value = source.paginator.pageIndex * source.paginator.pageIndex;
         status.stage = STAGE.PROGRESS;

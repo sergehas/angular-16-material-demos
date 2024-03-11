@@ -19,16 +19,17 @@ export class DemoExportComponent implements AfterViewInit {
   }
   cols = new FormControl(5, [Validators.required]);
   rows = new FormControl(37, [Validators.required]);
+  pageSize = new FormControl(100, [Validators.required]);
 
   export(): void {
     let dataSource = new PageableDataSource<Item, Paginator>(this.dataService);
-    const p = new Paginator(100);
-    p.pageSize = 100;
-    this.dataService.itemCount=this.rows.value!;
-    this.dataService.attributeCount=this.cols.value!;
+    const p = new Paginator(this.pageSize.value!);
+    this.dataService.itemCount = this.rows.value!;
+    this.dataService.attributeCount = this.cols.value!;
     dataSource.paginator = p;
     dataSource.length$.subscribe(l => {
-      console.log(`set export datasource length to ${l}`);
+      console.log(`export datasource length is ${l}`);
+      p.length = l;
     })
 
     //for demo, reset pager
