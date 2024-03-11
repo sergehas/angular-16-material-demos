@@ -18,6 +18,16 @@
 </section>
 <section class="demo-options">
 	<div class="label-container">
+		<mat-form-field appearance="outline">
+			<mat-label>Nb of columns</mat-label>
+			<input matInput type="number" [formControl]="cols" placeholder="5">
+			<mat-hint>Number of cols. for items</mat-hint>
+		</mat-form-field>
+		<mat-form-field appearance="outline">
+			<mat-label>Nb of rows</mat-label>
+			<input matInput type="number" [formControl]="rows" placeholder="37">
+			<mat-hint>The number of items</mat-hint>
+		</mat-form-field>
 		<button mat-flat-button (click)="export()" color="accent">
 			Export
 		</button>
