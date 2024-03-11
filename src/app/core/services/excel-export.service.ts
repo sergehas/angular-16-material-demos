@@ -18,7 +18,7 @@ export enum STAGE {
 
 export class Status {
   stage: STAGE = STAGE.PENDING;
-  readonly progress: { total: number; value: number; } = { total: 0, value: 0 };
+  progress: { total: number; value: number; } = { total: 0, value: 0 };
 }
 
 @Injectable({
@@ -29,7 +29,7 @@ export class ExcelExportService {
   constructor(protected notifService: NotificationService) { }
 
   export<T, P extends MatPaginator | Paginator = MatPaginator>(source: PageableDataSource<T, P>, headers: string[]): Observable<Status> {
-    let status = new Status();
+    const status = new Status();
     let statusSubject = new BehaviorSubject<Status>(status);
     console.log(`starting export`);
 
@@ -40,6 +40,7 @@ export class ExcelExportService {
      * @returns 
      */
     const finalizeWorkbook = async (workbook: Workbook, stage = STAGE.SUCCESS): Promise<void> => {
+      console.info(`writing file....`);
       await workbook.xlsx.writeBuffer().then((data) => {
         let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
         saveAs(blob, 'export-service.xlsx');
@@ -61,11 +62,12 @@ export class ExcelExportService {
     const worksheet = workbook.addWorksheet("export");
     worksheet.columns = headers.map(h => { return { header: h, key: h } });
     source.loadPage();
+    status.progress.total = source.length;
     source.connect().subscribe((data) => {
-      //wehnever data are available, add them to export 
+      //whenever data are available, add them to export 
       console.info(`exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`);
-      if (source.paginator) {
-        status.progress.value = source.paginator.pageIndex * source.paginator.pageIndex;
+      if (source.paginator !== undefined) {
+        status.progress.value += data.length;
         status.stage = STAGE.PROGRESS;
         statusSubject.next(status);
       }
@@ -80,7 +82,6 @@ export class ExcelExportService {
         worksheet.addRow(r);
 
       });
-      console.info(`rows in worksheet:  ${worksheet.actualRowCount}`);
       if (source.paginator?.hasNextPage()) {
         console.info(`export next page`);
         source.paginator.nextPage();
@@ -95,7 +96,7 @@ export class ExcelExportService {
     })
 
     /** 
-     * use the pager observable to get the datasoiurce size
+     * use the pager observable to get the datasource size
      */
     source.length$.pipe(map((len) => {
       //when the counting is done, then update notification
@@ -103,6 +104,7 @@ export class ExcelExportService {
       status.progress.total = len;
       statusSubject.next(status);
     }))
+    source.count();
 
     return statusSubject.asObservable();
   }

@@ -76,6 +76,12 @@ export class PageableDataSource<
 	protected countingSubject = new BehaviorSubject<boolean>(false);
 	public counting$ = this.countingSubject.asObservable();
 	public length$ = this.countSubject.asObservable();
+	private _length = 0;
+
+	get length(): number {
+		return this._length;
+	}
+
 
 	/**
 	 * Instance of the MatSort directive used by the table to control its sorting. Sort changes
@@ -224,6 +230,9 @@ export class PageableDataSource<
 				catchError(() => of(0)),
 				finalize(() => this.countingSubject.next(false))
 			)
-			.subscribe((count) => this.countSubject.next(count));
+			.subscribe((count) => {
+				this._length = count;
+				this.countSubject.next(count);
+			});
 	}
 }
