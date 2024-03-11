@@ -1,9 +1,9 @@
-import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, map } from "rxjs";
-import { Issue } from "../models/issue";
-import { HttpService, Page } from "../../services/http-service";
 import { Sort } from "@angular/material/sort";
+import { Observable, map } from "rxjs";
+import { HttpService, Page } from "../../services/http-service";
+import { Issue } from "../models/issue";
 
 @Injectable({
 	providedIn: "root",
@@ -72,15 +72,15 @@ export class GithubService extends HttpService<Issue> {
 				map((res) => {
 					return res.items.map(
 						(i: any) =>
-							({
-								created: new Date(i.created_at),
-								number: i.number,
-								state: i.state,
-								title: i.title,
-								url: i.url,
-								body: i.body,
-								userId: i.user.login,
-							} as Issue)
+						({
+							created: new Date(i.created_at),
+							number: i.number,
+							state: i.state,
+							title: i.title,
+							url: i.url,
+							body: i.body,
+							userId: i.user.login,
+						} as Issue)
 					);
 				})
 			);

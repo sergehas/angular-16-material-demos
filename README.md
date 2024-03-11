@@ -33,7 +33,7 @@ A feature module should not depend on a another feature module.
 #### initializing
 
 add a `demo` module with its routing: `ng generate module demo --routing`
-add a main feature page to `demo`: `ng generate component demo/pages/demo -m demo --flat`
+add a main feature page to `demo`: `ng generate component demo/pages/demo -m demo --flat --standalone false`
 
 then add to `demo-routing.module.ts`
 
@@ -60,7 +60,7 @@ then import this module in `app.module.ts`:
 
 #### add (sub) pages
 
-add a sub page to `demo` feature : `ng generate component demo/pages/demo-table -m demo`
+add a sub page to `demo` feature : `ng generate component demo/pages/demo-table --standalone false -m demo`
 
 then add to `demo-routing.module.ts`
 
@@ -121,7 +121,7 @@ add a `shared` module : `ng generate module shared`
 
 add a component in `shared` folder/module : `ng generate component shared/components/table-expandable-rows -m shared`
 
-or (for standalone component)
+or (for standalone component **recommended**)
 
 add a component in `shared` folder : `ng generate component shared/components/table-expandable-rows --standalone --view-encapsulation None`
 

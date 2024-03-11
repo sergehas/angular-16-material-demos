@@ -1,0 +1,25 @@
+.demo-options {
+	margin: 16px 16px;
+	display: flex;
+	flex-direction: column;
+
+	&>* {
+		margin: inherit;
+	}
+
+	.label-container {
+		display: flex;
+		column-gap: 16px;
+	}
+}
+
+.demo-log {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+}
+
+[hidden] {
+	display: none !important;
+}

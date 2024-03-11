@@ -34,6 +34,7 @@ import { MatSelectModule } from "@angular/material/select";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatCardModule } from "@angular/material/card";
 import { ReactiveFormsModule } from "@angular/forms";
+import { ExcelExportService } from "./core/services/excel-export.service";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -82,7 +83,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 		MatCardModule,
 		ReactiveFormsModule,
 	],
-	providers: [StorageService, NotificationService, DatePipe],
+	providers: [StorageService, NotificationService, ExcelExportService, DatePipe],
 	bootstrap: [AppComponent],
 })
 export class AppModule {}
