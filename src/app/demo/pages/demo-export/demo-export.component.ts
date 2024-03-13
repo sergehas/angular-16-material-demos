@@ -6,6 +6,7 @@ import { Item } from 'src/app/core/item/models/item';
 import { ItemService } from 'src/app/core/item/services/item.service';
 import { PageableDataSource, Paginator } from 'src/app/core/models/pageable-data-source';
 import { ExcelExportService, STAGE } from 'src/app/core/services/excel-export.service';
+import { SheetExportService } from 'src/app/core/services/sheet-export.service';
 
 type LogItem = {
   timestamp: Date, message: string
@@ -25,12 +26,14 @@ export class DemoExportComponent implements AfterViewInit {
   progressColor = "primary";
   progressValue = 0;
 
-  constructor(readonly exportService: ExcelExportService, readonly dataService: ItemService) {
+  constructor(readonly exportService: ExcelExportService, readonly sheetService: SheetExportService, readonly dataService: ItemService) {
+    //constructor(readonly exportService: SheetExportService, readonly dataService: ItemService) {
     //console.debug(`initializing datasource`);
   }
   cols = new FormControl(5, [Validators.required]);
   rows = new FormControl(37, [Validators.required]);
   pageSize = new FormControl(10, [Validators.required]);
+  library = new FormControl('exceljs', [Validators.required]);
 
   resetProgress(): void {
     this.progressMode = "determinate";
@@ -51,8 +54,9 @@ export class DemoExportComponent implements AfterViewInit {
       console.log(`export datasource length is ${l}`);
       p.length = l;
     })
+    const service = this.library.value === 'xslx' ? this.sheetService : this.exportService;
 
-    this.exportService.export(dataSource, this.dataService.itemHeaders).subscribe(e => {
+    service.export(dataSource, this.dataService.itemHeaders).subscribe(e => {
       switch (e.stage) {
         case STAGE.PENDING:
         case STAGE.PAUSE:

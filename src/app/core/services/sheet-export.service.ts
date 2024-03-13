@@ -1,30 +1,16 @@
 import { Injectable } from '@angular/core';
-import Excel, { Workbook } from 'exceljs';
 
 import { MatPaginator } from '@angular/material/paginator';
-import { saveAs } from 'file-saver';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { utils, writeFile } from 'xlsx';
 import { PageableDataSource, Paginator } from '../models/pageable-data-source';
+import { STAGE, Status } from './excel-export.service';
 import { NotificationService } from './notification.service';
-
-export enum STAGE {
-  PENDING,
-  PROGRESS,
-  PAUSE,
-  SUCCESS,
-  PARTIAL,
-  ERROR
-}
-
-export class Status {
-  stage: STAGE = STAGE.PENDING;
-  progress: { total: number; value: number; } = { total: 0, value: 0 };
-}
 
 @Injectable({
   providedIn: 'root'
 })
-export class ExcelExportService {
+export class SheetExportService {
 
   constructor(protected notifService: NotificationService) { }
 
@@ -39,34 +25,28 @@ export class ExcelExportService {
      * @param stage 
      * @returns 
      */
-    const finalizeWorkbook = async (workbook: Workbook, stage = STAGE.SUCCESS): Promise<void> => {
-      console.info(`writing file....`);
-      await workbook.xlsx.writeBuffer().then((data) => {
-        let blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-        saveAs(blob, 'export-service.xlsx');
-      }).catch((e) => {
-        stage = STAGE.ERROR;
-      }).finally(() => {
-        console.info(`export done`);
-        status.stage = stage;
-        statusSubject.next(status);
-        source.disconnect();
-        statusSubject.complete();
-        return Promise.resolve();
-      });
+    const finalizeWorkbook = async (rows: T[], stage = STAGE.SUCCESS): Promise<void> => {
+      const ws = utils.json_to_sheet(rows);
+      const wb = utils.book_new();
+      utils.book_append_sheet(wb, ws, "report");
 
+      console.info(`writing file....`);
+      writeFile(wb, "sheet-service.xlsx", { compression: false });
+      console.info(`export done`);
+      status.stage = stage;
+      statusSubject.next(status);
+      source.disconnect();
+      statusSubject.complete();
+      return Promise.resolve();
     }
 
 
     /**
      * manage (export) pages
      */
-    //const workbook = new Excel.stream.xlsx.WorkbookWriter({ filename: "export-service" });
-    const workbook = new Excel.Workbook();
-    const worksheet = workbook.addWorksheet("export");
-    worksheet.columns = headers.map(h => { return { header: h, key: h } });
     source.loadPage();
     status.progress.total = source.length;
+    const fullData: T[] = [];
     source.connect().subscribe((data) => {
       //whenever data are available, add them to export 
       console.info(`exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`);
@@ -82,9 +62,8 @@ export class ExcelExportService {
       //   await finalizeWorkbook(workbook, STAGE.PARTIAL);
       //   return;
       // }
-      data.forEach(r => {
-        worksheet.addRow(r);
-      });
+      fullData.push(...data);
+
       if (source.paginator?.hasNextPage()) {
         console.info(`export next page`);
         source.paginator.nextPage();
@@ -92,7 +71,7 @@ export class ExcelExportService {
         // worksheet.commit();
         // await workbook.commit();
         console.info(`no more page. Last page was ${source.paginator?.pageIndex}`);
-        finalizeWorkbook(workbook);
+        finalizeWorkbook(fullData);
       }
 
     })
