@@ -26,7 +26,9 @@ export class SheetExportService {
      * @returns 
      */
     const finalizeWorkbook = async (rows: T[], stage = STAGE.SUCCESS): Promise<void> => {
+      console.info(`building worksheet...`);
       const ws = utils.json_to_sheet(rows);
+      console.info(`building worksheet...`);
       const wb = utils.book_new();
       utils.book_append_sheet(wb, ws, "report");
 
