@@ -6,6 +6,7 @@ import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource
 import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
+import { DemoExportComponent } from "./pages/demo-export/demo-export.component";
 
 const routes: Routes = [
 	{
@@ -25,14 +26,19 @@ const routes: Routes = [
 				data: { animation: "slideLeft" },
 			},
 			{
+				path: "demo-export",
+				component: DemoExportComponent,
+				data: { animation: "slideLeft" },
+			},
+			{
 				path: "demo-icons",
 				component: DemoIconsComponent,
-				data: { animation: "slideRight" },
+				data: { animation: "slideLeft" },
 			},
 			{
 				path: "demo-i18n",
 				component: DemoI18nComponent,
-				data: { animation: "slideLeft" },
+				data: { animation: "slideRight" },
 			},
 		],
 	},
