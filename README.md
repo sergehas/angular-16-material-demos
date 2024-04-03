@@ -26,7 +26,7 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 A Feature module contains a set of consistent business GUI (so NOT services). A feature module is assigned to a consistent business processes (i.e. 'order' (for order management), 'bill', 'catalog', .. even 'admin').
 
-The main/default page of a feature module could be a dasboard (i.e. : counter per order status) or redirecting to the main page of the business process (place an order). A feature moduel contain its own / feature wide routing module.
+The main/default page of a feature module could be a dashboard (i.e. : counter per order status) or redirecting to the main page of the business process (place an order). A feature module contain its own / feature wide routing module.
 
 A feature module should not depend on a another feature module.
 
@@ -48,13 +48,13 @@ then import this module in `app.module.ts`:
 
 ```typescript
 @NgModule({
-	declarations: [AppComponent],
-	imports: [
+ declarations: [AppComponent],
+ imports: [
     //...
-		DemoModule,
-	],
-	providers: [],
-	bootstrap: [AppComponent],
+  DemoModule,
+ ],
+ providers: [],
+ bootstrap: [AppComponent],
 })
 ```
 
@@ -102,7 +102,7 @@ Alternatively, you could use a navigation by tabs in `demo.component.html`
 
 ### Shared components
 
-Share compoent are components & modules should **not** have any dependency on any of the other modules in the application.
+Share component are components & modules should **not** have any dependency on any of the other modules in the application.
 
 The shared module must declare the components, pipes, and directives using the declarations metadata and export it using the exports metadata
 
@@ -114,7 +114,7 @@ Tips: The commonly required angular modules like ( CommonModule, FormsModule, et
 
 ### add new shared module (if not exist)
 
-If you don't plan to use recommened standalone component,
+If you don't plan to use recommended standalone component,
 add a `shared` module : `ng generate module shared`
 
 ### add new shared component
@@ -133,12 +133,12 @@ This module contain all singletons, and so, **all services**.
 
 As services (& associated models) could be related to feature module ( i.e. `OrderService`, `OrderPlacementService`...) it should be organized in sub folders / modules (reflecting the feature modules organization)
 
-#### initializing
+#### initializing core
 
 - add a `github` module: `ng generate module core/github`
 - add a service to `github`: `ng generate service core/github/services/github`
 
-    - then, add it to module:
+  - then, add it to module:
 
     ```typescript
     @NgModule({
@@ -176,3 +176,11 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+- ttt
+- tttt
+
+another list
+
+- aaaaa
+- bbbbb

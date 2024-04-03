@@ -1,45 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
-import { v4 as uuid } from 'uuid';
-
-export type NotificationSeverity = "info" | "warn" | "sever";
-export interface NotificationDef {
-	severity: NotificationSeverity;
-	message: string;
-	date?: Date;
-	ref?: string;
-	persistent?: boolean;
-	show?: boolean;
-}
-
-export class Notification implements NotificationDef {
-	readonly id: string;
-	readonly severity: NotificationSeverity;
-	readonly message: string;
-	readonly date: Date;
-	readonly ref?: string;
-	readonly persistent: boolean;
-	readonly show: boolean;
-
-	constructor(def: NotificationDef) {
-		this.id = uuid();
-		this.severity = def.severity;
-		this.message = def.message;
-		this.date = def.date ?? new Date();
-		this.ref = def.ref;
-		this.persistent = def.persistent === undefined ? true : def.persistent;
-		this.show = def.show === undefined ? true : def.show;
-	}
-}
-
-export class ProgressNotification extends Notification {
-
-
-	constructor(def: NotificationDef) {
-		super(def);
-	}
-
-}
+import { Notification } from "src/app/models/notification";
 
 @Injectable({
 	providedIn: "root",

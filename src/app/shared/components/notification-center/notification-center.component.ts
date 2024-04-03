@@ -6,7 +6,6 @@ import {
 	inject
 } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
 import {
 	MAT_SNACK_BAR_DATA,
 	MatSnackBar,
@@ -16,9 +15,10 @@ import {
 
 import { MatIconModule } from "@angular/material/icon";
 import {
-	Notification,
 	NotificationService
 } from "src/app/core/services/notification.service";
+import { Notification } from "src/app/models/notification";
+import { NotificationComponent } from "./notification.component";
 
 @Component({
 	selector: "app-notification-center",
@@ -30,8 +30,7 @@ import {
 		CommonModule,
 		MatSnackBarModule,
 		MatButtonModule,
-		MatIconModule,
-		MatCardModule,
+		NotificationComponent
 	],
 })
 export class NotificationCenterComponent {

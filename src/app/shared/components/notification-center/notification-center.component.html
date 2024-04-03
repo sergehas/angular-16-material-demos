@@ -2,29 +2,7 @@
 	<button mat-stroked-button color="warn" (click)="clear()">CLEAR</button>
 </div>
 <section>
-	<mat-card class="notification-card zzmat-elevation-z8"
-		*ngFor="let notif of notifications$ | async; trackBy: trackItem" [class]="'notification-' + notif.severity">
-		<mat-card-header class="notification-header">
-			<ng-container [ngSwitch]="notif.severity">
-				<mat-icon *ngSwitchCase="'sever'">error</mat-icon>
-				<mat-icon *ngSwitchCase="'warn'">warning</mat-icon>
-				<mat-icon *ngSwitchCase="'info'">info</mat-icon>
-				<mat-icon *ngSwitchDefault>circle_notifications</mat-icon>
-			</ng-container>
-			<div class="notification-title">
-				{{ notif.date | date: "hh:mm:ss" }}
-			</div>
-			<span class="spacer"></span>
-
-			<button mat-icon-button (click)="dismiss(notif)">
-				<mat-icon>delete_forever</mat-icon>
-			</button>
-		</mat-card-header>
-		<mat-card-content class="notification-content">
-			{{ notif.message }}
-		</mat-card-content>
-		<!-- <mat-card-actions align="end">
-			<button mat-stroked-button (click)="dismiss(notif)"><mat-icon>delete_forever</mat-icon></button>
-		</mat-card-actions> -->
-	</mat-card>
+	<app-notification *ngFor="let notif of notifications$ | async; trackBy: trackItem"
+		[class]="'notification-' + notif.severity" [notif]="notif">
+	</app-notification>
 </section>

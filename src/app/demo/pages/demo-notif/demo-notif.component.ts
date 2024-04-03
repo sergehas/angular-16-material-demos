@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { Notification, NotificationService, NotificationSeverity } from 'src/app/core/services/notification.service';
+import { NotificationService } from 'src/app/core/services/notification.service';
+import { Notification, NotificationSeverity } from "src/app/models/notification";
 
 
 type NotifLog = {
   id: string,
   message: string,
+  severity: NotificationSeverity
   action: "add" | "update";
 }
 
@@ -65,7 +67,7 @@ export class DemoNotifComponent {
 
 
   private logNotif(notif: Notification, action: "add" | "update" = "add"): void {
-    this.notifs.push({ message: notif.message, id: notif.id, action: action });
+    this.notifs.push({ message: notif.message, id: notif.id, action: action, severity: notif.severity });
   }
 }
 

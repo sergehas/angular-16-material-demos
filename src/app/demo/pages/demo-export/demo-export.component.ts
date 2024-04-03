@@ -5,8 +5,9 @@ import { BehaviorSubject } from 'rxjs';
 import { Item } from 'src/app/core/item/models/item';
 import { ItemService } from 'src/app/core/item/services/item.service';
 import { PageableDataSource, Paginator } from 'src/app/core/models/pageable-data-source';
-import { ExcelExportService, STAGE } from 'src/app/core/services/excel-export.service';
+import { ExcelExportService } from 'src/app/core/services/excel-export.service';
 import { SheetExportService } from 'src/app/core/services/sheet-export.service';
+import { STAGE } from 'src/app/models/progress';
 
 type LogItem = {
   timestamp: Date, message: string
@@ -73,7 +74,7 @@ export class DemoExportComponent implements AfterViewInit {
           this.progressColor = "accent";
           break;
       }
-      this.progressValue = Math.ceil((e.progress.value / e.progress.total) * 100);
+      this.progressValue = Math.ceil((e.position.value / e.position.total) * 100);
       this.exportEvents.push({ timestamp: new Date(), message: `progress  ${this.progressValue}% (${JSON.stringify(e)})` });
       this.exportEvents$.next(this.exportEvents);
     });

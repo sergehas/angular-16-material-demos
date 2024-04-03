@@ -51,6 +51,13 @@
 
     <ul style="height: 100px;overflow-y: scroll;font-family: monospace">
         <li *ngFor="let n of notifs.slice().reverse()">
+            <ng-container [ngSwitch]="n.severity">
+                <mat-icon *ngSwitchCase="'sever'">error</mat-icon>
+                <mat-icon *ngSwitchCase="'warn'">warning</mat-icon>
+                <mat-icon *ngSwitchCase="'info'">info</mat-icon>
+                <mat-icon *ngSwitchDefault>circle_notifications</mat-icon>
+            </ng-container>
+
             {{ n.action }} notification <code>{{n.id}}</code>, message is <i>{{n.message}}</i>
         </li>
     </ul>

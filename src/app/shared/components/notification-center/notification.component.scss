@@ -1,0 +1,43 @@
+.notification-card {
+    margin: calc(var(--app-gap) / 2) var(--app-gap);
+
+    .notification-header {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        padding-right: calc(var(--app-gap) / 2);
+        .mat-icon {
+            margin-right: calc(var(--app-gap) / 2);
+        }
+
+        .notification-title {
+            // display: block;
+            // max-width: 200px;
+            // white-space: nowrap;
+            // overflow: hidden;
+            // text-overflow: ellipsis;
+        }
+        .spacer {
+            flex: 1 1 auto;
+        }
+        .mat-mdc-button,
+        .mat-mdc-unelevated-button,
+        .mdc-button--unelevated {
+            min-width: unset;
+            padding: 0 calc(var(--app-gap) / 2) 0 calc(var(--app-gap) / 2);
+            & > .mat-icon {
+                margin-right: 0;
+                margin-left: 0;
+            }
+        }
+    }
+    .notification-content {
+        max-height: 200px;
+        overflow: auto;
+        // display: block;
+        // //white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+    }
+}

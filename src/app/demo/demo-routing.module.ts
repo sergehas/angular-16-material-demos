@@ -46,11 +46,6 @@ const routes: Routes = [
 				component: DemoNotifComponent,
 				data: { animation: "slideRight" },
 			},
-			{
-				path: "demo-notif",
-				component: DemoNotifComponent,
-				data: { animation: "slideRight" },
-			},
 		],
 	},
 	{

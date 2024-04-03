@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Progress, STAGE } from 'src/app/models/progress';
 import { utils, writeFile } from 'xlsx';
 import { PageableDataSource, Paginator } from '../models/pageable-data-source';
-import { STAGE, Status } from './excel-export.service';
 import { NotificationService } from './notification.service';
 
 @Injectable({
@@ -14,9 +14,9 @@ export class SheetExportService {
 
   constructor(protected notifService: NotificationService) { }
 
-  export<T, P extends MatPaginator | Paginator = MatPaginator>(source: PageableDataSource<T, P>, headers: string[]): Observable<Status> {
-    const status = new Status();
-    let statusSubject = new BehaviorSubject<Status>(status);
+  export<T, P extends MatPaginator | Paginator = MatPaginator>(source: PageableDataSource<T, P>, headers: string[]): Observable<Progress> {
+    const status = new Progress();
+    let statusSubject = new BehaviorSubject<Progress>(status);
     console.log(`starting export`);
 
     /**
@@ -47,13 +47,13 @@ export class SheetExportService {
      * manage (export) pages
      */
     source.loadPage();
-    status.progress.total = source.length;
+    status.position.total = source.length;
     const fullData: T[] = [];
     source.connect().subscribe((data) => {
       //whenever data are available, add them to export 
       console.info(`exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`);
       if (source.paginator !== undefined) {
-        status.progress.value += data.length;
+        status.position.value += data.length;
         status.stage = STAGE.PROGRESS;
         statusSubject.next(status);
       }
@@ -84,7 +84,7 @@ export class SheetExportService {
     source.length$.pipe(map((len) => {
       //when the counting is done, then update notification
       console.info(`row count to export: ${len}`);
-      status.progress.total = len;
+      status.position.total = len;
       statusSubject.next(status);
     }))
     source.count();
