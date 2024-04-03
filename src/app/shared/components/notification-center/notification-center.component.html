@@ -1,13 +1,9 @@
 <div class="notif-button-row">
-	<button mat-stroked-button color="primary" (click)="addNotif()">ADD</button>
 	<button mat-stroked-button color="warn" (click)="clear()">CLEAR</button>
 </div>
 <section>
-	<mat-card
-		class="notification-card zzmat-elevation-z8"
-		*ngFor="let notif of notifications$ | async; trackBy: trackItem"
-		[class]="'notification-' + notif.severity"
-	>
+	<mat-card class="notification-card zzmat-elevation-z8"
+		*ngFor="let notif of notifications$ | async; trackBy: trackItem" [class]="'notification-' + notif.severity">
 		<mat-card-header class="notification-header">
 			<ng-container [ngSwitch]="notif.severity">
 				<mat-icon *ngSwitchCase="'sever'">error</mat-icon>

@@ -1,0 +1,57 @@
+<section>
+    <h2>This demo illustrate various feature of the notification center</h2>
+    <h3>Overview</h3>
+    <p>
+        user notification service to generate a notification.
+    </p>
+    <dl>
+        <dt><code>persistent</code></dt>
+        <dd>controls whether the notification is "persisted" in the notification center </dd>
+        <dt><code>show</code></dt>
+        <dd>controls whether the notification is displayed in a snack bar</dd>
+
+    </dl>
+
+    <mat-divider></mat-divider>
+</section>
+<section class="demo-options">
+    <mat-radio-group aria-label="Severity" [(ngModel)]="severity">
+        <mat-radio-button value="info">Information</mat-radio-button>
+        <mat-radio-button value="warn">Warning</mat-radio-button>
+        <mat-radio-button value="sever">Sever</mat-radio-button>
+    </mat-radio-group>
+
+    <mat-slide-toggle [(ngModel)]="show">show</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]="persistent">persistent</mat-slide-toggle>
+
+
+    <div class="label-container">
+
+        <button mat-stroked-button color="primary" (click)="addNotif()">ADD</button>
+        <button mat-stroked-button (click)="addRandom()">ADD RANDOMIZED</button>
+        <button mat-stroked-button color="warn" (click)="clear()">CLEAR ALL</button>
+    </div>
+</section>
+<section class="demo-options">
+    <mat-divider></mat-divider>
+    <div class="demo-log">
+        <h3>notification log</h3>
+
+        <button mat-flat-button class="icon-only" color="accent" matBadgePosition="below before"
+            [matBadgeHidden]="notifs.length === 0" [matBadge]="notifs.length" matBadgeColor="primary"
+            (click)="notifs.length = 0">
+            <mat-icon>delete</mat-icon>
+            clear
+        </button>
+    </div>
+
+    <div *ngIf="!notifs.length">
+        notification events will be logged here
+    </div>
+
+    <ul style="height: 100px;overflow-y: scroll;font-family: monospace">
+        <li *ngFor="let n of notifs.slice().reverse()">
+            {{ n.action }} notification <code>{{n.id}}</code>, message is <i>{{n.message}}</i>
+        </li>
+    </ul>
+</section>

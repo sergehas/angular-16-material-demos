@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject, Subject } from "rxjs";
+import { v4 as uuid } from 'uuid';
 
 export type NotificationSeverity = "info" | "warn" | "sever";
 export interface NotificationDef {
@@ -7,25 +8,37 @@ export interface NotificationDef {
 	message: string;
 	date?: Date;
 	ref?: string;
-	persisent?: boolean;
+	persistent?: boolean;
 	show?: boolean;
 }
 
 export class Notification implements NotificationDef {
+	readonly id: string;
 	readonly severity: NotificationSeverity;
 	readonly message: string;
 	readonly date: Date;
 	readonly ref?: string;
-	readonly persisent: boolean;
+	readonly persistent: boolean;
 	readonly show: boolean;
+
 	constructor(def: NotificationDef) {
+		this.id = uuid();
 		this.severity = def.severity;
 		this.message = def.message;
 		this.date = def.date ?? new Date();
 		this.ref = def.ref;
-		this.persisent = def.persisent === undefined ? true : def.persisent;
+		this.persistent = def.persistent === undefined ? true : def.persistent;
 		this.show = def.show === undefined ? true : def.show;
 	}
+}
+
+export class ProgressNotification extends Notification {
+
+
+	constructor(def: NotificationDef) {
+		super(def);
+	}
+
 }
 
 @Injectable({
@@ -37,14 +50,14 @@ export class NotificationService {
 	private notificationSubject = new Subject<Notification>();
 	public notification$ = this.notificationSubject.asObservable();
 
-	constructor() {}
+	constructor() { }
 
-	notify(notif: Notification, proragate = true): Notification {
+	notify(notif: Notification, propagate = true): Notification {
 		console.log("Notif: ", notif);
-		if (proragate) {
+		if (propagate) {
 			this.notificationSubject.next(notif);
 		}
-		if (notif.persisent) {
+		if (notif.persistent) {
 			this.cache.add(notif);
 		}
 		return notif;
@@ -54,6 +67,17 @@ export class NotificationService {
 		console.log("Dismiss: ", notif);
 		console.log("notif found:", this.cache.has(notif));
 		this.cache.delete(notif);
+	}
+	update(notif: Notification): void {
+		console.log("Update: ", notif);
+
+		if (notif.persistent) {
+			this.cache.add(notif)
+		} else if (this.cache.has(notif)) {
+			console.log("notif was persistent,  delete it");
+			this.cache.delete(notif);
+		}
+
 	}
 
 	clear(): void {

@@ -1,11 +1,12 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DemoComponent } from "./pages/demo.component";
-import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource.component";
-import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
-import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
+import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
+import { DemoNotifComponent } from "./pages/demo-notif/demo-notif.component";
+import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
+import { DemoComponent } from "./pages/demo.component";
+import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 
 const routes: Routes = [
 	{
@@ -34,6 +35,11 @@ const routes: Routes = [
 				component: DemoI18nComponent,
 				data: { animation: "slideLeft" },
 			},
+			{
+				path: "demo-notif",
+				component: DemoNotifComponent,
+				data: { animation: "slideRight" },
+			},
 		],
 	},
 	{
@@ -47,4 +53,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class DemoRoutingModule {}
+export class DemoRoutingModule { }

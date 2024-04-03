@@ -1,27 +1,24 @@
 import { CommonModule } from "@angular/common";
 import {
-	AfterViewInit,
 	ChangeDetectionStrategy,
 	Component,
 	Inject,
-	OnDestroy,
-	inject,
+	inject
 } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
 import {
 	MAT_SNACK_BAR_DATA,
 	MatSnackBar,
 	MatSnackBarModule,
 	MatSnackBarRef,
 } from "@angular/material/snack-bar";
-import { MatCardModule } from "@angular/material/card";
 
-import {
-	NotificationService,
-	Notification,
-	NotificationSeverity,
-} from "src/app/core/services/notification.service";
 import { MatIconModule } from "@angular/material/icon";
+import {
+	Notification,
+	NotificationService
+} from "src/app/core/services/notification.service";
 
 @Component({
 	selector: "app-notification-center",
@@ -68,26 +65,6 @@ export class NotificationCenterComponent {
 	clear() {
 		this.service.clear();
 	}
-
-	//demo stuff
-	private cnt = 0;
-	addNotif() {
-		this.cnt++;
-		const severity = ["info", "warn", "sever"][
-			Math.floor(Math.random() * 3)
-		] as NotificationSeverity;
-		const show = this.cnt % 4 !== 0;
-		this.service.notify(
-			new Notification({
-				severity: severity,
-				message:
-					this.cnt % 3 === 0
-						? `message #${this.cnt}: notif messsage body, notif messsage body, notif messsage body, notif messsage body, notif messsage body, notif messsage body `
-						: `short message # ${this.cnt}`,
-				show: !(this.cnt % 4 === 0),
-			})
-		);
-	}
 }
 
 @Component({
@@ -102,7 +79,7 @@ export class NotificationSnackBarComponent {
 	constructor(
 		@Inject(MAT_SNACK_BAR_DATA) public data: Notification,
 		private service: NotificationService
-	) {}
+	) { }
 
 	close() {
 		console.log("close");
