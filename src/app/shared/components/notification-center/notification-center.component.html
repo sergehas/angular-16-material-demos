@@ -3,6 +3,6 @@
 </div>
 <section>
 	<app-notification *ngFor="let notif of notifications$ | async; trackBy: trackItem"
-		[class]="'notification-' + notif.severity" [notif]="notif">
+		[class]="'notification-' + notif.severity" [notification]="notif">
 	</app-notification>
 </section>

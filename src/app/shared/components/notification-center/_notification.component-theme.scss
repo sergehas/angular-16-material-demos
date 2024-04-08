@@ -1,6 +1,29 @@
 @use "sass:map";
 @use "@angular/material" as mat;
 
+@mixin styleNotification($palette) {
+	background: mat.get-color-from-palette($palette);
+	color: mat.get-color-from-palette($palette, "500-contrast");
+	.notification-title {
+		color: color-mix(
+			in srgb,
+			var(--mat-card-subtitle-text-color) 15%,
+			mat.get-color-from-palette($palette, "500-contrast")
+		);
+	}
+	.notification-content {
+		.notification-progress {
+			padding-top: var(--app-gap);
+			--mdc-linear-progress-active-indicator-color: #{mat.get-color-from-palette($palette, "500-contrast")};
+			--mdc-linear-progress-track-color: color-mix(
+				in srgb,
+				#{mat.get-color-from-palette($palette)} 66%,
+				#{mat.get-color-from-palette($palette, "500-contrast")}
+			);
+		}
+	}
+}
+
 @mixin theme($theme) {
 	$primary: map.get($theme, primary);
 	$accent: map.get($theme, accent);
@@ -9,40 +32,17 @@
 	$foreground: map.get($theme, foreground);
 	$is-dark-theme: map.get($theme, is-dark);
 
-	$sticky-background-opacity: if($is-dark-theme, 0.2, 0.03);
+	// $sticky-background-opacity: if($is-dark-theme, 0.2, 0.03);
+
 	.notification-card {
 		&.notification-info {
-			background: mat.get-color-from-palette($primary);
-			color: mat.get-color-from-palette($primary, "500-contrast");
-			.notification-title {
-				color: color-mix(
-					in srgb,
-					var(--mat-card-subtitle-text-color) 15%,
-					mat.get-color-from-palette($primary, "500-contrast")
-				);
-			}
+			@include styleNotification($primary);
 		}
 		&.notification-warn {
-			background: mat.get-color-from-palette($accent);
-			color: mat.get-color-from-palette($accent, "500-contrast");
-			.notification-title {
-				color: color-mix(
-					in srgb,
-					var(--mat-card-subtitle-text-color) 15%,
-					mat.get-color-from-palette($accent, "500-contrast")
-				);
-			}
+			@include styleNotification($accent);
 		}
 		&.notification-sever {
-			background: mat.get-color-from-palette($warn);
-			color: mat.get-color-from-palette($warn, "500-contrast");
-			.notification-title {
-				color: color-mix(
-					in srgb,
-					var(--mat-card-subtitle-text-color) 15%,
-					mat.get-color-from-palette($warn, "500-contrast")
-				);
-			}
+			@include styleNotification($warn);
 		}
 	}
 }

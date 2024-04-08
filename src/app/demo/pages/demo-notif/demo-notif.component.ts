@@ -61,6 +61,7 @@ export class DemoNotifComponent {
             ? `message #${cnt}: random message body, random message body, random message body, random message body, random message body, random message body `
             : `short random message # ${cnt}`,
         show: !(cnt % 4 === 0),
+        ref: cnt % 2 === 0 ? "https://material.angular.io/" : undefined
       }));
 
   }

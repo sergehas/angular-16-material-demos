@@ -3,6 +3,7 @@ import { Component, Input, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatProgressBarModule, ProgressBarMode } from '@angular/material/progress-bar';
 
 import { NotificationService } from 'src/app/core/services/notification.service';
 import { Notification } from "src/app/models/notification";
@@ -15,7 +16,7 @@ import { Notification } from "src/app/models/notification";
     MatIconModule,
     MatCardModule,
     MatButtonModule,
-
+    MatProgressBarModule,
   ],
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss',
@@ -23,12 +24,29 @@ import { Notification } from "src/app/models/notification";
 })
 export class NotificationComponent {
 
-  @Input() notif!: Notification;
+  @Input() notification!: Notification;
 
   constructor(private service: NotificationService) {
   }
 
+
+  _progressMode: ProgressBarMode = "determinate";
+  _progressColor = "primary";
+  _progressValue = 20;
+
+  get progressMode(): ProgressBarMode {
+    return this._progressMode;
+  }
+
+  get progressColor(): string {
+    return this._progressColor;
+  }
+
+  get progressValue(): number {
+    return this._progressValue;
+  }
+
   dismiss() {
-    this.service.dismiss(this.notif);
+    this.service.dismiss(this.notification);
   }
 }
