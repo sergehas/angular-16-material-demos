@@ -10,14 +10,6 @@
         .mat-icon {
             margin-right: calc(var(--app-gap) / 2);
         }
-
-        .notification-title {
-            // display: block;
-            // max-width: 200px;
-            // white-space: nowrap;
-            // overflow: hidden;
-            // text-overflow: ellipsis;
-        }
         .spacer {
             flex: 1 1 auto;
         }
@@ -39,5 +31,20 @@
         // //white-space: nowrap;
         // overflow: hidden;
         // text-overflow: ellipsis;
+    }
+    .notification-footer {
+        padding-left: calc(var(--app-gap) / 2);
+        padding-right: calc(var(--app-gap) / 2);
+        .progress-hint {
+            font-family: var(--mat-form-field-subscript-text-font);
+            line-height: var(--mat-form-field-subscript-text-line-height);
+            font-size: var(--mat-form-field-subscript-text-size);
+            letter-spacing: var(--mat-form-field-subscript-text-tracking);
+            font-weight: var(--mat-form-field-subscript-text-weight);
+            text-align: end;
+            padding-top: calc(
+                max(var(--mdc-linear-progress-track-height), var(--mdc-linear-progress-active-indicator-height)) * -2
+            );
+        }
     }
 }

@@ -7,7 +7,8 @@ import { Notification } from "src/app/models/notification";
 })
 export class NotificationService {
 	private cache = new Set<Notification>();
-	public notifications$ = new BehaviorSubject(this.cache).asObservable();
+	private notificationCacheSubject = new BehaviorSubject(this.cache);
+	public notifications$ = this.notificationCacheSubject.asObservable();
 	private notificationSubject = new Subject<Notification>();
 	public notification$ = this.notificationSubject.asObservable();
 
@@ -33,15 +34,15 @@ export class NotificationService {
 		console.log("Update: ", notif);
 
 		if (notif.persistent) {
-			this.cache.add(notif)
+			this.cache.add(notif);
 		} else if (this.cache.has(notif)) {
 			console.log("notif was persistent,  delete it");
 			this.cache.delete(notif);
 		}
-
 	}
 
 	clear(): void {
 		this.cache.clear();
+		this.notificationCacheSubject.next(this.cache);
 	}
 }

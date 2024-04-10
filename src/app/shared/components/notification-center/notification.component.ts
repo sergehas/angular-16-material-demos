@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule, ProgressBarMode } from '@angular/material/progress-bar';
 
 import { NotificationService } from 'src/app/core/services/notification.service';
-import { Notification } from "src/app/models/notification";
+import { Notification, ProgressNotification } from "src/app/models/notification";
 
 @Component({
   selector: 'app-notification',
@@ -29,13 +29,17 @@ export class NotificationComponent {
   constructor(private service: NotificationService) {
   }
 
-
-  _progressMode: ProgressBarMode = "determinate";
+  //demo val
   _progressColor = "primary";
-  _progressValue = 20;
 
+  get hasProgress(): boolean {
+    return this.notification instanceof ProgressNotification;
+  }
   get progressMode(): ProgressBarMode {
-    return this._progressMode;
+    if (this.hasProgress && (this.notification as ProgressNotification).progress.position.total > 0) {
+      return "determinate"
+    }
+    return "indeterminate";
   }
 
   get progressColor(): string {
@@ -43,7 +47,12 @@ export class NotificationComponent {
   }
 
   get progressValue(): number {
-    return this._progressValue;
+    if (this.hasProgress && (this.notification as ProgressNotification).progress.position.total > 0) {
+      const p = (this.notification as ProgressNotification).progress.position;
+      console.info(`progress is ${(p.value / p.total) * 100}`);
+      return (p.value / p.total) * 100;
+    }
+    return -1;
   }
 
   dismiss() {

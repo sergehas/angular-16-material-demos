@@ -19,9 +19,16 @@
         </button>
     </mat-card-header>
     <mat-card-content class="notification-content">
-        <div class="aaa">{{ notification.message }}</div>
-        <mat-progress-bar class="notification-progress" *ngIf="progressValue>=0" [mode]="progressMode"
-            [value]="progressValue" [color]="progressColor">
-        </mat-progress-bar>
+        <div>{{ notification.message }}</div>
     </mat-card-content>
+    <mat-card-footer class="notification-footer">
+        <div class="notification-progress">
+            <mat-progress-bar class="notification-progress-bar" *ngIf="hasProgress" [mode]="progressMode"
+                [value]="progressValue" [color]="progressColor">
+            </mat-progress-bar>
+            <div class="progress-hint" *ngIf="hasProgress">
+                <span *ngIf="progressValue>=0">{{progressValue|number:'1.0-0'}}%</span>
+            </div>
+        </div>
+    </mat-card-footer>
 </mat-card>

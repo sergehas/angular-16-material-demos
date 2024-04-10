@@ -33,6 +33,22 @@
     </div>
 </section>
 <section class="demo-options">
+    <mat-divider />
+    <h3>update progress</h3>
+    <div class="label-container">
+        <mat-form-field hintLabel="Number (<0 means unknown)">
+            <mat-label>total</mat-label>
+            <input matInput type="number" min="-1" placeholder="Progress total" [formControl]="total">
+        </mat-form-field>
+
+        <mat-form-field hintLabel="Number">
+            <mat-label>Value</mat-label>
+            <input matInput type="number" min="-1" [max]="total.value" placeholder="Progress value"
+                [formControl]="value">
+        </mat-form-field>
+    </div>
+</section>
+<section class="demo-options">
     <mat-divider></mat-divider>
     <div class="demo-log">
         <h3>notification log</h3>

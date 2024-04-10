@@ -14,7 +14,7 @@ export interface NotificationDef {
 export class Notification implements NotificationDef {
     readonly id: string;
     readonly severity: NotificationSeverity;
-    readonly message: string;
+    message: string;
     readonly date: Date;
     readonly ref?: string;
     readonly persistent: boolean;
