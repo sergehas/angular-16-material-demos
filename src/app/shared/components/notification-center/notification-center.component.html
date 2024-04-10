@@ -14,7 +14,7 @@
 			<mat-icon color="primary">info</mat-icon>
 		</mat-button-toggle>
 	</mat-button-toggle-group>
-	<button mat-stroked-button color="warn" (click)="clear()">CLEAR</button>
+	<button mat-flat-button class="icon-only" color="warn" (click)="clear()"><mat-icon>delete</mat-icon></button>
 </div>
 <section class="notif-list" [attr.data-sort]="sort">
 	<ng-container *ngFor="let notif of notifications$ | async; trackBy: trackItem">

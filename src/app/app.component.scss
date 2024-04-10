@@ -47,7 +47,8 @@
 			}
 		}
 		.notif-sidenav {
-			width: 325px;
+			min-width: 310px;
+			max-width: 310px;
 		}
 		.root-content {
 			margin: 0 var(--app-gap);
