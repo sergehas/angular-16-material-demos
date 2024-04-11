@@ -21,7 +21,7 @@ export abstract class HttpService<T> {
 		accept: "application/json",
 	});
 
-	constructor(readonly http: HttpClient, protected baseUrl: string) {}
+	constructor(readonly http: HttpClient, protected baseUrl: string) { }
 
 	protected encodeFilter(f: Filter | undefined): string {
 		if (!f) return "";
@@ -65,5 +65,14 @@ export abstract class HttpService<T> {
 				params: params,
 			})
 			.pipe(map((res) => res.items));
+	}
+
+	get(id: keyof T): Observable<T> {
+		const u = this.baseUrl + `/${encodeURIComponent(String(id))}`
+		return this.http
+			.get<T>(u, {
+				headers: this.headers,
+			})
+			.pipe(map((res) => res));
 	}
 }

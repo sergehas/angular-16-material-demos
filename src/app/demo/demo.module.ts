@@ -19,8 +19,6 @@ import { MatTableModule } from "@angular/material/table";
 
 import { TranslateModule } from "@ngx-translate/core";
 
-import { IconSelectComponent } from "../shared/components/icon-select/icon-select.component";
-import { IconTreeComponent } from "../shared/components/icon-tree/icon-tree.component";
 import { TableExpandableRowsComponent } from "../shared/components/table-expandable-rows/table-expandable-rows.component";
 import { TabsNavComponent } from "../shared/components/tabs-nav/tabs-nav.component";
 import { DemoRoutingModule } from "./demo-routing.module";
@@ -71,8 +69,6 @@ import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 
 		TabsNavComponent,
 		TableExpandableRowsComponent,
-		IconSelectComponent,
-		IconTreeComponent,
 
 		DemoRoutingModule,
 	],

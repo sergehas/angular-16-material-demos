@@ -45,4 +45,8 @@ export class NotificationService {
 		this.cache.clear();
 		this.notificationCacheSubject.next(this.cache);
 	}
+
+	load() {
+
+	}
 }
