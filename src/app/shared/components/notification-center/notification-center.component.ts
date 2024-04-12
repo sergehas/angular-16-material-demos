@@ -76,6 +76,7 @@ export class NotificationCenterComponent {
 			verticalPosition: "top",
 			duration: 3000,
 			data: n,
+			panelClass: `notif-snack-${n.severity}`
 		});
 	}
 

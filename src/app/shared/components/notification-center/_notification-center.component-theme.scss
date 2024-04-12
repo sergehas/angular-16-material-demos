@@ -1,0 +1,24 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin theme($theme) {
+	// with angular native colors
+	// $success: map.get($theme, primary);
+	// $warning: map.get($theme, accent);
+	// $error: map.get($theme, warn);
+	// with extended  colors
+	$success: map.get($theme, success);
+	$warning: map.get($theme, warning);
+	$error: map.get($theme, error);
+	//override default/native color ?
+
+	[value="sever"] {
+		--mat-icon-color: #{mat.get-color-from-palette($error)};
+	}
+	[value="warn"] {
+		--mat-icon-color: #{mat.get-color-from-palette($warning)};
+	}
+	[value="info"] {
+		--mat-icon-color: #{mat.get-color-from-palette($success)};
+	}
+}

@@ -1,8 +1,8 @@
 <span class="snack-label" matSnackBarLabel>
 	<ng-container [ngSwitch]="data.severity">
-		<mat-icon *ngSwitchCase="'sever'" color="warn">error</mat-icon>
-		<mat-icon *ngSwitchCase="'warn'" color="accent">warning</mat-icon>
-		<mat-icon *ngSwitchCase="'info'" color="primary">info</mat-icon>
+		<mat-icon *ngSwitchCase="'sever'">error</mat-icon>
+		<mat-icon *ngSwitchCase="'warn'">warning</mat-icon>
+		<mat-icon *ngSwitchCase="'info'">info</mat-icon>
 		<mat-icon *ngSwitchDefault>circle_notifications</mat-icon> </ng-container>{{ data.message }}
 </span>
 <span matSnackBarActions *ngIf="data.persistent">

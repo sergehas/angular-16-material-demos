@@ -23,6 +23,8 @@ import { TableExpandableRowsComponent } from "../shared/components/table-expanda
 import { TabsNavComponent } from "../shared/components/tabs-nav/tabs-nav.component";
 import { DemoRoutingModule } from "./demo-routing.module";
 
+import { IconSelectComponent } from "../shared/components/icon-select/icon-select.component";
+import { IconTreeComponent } from "../shared/components/icon-tree/icon-tree.component";
 import { LocalizedDatePipe } from "../shared/pipes/translation/localized-date.pipe";
 import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource.component";
 import { DemoExportComponent } from "./pages/demo-export/demo-export.component";
@@ -69,6 +71,8 @@ import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 
 		TabsNavComponent,
 		TableExpandableRowsComponent,
+		IconTreeComponent,
+		IconSelectComponent,
 
 		DemoRoutingModule,
 	],

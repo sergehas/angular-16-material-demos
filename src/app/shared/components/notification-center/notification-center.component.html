@@ -5,13 +5,13 @@
 	</button>
 	<mat-button-toggle-group [formControl]="severityFilter" class="severity-filter" multiple>
 		<mat-button-toggle value="sever">
-			<mat-icon color="warn">error</mat-icon>
+			<mat-icon>error</mat-icon>
 		</mat-button-toggle>
 		<mat-button-toggle value="warn">
-			<mat-icon color="accent">warning</mat-icon>
+			<mat-icon>warning</mat-icon>
 		</mat-button-toggle>
 		<mat-button-toggle value="info">
-			<mat-icon color="primary">info</mat-icon>
+			<mat-icon>info</mat-icon>
 		</mat-button-toggle>
 	</mat-button-toggle-group>
 	<button mat-flat-button class="icon-only" color="warn" (click)="clear()"><mat-icon>delete</mat-icon></button>

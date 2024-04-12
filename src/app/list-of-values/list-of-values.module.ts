@@ -19,6 +19,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatSortModule } from "@angular/material/sort";
+import { IconSelectComponent } from "../shared/components/icon-select/icon-select.component";
 
 @NgModule({
 	declarations: [ListOfValuesComponent, ValuesComponent, GroupsComponent, ValueEditDialog],
@@ -38,6 +39,8 @@ import { MatSortModule } from "@angular/material/sort";
 		ReactiveFormsModule,
 
 		TabsNavComponent,
+		IconSelectComponent,
+
 		ListOfValuesRoutingModule,
 	],
 })
