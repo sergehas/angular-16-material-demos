@@ -2,13 +2,14 @@ import { CommonModule } from "@angular/common";
 import { NgModule, Optional, SkipSelf } from "@angular/core";
 import { ExcelExportService } from "./excel-export.service";
 import { NotificationService } from "./notification.service";
+import { ScrollService } from "./scroll.service";
 import { SheetExportService } from "./sheet-export.service";
 import { StorageService } from "./storage.service";
 
 @NgModule({
 	declarations: [],
 	imports: [CommonModule],
-	providers: [StorageService, NotificationService, ExcelExportService, SheetExportService],
+	providers: [ScrollService, StorageService, NotificationService, ExcelExportService, SheetExportService],
 })
 export class ServicesModule {
 	/** guarde to avoid multiple import */

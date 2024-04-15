@@ -1,6 +1,7 @@
 .sticky {
     position: sticky;
     top: 0;
+    z-index: 3; //ensure to be on top of material button (z-index:1)
     background-color: var(--mat-sidenav-content-background-color);
     margin-left: calc(var(--app-gap) * -1);
     margin-right: calc(var(--app-gap) * -1);
