@@ -72,7 +72,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	createOrEdit(entity?: Value) {
 		let dialogRef!: MatDialogRef<ValueEditDialog, Value>;
-		if (entity) {
+		if (entity !== undefined) {
 			dialogRef = this.dialog.open(ValueEditDialog, {
 				data: {
 					mode: EditMode.EDIT,
@@ -89,6 +89,15 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
 		}
 		dialogRef.afterClosed().subscribe((result) => {
 			console.log("The dialog was closed with:", result);
+			if (result !== undefined) {
+				this.service.save(result).subscribe((v) => {
+					console.info(`after save: ${v}`);
+					console.log("refreshing");
+					this.dataSource.count();
+					this.dataSource.loadPage();
+				})
+			}
+
 		});
 	}
 }
@@ -108,6 +117,8 @@ export class ValueEditDialog {
 	valueForm: FormGroup;
 
 	constructor(
+		public dialogRef: MatDialogRef<ValueEditDialog>,
+
 		@Inject(MAT_DIALOG_DATA) public data: { mode: EditMode; entity: Value }
 	) {
 		console.log("ent", data.entity);
@@ -138,5 +149,10 @@ export class ValueEditDialog {
 		if (data.mode === EditMode.EDIT) {
 			this.valueForm.get("name")?.disable();
 		}
+	}
+
+	save() {
+		//this.dialogRef.close(this.valueForm.getRawValue());
+		this.dialogRef.close(this.valueForm.getRawValue());
 	}
 }
