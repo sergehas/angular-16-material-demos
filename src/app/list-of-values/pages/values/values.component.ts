@@ -152,7 +152,10 @@ export class ValueEditDialog {
 	}
 
 	save() {
-		//this.dialogRef.close(this.valueForm.getRawValue());
 		this.dialogRef.close(this.valueForm.getRawValue());
+	}
+
+	delete() {
+		alert("TODO");
 	}
 }
