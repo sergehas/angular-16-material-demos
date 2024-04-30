@@ -16,7 +16,7 @@ import {
 } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
-import { tap } from "rxjs";
+import { Subject, tap } from "rxjs";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { Value } from "src/app/core/value-list/models/value";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
@@ -32,9 +32,9 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input("group") group?: string;
 
 	dataSource!: PageableDataSource<Value>;
-	private _page: Value[] = [];
+	private _page = new Subject<Value[]>();
 
-	get page(): Value[] {
+	get page(): Subject<Value[]> {
 		return this._page;
 	}
 
@@ -62,7 +62,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.dataSource.sort.sort({ id: "name", start: "asc" } as MatSortable);
 		this.dataSource.connect().subscribe((data) => {
 			//as data is readonly, we must clone it to be able to set _page
-			this._page = data.map((i) => i);
+			this._page.next(data.map((i) => i));
 		});
 	}
 
