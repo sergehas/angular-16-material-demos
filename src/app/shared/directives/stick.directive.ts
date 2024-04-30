@@ -1,4 +1,4 @@
-import { AfterViewInit, Directive, ElementRef, Input, Renderer2 } from '@angular/core';
+import { AfterViewChecked, Directive, ElementRef, Input, Renderer2 } from '@angular/core';
 import { ScrollService } from 'src/app/core/services/scroll.service';
 
 
@@ -13,7 +13,7 @@ function htmlElementAttribute(value: unknown): HTMLElement {
   selector: '[appStick]',
   standalone: true
 })
-export class StickDirective implements AfterViewInit {
+export class StickDirective implements AfterViewChecked {
   @Input({ required: true, transform: htmlElementAttribute }) appStick!: HTMLElement;
 
   private _native: HTMLElement;
@@ -23,7 +23,7 @@ export class StickDirective implements AfterViewInit {
   private requiredStyles: Record<string, string | number> = {
     'width': '100%',
     'z-index': 2, //ensure to be on top of mat button (z-index:1)
-    'transition': 'top 0.05s',
+    'transition': 'top,left 0.05s',
     'position': 'absolute',
     'left': 0,
     'top': '',
@@ -31,14 +31,17 @@ export class StickDirective implements AfterViewInit {
 
 
   constructor(private element: ElementRef<HTMLElement>, private scrollService: ScrollService, private renderer: Renderer2) {
+    // afterRender(() => {
+    //   console.log("AFTER")
+    // });
     this._native = this.element.nativeElement;
   }
-  ngAfterViewInit(): void {
+  ngAfterViewChecked(): void {
     this.renderer.setStyle(this.appStick, "position", "relative");
-    this.renderer.addClass(this._native, "app-stick");
     this._ref = this.appStick.getBoundingClientRect().top;
     this._original = this.element.nativeElement.getBoundingClientRect().top;
     console.log(`el position:${this._original}, ref position: ${this._ref}`)
+    this.renderer.addClass(this._native, "app-stickable");
 
     this.scrollService.scrolling$.subscribe(() => {
       this.onViewportScroll();
@@ -54,12 +57,14 @@ export class StickDirective implements AfterViewInit {
     let targetPos = this._ref - offsetRef;
     let shouldScroll = targetPos > (this._original - this._ref);
     if (shouldScroll) {
+      this.renderer.addClass(this._native, "app-sticked");
       Object.keys(this.requiredStyles).forEach(newStyle => {
         this.renderer.setStyle(
           this._native, `${newStyle}`, newStyle === 'top' ? `${targetPos}px` : this.requiredStyles[newStyle]
         );
       });
     } else {
+      this.renderer.removeClass(this._native, "app-sticked");
       Object.keys(this.requiredStyles).forEach(newStyle => {
         this.renderer.removeStyle(
           this._native, `${newStyle}`

@@ -5,6 +5,7 @@ import { DemoExportComponent } from "./pages/demo-export/demo-export.component";
 import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
 import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 import { DemoNotifComponent } from "./pages/demo-notif/demo-notif.component";
+import { DemoStickyComponent } from "./pages/demo-sticky/demo-sticky.component";
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoComponent } from "./pages/demo.component";
 import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
@@ -19,7 +20,7 @@ const routes: Routes = [
 			{
 				path: "demo-table",
 				component: DemoTableComponent,
-				data: { animation: "slideRight" },
+				data: { animation: "slideLeft" },
 			},
 			{
 				path: "demo-datasource",
@@ -39,12 +40,17 @@ const routes: Routes = [
 			{
 				path: "demo-i18n",
 				component: DemoI18nComponent,
-				data: { animation: "slideRight" },
+				data: { animation: "slideLeft" },
 			},
 			{
 				path: "demo-notif",
 				component: DemoNotifComponent,
-				data: { animation: "slideRight" },
+				data: { animation: "slideLeft" },
+			},
+			{
+				path: "demo-sticky",
+				component: DemoStickyComponent,
+				data: { animation: "slideLeft" },
 			},
 		],
 	},

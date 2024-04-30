@@ -1,4 +1,4 @@
-<div #topRef>
+<div>
     <section>
         <h2>This demo illustrate various feature of the notification center</h2>
         <h3>Overview</h3>
@@ -6,7 +6,7 @@
             user notification service to generate a notification.
         </p>
         <dl>
-            <dt [appStick]="topRef"><code>persistent</code></dt>
+            <dt><code>persistent</code></dt>
             <dd>controls whether the notification is "persisted" in the notification center </dd>
             <dt><code>show</code></dt>
             <dd>controls whether the notification is displayed in a snack bar</dd>
@@ -29,7 +29,7 @@
     </section>
     <section class="demo-options">
         <mat-divider />
-        <h3 [appStick]="topRef">update progress</h3>
+        <h3>update progress</h3>
         <div class="label-container">
             <mat-form-field hintLabel="Number (<0 means unknown)">
                 <mat-label>total</mat-label>

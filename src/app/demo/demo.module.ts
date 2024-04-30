@@ -35,6 +35,7 @@ import { DemoNotifComponent } from "./pages/demo-notif/demo-notif.component";
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoComponent } from "./pages/demo.component";
 import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
+import { DemoStickyComponent } from './pages/demo-sticky/demo-sticky.component';
 
 @NgModule({
 	declarations: [
@@ -46,6 +47,7 @@ import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 		DemoIconsComponent,
 		DemoI18nComponent,
 		DemoNotifComponent,
+  DemoStickyComponent,
 	],
 	imports: [
 		CommonModule,
