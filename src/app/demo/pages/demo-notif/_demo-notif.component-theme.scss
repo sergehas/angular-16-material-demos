@@ -1,0 +1,30 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin theme($theme) {
+    $success: map.get($theme, success);
+    $warning: map.get($theme, warning);
+    $error: map.get($theme, error);
+
+    .color-sample {
+        display: flex;
+        justify-content: space-evenly;
+        div {
+            padding: calc(var(--app-gap) / 2);
+            border-radius: var(--mdc-outlined-button-container-shape);
+            text-transform: uppercase;
+        }
+        .success {
+            color: mat.get-color-from-palette($success, "900-contrast");
+            background-color: mat.get-color-from-palette($success);
+        }
+        .warning {
+            color: mat.get-color-from-palette($warning, "900-contrast");
+            background-color: mat.get-color-from-palette($warning);
+        }
+        .error {
+            color: mat.get-color-from-palette($error, "900-contrast");
+            background-color: mat.get-color-from-palette($error);
+        }
+    }
+}

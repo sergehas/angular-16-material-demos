@@ -61,16 +61,17 @@
 		<code>app-icon-select</code> as a form field
 	</p>
 	<div class="field-demo-container">
-	<mat-form-field>
-		<mat-label>Select me</mat-label>
-		<app-icon-select [(value)]="selected" required [formControl]="icon"></app-icon-select>
-		<mat-error>icon is required</mat-error>
-		<mat-hint>choose your icon</mat-hint>
-	</mat-form-field>
-	<mat-form-field appearance="outline" style="max-width: 80px;" >
-		<app-icon-select [(value)]="selected" required [formControl]="icon" tooltip="I'm the tooltip"></app-icon-select>
-		<mat-error>required</mat-error>
-		<mat-hint>icon ?</mat-hint>
-	</mat-form-field>
-</div>
+		<mat-form-field>
+			<mat-label>Select me</mat-label>
+			<app-icon-select [(value)]="selected" required [formControl]="icon"></app-icon-select>
+			<mat-error>icon is required</mat-error>
+			<mat-hint>choose your icon</mat-hint>
+		</mat-form-field>
+		<mat-form-field appearance="outline" style="max-width: 80px;">
+			<app-icon-select [(value)]="selected" required [formControl]="icon"
+				tooltip="I'm the tooltip"></app-icon-select>
+			<mat-error>required</mat-error>
+			<mat-hint>icon ?</mat-hint>
+		</mat-form-field>
+	</div>
 </section>

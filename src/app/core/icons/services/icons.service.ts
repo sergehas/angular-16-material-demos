@@ -1,8 +1,8 @@
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Category, NAMESPACE } from "../models/category";
-import { HttpClient } from "@angular/common/http";
 
 type incoLibFormat = {
 	name: string;
@@ -26,7 +26,7 @@ export class IconsService {
 		private http: HttpClient,
 		private matIconRegistry: MatIconRegistry,
 		private domSanitizer: DomSanitizer
-	) {}
+	) { }
 
 	private load(data: incoLibFormat) {
 		const cat = new Category(data.name);
@@ -44,7 +44,7 @@ export class IconsService {
 		});
 		return cat;
 	}
-	public getIconslib() {
+	getIconslib(): Category {
 		return this.iconlib;
 	}
 }

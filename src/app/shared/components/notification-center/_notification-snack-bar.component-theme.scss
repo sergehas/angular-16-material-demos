@@ -1,0 +1,37 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin styleSnackbar($palette, $override: true) {
+	@if $override {
+		--mdc-snackbar-container-color: #{mat.get-color-from-palette($palette)};
+		--mdc-snackbar-supporting-text-color: #{mat.get-color-from-palette($palette, "900-contrast")};
+		--mat-icon-color: #{mat.get-color-from-palette($palette, "900-contrast")};
+
+		--mat-snack-bar-button-color: #{mat.get-color-from-palette($palette, "A100-contrast")};
+	} @else {
+		--mat-icon-color: #{mat.get-color-from-palette($palette)};
+	}
+}
+
+@mixin theme($theme) {
+	// with angular native colors
+	// $success: map.get($theme, primary);
+	// $warning: map.get($theme, accent);
+	// $error: map.get($theme, warn);
+	// with extended  colors
+	$success: map.get($theme, success);
+	$warning: map.get($theme, warning);
+	$error: map.get($theme, error);
+	//override default/native color ?
+	$override: true;
+
+	.notif-snack-info {
+		@include styleSnackbar($success, $override);
+	}
+	.notif-snack-warn {
+		@include styleSnackbar($warning, $override);
+	}
+	.notif-snack-sever {
+		@include styleSnackbar($error, $override);
+	}
+}

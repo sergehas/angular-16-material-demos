@@ -8,7 +8,7 @@ describe('IconSelectComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [IconSelectComponent]
+      imports: [IconSelectComponent]
     });
     fixture = TestBed.createComponent(IconSelectComponent);
     component = fixture.componentInstance;

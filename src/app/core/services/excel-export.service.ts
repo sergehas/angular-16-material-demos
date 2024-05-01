@@ -4,22 +4,9 @@ import Excel, { Workbook } from 'exceljs';
 import { MatPaginator } from '@angular/material/paginator';
 import { saveAs } from 'file-saver';
 import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Progress, STAGE } from 'src/app/models/progress';
 import { PageableDataSource, Paginator } from '../models/pageable-data-source';
 import { NotificationService } from './notification.service';
-
-export enum STAGE {
-  PENDING,
-  PROGRESS,
-  PAUSE,
-  SUCCESS,
-  PARTIAL,
-  ERROR
-}
-
-export class Status {
-  stage: STAGE = STAGE.PENDING;
-  progress: { total: number; value: number; } = { total: 0, value: 0 };
-}
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +15,9 @@ export class ExcelExportService {
 
   constructor(protected notifService: NotificationService) { }
 
-  export<T, P extends MatPaginator | Paginator = MatPaginator>(source: PageableDataSource<T, P>, headers: string[]): Observable<Status> {
-    const status = new Status();
-    let statusSubject = new BehaviorSubject<Status>(status);
+  export<T, P extends MatPaginator | Paginator = MatPaginator>(source: PageableDataSource<T, P>, headers: string[]): Observable<Progress> {
+    const status = new Progress();
+    let statusSubject = new BehaviorSubject<Progress>(status);
     console.log(`starting export`);
 
     /**
@@ -66,12 +53,12 @@ export class ExcelExportService {
     const worksheet = workbook.addWorksheet("export");
     worksheet.columns = headers.map(h => { return { header: h, key: h } });
     source.loadPage();
-    status.progress.total = source.length;
+    status.position.total = source.length;
     source.connect().subscribe((data) => {
       //whenever data are available, add them to export 
       console.info(`exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`);
       if (source.paginator !== undefined) {
-        status.progress.value += data.length;
+        status.position.value += data.length;
         status.stage = STAGE.PROGRESS;
         statusSubject.next(status);
       }
@@ -103,7 +90,7 @@ export class ExcelExportService {
     source.length$.pipe(map((len) => {
       //when the counting is done, then update notification
       console.info(`row count to export: ${len}`);
-      status.progress.total = len;
+      status.position.total = len;
       statusSubject.next(status);
     }))
     source.count();

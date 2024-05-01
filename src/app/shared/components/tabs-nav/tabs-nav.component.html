@@ -1,28 +1,14 @@
-<nav
-	mat-tab-nav-bar
-	[tabPanel]="tabPanel"
-	mat-stretch-tabs="false"
-	mat-align-tabs="center"
-	class="tabs-nav"
->
-	<a
-		mat-tab-link
-		*ngFor="let link of navLinks"
-		[routerLink]="link.path"
-		routerLinkActive
-		#rla="routerLinkActive"
-		[active]="rla.isActive"
-	>
+<nav mat-tab-nav-bar [tabPanel]="tabPanel" mat-stretch-tabs="false" mat-align-tabs="center" class="tabs-nav"
+	[class.sticky]="sticky" [class.mat-elevation-z1]="sticky">
+	<a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive"
+		[active]="rla.isActive">
 		{{ link.name }}
 	</a>
 </nav>
-<mat-tab-nav-panel
-	#tabPanel
-	[@routeAnimations]="
+<mat-tab-nav-panel #tabPanel [@routeAnimations]="
 		outlet &&
 		outlet.activatedRouteData &&
 		outlet.activatedRouteData['animation']
-	"
->
+	">
 	<router-outlet #outlet="outlet"></router-outlet>
 </mat-tab-nav-panel>

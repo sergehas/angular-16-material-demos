@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input } from "@angular/core";
+import { Component, Input, booleanAttribute } from "@angular/core";
 import { MatTabsModule } from "@angular/material/tabs";
 
 import {
@@ -11,8 +11,8 @@ import {
 } from "@angular/router";
 import { MenuNode, NavBuilder } from "./models/nav-builder";
 
-import { slideInAnimation } from "../../animations/route-animation";
 import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
+import { slideInAnimation } from "../../animations/route-animation";
 
 @Component({
 	selector: "app-tabs-nav",
@@ -31,13 +31,14 @@ import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
 })
 export class TabsNavComponent {
 	@Input("path") path: string = "";
+	@Input({ transform: booleanAttribute }) sticky = false;
 	navLinks: MenuNode[] = [];
 	activeLinkIndex = -1;
 	constructor(
 		private router: Router,
 		private contexts: ChildrenOutletContexts,
 		private snackBar: MatSnackBar
-	) {}
+	) { }
 	getRouteAnimationData() {
 		console.log("getRouteAnimationData");
 		return this.contexts.getContext("primary")?.route?.snapshot?.data?.[

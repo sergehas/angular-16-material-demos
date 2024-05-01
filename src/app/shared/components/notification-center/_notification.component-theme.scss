@@ -1,0 +1,54 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+@mixin styleNotification($palette) {
+	background: mat.get-color-from-palette($palette);
+	color: mat.get-color-from-palette($palette, "900-contrast");
+	.notification-title {
+		color: color-mix(
+			in srgb,
+			var(--mat-card-subtitle-text-color) 15%,
+			mat.get-color-from-palette($palette, "900-contrast")
+		);
+	}
+	.notification-footer {
+		.notification-progress-bar {
+			--mdc-linear-progress-active-indicator-color: #{mat.get-color-from-palette($palette, "900-contrast")};
+			--mdc-linear-progress-track-color: color-mix(
+				in srgb,
+				#{mat.get-color-from-palette($palette)} 66%,
+				#{mat.get-color-from-palette($palette, "900-contrast")}
+			);
+		}
+	}
+}
+
+@mixin theme($theme) {
+	// with angular native colors
+	// $success: map.get($theme, primary);
+	// $warning: map.get($theme, accent);
+	// $error: map.get($theme, warn);
+
+	// with extended  colors
+	$success: map.get($theme, success);
+	$warning: map.get($theme, warning);
+	$error: map.get($theme, error);
+
+	$background: map.get($theme, background);
+	$foreground: map.get($theme, foreground);
+	$is-dark-theme: map.get($theme, is-dark);
+
+	// $sticky-background-opacity: if($is-dark-theme, 0.2, 0.03);
+
+	.notification-card {
+		&.notification-info {
+			@include styleNotification($success);
+		}
+		&.notification-warn {
+			@include styleNotification($warning);
+		}
+		&.notification-sever {
+			@include styleNotification($error);
+		}
+	}
+}

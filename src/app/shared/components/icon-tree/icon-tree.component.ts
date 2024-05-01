@@ -1,4 +1,5 @@
 import { NestedTreeControl } from "@angular/cdk/tree";
+import { CommonModule } from "@angular/common";
 import {
 	AfterViewInit,
 	Component,
@@ -6,11 +7,10 @@ import {
 	Input,
 	Output,
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { MatTreeNestedDataSource, MatTreeModule } from "@angular/material/tree";
-import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTreeModule, MatTreeNestedDataSource } from "@angular/material/tree";
 import { Category } from "src/app/core/icons/models/category";
 import { IconsService } from "src/app/core/icons/services/icons.service";
 
@@ -36,7 +36,7 @@ export class IconTreeComponent implements AfterViewInit {
 	dataSource = new MatTreeNestedDataSource<Category>();
 
 	constructor(private service: IconsService) {
-		this.dataSource.data = service.getIconslib().categories;
+		this.dataSource.data = this.service.getIconslib().categories;
 		this.treeControl.dataNodes = this.dataSource.data;
 	}
 	ngAfterViewInit() {

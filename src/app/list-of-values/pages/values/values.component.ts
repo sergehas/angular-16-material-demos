@@ -16,7 +16,7 @@ import {
 } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
-import { tap } from "rxjs";
+import { Subject, tap } from "rxjs";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { Value } from "src/app/core/value-list/models/value";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
@@ -32,9 +32,9 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
 	@Input("group") group?: string;
 
 	dataSource!: PageableDataSource<Value>;
-	private _page: Value[] = [];
+	private _page = new Subject<Value[]>();
 
-	get page(): Value[] {
+	get page(): Subject<Value[]> {
 		return this._page;
 	}
 
@@ -62,7 +62,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
 		this.dataSource.sort.sort({ id: "name", start: "asc" } as MatSortable);
 		this.dataSource.connect().subscribe((data) => {
 			//as data is readonly, we must clone it to be able to set _page
-			this._page = data.map((i) => i);
+			this._page.next(data.map((i) => i));
 		});
 	}
 
@@ -72,7 +72,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
 
 	createOrEdit(entity?: Value) {
 		let dialogRef!: MatDialogRef<ValueEditDialog, Value>;
-		if (entity) {
+		if (entity !== undefined) {
 			dialogRef = this.dialog.open(ValueEditDialog, {
 				data: {
 					mode: EditMode.EDIT,
@@ -89,6 +89,15 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
 		}
 		dialogRef.afterClosed().subscribe((result) => {
 			console.log("The dialog was closed with:", result);
+			if (result !== undefined) {
+				this.service.save(result).subscribe((v) => {
+					console.info(`after save: ${v}`);
+					console.log("refreshing");
+					this.dataSource.count();
+					this.dataSource.loadPage();
+				})
+			}
+
 		});
 	}
 }
@@ -108,6 +117,8 @@ export class ValueEditDialog {
 	valueForm: FormGroup;
 
 	constructor(
+		public dialogRef: MatDialogRef<ValueEditDialog>,
+
 		@Inject(MAT_DIALOG_DATA) public data: { mode: EditMode; entity: Value }
 	) {
 		console.log("ent", data.entity);
@@ -138,5 +149,13 @@ export class ValueEditDialog {
 		if (data.mode === EditMode.EDIT) {
 			this.valueForm.get("name")?.disable();
 		}
+	}
+
+	save() {
+		this.dialogRef.close(this.valueForm.getRawValue());
+	}
+
+	delete() {
+		alert("TODO");
 	}
 }
