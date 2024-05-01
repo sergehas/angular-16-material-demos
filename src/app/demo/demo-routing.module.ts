@@ -8,7 +8,6 @@ import { DemoNotifComponent } from "./pages/demo-notif/demo-notif.component";
 import { DemoStickyComponent } from "./pages/demo-sticky/demo-sticky.component";
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoComponent } from "./pages/demo.component";
-import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 
 const routes: Routes = [
 	{
@@ -53,11 +52,6 @@ const routes: Routes = [
 				data: { animation: "slideLeft" },
 			},
 		],
-	},
-	{
-		path: "void-nav",
-		component: VoidNavComponent,
-		data: { animation: "slideLeft" },
 	},
 ];
 

@@ -4,6 +4,7 @@
     flex-wrap: wrap;
     row-gap: var(--app-gap);
     column-gap: var(--app-gap);
+    margin-bottom: var(--app-gap);
 
     .value-item {
         display: flex;
@@ -36,8 +37,12 @@
 
         }
     }
-}
 
-.spacer {
-    flex: 1 1 auto;
+    .spacer {
+        flex: 1 1 auto;
+    }
+
+    .add-button {
+        z-index: 2;
+    }
 }

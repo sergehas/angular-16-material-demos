@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input, booleanAttribute } from "@angular/core";
+import { Component, Input, booleanAttribute, inject } from "@angular/core";
 import { MatTabsModule } from "@angular/material/tabs";
 
 import {
@@ -11,7 +11,9 @@ import {
 } from "@angular/router";
 import { MenuNode, NavBuilder } from "./models/nav-builder";
 
-import { MatSnackBar, MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { NotificationService } from "src/app/core/services/notification.service";
+import { Notification } from "src/app/models/notification";
 import { slideInAnimation } from "../../animations/route-animation";
 
 @Component({
@@ -34,10 +36,12 @@ export class TabsNavComponent {
 	@Input({ transform: booleanAttribute }) sticky = false;
 	navLinks: MenuNode[] = [];
 	activeLinkIndex = -1;
+	private _notifService = inject(NotificationService);
+
+
 	constructor(
 		private router: Router,
 		private contexts: ChildrenOutletContexts,
-		private snackBar: MatSnackBar
 	) { }
 	getRouteAnimationData() {
 		console.log("getRouteAnimationData");
@@ -46,15 +50,17 @@ export class TabsNavComponent {
 		];
 	}
 	ngOnInit(): void {
-		console.debug("router config", this.router);
+		console.info("router config", this.router);
 		const root = this.router.config.find((p) => p.path === this.path);
 		const children = root ? root.children : undefined;
 		if (!children || children.length <= 0) {
-			this.snackBar.open(`${this.path} has no menu entry`, "dismiss", {
-				horizontalPosition: "center",
-				verticalPosition: "top",
-				duration: 5000,
-			});
+			this._notifService.notify(
+				new Notification({
+					severity: "warn",
+					message: `${this.path} has no menu entry`,
+					show: true,
+					persistent: false
+				}));
 			return;
 		}
 

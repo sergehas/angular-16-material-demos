@@ -19,7 +19,7 @@ export class IconsService {
 	async loadConfiguration() {
 		const libData = await this.http.get("assets/iconlib.json").toPromise();
 		this.iconlib = this.load(libData as incoLibFormat);
-		console.log("iconlib build: ", this.iconlib);
+		console.info("iconlib build: ", this.iconlib);
 	}
 
 	constructor(
@@ -32,7 +32,7 @@ export class IconsService {
 		const cat = new Category(data.name);
 		data.icons.map((i) => {
 			const icon = cat.addIcon(i);
-			console.log(`registering ${icon.name} in ${NAMESPACE}`);
+			console.debug(`registering ${icon.name} in ${NAMESPACE}`);
 			this.matIconRegistry.addSvgIconInNamespace(
 				NAMESPACE,
 				icon.name.split(":")[1], //remove namespace from name
