@@ -13,43 +13,67 @@ const routes: Routes = [
 	{
 		path: "demo",
 		component: DemoComponent,
-		data: { animation: "slideLeft" },
+		data: {
+			animation: "slideLeft",
+			icon: "preview"
+		},
 		children: [
 			// list "sub" pages from this demo feature components
 			{
 				path: "demo-table",
 				component: DemoTableComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "slideLeft",
+					icon: "table"
+				},
 			},
 			{
 				path: "demo-datasource",
 				component: DemoDatasourceComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "slideLeft",
+					icon: "dataset"
+				},
 			},
 			{
 				path: "demo-export",
 				component: DemoExportComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "slideLeft",
+					icon: "download"
+				},
 			},
 			{
 				path: "demo-icons",
 				component: DemoIconsComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "slideLeft",
+					icon: "imagemode"
+				},
 			},
 			{
 				path: "demo-i18n",
 				component: DemoI18nComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "slideLeft",
+					icon: "translate"
+				},
 			},
 			{
 				path: "demo-notif",
 				component: DemoNotifComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "slideLeft",
+					icon: "notifications"
+				},
 			},
 			{
 				path: "demo-sticky",
 				component: DemoStickyComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "slideLeft",
+					icon: "title"
+				},
 			},
 		],
 	},

@@ -69,6 +69,7 @@ export class AppComponent implements AfterViewInit {
 			expandable: !!node.children && node.children.length > 0,
 			name: node.name,
 			path: node.path,
+			icon: node.icon,
 			level: level,
 		};
 	};
@@ -98,5 +99,6 @@ interface MenuFlatNode {
 	expandable: boolean;
 	name: string;
 	path: string;
+	icon?: string;
 	level: number;
 }

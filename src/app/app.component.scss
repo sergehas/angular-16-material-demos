@@ -41,8 +41,11 @@
 					padding-right: 0;
 					padding-left: 0;
 				}
-				.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
-					border-radius: 0;
+				.menu-icon {
+					flex: 1 0 auto;
+				}
+				.mdc-list-item {
+					padding-left: calc(var(--app-gap) / 2);
 				}
 			}
 		}

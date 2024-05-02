@@ -28,7 +28,9 @@
 						matTreeNodePaddingIndent="10" routerLinkActive="active-menu-node" #rla="routerLinkActive">
 						<!-- use a disabled button to provide padding for tree leaf -->
 						<button mat-icon-button disabled class="tree-button"></button>
-						<a mat-list-item [routerLink]="node.path" [activated]="rla.isActive">{{ node.name }}</a>
+						<mat-icon class="menu-icon" mat-list-icon [fontIcon]="node.icon"></mat-icon>
+						<a mat-list-item [routerLink]="node.path" [activated]="rla.isActive">{{node.name
+							}}</a>
 					</mat-tree-node>
 					<!-- This is the tree node template for expandable nodes -->
 					<mat-tree-node class="menu-node" *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding
@@ -43,6 +45,7 @@
 								}}
 							</mat-icon>
 						</button>
+						<mat-icon class="menu-icon" mat-list-icon [fontIcon]="node.icon"></mat-icon>
 						<a mat-list-item [routerLink]="node.path" [activated]="rla.isActive">{{ node.name }}</a>
 					</mat-tree-node>
 				</mat-tree>

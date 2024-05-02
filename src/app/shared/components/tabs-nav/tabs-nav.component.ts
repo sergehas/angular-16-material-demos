@@ -11,7 +11,7 @@ import {
 } from "@angular/router";
 import { MenuNode, NavBuilder } from "./models/nav-builder";
 
-import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatIconModule } from "@angular/material/icon";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { Notification } from "src/app/models/notification";
 import { slideInAnimation } from "../../animations/route-animation";
@@ -25,7 +25,7 @@ import { slideInAnimation } from "../../animations/route-animation";
 		CommonModule,
 		RouterModule,
 		MatTabsModule,
-		MatSnackBarModule,
+		MatIconModule,
 		RouterLink,
 		RouterOutlet,
 	],
@@ -65,7 +65,7 @@ export class TabsNavComponent {
 		}
 
 		this.navLinks = children.map((c) =>
-			NavBuilder.nodeFromPath(".", c.path)
+			NavBuilder.nodeFromPath(".", c.path, (c.data ?? {})["icon"])
 		);
 	}
 }
