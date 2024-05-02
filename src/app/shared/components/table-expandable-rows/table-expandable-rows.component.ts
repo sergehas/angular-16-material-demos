@@ -82,7 +82,7 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
 	private _page: T[] = [];
 
 	get page(): T[] {
-		return this.page;
+		return this._page;
 	}
 
 	@ViewChild(MatPaginator) paginator: MatPaginator | undefined;
@@ -134,7 +134,6 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
 
 	/** Whether the number of selected elements matches the total number of rows. */
 	isAllSelected() {
-		// TODO
 		const numSelected = this.selection!.selected.length;
 		const numRows = this._page.length;
 		return numSelected === numRows;

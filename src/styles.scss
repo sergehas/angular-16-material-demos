@@ -1,21 +1,50 @@
 /* You can add global styles to this file, and also import other style files */
-@use '@angular/material' as mat;
-@use './app-theme';
-
-
-// Define the light theme.
-$primary: mat.define-palette(mat.$indigo-palette);
-$accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
-$theme: mat.define-light-theme((
-  color: (
-    primary: $primary,
-    accent: $accent
-  ),
-  typography: mat.define-typography-config(),
-));
+@use "@angular/material" as mat;
+@use "./styles/ex-theme" as ex;
+@use "./app-theme";
 
 // Include material core styles.
 @include mat.core();
+
+// Define the light theme.
+$primary: mat.$indigo-palette;
+$accent: mat.$pink-palette;
+// The warn palette is optional (defaults to red).
+$warn: mat.$red-palette;
+
+$success: mat.$green-palette;
+$warning: mat.$orange-palette;
+$error: mat.$red-palette;
+
+$theme: ex.extend-theme($primary, $accent, $warn, $success, $warning, $error);
+
+// $theme: mat.define-light-theme(
+//   (
+//     color: (
+//       primary: $primary,
+//       accent: $accent,
+//       warn: $warn
+//     ),
+//     typography: mat.define-typography-config()
+//   )
+// );
+
+//define few utility classes
+.mdc-button {
+  & > .mdc-button__label {
+    text-transform: uppercase;
+  }
+  &.icon-only {
+    width: 48px;
+    max-width: 48px;
+    & > .mdc-button__label {
+      display: none;
+    }
+    & > mat-icon {
+      margin: 0;
+    }
+  }
+}
 
 @include mat.all-component-themes($theme);
 @include app-theme.theme($theme);

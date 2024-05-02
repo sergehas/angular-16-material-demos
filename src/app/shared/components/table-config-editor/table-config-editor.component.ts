@@ -37,7 +37,7 @@ export class TableConfigEditorComponent {
 	@Input() maxHeight = "100%";
 
 	/**
-	 * Predicate function that only allows to sort sicky column XOR non sticky column. doesn't allow to interleave sticky/non sticky .
+	 * Predicate function that only allows to sort sticky column XOR non sticky column. doesn't allow to interleave sticky/non sticky .
 	 * WARNING: `this` is the drop lit, not the component
 	 */
 	sortPredicate(
@@ -45,7 +45,7 @@ export class TableConfigEditorComponent {
 		item: CdkDrag<TableColumn>,
 		drop: CdkDropList
 	): boolean {
-		return item.data.sticky === drop.data[index].sticky;
+		return item.data.sticky === drop.data[index].sticky && item.data.group === drop.data[index].group;
 	}
 
 	drop(event: CdkDragDrop<TableColumn[]>): void {

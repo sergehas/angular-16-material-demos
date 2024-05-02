@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
+import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map } from "rxjs";
@@ -8,31 +8,40 @@ export type Page = {
 	pageSize: number;
 };
 
+export type Filter = Record<
+	string,
+	string | boolean | number | Date | (string | boolean | number | Date)
+>;
+
 @Injectable({
 	providedIn: "root",
 })
 export abstract class HttpService<T> {
-	constructor(readonly http: HttpClient, protected baseUrl: string) {}
+	protected headers: HttpHeaders = new HttpHeaders({
+		accept: "application/json",
+	});
 
-	count(filter = ""): Observable<number> {
-		// const requestUrl = `${
-		// 	GithubService.href
-		// }?q=repo:angular/components&sort=${sort}&order=${order}&per_page=${pageSize}&page=${
-		// 	pageNumber + 1
-		// }`;
-		//there is no dedicated API for count, only the search api is available ==> to count, trigger a search, with result page size=1
+	constructor(readonly http: HttpClient, protected baseUrl: string) { }
+
+	protected encodeFilter(f: Filter | undefined): string {
+		if (!f) return "";
+		return encodeURIComponent(JSON.stringify(f));
+	}
+	count(criteria?: Filter): Observable<number> {
+		let params = new HttpParams();
+		if (criteria) {
+			params = params.set("q", this.encodeFilter(criteria));
+		}
 		return this.http
-			.get<{ total_count: number; items: T[] }>(this.baseUrl, {
-				headers: {
-					accept: "application/json",
-				},
-				params: new HttpParams().set("per_page", 1),
+			.get<{ totalCount: number; items: T[] }>(this.baseUrl, {
+				headers: this.headers,
+				params: params,
 			})
-			.pipe(map((res) => res.total_count));
+			.pipe(map((res) => res.totalCount));
 	}
 
 	find(
-		filter = "",
+		criteria: Filter | undefined,
 		sort: Sort | undefined,
 		page: Page | undefined
 	): Observable<T[]> {
@@ -47,13 +56,23 @@ export abstract class HttpService<T> {
 				.set("pageSize", page!.pageSize)
 				.set("page", page!.pageNumber + 1);
 		}
+		if (criteria) {
+			params = params.set("q", this.encodeFilter(criteria));
+		}
 		return this.http
 			.get<{ total_count: number; items: T[] }>(this.baseUrl, {
-				headers: {
-					accept: "application/json",
-				},
+				headers: this.headers,
 				params: params,
 			})
 			.pipe(map((res) => res.items));
+	}
+
+	get(id: keyof T): Observable<T> {
+		const u = this.baseUrl + `/${encodeURIComponent(String(id))}`
+		return this.http
+			.get<T>(u, {
+				headers: this.headers,
+			})
+			.pipe(map((res) => res));
 	}
 }

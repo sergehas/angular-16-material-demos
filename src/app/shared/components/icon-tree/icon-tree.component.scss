@@ -1,0 +1,73 @@
+.icon-tree-invisible {
+	display: none;
+}
+.icon-tree {
+	max-width: 200px;
+	--node-padding: 30px;
+	.icon-tree-node,
+	.mat-nested-tree-node {
+		.icon-list {
+			display: flex;
+			flex-direction: row;
+			flex-wrap: wrap;
+		}
+		.icon-list-item {
+			display: flex;
+			padding: 4px;
+			border-radius: 4px;
+			// make icon bigger
+			&[selected="true"] {
+				background-color: var(--mat-option-selected-state-layer-color);
+			}
+			&:hover,
+			&[selected="true"] {
+				padding: 0;
+				.selectable-icon {
+					width: 32px;
+					height: 32px;
+				}
+			}
+		}
+	}
+	.mat-nested-tree-node div[role="group"] {
+		padding-left: var(--node-padding);
+	}
+}
+
+.icon-tree-node {
+	flex-direction: column;
+	display: flex;
+	align-content: flex-start;
+	align-items: flex-start;
+}
+
+.category-node {
+	display: flex;
+	align-items: center;
+	flex: 1;
+	word-wrap: break-word;
+}
+/*
+ * Padding for leaf nodes.
+ * Leaf nodes need to have padding so as to align with other non-leaf nodes
+ * under the same parent.
+ */
+.category-node,
+.icon-tree-node {
+	& [role="group"] {
+		padding-left: var(--node-padding);
+	}
+}
+
+.tree-button {
+	width: var(--node-padding);
+	height: var(--mdc-icon-button-state-layer-size);
+	border: none;
+	background-color: inherit;
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	align-items: center;
+	border-radius: 4px;
+	padding: 0;
+}

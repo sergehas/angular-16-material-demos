@@ -1,0 +1,28 @@
+.notif-button-row {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-content: center;
+	justify-content: flex-end;
+	grid-gap: calc(var(--app-gap) / 2);
+	padding: calc(var(--app-gap) / 2) var(--app-gap);
+	.icon-only {
+		min-width: 36px;
+		padding: 16px 0;
+	}
+	.severity-filter {
+		box-sizing: border-box;
+		text-transform: var(--mdc-outlined-button-label-text-transform);
+		height: var(--mdc-outlined-button-container-height);
+		--mat-standard-button-toggle-height: var(--mdc-outlined-button-container-height);
+	}
+}
+.notif-list {
+	display: flex;
+	flex-direction: column;
+}
+
+.notif-list[data-sort="desc"] {
+	display: flex;
+	flex-direction: column-reverse;
+}

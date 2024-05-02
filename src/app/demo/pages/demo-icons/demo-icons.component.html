@@ -1,0 +1,77 @@
+<section>
+	<h2>This demo illustrate iconlib service & registry</h2>
+	<h3>Overview</h3>
+	<p>
+		Teh goal of the iconsService is to provide a easy way to add a large set
+		of static icons (static: part of the GUI app bundle) & use them with as
+		a collection (in addition to be usable as regular <code>mat-icon</code>)
+	</p>
+	<p>
+		1st, the <code>src/assets/iconlib.json</code> should be generated at
+		compilation time. See <code>package.json build:iconlib</code>.
+		Basically, it just reflect the scanned directory folder tree.
+	</p>
+	<p>
+		Then, ar runtime / app startup, the iconlib il loaded by the
+		<code>IconsService</code> with a factory to ensure lib is loaded before
+		any page is displayed
+	</p>
+	<p>
+		finally, all the icons loaded from the iconlib are usable as regular
+		angular icon, with namespace <code>parameter</code>
+	</p>
+	<p>Column widths can be defines by css or by config</p>
+</section>
+<mat-divider></mat-divider>
+<section class="mat-elevation-z8">
+	<div class="icon-demo-container">
+		<div class="label-icon" *ngFor="
+				let icon of [
+					'brands-gcp',
+					'countries-Europe-European_Union-se',
+					'countries-Australia-au'
+				]
+			">
+			<mat-label>icon <code>parameter:{{ icon }}</code>
+			</mat-label>
+			<mat-icon [svgIcon]="'parameter:' + icon"></mat-icon>
+		</div>
+	</div>
+</section>
+<mat-divider></mat-divider>
+
+<section>
+	selected icon: <code>{{ selected }}</code>
+	<button mat-flat-button color="accent" matBadgePosition="below before" (click)="selected = null">
+		CLEAR
+	</button>
+</section>
+<section class="mat-elevation-z8">
+	<app-icon-tree class="mat-elevation-z4" [expanded]="false" [(value)]="selected"></app-icon-tree>
+</section>
+
+<section class="mat-elevation-z8">
+	<p>
+		<code>app-icon-select</code> as a simple selector
+	</p><app-icon-select [(value)]="selected"></app-icon-select>
+</section>
+
+<section class="mat-elevation-z8">
+	<p>
+		<code>app-icon-select</code> as a form field
+	</p>
+	<div class="field-demo-container">
+		<mat-form-field>
+			<mat-label>Select me</mat-label>
+			<app-icon-select [(value)]="selected" required [formControl]="icon"></app-icon-select>
+			<mat-error>icon is required</mat-error>
+			<mat-hint>choose your icon</mat-hint>
+		</mat-form-field>
+		<mat-form-field appearance="outline" style="max-width: 80px;">
+			<app-icon-select [(value)]="selected" required [formControl]="icon"
+				tooltip="I'm the tooltip"></app-icon-select>
+			<mat-error>required</mat-error>
+			<mat-hint>icon ?</mat-hint>
+		</mat-form-field>
+	</div>
+</section>

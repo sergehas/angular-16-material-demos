@@ -1,15 +1,8 @@
-import {
-	BreakpointObserver,
-	Breakpoints,
-	MediaMatcher,
-} from "@angular/cdk/layout";
-import {
-	ChangeDetectionStrategy,
-	ChangeDetectorRef,
-	Component,
-	inject,
-} from "@angular/core";
 import { VERSION as CDK_VERSION } from "@angular/cdk";
+import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild, inject } from "@angular/core";
+import { VERSION as MAT_VERSION } from "@angular/material/core";
+import { TranslateService } from "@ngx-translate/core";
 
 import { FlatTreeControl } from "@angular/cdk/tree";
 import {
@@ -17,9 +10,16 @@ import {
 	MatTreeFlattener,
 } from "@angular/material/tree";
 
-import { VERSION as MAT_VERSION } from "@angular/material/core";
-import { Route, Router } from "@angular/router";
+import { MatSidenavContainer } from "@angular/material/sidenav";
+import { Router } from "@angular/router";
 import { Observable, map, shareReplay } from "rxjs";
+import { NotificationService } from "./core/services/notification.service";
+import { ScrollService } from "./core/services/scroll.service";
+import { Notification } from "./models/notification";
+import {
+	MenuNode,
+	NavBuilder,
+} from "./shared/components/tabs-nav/models/nav-builder";
 
 @Component({
 	selector: "app-root",
@@ -27,7 +27,9 @@ import { Observable, map, shareReplay } from "rxjs";
 	styleUrls: ["/app.component.scss"],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
+	@ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
+
 	title = `Angular ${CDK_VERSION.full} Material ${MAT_VERSION.full} demo`;
 	private breakpointObserver = inject(BreakpointObserver);
 	isHandset$: Observable<boolean> = this.breakpointObserver
@@ -36,8 +38,31 @@ export class AppComponent {
 			map((result) => result.matches),
 			shareReplay()
 		);
-	fillerNav = Array.from({ length: 10 }, (_, i) => `Nav Item ${i + 1}`);
+	notifications$: Observable<Set<Notification>>;
 
+	constructor(
+		private router: Router,
+		private service: NotificationService,
+		translate: TranslateService,
+		private scrollService: ScrollService
+	) {
+		// this language will be used as a fallback when a translation isn't found in the current language
+		translate.setDefaultLang("en-US");
+
+		// the lang to use, if the lang isn't available, it will use the current loader to get them
+		translate.use("en-US");
+		//menu content
+		this.dataSource.data = NavBuilder.buildTree("", this.router.config);
+		console.info("menu datasource", this.dataSource.data);
+
+		this.notifications$ = this.service.notifications$;
+	}
+
+	ngAfterViewInit(): void {
+		this.sidenavContainer.scrollable.elementScrolled().subscribe(() => this.scrollService.scroll());
+
+
+	}
 	//menu
 	private _transformer = (node: MenuNode, level: number): MenuFlatNode => {
 		return {
@@ -64,24 +89,10 @@ export class AppComponent {
 		this.treeControl,
 		this.treeFlattener
 	);
-	constructor(
-		private router: Router,
-		changeDetectorRef: ChangeDetectorRef,
-		media: MediaMatcher
-	) {
-		//menu content
-		this.dataSource.data = buildTree("", this.router.config);
-		console.info(this.dataSource.data);
-	}
+
 	hasChild = (_: number, node: MenuFlatNode) => node.expandable;
 }
 
-// tree menu mangement
-interface MenuNode {
-	name: string;
-	path: string;
-	children?: MenuNode[];
-}
 /** Flat node with expandable and level information */
 interface MenuFlatNode {
 	expandable: boolean;
@@ -89,20 +100,3 @@ interface MenuFlatNode {
 	path: string;
 	level: number;
 }
-
-const nodeFromPath = (parent: string, path?: string): MenuNode => {
-	const currentPath = path ? `${parent}/${path}` : parent;
-	return { name: path!, path: `${currentPath}` };
-};
-
-const buildTree = (parent: string, routes: Route[]): MenuNode[] => {
-	let menu: MenuNode[] = [];
-	for (let route of routes) {
-		let node: MenuNode = nodeFromPath(parent, route.path);
-		if (route.children) {
-			node.children = buildTree(node.path, route.children);
-		}
-		menu.push(node);
-	}
-	return menu;
-};

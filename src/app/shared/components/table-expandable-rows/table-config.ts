@@ -13,6 +13,7 @@ interface TableColumnDef {
 	hidden?: boolean;
 	minWidth?: number;
 	selector?: boolean;
+	group?: string;
 }
 
 export class TableColumn implements TableColumnDef {
@@ -23,6 +24,7 @@ export class TableColumn implements TableColumnDef {
 	hidden?: boolean = false;
 	minWidth?: number;
 	selector?: boolean;
+	group?: string;
 
 	constructor(def: TableColumnDef) {
 		this.name = def.name;
@@ -33,6 +35,7 @@ export class TableColumn implements TableColumnDef {
 		this.hidden = def.hidden ?? false;
 		this.minWidth = def.minWidth ?? 0;
 		this.selector = def.selector ?? false;
+		this.group = def.group ?? "";
 	}
 }
 
@@ -45,12 +48,20 @@ export class ColumnConfig {
 	get defaultSort(): TableColumn | undefined {
 		return this.columns.find((c) => c.defaultSort !== undefined);
 	}
+	
 	constructor(cols: TableColumnDef[]) {
 		this.columns = cols.map((c) => new TableColumn(c));
 		// this.columns.push({
 		// 	name: "action",
 		// 	sortable: false,
 		// });
+	}
+	get groups(): string[] {
+		let g: string[] = [];
+		return this.columns.reduce<string[]>((g: string[], c) => {
+			return g.includes(c.group!) ? g : g.concat(c.group!)
+		}, g);
+
 	}
 }
 
@@ -76,6 +87,6 @@ export class TableConfig {
 		this.responsive = conf.responsive ?? true;
 		this.stickyHeader = conf.stickyHeader ?? true;
 		this.paginator = conf.paginator ?? true;
-		this.columns = new ColumnConfig(conf.columns!);
+		this.columns = new ColumnConfig(conf.columns ?? []);
 	}
 }

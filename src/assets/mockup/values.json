@@ -1,0 +1,114 @@
+{
+	"items": [
+		{
+			"group": "countries",
+			"name": "FR",
+			"label": "France",
+			"icon": "parameter:countries-Europe-European_Union-fr",
+			"created": "2023-10-14T01:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "US",
+			"label": "United States",
+			"icon": "parameter:countries-America-us",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "CY",
+			"label": "Cyprus",
+			"icon": "parameter:countries-Europe-European_Union-cy",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},		{
+			"group": "countries",
+			"name": "IT",
+			"label": "Italia",
+			"icon": "parameter:countries-Europe-European_Union-it",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "ES",
+			"label": "Spain",
+			"icon": "parameter:countries-Europe-European_Union-es",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "IN",
+			"label": "India",
+			"icon": "parameter:countries-Asia-in",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "SK",
+			"label": "Slovakia",
+			"icon": "parameter:countries-Europe-European_Union-sk",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "CZ",
+			"label": "Czechia",
+			"icon": "parameter:countries-Europe-European_Union-cz",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "MA",
+			"label": "Morocco",
+			"icon": "parameter:countries-Africa-ma",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "CH",
+			"label": "Swiss",
+			"icon": "parameter:countries-Europe-ch",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "NO",
+			"label": "Norway",
+			"icon": "parameter:countries-Europe-no",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "brands",
+			"name": "AWS",
+			"label": "Amazon Web services",
+			"icon": "parameter:brands-aws",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "categories",
+			"name": "assembly",
+			"label": "Assembly of components",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "categories",
+			"name": "component",
+			"label": "Base component, should be part of an assembly",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		}
+	
+	]
+}

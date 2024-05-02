@@ -1,9 +1,9 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, map } from "rxjs";
-import { Issue } from "../models/issue";
-import { HttpService, Page } from "../../services/http-service";
 import { Sort } from "@angular/material/sort";
+import { Observable, map } from "rxjs";
+import { HttpService, Page } from "../../services/http-service";
+import { Issue } from "../models/issue";
 
 @Injectable({
 	providedIn: "root",
@@ -13,9 +13,13 @@ export class GithubService extends HttpService<Issue> {
 	static repo = "repo:angular/components";
 	constructor(http: HttpClient) {
 		super(http, GithubService.href);
+		this.headers = this.headers.set(
+			"accept",
+			"application/vnd.github+json"
+		);
 	}
 
-	override count(filter = ""): Observable<number> {
+	override count(filter?: Partial<Issue>): Observable<number> {
 		// const requestUrl = `${
 		// 	GithubService.href
 		// }?q=repo:angular/components&sort=${sort}&order=${order}&per_page=${pageSize}&page=${
@@ -24,9 +28,7 @@ export class GithubService extends HttpService<Issue> {
 		//there is no dedicated API for count, only the search api is available ==> to count, trigger a search, with result page size=1
 		return this.http
 			.get<{ total_count: number; items: Issue[] }>(GithubService.href, {
-				headers: {
-					accept: "application/vnd.github+json",
-				},
+				headers: this.headers,
 				params: new HttpParams()
 					.set("q", GithubService.repo)
 					.set("per_page", 1),
@@ -39,7 +41,7 @@ export class GithubService extends HttpService<Issue> {
 	 *
 	 */
 	override find(
-		filter = "",
+		filter: Partial<Issue>,
 		sort: Sort | undefined,
 		page: Page | undefined
 	): Observable<Issue[]> {
@@ -62,9 +64,7 @@ export class GithubService extends HttpService<Issue> {
 
 		return this.http
 			.get<{ total_count: number; items: Issue[] }>(GithubService.href, {
-				headers: {
-					accept: "application/vnd.github+json",
-				},
+				headers: this.headers,
 				params: params,
 			})
 			.pipe(
@@ -72,15 +72,15 @@ export class GithubService extends HttpService<Issue> {
 				map((res) => {
 					return res.items.map(
 						(i: any) =>
-							({
-								created: new Date(i.created_at),
-								number: i.number,
-								state: i.state,
-								title: i.title,
-								url: i.url,
-								body: i.body,
-								userId: i.user.login,
-							} as Issue)
+						({
+							created: new Date(i.created_at),
+							number: i.number,
+							state: i.state,
+							title: i.title,
+							url: i.url,
+							body: i.body,
+							userId: i.user.login,
+						} as Issue)
 					);
 				})
 			);

@@ -1,0 +1,50 @@
+.notification-card {
+    margin: calc(var(--app-gap) / 2) var(--app-gap);
+
+    .notification-header {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: nowrap;
+        align-items: center;
+        padding-right: calc(var(--app-gap) / 2);
+        .mat-icon {
+            margin-right: calc(var(--app-gap) / 2);
+        }
+        .spacer {
+            flex: 1 1 auto;
+        }
+        .mat-mdc-button,
+        .mat-mdc-unelevated-button,
+        .mdc-button--unelevated {
+            min-width: unset;
+            padding: 0 calc(var(--app-gap) / 2) 0 calc(var(--app-gap) / 2);
+            & > .mat-icon {
+                margin-right: 0;
+                margin-left: 0;
+            }
+        }
+    }
+    .notification-content {
+        max-height: 200px;
+        overflow: auto;
+        // display: block;
+        // //white-space: nowrap;
+        // overflow: hidden;
+        // text-overflow: ellipsis;
+    }
+    .notification-footer {
+        padding-left: calc(var(--app-gap) / 2);
+        padding-right: calc(var(--app-gap) / 2);
+        .progress-hint {
+            font-family: var(--mat-form-field-subscript-text-font);
+            line-height: var(--mat-form-field-subscript-text-line-height);
+            font-size: var(--mat-form-field-subscript-text-size);
+            letter-spacing: var(--mat-form-field-subscript-text-tracking);
+            font-weight: var(--mat-form-field-subscript-text-weight);
+            text-align: end;
+            padding-top: calc(
+                max(var(--mdc-linear-progress-track-height), var(--mdc-linear-progress-active-indicator-height)) * -2
+            );
+        }
+    }
+}

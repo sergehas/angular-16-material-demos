@@ -1,0 +1,29 @@
+code {
+	background-color: var(--mat-badge-background-color);
+	color: var(--mat-badge-text-color);
+	padding: 4px 8px;
+	border-radius: 4px;
+}
+section {
+	padding: 20px 10px;
+	margin: 16px;
+}
+.icon-demo-container {
+	display: flex;
+	flex-direction: column;
+	row-gap: 16px;
+	margin: 16px 0;
+	.label-icon {
+		display: flex;
+		align-items: center;
+		column-gap: 16px;
+	}
+}
+
+.field-demo-container {
+	display: flex;
+	flex-direction: row;
+	row-gap: 16px;
+	column-gap: 16px;
+	margin: 16px 0;
+}

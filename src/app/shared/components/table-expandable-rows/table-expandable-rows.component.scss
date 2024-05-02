@@ -96,6 +96,9 @@
 				max-height: inherit;
 			}
 		}
+		&>.mat-mdc-row.mat-ripple {
+			overflow:clip;
+		}
 	}
 }
 .paginator {

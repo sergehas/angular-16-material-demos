@@ -1,0 +1,26 @@
+.dialog-content {
+    max-width: 500px;
+
+    form {
+        display: flex;
+        flex-direction: row;
+        column-gap: calc(var(--app-gap) / 2);
+        row-gap: calc(var(--app-gap) / 2);
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        mat-form-field {
+            min-width: 100px;
+            flex: 1 1 auto;
+        }
+        .group {
+            min-width: 100%;
+        }
+        .icon {
+            max-width: 60px;
+        }
+        .label {
+            min-width: 300px;
+        }
+    }
+}

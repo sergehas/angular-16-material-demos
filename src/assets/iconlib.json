@@ -1,0 +1,123 @@
+{
+  "name": "root",
+  "icons": [],
+  "categories": [
+    {
+      "name": "brands",
+      "icons": [
+        "assets/brands/aws.svg",
+        "assets/brands/azure.svg",
+        "assets/brands/gcp.svg"
+      ],
+      "categories": []
+    },
+    {
+      "name": "countries",
+      "icons": [],
+      "categories": [
+        {
+          "name": "Africa",
+          "icons": [
+            "assets/countries/Africa/dz.svg",
+            "assets/countries/Africa/eg.svg",
+            "assets/countries/Africa/ga.svg",
+            "assets/countries/Africa/gh.svg",
+            "assets/countries/Africa/ke.svg",
+            "assets/countries/Africa/ma.svg",
+            "assets/countries/Africa/za.svg"
+          ],
+          "categories": []
+        },
+        {
+          "name": "America",
+          "icons": [
+            "assets/countries/America/ar.svg",
+            "assets/countries/America/br.svg",
+            "assets/countries/America/ca.svg",
+            "assets/countries/America/cl.svg",
+            "assets/countries/America/mx.svg",
+            "assets/countries/America/ua.svg",
+            "assets/countries/America/us.svg",
+            "assets/countries/America/uy.svg"
+          ],
+          "categories": []
+        },
+        {
+          "name": "Antartica",
+          "icons": [
+            "assets/countries/Antartica/aq.svg"
+          ],
+          "categories": []
+        },
+        {
+          "name": "Asia",
+          "icons": [
+            "assets/countries/Asia/cn.svg",
+            "assets/countries/Asia/in.svg",
+            "assets/countries/Asia/jp.svg",
+            "assets/countries/Asia/kr.svg",
+            "assets/countries/Asia/ph.svg"
+          ],
+          "categories": []
+        },
+        {
+          "name": "Australia",
+          "icons": [
+            "assets/countries/Australia/au.svg",
+            "assets/countries/Australia/fj.svg",
+            "assets/countries/Australia/nz.svg",
+            "assets/countries/Australia/tv.svg",
+            "assets/countries/Australia/ws.svg"
+          ],
+          "categories": []
+        },
+        {
+          "name": "Europe",
+          "icons": [
+            "assets/countries/Europe/ch.svg",
+            "assets/countries/Europe/gb.svg",
+            "assets/countries/Europe/is.svg",
+            "assets/countries/Europe/no.svg",
+            "assets/countries/Europe/tr.svg",
+            "assets/countries/Europe/ua.svg"
+          ],
+          "categories": [
+            {
+              "name": "European_Union",
+              "icons": [
+                "assets/countries/Europe/European_Union/at.svg",
+                "assets/countries/Europe/European_Union/be.svg",
+                "assets/countries/Europe/European_Union/bg.svg",
+                "assets/countries/Europe/European_Union/cy.svg",
+                "assets/countries/Europe/European_Union/cz.svg",
+                "assets/countries/Europe/European_Union/de.svg",
+                "assets/countries/Europe/European_Union/dk.svg",
+                "assets/countries/Europe/European_Union/ee.svg",
+                "assets/countries/Europe/European_Union/es.svg",
+                "assets/countries/Europe/European_Union/fi.svg",
+                "assets/countries/Europe/European_Union/fr.svg",
+                "assets/countries/Europe/European_Union/gr.svg",
+                "assets/countries/Europe/European_Union/hr.svg",
+                "assets/countries/Europe/European_Union/hu.svg",
+                "assets/countries/Europe/European_Union/ie.svg",
+                "assets/countries/Europe/European_Union/it.svg",
+                "assets/countries/Europe/European_Union/lt.svg",
+                "assets/countries/Europe/European_Union/lu.svg",
+                "assets/countries/Europe/European_Union/lv.svg",
+                "assets/countries/Europe/European_Union/mt.svg",
+                "assets/countries/Europe/European_Union/nl.svg",
+                "assets/countries/Europe/European_Union/pl.svg",
+                "assets/countries/Europe/European_Union/pt.svg",
+                "assets/countries/Europe/European_Union/ro.svg",
+                "assets/countries/Europe/European_Union/se.svg",
+                "assets/countries/Europe/European_Union/si.svg",
+                "assets/countries/Europe/European_Union/sk.svg"
+              ],
+              "categories": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

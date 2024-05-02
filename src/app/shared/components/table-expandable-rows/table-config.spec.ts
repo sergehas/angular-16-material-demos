@@ -1,7 +1,7 @@
-import { TableConfig } from './table-config';
+import { TableConfig } from "./table-config";
 
-describe('TableConfig', () => {
-  it('should create an instance', () => {
-    expect(new TableConfig()).toBeTruthy();
-  });
+describe("TableConfig", () => {
+	it("should create an instance", () => {
+		expect(new TableConfig({ name: "" })).toBeTruthy();
+	});
 });

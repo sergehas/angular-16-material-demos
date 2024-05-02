@@ -1,25 +1,72 @@
 import { DataSource } from "@angular/cdk/collections";
+import { EventEmitter } from "@angular/core";
+import { MatPaginator, PageEvent } from "@angular/material/paginator";
+import { MatSort, Sort } from "@angular/material/sort";
 import {
 	BehaviorSubject,
 	Observable,
+	Subscription,
+	auditTime,
 	catchError,
+	combineLatest,
 	finalize,
 	from,
 	merge,
-	of,
 	of as observableOf,
-	combineLatest,
+	of,
 	tap,
-	auditTime,
-	Subscription,
 } from "rxjs";
-import { HttpService, Page } from "../services/http-service";
-import { MatPaginator, PageEvent } from "@angular/material/paginator";
-import { MatSort, Sort } from "@angular/material/sort";
+import { Filter, HttpService, Page } from "../services/http-service";
+
+export class Paginator {
+	pageIndex = 0;
+	pageSize!: number;
+	page = new EventEmitter<PageEvent>();
+	initialized = new Observable<void>();
+	length = 0;
+
+	constructor(pageSize: number = 100) {
+		this.pageSize = pageSize;
+	}
+	/** Emits an event notifying that a change of the paginator's properties has been triggered. */
+	private _emitPageEvent(previousPageIndex: number) {
+		this.page.emit({
+			previousPageIndex,
+			pageIndex: this.pageIndex,
+			pageSize: this.pageSize,
+			length: this.length,
+		});
+	}
+
+
+	/** Whether there is a next page. */
+	hasNextPage(): boolean {
+		const maxPageIndex = this.getNumberOfPages() - 1;
+		return this.pageIndex < maxPageIndex && this.pageSize != 0;
+	}
+
+	/** Calculate the number of pages */
+	getNumberOfPages(): number {
+		if (!this.pageSize) {
+			return 0;
+		}
+		return Math.ceil(this.length / this.pageSize);
+	}
+
+	nextPage(): void {
+		if (!this.hasNextPage()) {
+			return;
+		}
+		const previousPageIndex = this.pageIndex;
+		this.pageIndex = this.pageIndex + 1;
+		this._emitPageEvent(previousPageIndex);
+	}
+
+}
 
 export class PageableDataSource<
 	T,
-	P extends MatPaginator = MatPaginator
+	P extends MatPaginator | Paginator = MatPaginator
 > extends DataSource<T> {
 	protected modelsSubject = new BehaviorSubject<T[]>([]);
 	protected loadingSubject = new BehaviorSubject<boolean>(false);
@@ -29,6 +76,12 @@ export class PageableDataSource<
 	protected countingSubject = new BehaviorSubject<boolean>(false);
 	public counting$ = this.countingSubject.asObservable();
 	public length$ = this.countSubject.asObservable();
+	private _length = 0;
+
+	get length(): number {
+		return this._length;
+	}
+
 
 	/**
 	 * Instance of the MatSort directive used by the table to control its sorting. Sort changes
@@ -66,6 +119,10 @@ export class PageableDataSource<
 		this.updateChangeSubscription();
 	}
 
+	private _filter: Filter | undefined;
+	set filter(filter: Filter) {
+		this._filter = filter;
+	}
 	constructor(protected service: HttpService<T>) {
 		super();
 		this.updateChangeSubscription();
@@ -76,16 +133,16 @@ export class PageableDataSource<
 		const initalChange = from(["init"]);
 		const sortChange: Observable<Sort | null | void> = this.sort
 			? (merge(
-					this.sort.sortChange,
-					this.sort.initialized
-			  ) as Observable<Sort | void>)
+				this.sort.sortChange,
+				this.sort.initialized
+			) as Observable<Sort | void>)
 			: observableOf(null);
 
 		const pageChange: Observable<PageEvent | null | void> = this.paginator
 			? (merge(
-					this.paginator.page,
-					this.paginator.initialized
-			  ) as Observable<PageEvent | void>)
+				this.paginator.page,
+				this.paginator.initialized
+			) as Observable<PageEvent | void>)
 			: observableOf(null);
 
 		// reset the paginator after sorting
@@ -137,20 +194,24 @@ export class PageableDataSource<
 		this.countSubject.complete();
 		this.countingSubject.complete();
 	}
-	protected loadPage() {
-		console.debug("load page");
+	public loadPage() {
+		console.info("load page");
 		this.load(
-			"",
+			this._filter,
 			this._sort,
 			this._paginator
 				? {
-						pageNumber: this._paginator.pageIndex,
-						pageSize: this._paginator.pageSize,
-				  }
+					pageNumber: this._paginator.pageIndex,
+					pageSize: this._paginator.pageSize,
+				}
 				: undefined
 		);
 	}
-	private load(filter = "", sort: Sort | undefined, page: Page | undefined) {
+	private load(
+		filter: Filter | undefined,
+		sort: Sort | undefined,
+		page: Page | undefined
+	) {
 		this.loadingSubject.next(true);
 		this.service
 			.find(filter, sort, page)
@@ -161,14 +222,17 @@ export class PageableDataSource<
 			.subscribe((models) => this.modelsSubject.next(models));
 	}
 
-	count(filter = "") {
+	count() {
 		this.countingSubject.next(true);
 		this.service
-			.count(filter)
+			.count(this._filter)
 			.pipe(
 				catchError(() => of(0)),
 				finalize(() => this.countingSubject.next(false))
 			)
-			.subscribe((count) => this.countSubject.next(count));
+			.subscribe((count) => {
+				this._length = count;
+				this.countSubject.next(count);
+			});
 	}
 }

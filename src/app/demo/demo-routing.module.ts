@@ -1,24 +1,63 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { DemoComponent } from "./pages/demo.component";
-import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoDatasourceComponent } from "./pages/demo-datasource/demo-datasource.component";
+import { DemoExportComponent } from "./pages/demo-export/demo-export.component";
+import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
+import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
+import { DemoNotifComponent } from "./pages/demo-notif/demo-notif.component";
+import { DemoStickyComponent } from "./pages/demo-sticky/demo-sticky.component";
+import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
+import { DemoComponent } from "./pages/demo.component";
+import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 
 const routes: Routes = [
 	{
 		path: "demo",
 		component: DemoComponent,
+		data: { animation: "slideLeft" },
 		children: [
 			// list "sub" pages from this demo feature components
 			{
 				path: "demo-table",
 				component: DemoTableComponent,
+				data: { animation: "slideLeft" },
 			},
 			{
 				path: "demo-datasource",
 				component: DemoDatasourceComponent,
+				data: { animation: "slideLeft" },
+			},
+			{
+				path: "demo-export",
+				component: DemoExportComponent,
+				data: { animation: "slideLeft" },
+			},
+			{
+				path: "demo-icons",
+				component: DemoIconsComponent,
+				data: { animation: "slideLeft" },
+			},
+			{
+				path: "demo-i18n",
+				component: DemoI18nComponent,
+				data: { animation: "slideLeft" },
+			},
+			{
+				path: "demo-notif",
+				component: DemoNotifComponent,
+				data: { animation: "slideLeft" },
+			},
+			{
+				path: "demo-sticky",
+				component: DemoStickyComponent,
+				data: { animation: "slideLeft" },
 			},
 		],
+	},
+	{
+		path: "void-nav",
+		component: VoidNavComponent,
+		data: { animation: "slideLeft" },
 	},
 ];
 
@@ -26,4 +65,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class DemoRoutingModule {}
+export class DemoRoutingModule { }

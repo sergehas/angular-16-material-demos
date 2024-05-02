@@ -5,7 +5,6 @@ import {
 	OnInit,
 	ViewEncapsulation,
 } from "@angular/core";
-import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 import { Issue } from "src/app/core/github/models/issue";
 import { GithubService } from "src/app/core/github/services/github.service";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
@@ -26,11 +25,11 @@ export class DemoTableComponent implements OnInit {
 		name: "",
 		responsive: true,
 		columns: [
-			{ name: "select", sticky: true, selector: true },
-			{ name: "number", sticky: true },
-			{ name: "title" },
-			{ name: "state" },
-			{ name: "created", defaultSort: "asc" },
+			{ name: "select", sticky: true, selector: true, group: "UI feature" },
+			{ name: "number", sticky: true, group: "Issue" },
+			{ name: "title", group: "Issue" },
+			{ name: "state", group: "Issue" },
+			{ name: "created", defaultSort: "asc", hidden: true, group: "Meta" },
 		],
 	});
 
@@ -40,5 +39,5 @@ export class DemoTableComponent implements OnInit {
 		this.dataSource = new PageableDataSource<Issue>(this.service);
 	}
 
-	ngOnInit(): void {}
+	ngOnInit(): void { }
 }
