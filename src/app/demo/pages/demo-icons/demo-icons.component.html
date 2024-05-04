@@ -23,8 +23,10 @@
 	<p>Column widths can be defines by css or by config</p>
 </section>
 <mat-divider></mat-divider>
-<section class="mat-elevation-z8">
-	<div class="icon-demo-container">
+<mat-divider></mat-divider>
+<section>
+	<h2><code>mat-icon svgIcon</code></h2>
+	<div class="mat-elevation-z8icon-demo-container">
 		<div class="label-icon" *ngFor="
 				let icon of [
 					'brands-gcp',
@@ -39,39 +41,43 @@
 	</div>
 </section>
 <mat-divider></mat-divider>
-
 <section>
 	selected icon: <code>{{ selected }}</code>
 	<button mat-flat-button color="accent" matBadgePosition="below before" (click)="selected = null">
 		CLEAR
 	</button>
 </section>
-<section class="mat-elevation-z8">
+<mat-divider></mat-divider>
+<section>
+	<h2><code>app-icon-tree</code></h2>
 	<app-icon-tree class="mat-elevation-z4" [expanded]="false" [(value)]="selected"></app-icon-tree>
 </section>
-
-<section class="mat-elevation-z8">
-	<p>
-		<code>app-icon-select</code> as a simple selector
-	</p><app-icon-select [(value)]="selected"></app-icon-select>
+<mat-divider></mat-divider>
+<section>
+	<h2><code>app-icon-select</code> as a simple selector (almost no styling)</h2>
+	<div class=" mat-elevation-z8">
+		<app-icon-select [(value)]="selected"></app-icon-select>
+	</div>
 </section>
+<mat-divider></mat-divider>
 
-<section class="mat-elevation-z8">
-	<p>
-		<code>app-icon-select</code> as a form field
-	</p>
-	<div class="field-demo-container">
-		<mat-form-field>
-			<mat-label>Select me</mat-label>
-			<app-icon-select [(value)]="selected" required [formControl]="icon"></app-icon-select>
-			<mat-error>icon is required</mat-error>
-			<mat-hint>choose your icon</mat-hint>
-		</mat-form-field>
-		<mat-form-field appearance="outline" style="max-width: 80px;">
-			<app-icon-select [(value)]="selected" required [formControl]="icon"
-				tooltip="I'm the tooltip"></app-icon-select>
-			<mat-error>required</mat-error>
-			<mat-hint>icon ?</mat-hint>
-		</mat-form-field>
+<section>
+	<h2><code>app-icon-select</code> as a form field</h2>
+
+	<div class="mat-elevation-z8">
+		<div class="field-demo-container">
+			<mat-form-field>
+				<mat-label>Select me</mat-label>
+				<app-icon-select [(value)]="selected" required [formControl]="icon"></app-icon-select>
+				<mat-error>icon is required</mat-error>
+				<mat-hint>choose your icon</mat-hint>
+			</mat-form-field>
+			<mat-form-field appearance="outline" style="max-width: 80px;">
+				<app-icon-select [(value)]="selected" required [formControl]="icon"
+					tooltip="I'm the tooltip"></app-icon-select>
+				<mat-error>required</mat-error>
+				<mat-hint>icon ?</mat-hint>
+			</mat-form-field>
+		</div>
 	</div>
 </section>

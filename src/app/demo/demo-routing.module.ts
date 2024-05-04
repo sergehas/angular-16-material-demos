@@ -31,7 +31,7 @@ const routes: Routes = [
 				path: "demo-datasource",
 				component: DemoDatasourceComponent,
 				data: {
-					animation: "slideLeft",
+					animation: "slideRight",
 					icon: "dataset"
 				},
 			},
@@ -47,7 +47,7 @@ const routes: Routes = [
 				path: "demo-icons",
 				component: DemoIconsComponent,
 				data: {
-					animation: "slideLeft",
+					animation: "slideRight",
 					icon: "imagemode"
 				},
 			},
@@ -63,7 +63,7 @@ const routes: Routes = [
 				path: "demo-notif",
 				component: DemoNotifComponent,
 				data: {
-					animation: "slideLeft",
+					animation: "slideRight",
 					icon: "notifications"
 				},
 			},

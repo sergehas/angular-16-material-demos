@@ -1,26 +1,29 @@
-<h2>This demo illustrate http service compatible data source</h2>
-<h3>Overview</h3>
-<p>
-	This datasouce support (optinal) <b>natively sorting & paging.</b><br />
-	It implements native Angular native datasource, & so can be used in any
-	datasource awre component (such as table)<br />
-	It is design to avoid extra underlyling (http) service call to preserve
-	response time & API cosumption plan.<br />
-	key benefit: it requrire a simple service injection... nothing else!
-</p>
-<h3>Events</h3>
-<p>It emits events while starting/ending to load & count.<br /></p>
+<section>
+	<h2>This demo illustrate http service compatible data source</h2>
+	<h3>Overview</h3>
+	<p>
+		This datasouce support (optinal) <b>natively sorting & paging.</b><br />
+		It implements native Angular native datasource, & so can be used in any
+		datasource awre component (such as table)<br />
+		It is design to avoid extra underlyling (http) service call to preserve
+		response time & API cosumption plan.<br />
+		key benefit: it requrire a simple service injection... nothing else!
+	</p>
+	<h3>Events</h3>
+	<p>It emits events while starting/ending to load & count.<br /></p>
+</section>
 <mat-divider></mat-divider>
-<div class="demo-options">
+
+<section class="demo-options">
 	<mat-slide-toggle [(ngModel)]="paginatorEnabled" (change)="
 			dataSource.paginator = paginatorEnabled ? paginator : undefined
 		">Enable paginiator</mat-slide-toggle>
 	<mat-slide-toggle [(ngModel)]="sortEnabled" (change)="dataSource.sort = sortEnabled ? sort : undefined">Enable
 		sort</mat-slide-toggle>
-	<mat-divider></mat-divider>
-</div>
+</section>
+<mat-divider></mat-divider>
 
-<section class="mat-elevation-z8">
+<section class="demo-options mat-elevation-z8">
 	<table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortEnabled ? 'created' : ''"
 		matSortDisableClear [matSortDirection]="sortEnabled ? 'desc' : ''">
 		<!-- Number Column -->
@@ -55,10 +58,10 @@
 	<mat-paginator [hidden]="!paginatorEnabled" [pageSizeOptions]="[5, 10, 20, 100]" showFirstLastButtons
 		[length]="dataSource.length$ | async" aria-label="Select page">
 	</mat-paginator>
-</section>
+</section><br>
+<mat-divider></mat-divider>
 <section class="demo-options">
-	<mat-divider></mat-divider>
-	<div class="demo-log">
+	<div class="demo-bar">
 		<h3>Datasource event log</h3>
 
 		<button mat-flat-button class="icon-only" color="accent" matBadgePosition="below before"
@@ -73,7 +76,7 @@
 		Datasource events will be logged here
 	</div>
 
-	<ul style="height: 100px;overflow-y: scroll;font-family: monospace">
+	<ul class="demo-log">
 		<li *ngFor="let event of dataSourceEvents.slice().reverse()">
 			{{ event }}
 		</li>

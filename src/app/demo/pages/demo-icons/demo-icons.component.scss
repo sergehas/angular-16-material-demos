@@ -1,18 +1,39 @@
 code {
-	background-color: var(--mat-badge-background-color);
-	color: var(--mat-badge-text-color);
+	background-color:
+		color-mix(in srgb, var(--mat-badge-background-color) 10%, transparent);
+	color: var(--mat-badge-background-color);
 	padding: 4px 8px;
 	border-radius: 4px;
+	margin: 0 0.1rem;
 }
-section {
-	padding: 20px 10px;
-	margin: 16px;
+
+.demo-options {
+	margin: 20px 10px 0;
+
+	display: flex;
+	flex-direction: column;
+
+	& > * {
+		margin-bottom: 16px;
+	}
+
+	.label-container {
+		display: flex;
+		justify-content: space-between;
+		margin: 20px 10px 0;
+
+		.value-label {
+			font-weight: 600;
+		}
+	}
 }
+
 .icon-demo-container {
 	display: flex;
 	flex-direction: column;
 	row-gap: 16px;
 	margin: 16px 0;
+
 	.label-icon {
 		display: flex;
 		align-items: center;
