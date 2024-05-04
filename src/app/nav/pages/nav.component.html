@@ -1,1 +1,48 @@
 <app-tabs-nav sticky path="navigation"></app-tabs-nav>
+<div>
+    <section>
+        <h2>This demo illustrate navigation components & behaviours</h2>
+        <h3>Overview</h3>
+        <p>
+            all GUI (display) components rely on loaded <code>&lt;module&gt;-routing.module.ts</code>. So have a look to
+            tese modules, more specificaly to the <code>data</code> attribute of routes!
+        </p>
+        <mat-divider></mat-divider>
+    </section>
+    <section class="demo-options">
+        <h3>Routes</h3>
+        <dl>
+            <dt><code>data.icon</code> (optional)</dt>
+            <dd>define the icon to display on the right of the navigaiton item. This is a
+                <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon</code></a> name
+            </dd>
+            <dt><code>data.animation</code> (optional) </dt>
+            <dd> define the animation to apply when this route is activated</dd>
+            <dt><code>data.roles</code> (optional) </dt>
+            <dd> define the (user) roles authorized to access the route</dd>
+        </dl>
+        <mat-divider></mat-divider>
+    </section>
+    <section class="demo-options">
+        <h3><code>tab-nav</code></h3>
+        <dl>
+            <dt><code>data.icon</code>(optional) </dt>
+            <dd>define the icon to display on the right of the navigaiton item. This is a
+                <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon 
+                    name</code></a>
+            </dd>
+        </dl>
+        <mat-divider></mat-divider>
+    </section>
+    <section class="demo-options">
+        <mat-radio-group aria-label="Severity">
+            <mat-radio-button value="info">Information</mat-radio-button>
+            <mat-radio-button value="warn">Warning</mat-radio-button>
+            <mat-radio-button value="sever">Sever</mat-radio-button>
+        </mat-radio-group>
+        <mat-slide-toggle>show</mat-slide-toggle>
+        <div class="label-container">
+            <button mat-stroked-button color="primary">ADD</button>
+        </div>
+    </section>
+</div>

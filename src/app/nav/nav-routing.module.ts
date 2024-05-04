@@ -8,11 +8,18 @@ const routes: Routes = [
   {
     path: "navigation",
     component: NavComponent,
+    data: {
+      animation: "slideRight",
+      icon: "navigation",
+    },
     children: [
       {
         path: "void-nav",
         component: VoidNavComponent,
-        data: { animation: "slideLeft" },
+        data: {
+          animation: "slideLeft",
+          icon: "report_problem",
+        },
       },
       {
         path: "nav-forbidden",
@@ -20,6 +27,7 @@ const routes: Routes = [
         canActivate: [anyRoleGuard],
         data: {
           animation: "slideLeft",
+          icon: "gpp_bad",
           roles: ["ADMIN", "VIEWER"]
         },
       },

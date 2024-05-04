@@ -53,8 +53,8 @@
 		</mat-sidenav>
 
 		<mat-sidenav-content>
-			<div class="root-content">
-				<router-outlet></router-outlet>
+			<div class="root-content" [@routeAnimations]="prepareRoute(outlet)">
+				<router-outlet #outlet="outlet"></router-outlet>
 			</div>
 		</mat-sidenav-content>
 		<mat-sidenav class="notif-sidenav" #snotif position="end" mode="over"

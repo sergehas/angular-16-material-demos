@@ -7,10 +7,6 @@
 		{{ link.name }}
 	</a>
 </nav>
-<mat-tab-nav-panel #tabPanel [@routeAnimations]="
-		outlet &&
-		outlet.activatedRouteData &&
-		outlet.activatedRouteData['animation']
-	">
-	<router-outlet #outlet="outlet"></router-outlet>
+<mat-tab-nav-panel #tabPanel [@routeAnimations]="animation">
+	<router-outlet (activate)="onActivate($event)" #outlet="outlet"></router-outlet>
 </mat-tab-nav-panel>

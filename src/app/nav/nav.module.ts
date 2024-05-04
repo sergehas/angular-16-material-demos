@@ -7,16 +7,26 @@ import { NavComponent } from './pages/nav.component';
 import { VoidNavComponent } from './pages/void-nav/void-nav.component';
 
 
+import { MatDividerModule } from '@angular/material/divider';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatSliderModule } from '@angular/material/slider';
+
+
 @NgModule({
   declarations: [
     NavComponent,
     VoidNavComponent
   ],
   imports: [
-    CommonModule,
-
     TabsNavComponent,
     NavRoutingModule,
+
+    CommonModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatSliderModule,
+    MatDividerModule,
   ]
 })
 export class NavModule { }

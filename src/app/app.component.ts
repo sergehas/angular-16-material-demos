@@ -1,31 +1,27 @@
 import { VERSION as CDK_VERSION } from "@angular/cdk";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
+import { FlatTreeControl } from "@angular/cdk/tree";
 import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild, inject } from "@angular/core";
 import { VERSION as MAT_VERSION } from "@angular/material/core";
-import { TranslateService } from "@ngx-translate/core";
-
-import { FlatTreeControl } from "@angular/cdk/tree";
-import {
-	MatTreeFlatDataSource,
-	MatTreeFlattener,
-} from "@angular/material/tree";
-
 import { MatSidenavContainer } from "@angular/material/sidenav";
-import { Router } from "@angular/router";
+import { MatTreeFlatDataSource, MatTreeFlattener, } from "@angular/material/tree";
+import { Router, RouterOutlet } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 import { Observable, map, shareReplay } from "rxjs";
+
 import { NotificationService } from "./core/services/notification.service";
 import { ScrollService } from "./core/services/scroll.service";
 import { Notification } from "./models/notification";
-import {
-	MenuNode,
-	NavBuilder,
-} from "./shared/components/tabs-nav/models/nav-builder";
+import { slideInAnimation } from "./shared/animations/route-animation";
+import { MenuNode, NavBuilder, } from "./shared/components/tabs-nav/models/nav-builder";
 
 @Component({
 	selector: "app-root",
 	templateUrl: "./app.component.html",
-	styleUrls: ["/app.component.scss"],
+	styleUrls: ["./app.component.scss"],
+	animations: [slideInAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush,
+
 })
 export class AppComponent implements AfterViewInit {
 	@ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
@@ -60,9 +56,17 @@ export class AppComponent implements AfterViewInit {
 
 	ngAfterViewInit(): void {
 		this.sidenavContainer.scrollable.elementScrolled().subscribe(() => this.scrollService.scroll());
-
-
 	}
+
+	prepareRoute(outlet: RouterOutlet) {
+		console.info(`[app-root] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData['animation']}`);
+		//return this.contexts.getContext("primary")?.route?.snapshot?.data?.["animation"];
+		return (
+			outlet?.activatedRouteData &&
+			outlet.activatedRouteData['animation']
+		);
+	}
+
 	//menu
 	private _transformer = (node: MenuNode, level: number): MenuFlatNode => {
 		return {
