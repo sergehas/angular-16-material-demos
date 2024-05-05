@@ -1,8 +1,18 @@
+code {
+    background-color:
+        color-mix(in srgb, var(--mat-badge-background-color) 10%, transparent);
+    color: var(--mat-badge-background-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 0 0.1rem;
+}
+
 .demo-options {
     margin: 20px 10px;
 
     display: flex;
     flex-direction: column;
+
     & > * {
         margin-bottom: 10px;
     }
@@ -12,6 +22,7 @@
         justify-content: flex-start;
         margin: 20px 0;
         column-gap: 16px;
+
         .value-label {
             font-weight: 600;
         }
@@ -28,11 +39,13 @@
     min-width: 350px;
     flex-basis: 350px;
 }
+
 .mat-column-number {
     max-width: 40px;
     min-width: 40px;
     flex-basis: 40px;
 }
+
 .mat-column-created,
 .mat-column-state {
     max-width: 150px;

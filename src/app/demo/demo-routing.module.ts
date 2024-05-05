@@ -23,7 +23,7 @@ const routes: Routes = [
 				path: "demo-table",
 				component: DemoTableComponent,
 				data: {
-					animation: "slideLeft",
+					animation: "tabSlide",
 					icon: "table"
 				},
 			},
@@ -31,7 +31,7 @@ const routes: Routes = [
 				path: "demo-datasource",
 				component: DemoDatasourceComponent,
 				data: {
-					animation: "slideRight",
+					animation: "tabSlide",
 					icon: "dataset"
 				},
 			},
@@ -39,7 +39,7 @@ const routes: Routes = [
 				path: "demo-export",
 				component: DemoExportComponent,
 				data: {
-					animation: "slideLeft",
+					animation: "tabSlide",
 					icon: "download"
 				},
 			},
@@ -47,7 +47,7 @@ const routes: Routes = [
 				path: "demo-icons",
 				component: DemoIconsComponent,
 				data: {
-					animation: "slideRight",
+					animation: "tabSlide",
 					icon: "imagemode"
 				},
 			},
@@ -55,7 +55,7 @@ const routes: Routes = [
 				path: "demo-i18n",
 				component: DemoI18nComponent,
 				data: {
-					animation: "slideLeft",
+					animation: "tabSlide",
 					icon: "translate"
 				},
 			},
@@ -63,7 +63,7 @@ const routes: Routes = [
 				path: "demo-notif",
 				component: DemoNotifComponent,
 				data: {
-					animation: "slideRight",
+					animation: "tabSlide",
 					icon: "notifications"
 				},
 			},
@@ -71,7 +71,7 @@ const routes: Routes = [
 				path: "demo-sticky",
 				component: DemoStickyComponent,
 				data: {
-					animation: "slideLeft",
+					animation: "tabSlide",
 					icon: "title"
 				},
 			},

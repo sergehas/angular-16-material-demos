@@ -1,90 +1,88 @@
-<div>
-    <section>
-        <h2>This demo illustrate various feature of the notification center</h2>
-        <h3>Overview</h3>
-        <p>
-            user notification service to generate a notification.
-        </p>
-        <dl>
-            <dt><code>persistent</code></dt>
-            <dd>controls whether the notification is "persisted" in the notification center </dd>
-            <dt><code>show</code></dt>
-            <dd>controls whether the notification is displayed in a snack bar</dd>
-        </dl>
-        <mat-divider></mat-divider>
-    </section>
-    <section class="demo-options">
-        <mat-radio-group aria-label="Severity" [(ngModel)]="severity">
-            <mat-radio-button value="info">Information</mat-radio-button>
-            <mat-radio-button value="warn">Warning</mat-radio-button>
-            <mat-radio-button value="sever">Sever</mat-radio-button>
-        </mat-radio-group>
-        <mat-slide-toggle [(ngModel)]="show">show</mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="persistent">persistent</mat-slide-toggle>
-        <div class="label-container">
-            <button mat-stroked-button color="primary" (click)="addNotif()">ADD</button>
-            <button mat-stroked-button (click)="addRandom()">ADD RANDOMIZED</button>
-            <button mat-stroked-button color="warn" (click)="clear()">CLEAR ALL</button>
-        </div>
-    </section>
-    <section class="demo-options">
-        <mat-divider />
-        <h3>update progress</h3>
-        <div class="label-container">
-            <mat-form-field hintLabel="Number (<0 means unknown)">
-                <mat-label>total</mat-label>
-                <input matInput type="number" min="-1" placeholder="Progress total" [formControl]="total">
-            </mat-form-field>
+<section>
+    <h1>This demo illustrate various feature of the notification center</h1>
+    <h2>Overview</h2>
+    <p>
+        user notification service to generate a notification.
+    </p>
+    <dl>
+        <dt><code>persistent</code></dt>
+        <dd>controls whether the notification is "persisted" in the notification center </dd>
+        <dt><code>show</code></dt>
+        <dd>controls whether the notification is displayed in a snack bar</dd>
+    </dl>
+    <mat-divider></mat-divider>
+</section>
+<section class="demo-options">
+    <h2>Options</h2>
+    <mat-radio-group aria-label="Severity" [(ngModel)]="severity">
+        <mat-radio-button value="info">Information</mat-radio-button>
+        <mat-radio-button value="warn">Warning</mat-radio-button>
+        <mat-radio-button value="sever">Sever</mat-radio-button>
+    </mat-radio-group>
+    <mat-slide-toggle [(ngModel)]="show">show</mat-slide-toggle>
+    <mat-slide-toggle [(ngModel)]="persistent">persistent</mat-slide-toggle>
+    <div class="label-container">
+        <button mat-stroked-button color="primary" (click)="addNotif()">ADD</button>
+        <button mat-stroked-button (click)="addRandom()">ADD RANDOMIZED</button>
+        <button mat-stroked-button color="warn" (click)="clear()">CLEAR ALL</button>
+    </div>
+</section>
+<mat-divider />
+<section class="demo-options">
+    <h2>update progress</h2>
+    <div class="label-container">
+        <mat-form-field hintLabel="Number (<0 means unknown)">
+            <mat-label>total</mat-label>
+            <input matInput type="number" min="-1" placeholder="Progress total" [formControl]="total">
+        </mat-form-field>
 
-            <mat-form-field hintLabel="Number">
-                <mat-label>Value</mat-label>
-                <input matInput type="number" min="-1" [max]="total.value" placeholder="Progress value"
-                    [formControl]="value">
-            </mat-form-field>
-        </div>
-    </section>
-    <section class="demo-options">
-        <mat-divider></mat-divider>
-        <h3>with colors</h3>
-        <p>
-            see
-            <code>src/app/shared/components/notification-center/_notification[-snack-bar].component-theme.scss</code> to
-            use (or not) extended colors
-        </p>
-        <div class="color-sample ">
-            <div class="color-sample success">success</div>
-            <div class="color-sample warning">warning</div>
-            <div class="color-sample error">error</div>
-        </div>
-    </section>
-    <section class="demo-options">
-        <mat-divider></mat-divider>
-        <div class="demo-log">
-            <h3>notification log</h3>
+        <mat-form-field hintLabel="Number">
+            <mat-label>Value</mat-label>
+            <input matInput type="number" min="-1" [max]="total.value" placeholder="Progress value"
+                [formControl]="value">
+        </mat-form-field>
+    </div>
+</section>
+<mat-divider></mat-divider>
+<section class="demo-options">
+    <h2>with colors</h2>
+    <p>
+        see
+        <code>src/app/shared/components/notification-center/_notification[-snack-bar].component-theme.scss</code> to
+        use (or not) extended colors
+    </p>
+    <div class="color-sample ">
+        <div class="color-sample success">success</div>
+        <div class="color-sample warning">warning</div>
+        <div class="color-sample error">error</div>
+    </div>
+</section>
+<section class="demo-options">
+    <mat-divider></mat-divider>
+    <div class="demo-log">
+        <h2>notification log</h2>
+        <button mat-flat-button class="icon-only" color="accent" matBadgePosition="below before"
+            [matBadgeHidden]="notifs.length === 0" [matBadge]="notifs.length" matBadgeColor="primary"
+            (click)="notifs.length = 0">
+            <mat-icon>delete</mat-icon>
+            clear
+        </button>
+    </div>
 
-            <button mat-flat-button class="icon-only" color="accent" matBadgePosition="below before"
-                [matBadgeHidden]="notifs.length === 0" [matBadge]="notifs.length" matBadgeColor="primary"
-                (click)="notifs.length = 0">
-                <mat-icon>delete</mat-icon>
-                clear
-            </button>
-        </div>
+    <div *ngIf="!notifs.length">
+        notification events will be logged here
+    </div>
 
-        <div *ngIf="!notifs.length">
-            notification events will be logged here
-        </div>
+    <ul style="height: 100px;overflow-y: scroll;font-family: monospace">
+        <li *ngFor="let n of notifs.slice().reverse()">
+            <ng-container [ngSwitch]="n.severity">
+                <mat-icon *ngSwitchCase="'sever'">error</mat-icon>
+                <mat-icon *ngSwitchCase="'warn'">warning</mat-icon>
+                <mat-icon *ngSwitchCase="'info'">info</mat-icon>
+                <mat-icon *ngSwitchDefault>circle_notifications</mat-icon>
+            </ng-container>
 
-        <ul style="height: 100px;overflow-y: scroll;font-family: monospace">
-            <li *ngFor="let n of notifs.slice().reverse()">
-                <ng-container [ngSwitch]="n.severity">
-                    <mat-icon *ngSwitchCase="'sever'">error</mat-icon>
-                    <mat-icon *ngSwitchCase="'warn'">warning</mat-icon>
-                    <mat-icon *ngSwitchCase="'info'">info</mat-icon>
-                    <mat-icon *ngSwitchDefault>circle_notifications</mat-icon>
-                </ng-container>
-
-                {{ n.action }} notification <code>{{n.id}}</code>, message is <i>{{n.message}}</i>
-            </li>
-        </ul>
-    </section>
-</div>
+            {{ n.action }} notification <code>{{n.id}}</code>, message is <i>{{n.message}}</i>
+        </li>
+    </ul>
+</section>

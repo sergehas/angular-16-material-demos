@@ -1,7 +1,7 @@
 <div #topRef style="position: relative;">
     <section>
-        <h2>This demo illustrate usage of the <code>appStick</code></h2>
-        <h3 [appStick]="topRef">Overview </h3>
+        <h1>This demo illustrate usage of the <code>appStick</code></h1>
+        <h2 [appStick]="topRef">Overview </h2>
         <p>
             In a complex layout like in a angular material app, it is very hard to get the scrolling on the proper
             (content) area. Generally speaking, and as it
@@ -16,7 +16,7 @@
         <mat-divider></mat-divider>
     </section>
     <section>
-        <h3 [appStick]="topRef">principle </h3>
+        <h2 [appStick]="topRef">principle </h2>
         <p>
             <code>&lt;The app-stick&gt;</code> rely on a scroll event.
             The scrolling event is provided by the <code>ScrollService</code>. This <code>ScrollService</code> is
@@ -30,7 +30,7 @@
         <mat-divider></mat-divider>
     </section>
     <section>
-        <h3 [appStick]="topRef">Definition & usage </h3>
+        <h2 [appStick]="topRef">Definition & usage </h2>
         <dl>
             <dt>stick reference</dt>
             <dd> (parent) element the sticked node should stick to. this reference node should have
@@ -59,7 +59,7 @@
         <mat-divider></mat-divider>
     </section>
     <section>
-        <h3 [appStick]="topRef">Sample code</h3>
+        <h2 [appStick]="topRef">Sample code</h2>
         <code class="mat-elevation-z2" style="display: block;">
             &lt;div #myStyckRef&gt; &lt;!-- define the initial position to stick to --&gt;<br>
             ...<br>
@@ -72,9 +72,9 @@
     </section>
     <h2>flood content for demo</h2>
     <section *ngFor="let _ of [].constructor(20);let i = index;">
-        <h3 [appStick]="topRef"><a href="https://www.lipsum.com/">What is Lorem Ipsum?</a> #{{i}} (this
-            <code>&lt;h3&gt;</code> is sticky)
-        </h3>
+        <h2 [appStick]="topRef"><a href="https://www.lipsum.com/">What is Lorem Ipsum?</a> #{{i}} (this
+            <code>&lt;h2&gt;</code> is sticky)
+        </h2>
         <p>
             s simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
             dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a

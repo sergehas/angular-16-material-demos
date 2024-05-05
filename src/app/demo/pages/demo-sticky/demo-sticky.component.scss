@@ -1,10 +1,21 @@
+code {
+    background-color:
+        color-mix(in srgb, var(--mat-badge-background-color) 10%, transparent);
+    color: var(--mat-badge-background-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 0 0.1rem;
+}
+
 .app-sticked {
     font-weight: 600;
     background-color: var(--mat-app-background-color);
 }
+
 .app-stickable::after {
     content: "location_off";
 }
+
 .app-sticked::after {
     content: "location_on";
     color: var(--mdc-checkbox-selected-icon-color);
@@ -16,7 +27,8 @@
         font-family: "Material Icons";
         font-weight: normal;
         font-style: normal;
-        font-size: 16px; /* Preferred icon size */
+        font-size: 16px;
+        /* Preferred icon size */
         display: inline-block;
         line-height: 1;
         text-transform: none;
