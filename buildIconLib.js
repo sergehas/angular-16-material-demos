@@ -1,13 +1,13 @@
-const { resolve, extname, join } = require("node:path");
+const { resolve, extname, posix } = require("node:path");
 const { readdir, readFile, writeFile } = require("node:fs/promises");
 
 // root folder to build relative paths from
 const RELATIVE_PATH = "src";
 // base bas to walk
-const BASE_PATH = join(RELATIVE_PATH, "assets");
+const BASE_PATH = posix.join(RELATIVE_PATH, "assets");
 // icon exctension
 const EXTENSION = ".svg";
-const ICON_LIB = join(BASE_PATH, "iconlib.json");
+const ICON_LIB = posix.join(BASE_PATH, "iconlib.json");
 
 class Category {
 	name = null;
@@ -19,7 +19,7 @@ class Category {
 	}
 
 	addCategory(name) {
-		console.debug(`adding cat ${name} to ${this.name}`);
+		console.debug(`[iconlib] adding cat ${name} to ${this.name}`);
 		const existing = this.categories.find((i) => i.name === name);
 		existing instanceof Category;
 		if (existing) {
@@ -31,9 +31,9 @@ class Category {
 		return cat;
 	}
 	addIcon(iconPath) {
-		console.debug(`adding icon ${iconPath} to ${this.name}`);
+		console.debug(`[iconlib] adding icon ${iconPath} to ${this.name}`);
 		let p = iconPath.substring(RELATIVE_PATH.length + 1);
-		const existing = this.icons.find((i) => i.name === p);
+		const existing = this.icons.find((i) => i === p);
 		if (!existing) {
 			this.icons.push(p);
 		}
@@ -42,17 +42,25 @@ class Category {
 }
 
 async function openIconLib() {
-	return readFile(ICON_LIB, { flag: "a" }).then((file) => {
+	console.log("[iconlib] opening lib file");
+
+	return readFile(ICON_LIB, {
+		encoding: 'utf8',
+		// flag: "a"
+	}).then((file) => {
 		let iconlib;
 		try {
 			iconlib = JSON.parse(file);
 		} catch (error) {
-			console.log("unparsable lib");
+			console.log("[iconlib] unparsable lib");
 			iconlib = new Category();
 			iconlib.name = "root";
 		}
-		console.log("read: ", iconlib);
+		console.log("[iconlib] read: ", iconlib);
 		return Category.from(iconlib);
+	}).catch(e => {
+		console.log(`[iconlib] unreadable file ${ICON_LIB}, ${e}`);
+		throw e;
 	});
 }
 async function writeIconLib(iconlib) {
@@ -70,17 +78,17 @@ async function writeIconLib(iconlib) {
 
 async function ls(path = BASE_PATH, cat = new Category()) {
 	//	yield path;
-	console.log(`populating ${cat.name}`);
+	console.log(`[iconlib] populating ${cat.name}`);
 	for (const dirent of await readdir(path, { withFileTypes: true })) {
 		if (dirent.isDirectory()) {
 			let curCat = cat.addCategory(dirent.name);
 			//			yield* ls(join(path, dirent.name), curCat);
-			await ls(join(path, dirent.name), curCat);
+			await ls(posix.join(path, dirent.name), curCat);
 		} else {
 			if (dirent.isFile() && EXTENSION === extname(dirent.name)) {
-				cat.addIcon(join(path, dirent.name));
+				cat.addIcon(posix.join(path, dirent.name));
 				//				yield join(path, dirent.name);
-				join(path, dirent.name);
+				posix.join(path, dirent.name);
 			}
 		}
 	}
@@ -88,9 +96,10 @@ async function ls(path = BASE_PATH, cat = new Category()) {
 }
 
 (async () => {
+	console.log("[iconlib] start building");
 	let lib = await openIconLib();
 	// lib = await ls(join(BASE_PATH, "countries"), lib);
 	// lib = await ls(join(BASE_PATH, "brands"), lib);
-	lib = await ls(join(BASE_PATH, "/"), lib);
+	lib = await ls(posix.join(BASE_PATH, "/"), lib);
 	writeIconLib(lib).then(console.log, console.error);
 })();

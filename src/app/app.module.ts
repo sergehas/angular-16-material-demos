@@ -16,6 +16,7 @@ import { SharedModule } from "./shared/shared.module";
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ArtInstituteModule } from "./art-institute/art-institute.module";
+import { IconsModule } from "./core/icons/icons.module";
 import { ExcelExportService } from "./core/services/excel-export.service";
 import { NotificationService } from "./core/services/notification.service";
 import { ServicesModule } from "./core/services/services.module";
@@ -59,6 +60,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 		SharedModule,
 		ServicesModule,
+		IconsModule,
 		AppRoutingModule,
 		DemoModule,
 		NavModule,
