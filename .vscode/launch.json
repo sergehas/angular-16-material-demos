@@ -13,6 +13,17 @@
             "runtimeArgs": [
                 "--incognito"
             ]
+        },
+        {
+            "type": "chrome",
+            "request": "launch",
+            "name": "Launch Chromium against localhost",
+            "url": "http://localhost:4200",
+            "webRoot": "${workspaceFolder}",
+            "runtimeExecutable": "e:/tools/chrlauncher/64/bin/chrome.exe",
+            "runtimeArgs": [
+                "--incognito"
+            ]
         }
     ]
 }

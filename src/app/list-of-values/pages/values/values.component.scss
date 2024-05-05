@@ -6,35 +6,42 @@
     column-gap: var(--app-gap);
     margin-bottom: var(--app-gap);
 
-    .value-item {
-        display: flex;
-        flex-direction: row;
-        flex-wrap: nowrap;
-        column-gap: calc(var(--app-gap)/2);
-        align-items: center;
-        justify-content: flex-start;
+    .value-button {
+        flex: 1 1 auto;
 
-        .mat-icon {
-            // force size when in mat-button
-            width: 24px;
-            height: 24px;
-            margin-right: 0;
-        }
+        .value-item {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: nowrap;
+            column-gap: calc(var(--app-gap)/2);
+            align-items: center;
+            justify-content: flex-start;
+            min-width: 160px;
+            max-width: 300px;
 
-        .no-icon {
-            opacity: 0.1;
-        }
 
-        .value-code {
-            font-weight: 700;
-        }
+            .mat-icon {
+                // force size when in mat-button
+                width: 24px;
+                height: 24px;
+                margin-right: 0;
+                min-width: 24px;
+            }
 
-        .value-label {
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            max-width: 150px;
+            .no-icon {
+                opacity: 0.1;
+            }
 
+            .value-code {
+                font-weight: 700;
+            }
+
+            .value-label {
+                overflow: hidden;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                flex: 1 1 auto;
+            }
         }
     }
 

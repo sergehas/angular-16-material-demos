@@ -9,7 +9,6 @@ const routes: Routes = [
     path: "navigation",
     component: NavComponent,
     canActivate: [anyRoleGuard],
-    canActivateChild: [anyRoleGuard],
 
     data: {
       animation: "slideRight",
