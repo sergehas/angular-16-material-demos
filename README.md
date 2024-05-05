@@ -112,9 +112,9 @@ The Services must not be defined here. Since the shared modules are imported eve
 
 Tips: The commonly required angular modules like ( CommonModule, FormsModule, etc) or third party modules can be imported here and re-exported. The other module importing the shared module does not have to import those modules.
 
-### add new shared module (if not exist)
+### add new shared module (if not exist) [not recommended]
 
-If you don't plan to use recommended standalone component,
+If you don't plan to use **recommended standalone components**,
 add a `shared` module : `ng generate module shared`
 
 ### add new shared component

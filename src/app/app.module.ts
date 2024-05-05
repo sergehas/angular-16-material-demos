@@ -5,19 +5,11 @@ import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 
-import { ReactiveFormsModule } from "@angular/forms";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatButtonModule } from "@angular/material/button";
-import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
-import { MatInputModule } from "@angular/material/input";
-import { MatListModule } from "@angular/material/list";
-import { MatRadioModule } from "@angular/material/radio";
-import { MatSelectModule } from "@angular/material/select";
 import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatTreeModule } from "@angular/material/tree";
 
 import { SharedModule } from "./shared/shared.module";
 
@@ -30,13 +22,13 @@ import { ServicesModule } from "./core/services/services.module";
 import { StorageService } from "./core/services/storage.service";
 import { DemoModule } from "./demo/demo.module";
 
-import { IconsModule } from "./core/icons/icons.module";
-
 import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
 
 import { DatePipe } from "@angular/common";
+
 import { ListOfValuesModule } from "./list-of-values/list-of-values.module";
 import { NavModule } from "./nav/nav.module";
+import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -59,32 +51,23 @@ export function HttpLoaderFactory(http: HttpClient) {
 			},
 		}),
 
-		MatButtonModule,
-		MatSnackBarModule,
 		MatToolbarModule,
-		MatButtonModule,
-		MatIconModule,
 		MatSidenavModule,
-		MatListModule,
-		MatTreeModule,
-		MatButtonModule,
 		MatIconModule,
 		MatBadgeModule,
-		MatInputModule,
-		MatSelectModule,
-		MatRadioModule,
-		MatCardModule,
-		ReactiveFormsModule,
+		MatButtonModule,
 
 		SharedModule,
 		ServicesModule,
-		IconsModule,
 		AppRoutingModule,
 		DemoModule,
 		NavModule,
 		ArtInstituteModule,
-		NotificationCenterComponent,
 		ListOfValuesModule,
+
+		NotificationCenterComponent,
+		TreeNavComponent,
+
 	],
 	providers: [StorageService, NotificationService, ExcelExportService, DatePipe],
 	bootstrap: [AppComponent],

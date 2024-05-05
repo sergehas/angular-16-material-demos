@@ -1,36 +1,73 @@
 <app-tabs-nav sticky path="navigation"></app-tabs-nav>
 <div>
     <section>
-        <h2>This demo illustrate navigation components & behaviours</h2>
-        <h3>Overview</h3>
+        <h1>This demo illustrate navigation components & behaviours</h1>
+        <h2>Overview</h2>
         <p>
             all GUI (display) components rely on loaded <code>&lt;module&gt;-routing.module.ts</code>. So have a look to
-            tese modules, more specificaly to the <code>data</code> attribute of routes!
+            these modules, more specificaly to the <code>data</code> attribute of routes!
+        </p>
+        <p>
+            There is no exta conf : just define routes + data in <code>&lt;module&gt;-routing.module.ts</code>, then
+            refer to them in the <code>*-nav</code> components. Higligting the active route (tree or tab) is managed
+            automatically.
+        </p>
+        <p>
+            All the demo pages are using <code>tab-nav</code>, & the main menu on the left is a <code>tree-nav</code>.
         </p>
         <mat-divider></mat-divider>
     </section>
     <section class="demo-options">
-        <h3>Routes</h3>
+        <h2>Routes</h2>
         <dl>
             <dt><code>data.icon</code> (optional)</dt>
             <dd>define the icon to display on the right of the navigaiton item. This is a
                 <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon</code></a> name
             </dd>
-            <dt><code>data.animation</code> (optional) </dt>
+            <dt><code>data.animation</code> (optional)</dt>
             <dd> define the animation to apply when this route is activated</dd>
-            <dt><code>data.roles</code> (optional) </dt>
-            <dd> define the (user) roles authorized to access the route</dd>
+            <dt><code>data.roles</code> (optional)</dt>
+            <dd> define the (user) roles authorized to access the route (used by guard)</dd>
         </dl>
         <mat-divider></mat-divider>
     </section>
     <section class="demo-options">
-        <h3><code>tab-nav</code></h3>
+        <h2><code>tab-nav</code></h2>
+        <p>
+            Display children routes of the given <code>&#64;Input path</code>as tabs. If specfied, navigate
+            automaticaly to
+            the <code>&#64;Input default</code>child path.
+        </p>
         <dl>
-            <dt><code>data.icon</code>(optional) </dt>
+            <dt><code>&lt;Route&gt;data.icon</code>(optional) </dt>
             <dd>define the icon to display on the right of the navigaiton item. This is a
-                <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon 
-                    name</code></a>
+                <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon</code></a>name
             </dd>
+            <dt><code>&lt;Route&gt;data.animation</code>(optional) </dt>
+            <dd>define animation to apply when entering/leaving teh route. allowed values are(see
+                <code>src/app/shared/animations/route-animation.ts</code>):
+                <ul>
+                    <li><code>slideLeft</code>view slides from left when entering. Reverse when leaving</li>
+                    <li><code>slideRight</code>view slides from right when entering. Reverse when leaving</li>
+                    <li><code>slideTab</code>applicable only to routes display as tab-nav. Slide from lef or right
+                        depending on the previous active tab. See <a
+                            href="https://stackoverflow.com/questions/48926912/angular-router-transition-animations-slide-both-left-and-right-conditionally/49590255#49590255">StackOverflow</a>
+                        for details</li>
+                </ul>
+            </dd>
+        </dl>
+        <mat-divider></mat-divider>
+    </section>
+    <section class="demo-options">
+        <h2><code>tree-nav</code></h2>
+        <p>
+            Display all routes in a tree view.
+        </p>
+        <dl>
+            <dt><code>&lt;Route&gt;data.icon</code>(optional) </dt>
+            <dd>same as for <code>tab-nav</code> </dd>
+            <dt><code>&lt;Route&gt;data.animation</code>(optional) </dt>
+            <dd>same as for <code>tab-nav</code>, but <code>slideTab</code> is of course not usable (no tabs here).</dd>
         </dl>
         <mat-divider></mat-divider>
     </section>

@@ -18,7 +18,8 @@ import { Notification } from "src/app/models/notification";
 import { slideInAnimation } from "../../animations/route-animation";
 
 
-
+const TAB_INDEX_PROP = "tabIndex";
+const TAB_SLIDE_ANIMATION = "tabSlide";
 
 @Component({
 	selector: "app-tabs-nav",
@@ -44,7 +45,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 	activeLinkIndex = -1;
 	private _notifService = inject(NotificationService);
 
-	animation = "";
+	animation: string | number = -1;
 
 	constructor(
 		private route: ActivatedRoute,
@@ -55,8 +56,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 	ngOnInit(): void {
 		console.info("[tab-nav] router config", this.router);
 		const root = this.router.config.find((p) => p.path === this.path);
-		const children = root ? root.children : undefined;
-		if (!children || children.length <= 0) {
+		if (!root?.children || root?.children.length <= 0) {
 			this._notifService.notify(
 				new Notification({
 					severity: "warn",
@@ -67,9 +67,15 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 			return;
 		}
 
-		this.navLinks = children.map((c) =>
-			NavBuilder.nodeFromPath(".", c.path, (c.data ?? {})["icon"])
-		);
+		this.navLinks = root!.children.map((c, index) => {
+			//1st add an index for animation increment/decremet
+			if (c.data === undefined) {
+				c.data = {};
+			}
+			root!.children![index].data![TAB_INDEX_PROP] = index;
+			// then build nodes for UI compoent
+			return NavBuilder.nodeFromPath(".", c.path, c.data["icon"]);
+		});
 	}
 	ngAfterViewInit(): void {
 		//if the current navgation is this path, then navigate to defautl child route
@@ -79,8 +85,15 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 		}
 	}
 
+	/**
+	 *use "onActivate" instead of directy fetch animation from the trigger  -calling a function, eg "[@Trigger]="myAnim()]" - to reduce number of calls.
+	 *
+	 * @param {Type<any>} component the activated component (not realy useful...)
+	 * @memberof TabsNavComponent
+	 */
 	onActivate(component: Type<any>) {
-		this.animation = this.contexts.getContext("primary")?.route?.snapshot?.data?.["animation"];
+		const data = this.contexts.getContext("primary")?.route?.snapshot?.data ?? {};
+		this.animation = data["animation"] === TAB_SLIDE_ANIMATION ? data[TAB_INDEX_PROP] : data["animation"];
 		console.info(`[tab-nav] activate animation ${this.animation} ${component.toString()}`);
 	}
 

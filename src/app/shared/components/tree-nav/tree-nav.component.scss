@@ -1,0 +1,26 @@
+.menu-node {
+    position: relative;
+
+    &.active-menu-node:before {
+        content: "";
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        opacity: calc(var(--mdc-list-list-item-focus-state-layer-opacity));
+    }
+
+    .tree-button.mat-mdc-icon-button {
+        width: calc(var(--mdc-icon-button-state-layer-size) / 2);
+        border-radius: 0;
+        padding-right: 0;
+        padding-left: 0;
+    }
+
+    .menu-icon {
+        flex: 1 0 auto;
+    }
+
+    .mdc-list-item {
+        padding-left: calc(var(--app-gap) / 2);
+    }
+}

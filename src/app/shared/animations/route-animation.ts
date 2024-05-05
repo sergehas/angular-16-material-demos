@@ -38,4 +38,7 @@ export const slideInAnimation = trigger("routeAnimations", [
 	transition("* => slideLeft", right),
 	transition("slideLeft => void", right),
 	transition("void => slideLeft", left),
+
+	transition(':increment', right),
+	transition(':decrement', left),
 ]);
