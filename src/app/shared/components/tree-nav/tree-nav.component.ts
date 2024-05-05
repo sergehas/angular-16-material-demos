@@ -37,11 +37,11 @@ export class TreeNavComponent {
   constructor(private router: Router,) {
     //menu content
     this.dataSource.data = NavBuilder.buildTree("", this.router.config);
-    console.info("menu datasource", this.dataSource.data);
+    console.info("[tree-nav] menu datasource", this.dataSource.data);
   }
 
   prepareRoute(outlet: RouterOutlet) {
-    console.info(`[app-root] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData['animation']}`);
+    console.info(`[tree-nav] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData['animation']}`);
     //return this.contexts.getContext("primary")?.route?.snapshot?.data?.["animation"];
     return (
       outlet?.activatedRouteData &&

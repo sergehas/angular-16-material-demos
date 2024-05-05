@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { anyRoleGuard } from '../shared/guards/any-role.guard';
+import { anyRoleGuard } from '../shared/guards/roles.guard';
 import { NavComponent } from './pages/nav.component';
 import { VoidNavComponent } from './pages/void-nav/void-nav.component';
 
@@ -8,9 +8,14 @@ const routes: Routes = [
   {
     path: "navigation",
     component: NavComponent,
+    canActivate: [anyRoleGuard],
+    canActivateChild: [anyRoleGuard],
+
     data: {
       animation: "slideRight",
       icon: "navigation",
+      roles: ["SPECTATOR"]
+
     },
     children: [
       {

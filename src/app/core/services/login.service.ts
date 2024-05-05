@@ -9,6 +9,32 @@ export class SignedUser {
   id: string | null = null;
   isLoggedIn = false;
   roles: Role[] = [];
+
+  static from(name: string, lastname: string, id: string, isLoggedIn: boolean, roles: Role[]): SignedUser {
+    const self = new SignedUser();
+    self.name = name;
+    self.lastname = lastname;
+    self.id = id;
+    self.isLoggedIn = isLoggedIn;
+    self.roles = [...roles];
+    return self;
+  }
+  static clone(u: SignedUser): SignedUser {
+    return SignedUser.from(
+      u.name!,
+      u.lastname!,
+      u.id!,
+      u.isLoggedIn,
+      [...u.roles],)
+  }
+  hasAnyRoles(roles: Role | Role[]): boolean {
+    const r = [...roles] as Role[];
+    return this.roles.some(role => r.includes(role));
+  }
+  hasAllRoles(roles: Role | Role[]): boolean {
+    const r = [...roles] as Role[];
+    return r.every(role => this.roles.includes(role));
+  }
 }
 
 @Injectable({
@@ -23,8 +49,8 @@ export class LoginService {
     this.login();
   }
 
-  getLoggedUser() {
-    return { ...this._user };
+  getLoggedUser(): SignedUser {
+    return SignedUser.clone(this._user);
   }
 
   /**

@@ -1,11 +1,14 @@
 <nav mat-tab-nav-bar [tabPanel]="tabPanel" mat-stretch-tabs="false" mat-align-tabs="center" class="tabs-nav"
 	[class.sticky]="sticky" [class.mat-elevation-z1]="sticky">
-	<a mat-tab-link *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive #rla="routerLinkActive"
-		[active]="rla.isActive">
-		<mat-icon *ngIf="link.icon !== undefined" class="tab-icon" [fontIcon]="link.icon"></mat-icon>
+	<!-- add [roles-any]="link.roles" (granted)="link.granted=$event" to the ng-container  to hide the tabs-->
+	<ng-container *ngFor="let link of navLinks">
+		<!-- add  *ngIf="link.granted" to the mat-tab-link to hide the tabs-->
 
-		{{ link.name }}
-	</a>
+		<a mat-tab-link [routerLink]="link.path" routerLinkActive #rla="routerLinkActive" [active]="rla.isActive">
+			<mat-icon *ngIf="link.icon !== undefined" class="tab-icon" [fontIcon]="link.icon"></mat-icon>
+			{{ link.name }}
+		</a>
+	</ng-container>
 </nav>
 <mat-tab-nav-panel #tabPanel [@routeAnimations]="animation">
 	<router-outlet (activate)="onActivate($event)" #outlet="outlet"></router-outlet>

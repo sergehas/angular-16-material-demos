@@ -21,6 +21,10 @@ import { slideInAnimation } from "../../animations/route-animation";
 const TAB_INDEX_PROP = "tabIndex";
 const TAB_SLIDE_ANIMATION = "tabSlide";
 
+/*
+ * to hide tabs depending on roles, remove the comment in the html template & uncomment below AnyRolesDirective  
+ */
+
 @Component({
 	selector: "app-tabs-nav",
 	templateUrl: "./tabs-nav.component.html",
@@ -33,6 +37,7 @@ const TAB_SLIDE_ANIMATION = "tabSlide";
 		MatIconModule,
 		RouterLink,
 		RouterOutlet,
+		// AnyRolesDirective
 	],
 	animations: [slideInAnimation],
 	changeDetection: ChangeDetectionStrategy.OnPush
@@ -44,7 +49,6 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 	navLinks: MenuNode[] = [];
 	activeLinkIndex = -1;
 	private _notifService = inject(NotificationService);
-
 	animation: string | number = -1;
 
 	constructor(
@@ -67,6 +71,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 			return;
 		}
 
+		/** */
 		this.navLinks = root!.children.map((c, index) => {
 			//1st add an index for animation increment/decremet
 			if (c.data === undefined) {
@@ -74,7 +79,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 			}
 			root!.children![index].data![TAB_INDEX_PROP] = index;
 			// then build nodes for UI compoent
-			return NavBuilder.nodeFromPath(".", c.path, c.data["icon"]);
+			return NavBuilder.nodeFromPath(".", c.path, c.data["icon"], c.data["roles"]);
 		});
 	}
 	ngAfterViewInit(): void {
