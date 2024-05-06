@@ -1,5 +1,5 @@
-<app-tabs-nav sticky path="navigation"></app-tabs-nav>
-<div>
+<app-tabs-nav sticky path="navigation" (activate)="isactive=false" (deactivate)="isactive=true"></app-tabs-nav>
+<div *ngIf="isactive">
     <section>
         <h1>This demo illustrate navigation components & behaviours</h1>
         <h2>Overview</h2>

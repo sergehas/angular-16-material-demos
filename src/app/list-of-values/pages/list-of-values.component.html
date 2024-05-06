@@ -1,5 +1,7 @@
-<app-tabs-nav path="list-of-values"></app-tabs-nav>
-<div class="list-of-values-dashboard" *ngIf="isDashboardActive()">
+<app-tabs-nav path="list-of-values" (activate)="isDashboardActive=false"
+	(deactivate)="isDashboardActive=true"></app-tabs-nav>
+
+<div class="list-of-values-dashboard" *ngIf="isDashboardActive">
 	<mat-card matRipple class="kpi-card" routerLink="./groups">
 		<div class="kpi" mat-card-image>
 			{{ countGroups$ | async }}

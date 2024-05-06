@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { AfterViewInit, ChangeDetectionStrategy, Component, Input, OnInit, Type, booleanAttribute, inject } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, Type, ViewChild, booleanAttribute, inject, } from "@angular/core";
 import { MatTabsModule } from "@angular/material/tabs";
 
 import {
@@ -8,7 +8,7 @@ import {
 	Router,
 	RouterLink,
 	RouterModule,
-	RouterOutlet,
+	RouterOutlet
 } from "@angular/router";
 import { MenuNode, NavBuilder } from "./models/nav-builder";
 
@@ -46,8 +46,13 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 	@Input("path") path: string = "";
 	@Input("default") default?: string;
 	@Input({ transform: booleanAttribute }) sticky = false;
+	@Output() activate = new EventEmitter<ActivatedRoute | null>();
+	@Output() deactivate = new EventEmitter<Type<unknown>>();
+	@Output() indexFocused = new EventEmitter<number>();
+
+	@ViewChild(RouterOutlet) outlet!: RouterOutlet;
+
 	navLinks: MenuNode[] = [];
-	activeLinkIndex = -1;
 	private _notifService = inject(NotificationService);
 	animation: string | number = -1;
 
@@ -58,6 +63,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 	) { }
 
 	ngOnInit(): void {
+
 		console.info("[tab-nav] router config", this.router);
 		const root = this.router.config.find((p) => p.path === this.path);
 		if (!root?.children || root?.children.length <= 0) {
@@ -92,16 +98,29 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 
 	/**
 	 *use "onActivate" instead of directy fetch animation from the trigger  -calling a function, eg "[@Trigger]="myAnim()]" - to reduce number of calls.
-	 *
+	 *Warning: at this step, outlet may be not yet initialized
 	 * @param {Type<any>} component the activated component (not realy useful...)
 	 * @memberof TabsNavComponent
 	 */
-	onActivate(component: Type<any>) {
-		const data = this.contexts.getContext("primary")?.route?.snapshot?.data ?? {};
+	onActivate(component: Type<unknown>) {
+		const route = this.contexts.getContext("primary")!.route;
+		this.activate.emit(route);
+		const data = route?.snapshot?.data ?? {};
 		this.animation = data["animation"] === TAB_SLIDE_ANIMATION ? data[TAB_INDEX_PROP] : data["animation"];
-		console.info(`[tab-nav] activate animation ${this.animation} ${component.toString()}`);
+		console.info(`[tab-nav] activate animation ${this.animation} on route ${route?.snapshot.url}}`);
 	}
 
+	onDeactivate(component: Type<unknown>) {
+		this.deactivate.emit(component);
+
+		console.info(`[tab-nav] deactivate route. outlet is active:  ${this.outlet?.isActivated}`);
+	}
+
+	onFocus(index: number) {
+		console.info(`[tab-nav] index focused ${index}`);
+		this.indexFocused.emit(index);
+
+	}
 	// prepareRoute(outlet: RouterOutlet) {
 	// 	console.info(`[tab-nav] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData['animation']}`);
 	// 	//return this.contexts.getContext("primary")?.route?.snapshot?.data?.["animation"];
