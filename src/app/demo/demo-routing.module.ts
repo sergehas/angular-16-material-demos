@@ -8,56 +8,73 @@ import { DemoNotifComponent } from "./pages/demo-notif/demo-notif.component";
 import { DemoStickyComponent } from "./pages/demo-sticky/demo-sticky.component";
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoComponent } from "./pages/demo.component";
-import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 
 const routes: Routes = [
 	{
 		path: "demo",
 		component: DemoComponent,
-		data: { animation: "slideLeft" },
+		data: {
+			icon: "preview"
+		},
 		children: [
 			// list "sub" pages from this demo feature components
 			{
 				path: "demo-table",
 				component: DemoTableComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "tabSlide",
+					icon: "table"
+				},
 			},
 			{
 				path: "demo-datasource",
 				component: DemoDatasourceComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "tabSlide",
+					icon: "dataset"
+				},
 			},
 			{
 				path: "demo-export",
 				component: DemoExportComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "tabSlide",
+					icon: "download"
+				},
 			},
 			{
 				path: "demo-icons",
 				component: DemoIconsComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "tabSlide",
+					icon: "imagemode"
+				},
 			},
 			{
 				path: "demo-i18n",
 				component: DemoI18nComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "tabSlide",
+					icon: "translate"
+				},
 			},
 			{
 				path: "demo-notif",
 				component: DemoNotifComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "tabSlide",
+					icon: "notifications"
+				},
 			},
 			{
 				path: "demo-sticky",
 				component: DemoStickyComponent,
-				data: { animation: "slideLeft" },
+				data: {
+					animation: "tabSlide",
+					icon: "title"
+				},
 			},
 		],
-	},
-	{
-		path: "void-nav",
-		component: VoidNavComponent,
-		data: { animation: "slideLeft" },
 	},
 ];
 

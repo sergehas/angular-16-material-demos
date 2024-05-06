@@ -1,6 +1,6 @@
 <div>
 	<div class="value-list">
-		<button mat-stroked-button *ngFor="let v of page|async" (click)="createOrEdit(v)">
+		<button mat-stroked-button *ngFor="let v of page|async" (click)="createOrEdit(v)" class="value-button">
 			<div class="value-item">
 				<mat-icon *ngIf="v.icon; else noIcon" [svgIcon]="v.icon"></mat-icon>
 				<ng-template #noIcon><mat-icon class="no-icon">image</mat-icon></ng-template>

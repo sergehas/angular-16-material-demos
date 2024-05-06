@@ -17,6 +17,11 @@ code {
         margin-bottom: 10px;
     }
 
+    dd {
+        margin-top: 8px;
+        margin-bottom: 16px;
+    }
+
     .label-container {
         display: flex;
         justify-content: flex-start;
@@ -27,28 +32,4 @@ code {
             font-weight: 600;
         }
     }
-}
-
-.variable-width-container {
-    width: 100%;
-    margin: auto;
-}
-
-.mat-column-title {
-    //max-width: 400px;
-    min-width: 350px;
-    flex-basis: 350px;
-}
-
-.mat-column-number {
-    max-width: 40px;
-    min-width: 40px;
-    flex-basis: 40px;
-}
-
-.mat-column-created,
-.mat-column-state {
-    max-width: 150px;
-    min-width: 115px;
-    flex-basis: 115px;
 }

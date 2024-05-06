@@ -8,34 +8,28 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
-import { MatListModule } from "@angular/material/list";
 import { MatSidenavModule } from "@angular/material/sidenav";
-import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatToolbarModule } from "@angular/material/toolbar";
-import { MatTreeModule } from "@angular/material/tree";
 
 import { SharedModule } from "./shared/shared.module";
 
 import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { ArtInstituteModule } from "./art-institute/art-institute.module";
+import { IconsModule } from "./core/icons/icons.module";
 import { ExcelExportService } from "./core/services/excel-export.service";
 import { NotificationService } from "./core/services/notification.service";
 import { ServicesModule } from "./core/services/services.module";
 import { StorageService } from "./core/services/storage.service";
 import { DemoModule } from "./demo/demo.module";
 
-import { IconsModule } from "./core/icons/icons.module";
-
 import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
 
 import { DatePipe } from "@angular/common";
-import { ReactiveFormsModule } from "@angular/forms";
-import { MatCardModule } from "@angular/material/card";
-import { MatInputModule } from "@angular/material/input";
-import { MatRadioModule } from "@angular/material/radio";
-import { MatSelectModule } from "@angular/material/select";
+
 import { ListOfValuesModule } from "./list-of-values/list-of-values.module";
+import { NavModule } from "./nav/nav.module";
+import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.component";
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
@@ -58,31 +52,24 @@ export function HttpLoaderFactory(http: HttpClient) {
 			},
 		}),
 
-		MatButtonModule,
-		MatSnackBarModule,
 		MatToolbarModule,
-		MatButtonModule,
-		MatIconModule,
 		MatSidenavModule,
-		MatListModule,
-		MatTreeModule,
-		MatButtonModule,
 		MatIconModule,
 		MatBadgeModule,
+		MatButtonModule,
 
 		SharedModule,
 		ServicesModule,
 		IconsModule,
 		AppRoutingModule,
 		DemoModule,
+		NavModule,
 		ArtInstituteModule,
-		NotificationCenterComponent,
 		ListOfValuesModule,
-		MatInputModule,
-		MatSelectModule,
-		MatRadioModule,
-		MatCardModule,
-		ReactiveFormsModule,
+
+		NotificationCenterComponent,
+		TreeNavComponent,
+
 	],
 	providers: [StorageService, NotificationService, ExcelExportService, DatePipe],
 	bootstrap: [AppComponent],

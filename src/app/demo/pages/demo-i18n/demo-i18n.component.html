@@ -1,4 +1,14 @@
+<section>
+	<h1>This demo illustrate ..</h1>
+	<h3>Overview</h3>
+	<p>
+		TODO
+	</p>
+</section>
+<mat-divider></mat-divider>
+
 <section class="demo-options">
+	<h2>Dynamic laguages</h2>
 	<div class="label-container">
 		<button mat-flat-button (click)="setLanguage('en-US')" color="accent">
 			EN (default, fallback)
@@ -9,27 +19,31 @@
 		<button mat-flat-button (click)="setLanguage('pt-PT')" color="warn">
 			PT (no translation)
 		</button>
-		<button mat-stroked-button (click)="updateDate()">UPDATE</button>
+		<mat-divider [vertical]="true"></mat-divider>
+		<button mat-stroked-button (click)="updateDate()">Update date</button>
 	</div>
+</section>
+<mat-divider></mat-divider>
+<section class="demo-options">
+	<h2>Formated dates(language specific)</h2>
 	<p>raw date: {{ today }}</p>
 	<p>dateFormat.day: {{ "format.day" | translate }}</p>
 	<p>formatted date: {{ today | localizedDate: "format.day" }}</p>
 	<p>formatted date: {{ today | localizedDate: "format.datetime" }}</p>
 
+</section>
+<mat-divider></mat-divider>
+<section class="demo-options">
+	<h2>Date range selector displayed as formated weeks</h2>
 	<mat-form-field>
 		<mat-label>Enter a date range</mat-label>
 		<mat-date-range-input [rangePicker]="picker">
 			<input matStartDate placeholder="Start date" />
 			<input matEndDate placeholder="End date" />
 		</mat-date-range-input>
-		<mat-hint
-			>{{ "format.weekYear" | translate }} –
-			{{ "format.weekYear" | translate }}</mat-hint
-		>
-		<mat-datepicker-toggle
-			matIconSuffix
-			[for]="picker"
-		></mat-datepicker-toggle>
+		<mat-hint>{{ "format.weekYear" | translate }} –
+			{{ "format.weekYear" | translate }}</mat-hint>
+		<mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
 		<mat-date-range-picker #picker></mat-date-range-picker>
 	</mat-form-field>
 </section>

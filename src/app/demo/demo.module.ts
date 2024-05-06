@@ -32,10 +32,9 @@ import { DemoExportComponent } from "./pages/demo-export/demo-export.component";
 import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
 import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 import { DemoNotifComponent } from "./pages/demo-notif/demo-notif.component";
+import { DemoStickyComponent } from './pages/demo-sticky/demo-sticky.component';
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoComponent } from "./pages/demo.component";
-import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
-import { DemoStickyComponent } from './pages/demo-sticky/demo-sticky.component';
 
 @NgModule({
 	declarations: [
@@ -43,11 +42,10 @@ import { DemoStickyComponent } from './pages/demo-sticky/demo-sticky.component';
 		DemoTableComponent,
 		DemoDatasourceComponent,
 		DemoExportComponent,
-		VoidNavComponent,
 		DemoIconsComponent,
 		DemoI18nComponent,
 		DemoNotifComponent,
-  DemoStickyComponent,
+		DemoStickyComponent,
 	],
 	imports: [
 		CommonModule,

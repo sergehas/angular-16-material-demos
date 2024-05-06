@@ -1,6 +1,6 @@
 <section>
-	<h2>This demo illustrate iconlib service & registry</h2>
-	<h3>Overview</h3>
+	<h1>This demo illustrate iconlib service & registry</h1>
+	<h2>Overview</h2>
 	<p>
 		Teh goal of the iconsService is to provide a easy way to add a large set
 		of static icons (static: part of the GUI app bundle) & use them with as
@@ -23,8 +23,9 @@
 	<p>Column widths can be defines by css or by config</p>
 </section>
 <mat-divider></mat-divider>
-<section class="mat-elevation-z8">
-	<div class="icon-demo-container">
+<section class="demo-options">
+	<h2><code>mat-icon svgIcon</code></h2>
+	<div class="mat-elevation-z4 demo-container">
 		<div class="label-icon" *ngFor="
 				let icon of [
 					'brands-gcp',
@@ -39,39 +40,48 @@
 	</div>
 </section>
 <mat-divider></mat-divider>
-
-<section>
-	selected icon: <code>{{ selected }}</code>
-	<button mat-flat-button color="accent" matBadgePosition="below before" (click)="selected = null">
-		CLEAR
-	</button>
+<section class="demo-options">
+	<h2>Selection</h2>
+	<div>
+		selected icon: <code>{{ selected }}</code>
+		<button mat-flat-button color="accent" matBadgePosition="below before" (click)="selected = null">
+			CLEAR
+		</button>
+	</div>
 </section>
-<section class="mat-elevation-z8">
-	<app-icon-tree class="mat-elevation-z4" [expanded]="false" [(value)]="selected"></app-icon-tree>
+<mat-divider></mat-divider>
+<section class="demo-options">
+	<h2><code>app-icon-tree</code></h2>
+	<div class="mat-elevation-z4 demo-container">
+		<app-icon-tree [expanded]="false" [(value)]="selected"></app-icon-tree>
+	</div>
 </section>
-
-<section class="mat-elevation-z8">
-	<p>
-		<code>app-icon-select</code> as a simple selector
-	</p><app-icon-select [(value)]="selected"></app-icon-select>
+<mat-divider></mat-divider>
+<section class="demo-options">
+	<h2><code>app-icon-select</code> as a simple selector (almost no styling)</h2>
+	<div class="mat-elevation-z4">
+		<app-icon-select [(value)]="selected"></app-icon-select>
+	</div>
 </section>
+<mat-divider></mat-divider>
 
-<section class="mat-elevation-z8">
-	<p>
-		<code>app-icon-select</code> as a form field
-	</p>
-	<div class="field-demo-container">
-		<mat-form-field>
-			<mat-label>Select me</mat-label>
-			<app-icon-select [(value)]="selected" required [formControl]="icon"></app-icon-select>
-			<mat-error>icon is required</mat-error>
-			<mat-hint>choose your icon</mat-hint>
-		</mat-form-field>
-		<mat-form-field appearance="outline" style="max-width: 80px;">
-			<app-icon-select [(value)]="selected" required [formControl]="icon"
-				tooltip="I'm the tooltip"></app-icon-select>
-			<mat-error>required</mat-error>
-			<mat-hint>icon ?</mat-hint>
-		</mat-form-field>
+<section class="demo-options">
+	<h2><code>app-icon-select</code> as a form field</h2>
+
+	<div class="mat-elevation-z4 demo-container">
+		<div class="field-demo-container">
+			<mat-form-field>
+				<mat-label>Select me</mat-label>
+				<app-icon-select [(value)]="selected" required [formControl]="icon"></app-icon-select>
+				<mat-error>icon is required</mat-error>
+				<mat-hint>choose your icon</mat-hint>
+			</mat-form-field>
+			<mat-form-field appearance="outline" style="max-width: 80px;">
+				<app-icon-select [(value)]="selected" required [formControl]="icon"
+					tooltip="I'm the tooltip"></app-icon-select>
+				<mat-error>required</mat-error>
+				<mat-hint>icon ?</mat-hint>
+			</mat-form-field>
+		</div>
 	</div>
 </section>

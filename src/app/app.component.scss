@@ -6,50 +6,38 @@
 	bottom: 0;
 	left: 0;
 	right: 0;
+
 	.root-toolbar {
 		position: sticky;
 		/* Make sure the toolbar will stay on top of the content as it scrolls past. */
 		z-index: 2;
+
 		.root-app-name {
 			display: block;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
 		}
+
 		h1.root-app-name {
 			margin-left: 8px;
 		}
+
 		.spacer {
 			flex: 1 1 auto;
 		}
 	}
+
 	.root-sidenav-container {
 		.root-sidenav {
 			min-width: 200px;
-			.menu-node {
-				position: relative;
-				&.active-menu-node:before {
-					content: "";
-					position: absolute;
-					height: 100%;
-					width: 100%;
-					opacity: calc(var(--mdc-list-list-item-focus-state-layer-opacity));
-				}
-				.tree-button.mat-mdc-icon-button {
-					width: calc(var(--mdc-icon-button-state-layer-size) / 2);
-					border-radius: 0;
-					padding-right: 0;
-					padding-left: 0;
-				}
-				.mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
-					border-radius: 0;
-				}
-			}
 		}
+
 		.notif-sidenav {
 			min-width: 310px;
 			max-width: 310px;
 		}
+
 		.root-content {
 			margin: 0 var(--app-gap);
 		}

@@ -1,0 +1,8 @@
+code {
+    background-color:
+        color-mix(in srgb, var(--mat-badge-background-color) 10%, transparent);
+    color: var(--mat-badge-background-color);
+    padding: 4px 8px;
+    border-radius: 4px;
+    margin: 0 0.1rem;
+}

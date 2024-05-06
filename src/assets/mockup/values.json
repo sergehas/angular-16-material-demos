@@ -23,7 +23,8 @@
 			"icon": "parameter:countries-Europe-European_Union-cy",
 			"created": "2023-10-14T02:00:00Z",
 			"userId": "John DOE"
-		},		{
+		},
+		{
 			"group": "countries",
 			"name": "IT",
 			"label": "Italia",
@@ -74,7 +75,7 @@
 		{
 			"group": "countries",
 			"name": "CH",
-			"label": "Swiss",
+			"label": "Switzerland",
 			"icon": "parameter:countries-Europe-ch",
 			"created": "2023-10-14T02:00:00Z",
 			"userId": "John DOE"
@@ -84,6 +85,62 @@
 			"name": "NO",
 			"label": "Norway",
 			"icon": "parameter:countries-Europe-no",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "DZ",
+			"label": "Algeria",
+			"icon": "parameter:countries-Africa-dz",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "EG",
+			"label": "Egypt",
+			"icon": "parameter:countries-Africa-eg",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "GA",
+			"label": "Gabon",
+			"icon": "parameter:countries-Africa-ga",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "GH",
+			"label": "Ghana",
+			"icon": "parameter:countries-Africa-gh",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "KE",
+			"label": "Kenya",
+			"icon": "parameter:countries-Africa-ke",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "MA",
+			"label": "Morocco",
+			"icon": "parameter:countries-Africa-ma",
+			"created": "2023-10-14T02:00:00Z",
+			"userId": "John DOE"
+		},
+		{
+			"group": "countries",
+			"name": "ZA",
+			"label": "South Africa",
+			"icon": "parameter:countries-Africa-za",
 			"created": "2023-10-14T02:00:00Z",
 			"userId": "John DOE"
 		},
@@ -109,6 +166,5 @@
 			"created": "2023-10-14T02:00:00Z",
 			"userId": "John DOE"
 		}
-	
 	]
 }

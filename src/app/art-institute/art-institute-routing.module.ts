@@ -6,7 +6,9 @@ const routes: Routes = [
 	{
 		path: "art-institute",
 		component: ArtInstituteComponent,
-		data: { animation: "slideLeft" },
+		data: {
+			icon: "art_track",
+		},
 		children: [],
 	},
 ];
@@ -15,4 +17,4 @@ const routes: Routes = [
 	imports: [RouterModule.forChild(routes)],
 	exports: [RouterModule],
 })
-export class ArtInstituteRoutingModule {}
+export class ArtInstituteRoutingModule { }
