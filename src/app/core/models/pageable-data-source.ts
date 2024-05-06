@@ -7,14 +7,12 @@ import {
 	Observable,
 	Subscription,
 	auditTime,
-	catchError,
 	combineLatest,
-	finalize,
 	from,
 	merge,
+	noop,
 	of as observableOf,
-	of,
-	tap,
+	tap
 } from "rxjs";
 import { Filter, HttpService, Page } from "../services/http-service";
 
@@ -64,16 +62,24 @@ export class Paginator {
 
 }
 
+export class DatasourceError extends Error {
+	constructor(err: Error) {
+		super(err.message, {
+			cause: err
+		})
+	}
+}
+
 export class PageableDataSource<
 	T,
 	P extends MatPaginator | Paginator = MatPaginator
 > extends DataSource<T> {
 	protected modelsSubject = new BehaviorSubject<T[]>([]);
-	protected loadingSubject = new BehaviorSubject<boolean>(false);
+	protected loadingSubject = new BehaviorSubject<boolean | Error>(false);
 	public loading$ = this.loadingSubject.asObservable();
 
 	protected countSubject = new BehaviorSubject<number>(0);
-	protected countingSubject = new BehaviorSubject<boolean>(false);
+	protected countingSubject = new BehaviorSubject<boolean | Error>(false);
 	public counting$ = this.countingSubject.asObservable();
 	public length$ = this.countSubject.asObservable();
 	private _length = 0;
@@ -147,16 +153,16 @@ export class PageableDataSource<
 
 		// reset the paginator after sorting
 		sortChange.subscribe(() => {
-			console.debug("sort event");
+			console.debug("[datasource] sort event");
 			if (this.paginator) {
 				this.paginator.pageIndex = 0;
 			}
 		});
 		pageChange.subscribe(() => {
-			console.debug("page event");
+			console.debug("[datasource] page event");
 		});
 		initalChange.subscribe((e) => {
-			console.debug("init event", e);
+			console.debug("[datasource] init event", e);
 			if (this.paginator) {
 				this.count();
 			}
@@ -172,7 +178,7 @@ export class PageableDataSource<
 			.pipe(
 				auditTime(0),
 				tap((e) => {
-					console.info("merge event", e);
+					console.info("[datasource] merge event", e);
 					this.loadPage();
 				})
 			)
@@ -184,7 +190,7 @@ export class PageableDataSource<
 	 * return an Observable derived from issueSubject to avoid to expose internal subject
 	 */
 	connect(): Observable<readonly T[]> {
-		console.debug("Connecting datasource");
+		console.debug("[datasource] Connecting datasource");
 		return this.modelsSubject.asObservable();
 	}
 
@@ -195,7 +201,7 @@ export class PageableDataSource<
 		this.countingSubject.complete();
 	}
 	public loadPage() {
-		console.info("load page");
+		console.info("[datasource] load page");
 		this.load(
 			this._filter,
 			this._sort,
@@ -216,19 +222,32 @@ export class PageableDataSource<
 		this.service
 			.find(filter, sort, page)
 			.pipe(
-				catchError(() => of([])),
-				finalize(() => this.loadingSubject.next(false))
+				tap({
+					next: () => noop,
+					error: (err: Error) => {
+						console.log(`[datasource] find error: ${err.message}`);
+						this.loadingSubject.next(new DatasourceError(err));
+					},
+					complete: () => this.loadingSubject.next(false)
+				})
 			)
 			.subscribe((models) => this.modelsSubject.next(models));
 	}
 
-	count() {
+	public count() {
+		console.info("[datasource] count");
 		this.countingSubject.next(true);
 		this.service
 			.count(this._filter)
 			.pipe(
-				catchError(() => of(0)),
-				finalize(() => this.countingSubject.next(false))
+				tap({
+					next: () => noop,
+					error: (err: Error) => {
+						console.log(`[datasource] count error: ${err.message}`);
+						this.countingSubject.next(new DatasourceError(err));
+					},
+					complete: () => this.countingSubject.next(false)
+				})
 			)
 			.subscribe((count) => {
 				this._length = count;

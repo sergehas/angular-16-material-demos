@@ -1,4 +1,13 @@
 import {
+	animate,
+	state,
+	style,
+	transition,
+	trigger,
+} from "@angular/animations";
+import { SelectionModel } from "@angular/cdk/collections";
+import { CommonModule, DatePipe } from "@angular/common";
+import {
 	AfterViewInit,
 	Component,
 	Input,
@@ -6,28 +15,19 @@ import {
 	ViewChild,
 	ViewEncapsulation,
 } from "@angular/core";
-import {
-	animate,
-	state,
-	style,
-	transition,
-	trigger,
-} from "@angular/animations";
-import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
-import { CommonModule, DatePipe } from "@angular/common";
-import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
-import { MatRippleModule } from "@angular/material/core";
-import { MatTableModule } from "@angular/material/table";
-import { SelectionModel } from "@angular/cdk/collections";
-import { MatMenuModule } from "@angular/material/menu";
 import { MatCheckboxModule } from "@angular/material/checkbox";
+import { MatRippleModule } from "@angular/material/core";
+import { MatIconModule } from "@angular/material/icon";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { MatTableModule } from "@angular/material/table";
 
-import { MatSort, MatSortModule, MatSortable } from "@angular/material/sort";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
+import { MatSort, MatSortModule, MatSortable } from "@angular/material/sort";
 
 import { tap } from "rxjs";
-import { PageableDataSource } from "src/app/core/models/pageable-data-source";
+import { DatasourceError, PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { InstanceofPipe } from "../../pipes/instanceof.pipe";
 import { TableConfigEditorComponent } from "../table-config-editor/table-config-editor.component";
 import { ColumnConfig, TableConfig } from "./table-config";
@@ -75,8 +75,6 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
 	@Input("max-height") maxHeight = "100%";
 	@Input("selection") selection?: SelectionModel<T>;
 
-	//for debug
-	readonly console = console;
 	//for instanceof pipe
 	readonly Date = Date;
 	private _page: T[] = [];
@@ -102,14 +100,14 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
 		if (this.columnOptions) {
 			this.options.columns = this.columnOptions;
 		}
-		console.log("options:", this.options);
+		console.log("[table-expandable-rows] options:", this.options);
 
 		//just for debug
 		this.dataSource.loading$
-			.pipe(tap((b) => console.info(`loading: ${b}`)))
+			.pipe(tap((b) => console.info(`[table-expandable-rows] loading: ${b}`)))
 			.subscribe();
 		this.dataSource.counting$
-			.pipe(tap((b) => console.info(`counting: ${b}`)))
+			.pipe(tap((b) => console.info(`[table-expandable-rows] counting: ${b}`)))
 			.subscribe();
 	}
 
@@ -132,6 +130,9 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
 		});
 	}
 
+	isError(m: boolean | DatasourceError): boolean {
+		return m instanceof DatasourceError;
+	}
 	/** Whether the number of selected elements matches the total number of rows. */
 	isAllSelected() {
 		const numSelected = this.selection!.selected.length;
