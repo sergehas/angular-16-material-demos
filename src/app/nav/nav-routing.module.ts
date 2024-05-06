@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { anyRoleGuard } from '../shared/guards/roles.guard';
+import { anyRoleGuard } from '../core/guards/roles.guard';
 import { NavComponent } from './pages/nav.component';
 import { VoidNavComponent } from './pages/void-nav/void-nav.component';
 

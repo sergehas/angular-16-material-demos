@@ -32,21 +32,23 @@
         <mat-divider></mat-divider>
     </section>
     <section class="demo-options">
-        <h2><code>tab-nav</code></h2>
+        <h2><code>tab-nav</code> component</h2>
         <p>
             Display children routes of the given <code>&#64;Input path</code>as tabs. If specfied, navigate
             automaticaly to
             the <code>&#64;Input default</code>child path.
         </p>
         <dl>
-            <dt><code>&lt;Route&gt;data.icon</code>(optional) </dt>
+            <dt><code>&lt;Route&gt;.data.icon</code>(optional) </dt>
             <dd>define the icon to display on the right of the navigaiton item. This is a
                 <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon</code></a>name
             </dd>
-            <dt><code>&lt;Route&gt;data.animation</code>(optional) </dt>
+            <dt><code>&lt;Route&gt;.data.animation</code>(optional) </dt>
             <dd>define animation to apply when entering/leaving teh route. allowed values are(see
                 <code>src/app/shared/animations/route-animation.ts</code>):
                 <ul>
+                    <li><code>slideTop</code>view slides from top when entering. Reverse when leaving</li>
+                    <li><code>slideBottom</code>view slides from bottom when entering. Reverse when leaving</li>
                     <li><code>slideLeft</code>view slides from left when entering. Reverse when leaving</li>
                     <li><code>slideRight</code>view slides from right when entering. Reverse when leaving</li>
                     <li><code>slideTab</code>applicable only to routes display as tab-nav. Slide from lef or right
@@ -59,27 +61,47 @@
         <mat-divider></mat-divider>
     </section>
     <section class="demo-options">
-        <h2><code>tree-nav</code></h2>
+        <h2><code>tree-nav</code> component</h2>
         <p>
             Display all routes in a tree view.
         </p>
         <dl>
-            <dt><code>&lt;Route&gt;data.icon</code>(optional) </dt>
+            <dt><code>&lt;Route&gt;.data.icon</code>(optional) </dt>
             <dd>same as for <code>tab-nav</code> </dd>
-            <dt><code>&lt;Route&gt;data.animation</code>(optional) </dt>
+            <dt><code>&lt;Route&gt;.data.animation</code>(optional) </dt>
             <dd>same as for <code>tab-nav</code>, but <code>slideTab</code> is of course not usable (no tabs here).</dd>
         </dl>
         <mat-divider></mat-divider>
     </section>
     <section class="demo-options">
-        <mat-radio-group aria-label="Severity">
-            <mat-radio-button value="info">Information</mat-radio-button>
-            <mat-radio-button value="warn">Warning</mat-radio-button>
-            <mat-radio-button value="sever">Sever</mat-radio-button>
-        </mat-radio-group>
-        <mat-slide-toggle>show</mat-slide-toggle>
-        <div class="label-container">
-            <button mat-stroked-button color="primary">ADD</button>
-        </div>
+        <h2><code>LoginService</code> Service</h2>
+        <p>
+            this service (to be adapated to support login/auth process) is the base service for all permission checks
+            (dorectives & guards) feature.
+        </p>
+        <mat-divider></mat-divider>
+    </section>
+    <section class="demo-options">
+        <h2><code>any-roles</code> and <code>all-roles</code> directives</h2>
+        <p>
+            check & report if user has role(s)
+        </p>
+        <dl>
+            <dt><code>&#64;Input</code></dt>
+            <dd>array of required roles (any of or all of depending on the directive</dd>
+            <dt><code>&#64;granted:boolean </code></dt>
+            <dd>true if user are required role(s)</dd>
+        </dl>
+        <h3>Sample</h3>
+        <code>&lt;div [any-roles]="['ADMIN', 'READER']" (granted)="myCompGranted=$event" &gt;...</code>
+        <mat-divider></mat-divider>
+    </section>
+    <section class="demo-options">
+        <h2><code>anyRoleGuard</code> and <code>allRoleGuard</code> guards</h2>
+        <p>
+            route guard (<code>CanActivateFn</code>) using <code>&lt;Route&gt;.data.roles</code>
+        </p>
+        <p>use them as <code>canActivate</code> function in your routing modules</p>
+        <mat-divider></mat-divider>
     </section>
 </div>

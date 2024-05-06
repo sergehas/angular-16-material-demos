@@ -8,6 +8,10 @@
 
     .value-button {
         flex: 1 1 auto;
+        max-width: 320px;
+        clip-path: border-box;
+        max-width: fit-content;
+        justify-content: flex-start;
 
         .value-item {
             display: flex;
