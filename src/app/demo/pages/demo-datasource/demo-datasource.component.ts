@@ -1,11 +1,11 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ViewChild } from "@angular/core";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { map, merge } from "rxjs";
 import { Issue } from "src/app/core/github/models/issue";
 
 import { GithubService } from "src/app/core/github/services/github.service";
-import { PageableDataSource } from "src/app/core/models/pageable-data-source";
+import { DatasourceError, PageableDataSource } from "src/app/core/models/pageable-data-source";
 
 @Component({
 	selector: "app-demo-datasource",
@@ -30,10 +30,21 @@ export class DemoDatasourceComponent implements AfterViewInit {
 	ngAfterViewInit() {
 		merge(
 			this.dataSource.loading$.pipe(
-				map((b) => `datasource loading: ${b}`)
+				map((b) => {
+					if (b instanceof DatasourceError) {
+						return `datasource loading: ERROR (${b})`
+					}
+
+					return `datasource loading: ${b}`
+				})
 			),
 			this.dataSource.counting$.pipe(
-				map((b) => `datasource  counting: ${b}`)
+				map((b) => {
+					if (b instanceof Error) {
+						return `datasource counting: ERROR (${b})`
+					}
+					return `datasource  counting: ${b}`
+				})
 			)
 		).subscribe((e) =>
 			this.dataSourceEvents.push(`[${new Date().toISOString()}]: ${e}`)
