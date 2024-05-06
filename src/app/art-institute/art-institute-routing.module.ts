@@ -7,7 +7,7 @@ const routes: Routes = [
 		path: "art-institute",
 		component: ArtInstituteComponent,
 		data: {
-			animation: "slideLeft",
+			icon: "art_track",
 		},
 		children: [],
 	},

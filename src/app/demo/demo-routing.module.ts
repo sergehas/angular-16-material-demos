@@ -14,7 +14,6 @@ const routes: Routes = [
 		path: "demo",
 		component: DemoComponent,
 		data: {
-			animation: "slideLeft",
 			icon: "preview"
 		},
 		children: [

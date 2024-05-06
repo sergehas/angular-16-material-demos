@@ -15,7 +15,7 @@ import { MenuNode, NavBuilder } from "./models/nav-builder";
 import { MatIconModule } from "@angular/material/icon";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { Notification } from "src/app/models/notification";
-import { slideInAnimation } from "../../animations/route-animation";
+import { slideAnimations } from "../../animations/route-animation";
 
 
 const TAB_INDEX_PROP = "tabIndex";
@@ -39,7 +39,7 @@ const TAB_SLIDE_ANIMATION = "tabSlide";
 		RouterOutlet,
 		// AnyRolesDirective
 	],
-	animations: [slideInAnimation],
+	animations: [slideAnimations],
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TabsNavComponent implements OnInit, AfterViewInit {

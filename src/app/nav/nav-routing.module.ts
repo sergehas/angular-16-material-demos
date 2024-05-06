@@ -11,7 +11,6 @@ const routes: Routes = [
     canActivate: [anyRoleGuard],
 
     data: {
-      animation: "slideRight",
       icon: "navigation",
       roles: ["SPECTATOR"]
 

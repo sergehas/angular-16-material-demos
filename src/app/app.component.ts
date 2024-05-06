@@ -10,13 +10,13 @@ import { Observable, map, shareReplay } from "rxjs";
 import { NotificationService } from "./core/services/notification.service";
 import { ScrollService } from "./core/services/scroll.service";
 import { Notification } from "./models/notification";
-import { slideInAnimation } from "./shared/animations/route-animation";
+import { slideAnimations } from "./shared/animations/route-animation";
 
 @Component({
 	selector: "app-root",
 	templateUrl: "./app.component.html",
 	styleUrls: ["./app.component.scss"],
-	animations: [slideInAnimation],
+	animations: [slideAnimations],
 	changeDetection: ChangeDetectionStrategy.OnPush,
 
 })
