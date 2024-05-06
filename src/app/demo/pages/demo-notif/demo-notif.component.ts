@@ -2,8 +2,8 @@ import { Component } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormControl } from '@angular/forms';
 import { merge } from 'rxjs';
+import { Notification, NotificationSeverity, ProgressNotification } from "src/app/core/models/notification";
 import { NotificationService } from 'src/app/core/services/notification.service';
-import { Notification, NotificationSeverity, ProgressNotification } from "src/app/models/notification";
 
 
 type NotifLog = {

@@ -1,15 +1,15 @@
 import { VERSION as CDK_VERSION } from "@angular/cdk";
 import { BreakpointObserver, Breakpoints } from "@angular/cdk/layout";
-import { AfterViewInit, ChangeDetectionStrategy, Component, ViewChild, inject } from "@angular/core";
+import { AfterViewInit, ChangeDetectionStrategy, Component, Type, ViewChild, inject } from "@angular/core";
 import { VERSION as MAT_VERSION } from "@angular/material/core";
 import { MatSidenavContainer } from "@angular/material/sidenav";
 import { RouterOutlet } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable, map, shareReplay } from "rxjs";
 
+import { Notification } from "./core/models/notification";
 import { NotificationService } from "./core/services/notification.service";
 import { ScrollService } from "./core/services/scroll.service";
-import { Notification } from "./models/notification";
 import { slideAnimations } from "./shared/animations/route-animation";
 
 @Component({
@@ -22,6 +22,7 @@ import { slideAnimations } from "./shared/animations/route-animation";
 })
 export class AppComponent implements AfterViewInit {
 	@ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
+	@ViewChild(RouterOutlet) outlet!: RouterOutlet;
 
 	title = `Angular ${CDK_VERSION.full} Material ${MAT_VERSION.full} demo`;
 	private breakpointObserver = inject(BreakpointObserver);
@@ -32,7 +33,7 @@ export class AppComponent implements AfterViewInit {
 			shareReplay()
 		);
 	notifications$: Observable<Set<Notification>>;
-
+	animation: string = "";
 	constructor(
 		private service: NotificationService,
 		translate: TranslateService,
@@ -58,6 +59,12 @@ export class AppComponent implements AfterViewInit {
 			outlet?.activatedRouteData &&
 			outlet.activatedRouteData['animation']
 		);
+	}
+
+	onActivate(component: Type<unknown>) {
+		const ar = this.outlet.activatedRoute;
+		this.animation = this.outlet.activatedRouteData && this.outlet.activatedRouteData['animation'];
+		console.info(`[app-root] activate animation ${ar?.snapshot.data['animation']} on route ${ar?.snapshot.url}}`);
 	}
 
 

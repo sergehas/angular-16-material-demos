@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { MatPaginator } from '@angular/material/paginator';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { Progress, STAGE } from 'src/app/models/progress';
+import { Progress, STAGE } from 'src/app/core/models/progress';
 import { utils, writeFile } from 'xlsx';
 import { PageableDataSource, Paginator } from '../models/pageable-data-source';
 import { NotificationService } from './notification.service';

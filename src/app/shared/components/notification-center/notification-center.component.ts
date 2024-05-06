@@ -17,10 +17,10 @@ import {
 
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule } from "@angular/material/icon";
+import { Notification } from "src/app/core/models/notification";
 import {
 	NotificationService
 } from "src/app/core/services/notification.service";
-import { Notification } from "src/app/models/notification";
 import { NotificationComponent } from "./notification.component";
 
 @Component({

@@ -5,8 +5,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatProgressBarModule, ProgressBarMode } from '@angular/material/progress-bar';
 
+import { Notification, ProgressNotification } from "src/app/core/models/notification";
 import { NotificationService } from 'src/app/core/services/notification.service';
-import { Notification, ProgressNotification } from "src/app/models/notification";
 
 @Component({
   selector: 'app-notification',
