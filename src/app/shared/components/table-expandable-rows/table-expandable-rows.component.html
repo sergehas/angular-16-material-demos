@@ -12,7 +12,8 @@
 		</mat-menu>
 	</div>
 	<mat-table [dataSource]="dataSource" multiTemplateDataRows fixedLayout="true" matSort matSortDisableClear
-		matSortDirection="asc" class="table" [class.autohide]="options!.responsive" [style.max-height]="maxHeight">
+		matSortDirection="asc" class="table" [class.autohide]="options!.responsive"
+		[style.max-height]="options!.paginator? 'calc('+ maxHeight+ ' - var(--pagaginator-height))':maxHeight">
 		<ng-container *ngFor="let column of options!.columns.columns" [matColumnDef]="column.name"
 			[sticky]="column.sticky && !column.hidden">
 			<!-- Checkbox Column (header)-->

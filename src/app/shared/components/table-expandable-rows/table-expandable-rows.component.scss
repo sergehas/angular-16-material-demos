@@ -1,17 +1,22 @@
+:root {
+	--pagaginator-height: 56px; //not defined by material, but that's the value
+}
+
 .progress-container {
 	position: relative;
-	height: max(
-		var(--mdc-linear-progress-track-height),
-		var(--mdc-linear-progress-active-indicator-height)
-	);
+	height: max(var(--mdc-linear-progress-track-height),
+			var(--mdc-linear-progress-active-indicator-height));
+
 	mat-progress-bar {
 		position: absolute;
 		bottom: 0px;
 	}
 }
+
 .table-container {
 	//attr for menu button on the top right
 	position: relative;
+
 	.config-button {
 		width: 24px;
 		float: right;
@@ -30,15 +35,19 @@
 			background: none;
 		}
 	}
+
 	.table {
 		width: 100%;
 		overflow: auto;
+
 		[hidden] {
 			display: none !important;
 		}
+
 		.mat-sort-header-container {
 			//elipsis on text
 			max-width: inherit;
+
 			.mat-sort-header-content {
 				display: block;
 				white-space: nowrap;
@@ -47,14 +56,17 @@
 				margin-right: 5px; //force elipsis to display
 			}
 		}
+
 		mat-cell:first-of-type,
 		mat-header-cell:first-of-type,
 		mat-footer-cell:first-of-type {
 			padding-left: 12px;
+
 			&.selector-column {
 				padding: 0;
 			}
 		}
+
 		.selector-column {
 			max-width: 40px;
 			min-width: 40px;
@@ -63,6 +75,7 @@
 		}
 
 		&.autohide {
+
 			//autohide related attr
 			mat-header-row.mat-mdc-header-row,
 			mat-row.mat-mdc-row,
@@ -73,11 +86,13 @@
 				display: flex;
 				flex-wrap: wrap;
 			}
+
 			mat-header-row.mat-mdc-header-row,
 			mat-footer-row.mat-mdc-footer-cell {
 				max-height: var(--mat-table-header-container-height, 56px);
 				min-height: var(--mat-table-header-container-height, 56px);
 			}
+
 			mat-row.mat-mdc-row {
 				max-height: var(--mat-table-row-item-container-height, 52px);
 				min-height: var(--mat-table-row-item-container-height, 52px);
@@ -96,15 +111,53 @@
 				max-height: inherit;
 			}
 		}
-		&>.mat-mdc-row.mat-ripple {
-			overflow:clip;
+
+		& > .mat-mdc-row.mat-ripple {
+			overflow: clip;
 		}
 	}
 }
+
 .paginator {
-	position: sticky !important;
 	min-width: 300px;
-	left: 0;
-	bottom: 0;
 	z-index: 1;
+
+	.mat-mdc-paginator-container {
+		flex-wrap: nowrap;
+		border-top-color: var(--mat-table-row-item-outline-color);
+		border-top-width: var(--mat-table-row-item-outline-width);
+		border-top-style: solid;
+
+		.mat-mdc-paginator-page-size {
+			min-width: 0;
+			flex-shrink: 3;
+
+			.mat-mdc-form-field {
+				flex-shrink: 1;
+				min-width: 50px;
+			}
+
+			.mat-mdc-paginator-page-size-label {
+				flex-shrink: 3;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+		}
+
+		.mat-mdc-paginator-range-actions {
+			min-width: 0;
+
+			.mat-mdc-paginator-range-label {
+				flex-shrink: 3;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				overflow: hidden;
+			}
+
+			.mat-mdc-icon-button {
+				flex-shrink: 3;
+			}
+		}
+	}
 }
