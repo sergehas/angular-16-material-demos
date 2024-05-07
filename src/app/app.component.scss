@@ -12,15 +12,11 @@
 		/* Make sure the toolbar will stay on top of the content as it scrolls past. */
 		z-index: 2;
 
-		.root-app-name {
-			display: block;
+		.app-title {
+			margin-left: 8px;
 			white-space: nowrap;
 			overflow: hidden;
 			text-overflow: ellipsis;
-		}
-
-		h1.root-app-name {
-			margin-left: 8px;
 		}
 
 		.spacer {

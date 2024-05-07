@@ -33,13 +33,21 @@ $theme: ex.extend-theme($primary, $accent, $warn, $success, $warning, $error);
 .mdc-button {
   & > .mdc-button__label {
     text-transform: uppercase;
+    //force button to shrink & display elipsis on text
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+
   &.icon-only {
     width: 48px;
     max-width: 48px;
+
     & > .mdc-button__label {
       display: none;
     }
+
     & > mat-icon {
       margin: 0;
     }
