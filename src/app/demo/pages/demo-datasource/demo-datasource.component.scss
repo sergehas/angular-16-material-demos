@@ -10,12 +10,27 @@
 
 	.label-container {
 		display: flex;
-		justify-content: space-between;
+		justify-content: space-around;
 		margin: 20px 10px 0;
+		align-items: center;
 
 		.value-label {
 			font-weight: 600;
 		}
+
+		.filter {
+
+			width: calc(100% - 120px);
+			margin-right: var(--app-gap);
+		}
+	}
+}
+
+.active-hint {
+	cursor: pointer;
+
+	&:hover {
+		text-decoration: underline dotted;
 	}
 }
 
@@ -24,12 +39,27 @@
 	flex-direction: row;
 	align-items: center;
 	justify-content: space-between;
+	width: 100%;
 }
 
 .demo-log {
-	height: 200px;
+	height: 150px;
 	overflow-y: scroll;
-	font-family: monospace
+	font-family: monospace;
+	resize: vertical;
+	border-style: solid;
+	border-color: var(--mat-divider-color);
+	border-width: var(--mat-divider-width);
+
+	ol {
+		display: flex;
+		flex-direction: column-reverse;
+
+		li {
+			flex: 0 0 auto;
+		}
+	}
+
 }
 
 

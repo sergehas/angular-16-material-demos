@@ -10,6 +10,14 @@
 		key benefit: it requrire a simple service injection... nothing else!
 	</p>
 	<h3>Events</h3>
+	<p>
+		driving the datasource: it is supoer simple: the constructor takes 1 optional arg to control if the DS should
+		automaticaly load at startup.
+		Then, everithing else is automated: set the pager, set the sort, set the filter they will fire the proper
+		(datasource internal) event to load and count (if needed).
+
+		To enforce datasource loading ; simply set a filter : <code>datasource.filter=(&#123;&#125;)</code>
+	</p>
 	<p>It emits events while starting/ending to load & count.<br /></p>
 </section>
 <mat-divider></mat-divider>
@@ -20,10 +28,32 @@
 		">Enable paginiator</mat-slide-toggle>
 	<mat-slide-toggle [(ngModel)]="sortEnabled" (change)="dataSource.sort = sortEnabled ? sort : undefined">Enable
 		sort</mat-slide-toggle>
+	<div>
+		<mat-slide-toggle [(ngModel)]="autoloadEnabled" (change)="resetDatasource()">Initial
+			autoloading</mat-slide-toggle>&nbsp;
+		<button mat-flat-button color="primary" (click)="filter.setValue(null); dataSource.filter={}"
+			[disabled]="autoloadEnabled">
+			<mat-icon>refresh</mat-icon>
+			Load
+		</button>
+	</div>
 </section>
 <mat-divider></mat-divider>
 
 <section class="demo-options mat-elevation-z8">
+	<div class="label-container">
+		<mat-form-field appearance="outline" class="filter">
+			<mat-label>Filter</mat-label>
+			<input matInput type="text" [formControl]="filter" placeholder="is:open">
+			<mat-hint class="active-hint" (click)="filter.setValue('is:open matTable')">e.g.: is:open
+				matTable</mat-hint>
+		</mat-form-field>
+		<button mat-flat-button color="primary" class="icon-only" (click)="setFilter()">
+			<mat-icon>filter_list</mat-icon>
+			Apply
+		</button>
+	</div>
+
 	<table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortEnabled ? 'created' : ''"
 		matSortDisableClear [matSortDirection]="sortEnabled ? 'desc' : ''">
 		<!-- Number Column -->
@@ -67,7 +97,7 @@
 		<button mat-flat-button class="icon-only" color="accent" matBadgePosition="below before"
 			[matBadgeHidden]="dataSourceEvents.length === 0" [matBadge]="dataSourceEvents.length"
 			matBadgeColor="primary" (click)="dataSourceEvents = []">
-			<mat-icon>delete</mat-icon>
+			<mat-icon>playlist_remove</mat-icon>
 			clear
 		</button>
 	</div>
@@ -76,9 +106,11 @@
 		Datasource events will be logged here
 	</div>
 
-	<ul class="demo-log">
-		<li *ngFor="let event of dataSourceEvents.slice().reverse()">
-			{{ event }}
-		</li>
-	</ul>
+	<section class="demo-log">
+		<ol>
+			<li *ngFor="let event of dataSourceEvents">
+				{{ event }}
+			</li>
+		</ol>
+	</section>
 </section>
