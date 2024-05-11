@@ -1,5 +1,6 @@
-<div class="progress-container" *ngIf="dataSource.loading$ | async">
-	<mat-progress-bar mode="query"></mat-progress-bar>
+<div class="progress-container" *ngIf="dataSource.loading$ | async  as loading">
+	<mat-progress-bar [mode]="isError(loading) ? 'determinate':'query'" value="100"
+		[color]="isError(loading) ? 'warn':'primary'"></mat-progress-bar>
 </div>
 <div class="table-container">
 	<div class="config-button" matRipple>
@@ -11,7 +12,8 @@
 		</mat-menu>
 	</div>
 	<mat-table [dataSource]="dataSource" multiTemplateDataRows fixedLayout="true" matSort matSortDisableClear
-		matSortDirection="asc" class="table" [class.autohide]="options!.responsive" [style.max-height]="maxHeight">
+		matSortDirection="asc" class="table" [class.autohide]="options!.responsive"
+		[style.max-height]="options!.paginator? 'calc('+ maxHeight+ ' - var(--pagaginator-height))':maxHeight">
 		<ng-container *ngFor="let column of options!.columns.columns" [matColumnDef]="column.name"
 			[sticky]="column.sticky && !column.hidden">
 			<!-- Checkbox Column (header)-->
@@ -59,8 +61,9 @@
 		<mat-row matRipple *matRowDef="let row; columns: options!.columns.names"></mat-row>
 	</mat-table>
 </div>
-<div class="progress-container" *ngIf="dataSource.counting$ | async">
-	<mat-progress-bar mode="query"></mat-progress-bar>
+<div class="progress-container" *ngIf="dataSource.counting$ | async  as counting">
+	<mat-progress-bar [mode]="isError(counting) ? 'determinate':'query'" value="100"
+		[color]="isError(counting) ? 'warn':'primary'"></mat-progress-bar>
 </div>
 <mat-paginator *ngIf="options!.paginator" class="paginator" [pageSizeOptions]="[5, 10, 20, 100]" showFirstLastButtons
 	[length]="dataSource.length$ | async" aria-label="Select page">

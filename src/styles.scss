@@ -33,15 +33,26 @@ $theme: ex.extend-theme($primary, $accent, $warn, $success, $warning, $error);
 .mdc-button {
   & > .mdc-button__label {
     text-transform: uppercase;
+    //force button to shrink & display elipsis on text
+    flex-shrink: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
+
   &.icon-only {
-    width: 48px;
-    max-width: 48px;
+    min-width: 24px;
+    // padding: 0 calc(var(--mat-filled-button-horizontal-padding)/2);
+
     & > .mdc-button__label {
       display: none;
     }
+
     & > mat-icon {
       margin: 0;
+      width: 24px;
+      height: 24px;
+      font-size: 24px;
     }
   }
 }

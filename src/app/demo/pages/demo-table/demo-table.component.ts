@@ -22,6 +22,7 @@ import { TableConfig } from "src/app/shared/components/table-expandable-rows/tab
 export class DemoTableComponent implements OnInit {
 	dataSource!: PageableDataSource<Issue>;
 	options: TableConfig = new TableConfig({
+		paginator: true,
 		name: "",
 		responsive: true,
 		columns: [

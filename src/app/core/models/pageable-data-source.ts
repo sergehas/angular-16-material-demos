@@ -5,16 +5,15 @@ import { MatSort, Sort } from "@angular/material/sort";
 import {
 	BehaviorSubject,
 	Observable,
+	Subject,
 	Subscription,
 	auditTime,
-	catchError,
 	combineLatest,
-	finalize,
-	from,
+	map,
 	merge,
+	noop,
 	of as observableOf,
-	of,
-	tap,
+	tap
 } from "rxjs";
 import { Filter, HttpService, Page } from "../services/http-service";
 
@@ -64,24 +63,31 @@ export class Paginator {
 
 }
 
+export class DatasourceError extends Error {
+	constructor(err: Error) {
+		super(err.message, {
+			cause: err
+		})
+	}
+}
+
 export class PageableDataSource<
 	T,
 	P extends MatPaginator | Paginator = MatPaginator
 > extends DataSource<T> {
 	protected modelsSubject = new BehaviorSubject<T[]>([]);
-	protected loadingSubject = new BehaviorSubject<boolean>(false);
+	protected loadingSubject = new BehaviorSubject<boolean | Error>(false);
 	public loading$ = this.loadingSubject.asObservable();
 
 	protected countSubject = new BehaviorSubject<number>(0);
-	protected countingSubject = new BehaviorSubject<boolean>(false);
-	public counting$ = this.countingSubject.asObservable();
 	public length$ = this.countSubject.asObservable();
 	private _length = 0;
 
-	get length(): number {
-		return this._length;
-	}
+	protected countingSubject = new BehaviorSubject<boolean | Error>(false);
+	public counting$ = this.countingSubject.asObservable();
 
+	protected errorSubject = new Subject<Error>();
+	public error$ = this.errorSubject.asObservable();
 
 	/**
 	 * Instance of the MatSort directive used by the table to control its sorting. Sort changes
@@ -89,14 +95,6 @@ export class PageableDataSource<
 	 */
 	private _sort: MatSort | undefined;
 
-	get sort(): MatSort | undefined {
-		return this._sort;
-	}
-
-	set sort(sort: MatSort | undefined) {
-		this._sort = sort;
-		this.updateChangeSubscription();
-	}
 
 	/**
 	 * Instance of the paginator component used by the table to control what page of the data is
@@ -109,6 +107,37 @@ export class PageableDataSource<
 	 * initialized before assigning it to this data source.
 	 */
 	private _paginator: P | undefined;
+	private _shouldCount = false;
+
+	private _filter: Filter | undefined;
+	_filterChange = new BehaviorSubject<Filter | undefined>(undefined);
+
+	autoload: boolean;
+
+	private _filteredEventStream: Subscription | null = null;
+
+	constructor(protected service: HttpService<T>, autoload: boolean = true) {
+		super();
+		this.autoload = autoload;
+		if (this.autoload = autoload)
+			this._filterChange.next({ autoload: true });
+		this.updateChangeSubscription();
+	}
+
+
+	get length(): number {
+		return this._length;
+	}
+
+	get sort(): MatSort | undefined {
+		return this._sort;
+	}
+
+	set sort(sort: MatSort | undefined) {
+		this._sort = sort;
+		this.updateChangeSubscription();
+	}
+
 
 	get paginator(): P | undefined {
 		return this._paginator;
@@ -119,18 +148,16 @@ export class PageableDataSource<
 		this.updateChangeSubscription();
 	}
 
-	private _filter: Filter | undefined;
-	set filter(filter: Filter) {
+	set filter(filter: Filter | undefined) {
 		this._filter = filter;
-	}
-	constructor(protected service: HttpService<T>) {
-		super();
-		this.updateChangeSubscription();
+		this._filterChange.next(this._filter);
 	}
 
 	private updateChangeSubscription() {
 		//an "init" oneshot event to force load if no pager/sort exist
-		const initalChange = from(["init"]);
+		//const initalChange = from(["init"]);
+		this.countSubject.subscribe(() => this._shouldCount = false);
+		const filterChange = this._filterChange;
 		const sortChange: Observable<Sort | null | void> = this.sort
 			? (merge(
 				this.sort.sortChange,
@@ -146,45 +173,60 @@ export class PageableDataSource<
 			: observableOf(null);
 
 		// reset the paginator after sorting
-		sortChange.subscribe(() => {
-			console.debug("sort event");
+		sortChange.subscribe((e) => {
+			console.debug("[datasource] sort event", e);
 			if (this.paginator) {
 				this.paginator.pageIndex = 0;
 			}
 		});
-		pageChange.subscribe(() => {
-			console.debug("page event");
+		pageChange.subscribe((e) => {
+			console.debug("[datasource] page event", e);
 		});
-		initalChange.subscribe((e) => {
-			console.debug("init event", e);
-			if (this.paginator) {
-				this.count();
+		filterChange.subscribe((e) => {
+			console.debug("[datasource] filter event", e);
+			// });
+			// filterChange.subscribe((e) => {
+			// 	console.debug("[datasource] init event", e);
+
+			if (this.paginator && e !== undefined) {
+				this.paginator.pageIndex = 0;
+				this._shouldCount = true;
 			}
 		});
 		//reload page on any event
-		const changes = combineLatest([initalChange, sortChange, pageChange]);
+		const changes: Observable<[Filter | undefined, void | Sort | null, void | PageEvent | null]>
+			= combineLatest([filterChange, sortChange, pageChange]);
+		//const changes =combineLatest([initalChange, sortChange, pageChange]);
+		//const changes= combineLatest([sortChange, pageChange]);
+
 		// The purpose of this intermediate `filteredEventStream` subscrption is to break the flow of events, by filtering it in order to have only the latest event.
 		// More specificaly when the paginator and/or the sort are set.
 		// The `auditTime(0)` is important as it breaks this event flow.
 		//finally, this subscriptios is responsible to avoit extra service calls
-		this.filteredEventStream?.unsubscribe();
-		this.filteredEventStream = changes
+		this._filteredEventStream?.unsubscribe();
+		this._filteredEventStream = changes
 			.pipe(
 				auditTime(0),
-				tap((e) => {
-					console.info("merge event", e);
-					this.loadPage();
+				//remove undefined events produces by init of nested components (sort, page)
+				map(a => a.filter(e => e !== undefined)),
+				tap(e => {
+					console.info("[datasource] merge event", e);
+					if (e.length > 0) {
+						this.loadPage();
+						if (this._shouldCount) {
+							this.count();
+						}
+					}
 				})
 			)
 			.subscribe();
 	}
 
-	filteredEventStream: Subscription | null = null;
 	/**
 	 * return an Observable derived from issueSubject to avoid to expose internal subject
 	 */
 	connect(): Observable<readonly T[]> {
-		console.debug("Connecting datasource");
+		console.debug("[datasource] Connecting datasource");
 		return this.modelsSubject.asObservable();
 	}
 
@@ -195,7 +237,7 @@ export class PageableDataSource<
 		this.countingSubject.complete();
 	}
 	public loadPage() {
-		console.info("load page");
+		console.info("[datasource] load page");
 		this.load(
 			this._filter,
 			this._sort,
@@ -216,19 +258,36 @@ export class PageableDataSource<
 		this.service
 			.find(filter, sort, page)
 			.pipe(
-				catchError(() => of([])),
-				finalize(() => this.loadingSubject.next(false))
+				tap({
+					next: () => noop,
+					error: (err: Error) => {
+						const error = new DatasourceError(err);
+						console.log(`[datasource] find error: ${error.message}`);
+						this.errorSubject.next(error);
+						this.loadingSubject.next(error);
+					},
+					complete: () => this.loadingSubject.next(false)
+				})
 			)
 			.subscribe((models) => this.modelsSubject.next(models));
 	}
 
-	count() {
+	public count() {
+		console.info("[datasource] count");
 		this.countingSubject.next(true);
 		this.service
 			.count(this._filter)
 			.pipe(
-				catchError(() => of(0)),
-				finalize(() => this.countingSubject.next(false))
+				tap({
+					next: () => noop,
+					error: (err: Error) => {
+						const error = new DatasourceError(err);
+						console.log(`[datasource] count error: ${error.message}`);
+						this.errorSubject.next(error);
+						this.countingSubject.next(error);
+					},
+					complete: () => this.countingSubject.next(false)
+				})
 			)
 			.subscribe((count) => {
 				this._length = count;

@@ -1,11 +1,12 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { FormControl } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
-import { map, merge } from "rxjs";
+import { Subscription, map, merge } from "rxjs";
 import { Issue } from "src/app/core/github/models/issue";
 
 import { GithubService } from "src/app/core/github/services/github.service";
-import { PageableDataSource } from "src/app/core/models/pageable-data-source";
+import { DatasourceError, PageableDataSource } from "src/app/core/models/pageable-data-source";
 
 @Component({
 	selector: "app-demo-datasource",
@@ -22,23 +23,46 @@ export class DemoDatasourceComponent implements AfterViewInit {
 	// demo purpose features
 	paginatorEnabled = true;
 	sortEnabled = true;
+	autoloadEnabled = false;
+	filter = new FormControl("");
+	private _sub?: Subscription;
 
 	constructor(private service: GithubService) {
-		this.dataSource = new PageableDataSource<Issue>(this.service);
+		this.dataSource = new PageableDataSource<Issue>(this.service, this.autoloadEnabled);
 	}
 
-	ngAfterViewInit() {
-		merge(
+	setFilter() {
+		this.dataSource.filter = { query: this.filter.value ? this.filter.value : "" };
+	}
+
+	private _setDatasource() {
+
+		this._sub = merge(
 			this.dataSource.loading$.pipe(
-				map((b) => `datasource loading: ${b}`)
+				map((b) => {
+					if (b instanceof DatasourceError) {
+						return `datasource loading: ERROR (${b})`
+					}
+
+					return `datasource loading: ${b}`
+				})
 			),
 			this.dataSource.counting$.pipe(
-				map((b) => `datasource  counting: ${b}`)
+				map((b) => {
+					if (b instanceof Error) {
+						return `datasource counting: ERROR (${b})`
+					}
+					return `datasource  counting: ${b}`
+				})
+			),
+			this.dataSource.error$.pipe(
+				map((b) => {
+					return `datasource error: ${b}`
+				})
 			)
 		).subscribe((e) =>
 			this.dataSourceEvents.push(`[${new Date().toISOString()}]: ${e}`)
 		);
-
 		//manage default sort: must be done BEFORE managing events!
 		if (this.sortEnabled) {
 			this.dataSource.sort = this.sort;
@@ -46,5 +70,16 @@ export class DemoDatasourceComponent implements AfterViewInit {
 		if (this.paginatorEnabled) {
 			this.dataSource.paginator = this.paginator;
 		}
+	}
+
+	resetDatasource() {
+		this._sub?.unsubscribe();
+		this.filter.setValue(null);
+		this.dataSource = new PageableDataSource<Issue>(this.service, this.autoloadEnabled);
+		this._setDatasource();
+	}
+
+	ngAfterViewInit() {
+		this._setDatasource();
 	}
 }

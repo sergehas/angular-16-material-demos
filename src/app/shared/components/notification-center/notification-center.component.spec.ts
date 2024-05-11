@@ -1,8 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 
+import { Notification } from 'src/app/core/models/notification';
 import { NotificationService } from 'src/app/core/services/notification.service';
-import { Notification } from 'src/app/models/notification';
 import { NotificationCenterComponent } from './notification-center.component';
 
 describe('NotificationCenterComponent', () => {

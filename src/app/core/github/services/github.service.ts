@@ -5,12 +5,14 @@ import { Observable, map } from "rxjs";
 import { HttpService, Page } from "../../services/http-service";
 import { Issue } from "../models/issue";
 
+
 @Injectable({
 	providedIn: "root",
 })
 export class GithubService extends HttpService<Issue> {
 	static href = "https://api.github.com/search/issues";
 	static repo = "repo:angular/components";
+
 	constructor(http: HttpClient) {
 		super(http, GithubService.href);
 		this.headers = this.headers.set(
@@ -18,20 +20,28 @@ export class GithubService extends HttpService<Issue> {
 			"application/vnd.github+json"
 		);
 	}
+	private _BuildQuery(params: HttpParams, filter?: { query: string }): HttpParams {
+		if (filter && filter.query) {
+			params = params.set("q", `${GithubService.repo} ${filter.query.replaceAll(/\s+/g, ' ')}`);
+		} else {
+			params = params.set("q", GithubService.repo);
+		}
+		return params;
+	}
 
-	override count(filter?: Partial<Issue>): Observable<number> {
+	override count(filter?: { query: string }): Observable<number> {
 		// const requestUrl = `${
 		// 	GithubService.href
 		// }?q=repo:angular/components&sort=${sort}&order=${order}&per_page=${pageSize}&page=${
 		// 	pageNumber + 1
 		// }`;
 		//there is no dedicated API for count, only the search api is available ==> to count, trigger a search, with result page size=1
+		let params = new HttpParams();
+		params = this._BuildQuery(params, filter);
 		return this.http
 			.get<{ total_count: number; items: Issue[] }>(GithubService.href, {
 				headers: this.headers,
-				params: new HttpParams()
-					.set("q", GithubService.repo)
-					.set("per_page", 1),
+				params: params.set("per_page", 1),
 			})
 			.pipe(map((res) => res.total_count));
 	}
@@ -41,7 +51,7 @@ export class GithubService extends HttpService<Issue> {
 	 *
 	 */
 	override find(
-		filter: Partial<Issue>,
+		filter: { query: string } | undefined,
 		sort: Sort | undefined,
 		page: Page | undefined
 	): Observable<Issue[]> {
@@ -50,7 +60,9 @@ export class GithubService extends HttpService<Issue> {
 		// }?q=repo:angular/components&sort=${sort}&order=${order}&per_page=${pageSize}&page=${
 		// 	pageNumber + 1
 		// }`;
-		let params = new HttpParams().set("q", GithubService.repo);
+
+		let params = new HttpParams();
+		params = this._BuildQuery(params, filter);
 		if (sort) {
 			params = params
 				.set("sort", sort!.active)

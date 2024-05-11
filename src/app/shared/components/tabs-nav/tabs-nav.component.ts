@@ -13,8 +13,8 @@ import {
 import { MenuNode, NavBuilder } from "./models/nav-builder";
 
 import { MatIconModule } from "@angular/material/icon";
+import { Notification } from "src/app/core/models/notification";
 import { NotificationService } from "src/app/core/services/notification.service";
-import { Notification } from "src/app/models/notification";
 import { slideAnimations } from "../../animations/route-animation";
 
 
@@ -110,6 +110,15 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 		console.info(`[tab-nav] activate animation ${this.animation} on route ${route?.snapshot.url}}`);
 	}
 
+	// prepareRoute(outlet: RouterOutlet) {
+	// 	console.info(`[tab-nav] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData['animation']}`);
+	// 	//return this.contexts.getContext("primary")?.route?.snapshot?.data?.["animation"];
+	// 	return (
+	// 		outlet?.activatedRouteData &&
+	// 		outlet.activatedRouteData['animation']
+	// 	);
+	// }
+
 	onDeactivate(component: Type<unknown>) {
 		this.deactivate.emit(component);
 
@@ -119,15 +128,6 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 	onFocus(index: number) {
 		console.info(`[tab-nav] index focused ${index}`);
 		this.indexFocused.emit(index);
-
 	}
-	// prepareRoute(outlet: RouterOutlet) {
-	// 	console.info(`[tab-nav] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData['animation']}`);
-	// 	//return this.contexts.getContext("primary")?.route?.snapshot?.data?.["animation"];
-	// 	return (
-	// 		outlet?.activatedRouteData &&
-	// 		outlet.activatedRouteData['animation']
-	// 	);
-	// }
 }
 

@@ -4,7 +4,7 @@ import Excel, { Workbook } from 'exceljs';
 import { MatPaginator } from '@angular/material/paginator';
 import { saveAs } from 'file-saver';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { Progress, STAGE } from 'src/app/models/progress';
+import { Progress, STAGE } from 'src/app/core/models/progress';
 import { PageableDataSource, Paginator } from '../models/pageable-data-source';
 import { NotificationService } from './notification.service';
 
