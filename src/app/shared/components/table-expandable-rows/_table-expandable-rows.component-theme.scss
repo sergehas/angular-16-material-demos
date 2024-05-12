@@ -2,40 +2,40 @@
 @use "@angular/material" as mat;
 
 @mixin theme($theme) {
-	$primary: map.get($theme, primary);
-	$accent: map.get($theme, accent);
-	$warn: map.get($theme, warn);
-	$background: map.get($theme, background);
-	$foreground: map.get($theme, foreground);
-	$is-dark-theme: map.get($theme, is-dark);
+  $primary: map.get($theme, primary);
+  $accent: map.get($theme, accent);
+  $warn: map.get($theme, warn);
+  $background: map.get($theme, background);
+  $foreground: map.get($theme, foreground);
+  $is-dark-theme: map.get($theme, is-dark);
 
-	$sticky-background-opacity: if($is-dark-theme, 0.2, 0.03);
-	.table {
-		//sticky related attr
-		.mat-mdc-table-sticky {
-			background: color-mix(
-				in srgb,
-				rgba(0, 0, 0) calc(100% * $sticky-background-opacity),
-				var(--mat-table-background-color)
-			);
-		}
-		$sticky-border-style: var(--mat-table-row-item-outline-width) solid
-			var(--mat-table-row-item-outline-color);
+  $sticky-background-opacity: if($is-dark-theme, 0.2, 0.03);
+  .table {
+    //sticky related attr
+    .mat-mdc-table-sticky {
+      background: color-mix(
+        in srgb,
+        rgba(0, 0, 0) calc(100% * $sticky-background-opacity),
+        var(--mat-table-background-color)
+      );
+    }
+    $sticky-border-style: var(--mat-table-row-item-outline-width) solid
+      var(--mat-table-row-item-outline-color);
 
-		.mat-mdc-table-sticky-border-elem-top {
-			border-bottom: $sticky-border-style;
-		}
+    .mat-mdc-table-sticky-border-elem-top {
+      border-bottom: $sticky-border-style;
+    }
 
-		.mat-mdc-table-sticky-border-elem-right {
-			border-left: $sticky-border-style;
-		}
+    .mat-mdc-table-sticky-border-elem-right {
+      border-left: $sticky-border-style;
+    }
 
-		.mat-mdc-table-sticky-border-elem-bottom {
-			border-top: $sticky-border-style;
-		}
+    .mat-mdc-table-sticky-border-elem-bottom {
+      border-top: $sticky-border-style;
+    }
 
-		.mat-mdc-table-sticky-border-elem-left {
-			border-right: $sticky-border-style;
-		}
-	}
+    .mat-mdc-table-sticky-border-elem-left {
+      border-right: $sticky-border-style;
+    }
+  }
 }

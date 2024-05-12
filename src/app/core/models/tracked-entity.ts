@@ -1,4 +1,4 @@
 export interface TrackedEntity {
-	created?: Date;
-	userId?: string;
+  created?: Date;
+  userId?: string;
 }

@@ -1,116 +1,164 @@
 <section>
-	<h1>This demo illustrate http service compatible data source</h1>
-	<h2>Overview</h2>
-	<p>
-		This datasouce support (optinal) <b>natively sorting & paging.</b><br />
-		It implements native Angular native datasource, & so can be used in any
-		datasource awre component (such as table)<br />
-		It is design to avoid extra underlyling (http) service call to preserve
-		response time & API cosumption plan.<br />
-		key benefit: it requrire a simple service injection... nothing else!
-	</p>
-	<h3>Events</h3>
-	<p>
-		driving the datasource: it is supoer simple: the constructor takes 1 optional arg to control if the DS should
-		automaticaly load at startup.
-		Then, everithing else is automated: set the pager, set the sort, set the filter they will fire the proper
-		(datasource internal) event to load and count (if needed).
-
-		To enforce datasource loading ; simply set a filter : <code>datasource.filter=(&#123;&#125;)</code>
-	</p>
-	<p>It emits events while starting/ending to load & count.<br /></p>
+  <h1>This demo illustrate http service compatible data source</h1>
+  <h2>Overview</h2>
+  <p>
+    This datasouce support (optinal) <b>natively sorting & paging.</b><br />
+    It implements native Angular native datasource, & so can be used in any
+    datasource awre component (such as table)<br />
+    It is design to avoid extra underlyling (http) service call to preserve
+    response time & API cosumption plan.<br />
+    key benefit: it requrire a simple service injection... nothing else!
+  </p>
+  <h3>Events</h3>
+  <p>
+    driving the datasource: it is supoer simple: the constructor takes 1
+    optional arg to control if the DS should automaticaly load at startup. Then,
+    everithing else is automated: set the pager, set the sort, set the filter
+    they will fire the proper (datasource internal) event to load and count (if
+    needed). To enforce datasource loading ; simply set a filter :
+    <code>datasource.filter=(&#123;&#125;)</code>
+  </p>
+  <p>It emits events while starting/ending to load & count.<br /></p>
 </section>
 <mat-divider></mat-divider>
 
 <section class="demo-options">
-	<mat-slide-toggle [(ngModel)]="paginatorEnabled" (change)="
-			dataSource.paginator = paginatorEnabled ? paginator : undefined
-		">Enable paginiator</mat-slide-toggle>
-	<mat-slide-toggle [(ngModel)]="sortEnabled" (change)="dataSource.sort = sortEnabled ? sort : undefined">Enable
-		sort</mat-slide-toggle>
-	<div>
-		<mat-slide-toggle [(ngModel)]="autoloadEnabled" (change)="resetDatasource()">Initial
-			autoloading</mat-slide-toggle>&nbsp;
-		<button mat-flat-button color="primary" (click)="filter.setValue(null); dataSource.filter={}"
-			[disabled]="autoloadEnabled">
-			<mat-icon>refresh</mat-icon>
-			Load
-		</button>
-	</div>
+  <mat-slide-toggle
+    [(ngModel)]="paginatorEnabled"
+    (change)="dataSource.paginator = paginatorEnabled ? paginator : undefined"
+    >Enable paginiator</mat-slide-toggle
+  >
+  <mat-slide-toggle
+    [(ngModel)]="sortEnabled"
+    (change)="dataSource.sort = sortEnabled ? sort : undefined"
+    >Enable sort</mat-slide-toggle
+  >
+  <div>
+    <mat-slide-toggle [(ngModel)]="autoloadEnabled" (change)="resetDatasource()"
+      >Initial autoloading</mat-slide-toggle
+    >&nbsp;
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="filter.setValue(null); dataSource.filter = {}"
+      [disabled]="autoloadEnabled"
+    >
+      <mat-icon>refresh</mat-icon>
+      Load
+    </button>
+  </div>
 </section>
 <mat-divider></mat-divider>
 
 <section class="demo-options mat-elevation-z8">
-	<div class="label-container">
-		<mat-form-field appearance="outline" class="filter">
-			<mat-label>Filter</mat-label>
-			<input matInput type="text" [formControl]="filter" placeholder="is:open">
-			<mat-hint class="active-hint" (click)="filter.setValue('is:open matTable')">e.g.: is:open
-				matTable</mat-hint>
-		</mat-form-field>
-		<button mat-flat-button color="primary" class="icon-only" (click)="setFilter()">
-			<mat-icon>filter_list</mat-icon>
-			Apply
-		</button>
-	</div>
+  <div class="label-container">
+    <mat-form-field appearance="outline" class="filter">
+      <mat-label>Filter</mat-label>
+      <input
+        matInput
+        type="text"
+        [formControl]="filter"
+        placeholder="is:open"
+      />
+      <mat-hint
+        class="active-hint"
+        (click)="filter.setValue('is:open matTable')"
+        >e.g.: is:open matTable</mat-hint
+      >
+    </mat-form-field>
+    <button
+      mat-flat-button
+      color="primary"
+      class="icon-only"
+      (click)="setFilter()"
+    >
+      <mat-icon>filter_list</mat-icon>
+      Apply
+    </button>
+  </div>
 
-	<table mat-table [dataSource]="dataSource" matSort [matSortActive]="sortEnabled ? 'created' : ''"
-		matSortDisableClear [matSortDirection]="sortEnabled ? 'desc' : ''">
-		<!-- Number Column -->
-		<ng-container matColumnDef="number">
-			<th mat-header-cell *matHeaderCellDef>#</th>
-			<td mat-cell *matCellDef="let row">{{ row.number }}</td>
-		</ng-container>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    [matSortActive]="sortEnabled ? 'created' : ''"
+    matSortDisableClear
+    [matSortDirection]="sortEnabled ? 'desc' : ''"
+  >
+    <!-- Number Column -->
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let row">{{ row.number }}</td>
+    </ng-container>
 
-		<!-- Title Column -->
-		<ng-container matColumnDef="title">
-			<th mat-header-cell *matHeaderCellDef>Title</th>
-			<td mat-cell *matCellDef="let row">{{ row.title }}</td>
-		</ng-container>
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let row">{{ row.title }}</td>
+    </ng-container>
 
-		<!-- State Column -->
-		<ng-container matColumnDef="state">
-			<th mat-header-cell *matHeaderCellDef>State</th>
-			<td mat-cell *matCellDef="let row">{{ row.state }}</td>
-		</ng-container>
+    <!-- State Column -->
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef>State</th>
+      <td mat-cell *matCellDef="let row">{{ row.state }}</td>
+    </ng-container>
 
-		<!-- Created Column -->
-		<ng-container matColumnDef="created">
-			<th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!sortEnabled" disableClear>
-				Created
-			</th>
-			<td mat-cell *matCellDef="let row">{{ row.created | date }}</td>
-		</ng-container>
+    <!-- Created Column -->
+    <ng-container matColumnDef="created">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        [disabled]="!sortEnabled"
+        disableClear
+      >
+        Created
+      </th>
+      <td mat-cell *matCellDef="let row">{{ row.created | date }}</td>
+    </ng-container>
 
-		<tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-		<tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-	</table>
-	<mat-paginator [hidden]="!paginatorEnabled" [pageSizeOptions]="[5, 10, 20, 100]" showFirstLastButtons
-		[length]="dataSource.length$ | async" aria-label="Select page">
-	</mat-paginator>
-</section><br>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [hidden]="!paginatorEnabled"
+    [pageSizeOptions]="[5, 10, 20, 100]"
+    showFirstLastButtons
+    [length]="dataSource.length$ | async"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</section>
+<br />
 <mat-divider></mat-divider>
 <section class="demo-options">
-	<div class="demo-bar">
-		<h2>Datasource event log</h2>
+  <div class="demo-bar">
+    <h2>Datasource event log</h2>
 
-		<button mat-flat-button class="icon-only" color="accent" matBadgePosition="below before"
-			[matBadgeHidden]="dataSourceEvents.length === 0" [matBadge]="dataSourceEvents.length"
-			matBadgeColor="primary" (click)="dataSourceEvents = []">
-			<mat-icon>playlist_remove</mat-icon>
-			clear
-		</button>
-	</div>
+    <button
+      mat-flat-button
+      class="icon-only"
+      color="accent"
+      matBadgePosition="below before"
+      [matBadgeHidden]="dataSourceEvents.length === 0"
+      [matBadge]="dataSourceEvents.length"
+      matBadgeColor="primary"
+      (click)="dataSourceEvents = []"
+    >
+      <mat-icon>playlist_remove</mat-icon>
+      clear
+    </button>
+  </div>
 
-	<div *ngIf="!dataSourceEvents.length">
-		Datasource events will be logged here
-	</div>
+  <div *ngIf="!dataSourceEvents.length">
+    Datasource events will be logged here
+  </div>
 
-	<section class="demo-log">
-		<ol>
-			<li *ngFor="let event of dataSourceEvents">
-				{{ event }}
-			</li>
-		</ol>
-	</section>
+  <section class="demo-log">
+    <ol>
+      <li *ngFor="let event of dataSourceEvents">
+        {{ event }}
+      </li>
+    </ol>
+  </section>
 </section>

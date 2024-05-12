@@ -1,34 +1,48 @@
-<mat-card class="notification-card" [class]="'notification-' + notification.severity">
-    <mat-card-header class="notification-header">
-        <ng-container [ngSwitch]="notification.severity">
-            <mat-icon *ngSwitchCase="'sever'">error</mat-icon>
-            <mat-icon *ngSwitchCase="'warn'">warning</mat-icon>
-            <mat-icon *ngSwitchCase="'info'">info</mat-icon>
-            <mat-icon *ngSwitchDefault>circle_notifications</mat-icon>
-        </ng-container>
-        <div class="notification-title">
-            {{ notification.date | date: "hh:mm:ss" }}
-        </div>
-        <a mat-icon-button *ngIf="notification.ref!==undefined && notification.ref!==''" [href]="notification.ref">
-            <mat-icon>link</mat-icon>
-        </a>
-        <span class="spacer"></span>
+<mat-card
+  class="notification-card"
+  [class]="'notification-' + notification.severity"
+>
+  <mat-card-header class="notification-header">
+    <ng-container [ngSwitch]="notification.severity">
+      <mat-icon *ngSwitchCase="'sever'">error</mat-icon>
+      <mat-icon *ngSwitchCase="'warn'">warning</mat-icon>
+      <mat-icon *ngSwitchCase="'info'">info</mat-icon>
+      <mat-icon *ngSwitchDefault>circle_notifications</mat-icon>
+    </ng-container>
+    <div class="notification-title">
+      {{ notification.date | date: "hh:mm:ss" }}
+    </div>
+    <a
+      mat-icon-button
+      *ngIf="notification.ref !== undefined && notification.ref !== ''"
+      [href]="notification.ref"
+    >
+      <mat-icon>link</mat-icon>
+    </a>
+    <span class="spacer"></span>
 
-        <button mat-icon-button (click)="dismiss()">
-            <mat-icon>delete_forever</mat-icon>
-        </button>
-    </mat-card-header>
-    <mat-card-content class="notification-content">
-        <div>{{ notification.message }}</div>
-    </mat-card-content>
-    <mat-card-footer class="notification-footer">
-        <div class="notification-progress">
-            <mat-progress-bar class="notification-progress-bar" *ngIf="hasProgress" [mode]="progressMode"
-                [value]="progressValue" [color]="progressColor">
-            </mat-progress-bar>
-            <div class="progress-hint" *ngIf="hasProgress">
-                <span *ngIf="progressValue>=0">{{progressValue|number:'1.0-0'}}%</span>
-            </div>
-        </div>
-    </mat-card-footer>
+    <button mat-icon-button (click)="dismiss()">
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+  </mat-card-header>
+  <mat-card-content class="notification-content">
+    <div>{{ notification.message }}</div>
+  </mat-card-content>
+  <mat-card-footer class="notification-footer">
+    <div class="notification-progress">
+      <mat-progress-bar
+        class="notification-progress-bar"
+        *ngIf="hasProgress"
+        [mode]="progressMode"
+        [value]="progressValue"
+        [color]="progressColor"
+      >
+      </mat-progress-bar>
+      <div class="progress-hint" *ngIf="hasProgress">
+        <span *ngIf="progressValue >= 0"
+          >{{ progressValue | number: "1.0-0" }}%</span
+        >
+      </div>
+    </div>
+  </mat-card-footer>
 </mat-card>

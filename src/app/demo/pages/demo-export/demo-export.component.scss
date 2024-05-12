@@ -1,36 +1,36 @@
 .demo-options {
-	margin: 16px 16px;
-	display: flex;
-	flex-direction: column;
+  margin: 16px 16px;
+  display: flex;
+  flex-direction: column;
 
-	& > * {
-		margin: inherit;
-	}
+  & > * {
+    margin: inherit;
+  }
 
-	.label-container {
-		display: flex;
-		column-gap: 16px;
-	}
+  .label-container {
+    display: flex;
+    column-gap: 16px;
+  }
 }
 
 .demo-log {
-	display: flex;
-	flex-direction: row;
-	align-items: center;
-	justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 .logs {
-	height: 100px;
-	overflow-y: scroll;
-	font-family: monospace;
-	display: flex;
-	flex-direction: column-reverse;
+  height: 100px;
+  overflow-y: scroll;
+  font-family: monospace;
+  display: flex;
+  flex-direction: column-reverse;
 
-	li {
-		flex: 0 0 auto;
-	}
+  li {
+    flex: 0 0 auto;
+  }
 }
 
 [hidden] {
-	display: none !important;
+  display: none !important;
 }

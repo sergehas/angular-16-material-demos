@@ -2,25 +2,25 @@
 @use "@angular/material" as mat;
 
 @mixin theme($theme) {
-	$primary: map.get($theme, primary);
-	$accent: map.get($theme, accent);
-	$warn: map.get($theme, warn);
-	// $background: map.get($theme, background);
-	// $foreground: map.get($theme, foreground);
-	// $is-dark-theme: map.get($theme, is-dark);
-	$indicator-color: mat.get-color-from-palette($primary);
+  $primary: map.get($theme, primary);
+  $accent: map.get($theme, accent);
+  $warn: map.get($theme, warn);
+  // $background: map.get($theme, background);
+  // $foreground: map.get($theme, foreground);
+  // $is-dark-theme: map.get($theme, is-dark);
+  $indicator-color: mat.get-color-from-palette($primary);
 
-	.root-sidenav-container {
-		.root-sidenav {
-			.menu-node.active-menu-node {
-				&:before {
-					background-color: $indicator-color;
-				}
+  .root-sidenav-container {
+    .root-sidenav {
+      .menu-node.active-menu-node {
+        &:before {
+          background-color: $indicator-color;
+        }
 
-				.menu-icon {
-					color: $indicator-color;
-				}
-			}
-		}
-	}
+        .menu-icon {
+          color: $indicator-color;
+        }
+      }
+    }
+  }
 }

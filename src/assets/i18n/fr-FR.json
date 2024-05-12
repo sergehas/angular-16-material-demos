@@ -1,8 +1,7 @@
 {
-	"format": {
-		"day": "dd/MM/YYYY",
-		"datetime": "dd/MM/YYYY HH:mm:ss",
-		"weekYear" : "YYYY-W"
-
-	}
+  "format": {
+    "day": "dd/MM/YYYY",
+    "datetime": "dd/MM/YYYY HH:mm:ss",
+    "weekYear": "YYYY-W"
+  }
 }

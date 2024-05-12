@@ -33,45 +33,49 @@ import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.componen
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(http: HttpClient) {
-	return new TranslateHttpLoader(http, "/assets/i18n/", ".json");
+  return new TranslateHttpLoader(http, "/assets/i18n/", ".json");
 }
 
 @NgModule({
-	declarations: [AppComponent],
-	imports: [
-		BrowserModule,
-		BrowserAnimationsModule,
-		// import HttpClientModule after BrowserModule.
-		HttpClientModule,
-		TranslateModule.forRoot({
-			defaultLanguage: "en-US",
-			loader: {
-				provide: TranslateLoader,
-				useFactory: HttpLoaderFactory,
-				deps: [HttpClient],
-			},
-		}),
+  declarations: [AppComponent],
+  imports: [
+    BrowserModule,
+    BrowserAnimationsModule,
+    // import HttpClientModule after BrowserModule.
+    HttpClientModule,
+    TranslateModule.forRoot({
+      defaultLanguage: "en-US",
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
 
-		MatToolbarModule,
-		MatSidenavModule,
-		MatIconModule,
-		MatBadgeModule,
-		MatButtonModule,
+    MatToolbarModule,
+    MatSidenavModule,
+    MatIconModule,
+    MatBadgeModule,
+    MatButtonModule,
 
-		SharedModule,
-		ServicesModule,
-		IconsModule,
-		AppRoutingModule,
-		DemoModule,
-		NavModule,
-		ArtInstituteModule,
-		ListOfValuesModule,
+    SharedModule,
+    ServicesModule,
+    IconsModule,
+    AppRoutingModule,
+    DemoModule,
+    NavModule,
+    ArtInstituteModule,
+    ListOfValuesModule,
 
-		NotificationCenterComponent,
-		TreeNavComponent,
-
-	],
-	providers: [StorageService, NotificationService, ExcelExportService, DatePipe],
-	bootstrap: [AppComponent],
+    NotificationCenterComponent,
+    TreeNavComponent,
+  ],
+  providers: [
+    StorageService,
+    NotificationService,
+    ExcelExportService,
+    DatePipe,
+  ],
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

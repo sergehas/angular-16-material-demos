@@ -2,44 +2,48 @@
 @use "sass:map";
 
 @use "./app/app.component-theme" as app;
-@use "./app/shared/components/table-expandable-rows/table-expandable-rows.component-theme" as table-expandable-rows;
+@use "./app/shared/components/table-expandable-rows/table-expandable-rows.component-theme"
+  as table-expandable-rows;
 
 @use "./app/shared/components/tree-nav/tree-nav.component-theme" as tree-nav;
 @use "./app/shared/components/tabs-nav/tabs-nav.component-theme" as tabs-nav;
-@use "./app/shared/components/notification-center/notification.component-theme" as notification;
-@use "./app/shared/components/notification-center/notification-snack-bar.component-theme" as notification-snack;
-@use "./app/shared/components/notification-center/notification-center.component-theme" as notification-center;
+@use "./app/shared/components/notification-center/notification.component-theme"
+  as notification;
+@use "./app/shared/components/notification-center/notification-snack-bar.component-theme"
+  as notification-snack;
+@use "./app/shared/components/notification-center/notification-center.component-theme"
+  as notification-center;
 
 @use "./app/demo/pages/demo-notif/demo-notif.component-theme" as demo-notif;
 
 html {
-	--app-gap: 16px;
+  --app-gap: 16px;
 }
 
 html,
 body {
-	height: 100%;
+  height: 100%;
 }
 
 body {
-	margin: 0;
+  margin: 0;
 }
 
 // Styles for the docs app that are based on the current theme.
 @mixin theme($theme) {
-	// $primary: map.get($theme, primary);
-	// $accent: map.get($theme, accent);
-	// $warn: map.get($theme, warn);
-	// $background: map.get($theme, background);
-	// $foreground: map.get($theme, foreground);
+  // $primary: map.get($theme, primary);
+  // $accent: map.get($theme, accent);
+  // $warn: map.get($theme, warn);
+  // $background: map.get($theme, background);
+  // $foreground: map.get($theme, foreground);
 
-	@include app.theme($theme);
-	@include tabs-nav.theme($theme);
-	@include tree-nav.theme($theme);
-	@include table-expandable-rows.theme($theme);
-	@include notification.theme($theme);
-	@include notification-snack.theme($theme);
-	@include notification-center.theme($theme);
+  @include app.theme($theme);
+  @include tabs-nav.theme($theme);
+  @include tree-nav.theme($theme);
+  @include table-expandable-rows.theme($theme);
+  @include notification.theme($theme);
+  @include notification-snack.theme($theme);
+  @include notification-center.theme($theme);
 
-	@include demo-notif.theme($theme);
+  @include demo-notif.theme($theme);
 }

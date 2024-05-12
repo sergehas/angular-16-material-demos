@@ -6,24 +6,24 @@ import { RouterTestingModule } from "@angular/router/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 describe("VoidNavComponent", () => {
-	let component: VoidNavComponent;
-	let fixture: ComponentFixture<VoidNavComponent>;
+  let component: VoidNavComponent;
+  let fixture: ComponentFixture<VoidNavComponent>;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			declarations: [VoidNavComponent],
-			imports: [
-				TabsNavComponent,
-				RouterTestingModule.withRoutes([]),
-				NoopAnimationsModule,
-			],
-		});
-		fixture = TestBed.createComponent(VoidNavComponent);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [VoidNavComponent],
+      imports: [
+        TabsNavComponent,
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
+      ],
+    });
+    fixture = TestBed.createComponent(VoidNavComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it("should create", () => {
-		expect(component).toBeTruthy();
-	});
+  it("should create", () => {
+    expect(component).toBeTruthy();
+  });
 });

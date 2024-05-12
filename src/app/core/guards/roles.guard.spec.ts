@@ -1,9 +1,9 @@
-import { TestBed } from '@angular/core/testing';
-import { CanActivateFn } from '@angular/router';
+import { TestBed } from "@angular/core/testing";
+import { CanActivateFn } from "@angular/router";
 
-import { allRoleGuard, anyRoleGuard } from './roles.guard';
+import { allRoleGuard, anyRoleGuard } from "./roles.guard";
 
-describe('anyRoleGuard', () => {
+describe("anyRoleGuard", () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
     TestBed.runInInjectionContext(() => anyRoleGuard(...guardParameters));
 
@@ -11,12 +11,12 @@ describe('anyRoleGuard', () => {
     TestBed.configureTestingModule({});
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(executeGuard).toBeTruthy();
   });
 });
 
-describe('allRoleGuard', () => {
+describe("allRoleGuard", () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
     TestBed.runInInjectionContext(() => allRoleGuard(...guardParameters));
 
@@ -24,7 +24,7 @@ describe('allRoleGuard', () => {
     TestBed.configureTestingModule({});
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(executeGuard).toBeTruthy();
   });
 });

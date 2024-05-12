@@ -1,14 +1,14 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
 
-import { ValuesComponent } from './values.component';
+import { ValuesComponent } from "./values.component";
 
-describe('ValuesComponent', () => {
+describe("ValuesComponent", () => {
   let component: ValuesComponent;
   let fixture: ComponentFixture<ValuesComponent>;
 
   beforeEach(() => {
-    const service = jasmine.createSpyObj('ValuesService', ['find', 'count']);
+    const service = jasmine.createSpyObj("ValuesService", ["find", "count"]);
 
     TestBed.configureTestingModule({
       declarations: [ValuesComponent],
@@ -19,7 +19,7 @@ describe('ValuesComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

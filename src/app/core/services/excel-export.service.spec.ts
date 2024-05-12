@@ -1,8 +1,8 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from "@angular/core/testing";
 
-import { ExcelExportService } from './excel-export.service';
+import { ExcelExportService } from "./excel-export.service";
 
-describe('ExcelExportService', () => {
+describe("ExcelExportService", () => {
   let service: ExcelExportService;
 
   beforeEach(() => {
@@ -10,7 +10,7 @@ describe('ExcelExportService', () => {
     service = TestBed.inject(ExcelExportService);
   });
 
-  it('should be created', () => {
+  it("should be created", () => {
     expect(service).toBeTruthy();
   });
 });

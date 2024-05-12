@@ -8,52 +8,52 @@
 /// @param {Map} $danger The danger color palette.
 /// @param {Boolean} $create-light-theme If true a light theme is created, otherwise a dark theme is created
 @function extend-theme(
-    $primary,
-    $accent,
-    $warn: mat.$orange-palette,
-    $success: mat.$green-palette,
-    $warning: mat.$orange-palette,
-    $error: mat.$red-palette,
-    $create-light-theme: true,
-    $typography: mat.define-typography-config()
+  $primary,
+  $accent,
+  $warn: mat.$orange-palette,
+  $success: mat.$green-palette,
+  $warning: mat.$orange-palette,
+  $error: mat.$red-palette,
+  $create-light-theme: true,
+  $typography: mat.define-typography-config()
 ) {
-    $primary: mat.define-palette($primary);
-    $accent: mat.define-palette($accent);
-    $warn: mat.define-palette($warn);
+  $primary: mat.define-palette($primary);
+  $accent: mat.define-palette($accent);
+  $warn: mat.define-palette($warn);
 
-    $success: mat.define-palette($success);
-    $warning: mat.define-palette($warning);
-    $error: mat.define-palette($error);
+  $success: mat.define-palette($success);
+  $warning: mat.define-palette($warning);
+  $error: mat.define-palette($error);
 
-    $theme: null;
+  $theme: null;
 
-    @if ($create-light-theme) {
-        $theme: mat.define-light-theme(
-            (
-                color: (
-                    primary: $primary,
-                    accent: $accent,
-                    warn: $warn
-                ),
-                typography: $typography
-            )
-        );
-    } @else {
-        $theme: mat.define-dark-theme(
-            (
-                color: (
-                    primary: $primary,
-                    accent: $accent,
-                    warn: $warn
-                ),
-                typography: $typography
-            )
-        );
-    }
-    $swe: (
-        success: $success,
-        warning: $warning,
-        error: $error
+  @if ($create-light-theme) {
+    $theme: mat.define-light-theme(
+      (
+        color: (
+          primary: $primary,
+          accent: $accent,
+          warn: $warn,
+        ),
+        typography: $typography,
+      )
     );
-    @return map-merge($theme, $swe);
+  } @else {
+    $theme: mat.define-dark-theme(
+      (
+        color: (
+          primary: $primary,
+          accent: $accent,
+          warn: $warn,
+        ),
+        typography: $typography,
+      )
+    );
+  }
+  $swe: (
+    success: $success,
+    warning: $warning,
+    error: $error,
+  );
+  @return map-merge($theme, $swe);
 }

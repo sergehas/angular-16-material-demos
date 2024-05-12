@@ -4,8 +4,8 @@ import { GroupsService } from "./services/groups.service";
 import { ValuesService } from "./services/values.service";
 
 @NgModule({
-	declarations: [],
-	imports: [CommonModule],
-	providers: [GroupsService, ValuesService],
+  declarations: [],
+  imports: [CommonModule],
+  providers: [GroupsService, ValuesService],
 })
 export class ValueListModule {}

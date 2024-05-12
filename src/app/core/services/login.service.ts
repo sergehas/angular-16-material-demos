@@ -1,5 +1,4 @@
-import { Injectable } from '@angular/core';
-
+import { Injectable } from "@angular/core";
 
 export type Role = "ADMIN" | "AUTHOR" | "VIEWER" | "SPECTATOR" | "SUPER";
 
@@ -10,7 +9,13 @@ export class SignedUser {
   isLoggedIn = false;
   roles: Role[] = [];
 
-  static from(name: string, lastname: string, id: string, isLoggedIn: boolean, roles: Role[]): SignedUser {
+  static from(
+    name: string,
+    lastname: string,
+    id: string,
+    isLoggedIn: boolean,
+    roles: Role[]
+  ): SignedUser {
     const self = new SignedUser();
     self.name = name;
     self.lastname = lastname;
@@ -20,25 +25,22 @@ export class SignedUser {
     return self;
   }
   static clone(u: SignedUser): SignedUser {
-    return SignedUser.from(
-      u.name!,
-      u.lastname!,
-      u.id!,
-      u.isLoggedIn,
-      [...u.roles],)
+    return SignedUser.from(u.name!, u.lastname!, u.id!, u.isLoggedIn, [
+      ...u.roles,
+    ]);
   }
   hasAnyRoles(roles: Role | Role[]): boolean {
     const r = [...roles] as Role[];
-    return this.roles.some(role => r.includes(role));
+    return this.roles.some((role) => r.includes(role));
   }
   hasAllRoles(roles: Role | Role[]): boolean {
     const r = [...roles] as Role[];
-    return r.every(role => this.roles.includes(role));
+    return r.every((role) => this.roles.includes(role));
   }
 }
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 /**
  * fake login serivce. Host the supposed logged in user
@@ -71,5 +73,4 @@ export class LoginService {
     this._user.id = null;
     this._user.roles = [];
   }
-
 }

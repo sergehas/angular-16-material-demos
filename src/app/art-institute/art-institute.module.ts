@@ -6,7 +6,7 @@ import { ArtInstituteComponent } from "./pages/art-institute.component";
 import { TabsNavComponent } from "../shared/components/tabs-nav/tabs-nav.component";
 
 @NgModule({
-	declarations: [ArtInstituteComponent],
-	imports: [CommonModule, TabsNavComponent, ArtInstituteRoutingModule],
+  declarations: [ArtInstituteComponent],
+  imports: [CommonModule, TabsNavComponent, ArtInstituteRoutingModule],
 })
 export class ArtInstituteModule {}

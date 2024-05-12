@@ -1,8 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
-import { anyRoleGuard } from '../core/guards/roles.guard';
-import { NavComponent } from './pages/nav.component';
-import { VoidNavComponent } from './pages/void-nav/void-nav.component';
+import { NgModule } from "@angular/core";
+import { RouterModule, Routes } from "@angular/router";
+import { anyRoleGuard } from "../core/guards/roles.guard";
+import { NavComponent } from "./pages/nav.component";
+import { VoidNavComponent } from "./pages/void-nav/void-nav.component";
 
 const routes: Routes = [
   {
@@ -12,8 +12,7 @@ const routes: Routes = [
 
     data: {
       icon: "navigation",
-      roles: ["SPECTATOR"]
-
+      roles: ["SPECTATOR"],
     },
     children: [
       {
@@ -31,16 +30,15 @@ const routes: Routes = [
         data: {
           animation: "slideLeft",
           icon: "gpp_bad",
-          roles: ["ADMIN", "VIEWER"]
+          roles: ["ADMIN", "VIEWER"],
         },
       },
-    ]
-  }
+    ],
+  },
 ];
-
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class NavRoutingModule { }
+export class NavRoutingModule {}

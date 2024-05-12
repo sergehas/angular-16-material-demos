@@ -1,163 +1,164 @@
 :root {
-	--pagaginator-height: 56px; //not defined by material, but that's the value
+  --pagaginator-height: 56px; //not defined by material, but that's the value
 }
 
 .progress-container {
-	position: relative;
-	height: max(var(--mdc-linear-progress-track-height),
-			var(--mdc-linear-progress-active-indicator-height));
+  position: relative;
+  height: max(
+    var(--mdc-linear-progress-track-height),
+    var(--mdc-linear-progress-active-indicator-height)
+  );
 
-	mat-progress-bar {
-		position: absolute;
-		bottom: 0px;
-	}
+  mat-progress-bar {
+    position: absolute;
+    bottom: 0px;
+  }
 }
 
 .table-container {
-	//attr for menu button on the top right
-	position: relative;
+  //attr for menu button on the top right
+  position: relative;
 
-	.config-button {
-		width: 24px;
-		float: right;
-		position: absolute;
-		right: 0;
-		top: 0;
-		z-index: 101;
-		display: flex;
-		// reduce heigh by 1 px to avoid "blurring" the border bottom of sticky header
-		height: calc(var(--mat-table-header-container-height, 56px) - 1px);
-		backdrop-filter: blur(8px);
+  .config-button {
+    width: 24px;
+    float: right;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 101;
+    display: flex;
+    // reduce heigh by 1 px to avoid "blurring" the border bottom of sticky header
+    height: calc(var(--mat-table-header-container-height, 56px) - 1px);
+    backdrop-filter: blur(8px);
 
-		button {
-			border: none;
-			padding: 0;
-			background: none;
-		}
-	}
+    button {
+      border: none;
+      padding: 0;
+      background: none;
+    }
+  }
 
-	.table {
-		width: 100%;
-		overflow: auto;
+  .table {
+    width: 100%;
+    overflow: auto;
 
-		[hidden] {
-			display: none !important;
-		}
+    [hidden] {
+      display: none !important;
+    }
 
-		.mat-sort-header-container {
-			//elipsis on text
-			max-width: inherit;
+    .mat-sort-header-container {
+      //elipsis on text
+      max-width: inherit;
 
-			.mat-sort-header-content {
-				display: block;
-				white-space: nowrap;
-				overflow: hidden;
-				text-overflow: ellipsis;
-				margin-right: 5px; //force elipsis to display
-			}
-		}
+      .mat-sort-header-content {
+        display: block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-right: 5px; //force elipsis to display
+      }
+    }
 
-		mat-cell:first-of-type,
-		mat-header-cell:first-of-type,
-		mat-footer-cell:first-of-type {
-			padding-left: 12px;
+    mat-cell:first-of-type,
+    mat-header-cell:first-of-type,
+    mat-footer-cell:first-of-type {
+      padding-left: 12px;
 
-			&.selector-column {
-				padding: 0;
-			}
-		}
+      &.selector-column {
+        padding: 0;
+      }
+    }
 
-		.selector-column {
-			max-width: 40px;
-			min-width: 40px;
-			flex-basis: 40px;
-			padding: 0;
-		}
+    .selector-column {
+      max-width: 40px;
+      min-width: 40px;
+      flex-basis: 40px;
+      padding: 0;
+    }
 
-		&.autohide {
+    &.autohide {
+      //autohide related attr
+      mat-header-row.mat-mdc-header-row,
+      mat-row.mat-mdc-row,
+      mat-footer-row.mat-mdc-footer-cell {
+        //border: 1px solid red;
+        overflow: hidden;
+        padding: 0;
+        display: flex;
+        flex-wrap: wrap;
+      }
 
-			//autohide related attr
-			mat-header-row.mat-mdc-header-row,
-			mat-row.mat-mdc-row,
-			mat-footer-row.mat-mdc-footer-cell {
-				//border: 1px solid red;
-				overflow: hidden;
-				padding: 0;
-				display: flex;
-				flex-wrap: wrap;
-			}
+      mat-header-row.mat-mdc-header-row,
+      mat-footer-row.mat-mdc-footer-cell {
+        max-height: var(--mat-table-header-container-height, 56px);
+        min-height: var(--mat-table-header-container-height, 56px);
+      }
 
-			mat-header-row.mat-mdc-header-row,
-			mat-footer-row.mat-mdc-footer-cell {
-				max-height: var(--mat-table-header-container-height, 56px);
-				min-height: var(--mat-table-header-container-height, 56px);
-			}
+      mat-row.mat-mdc-row {
+        max-height: var(--mat-table-row-item-container-height, 52px);
+        min-height: var(--mat-table-row-item-container-height, 52px);
+      }
 
-			mat-row.mat-mdc-row {
-				max-height: var(--mat-table-row-item-container-height, 52px);
-				min-height: var(--mat-table-row-item-container-height, 52px);
-			}
+      .mat-mdc-cell,
+      .mat-mdc-footer-cell,
+      .mat-mdc-header-cell {
+        //border: 1px solid blue;
+        flex-grow: 1;
+        flex-shrink: 0;
+        //flex-basis: xxpx; //trigger "hidding" item + define width: ;
+        box-sizing: border-box;
+        height: inherit;
+        min-height: inherit;
+        max-height: inherit;
+      }
+    }
 
-			.mat-mdc-cell,
-			.mat-mdc-footer-cell,
-			.mat-mdc-header-cell {
-				//border: 1px solid blue;
-				flex-grow: 1;
-				flex-shrink: 0;
-				//flex-basis: xxpx; //trigger "hidding" item + define width: ;
-				box-sizing: border-box;
-				height: inherit;
-				min-height: inherit;
-				max-height: inherit;
-			}
-		}
-
-		& > .mat-mdc-row.mat-ripple {
-			overflow: clip;
-		}
-	}
+    & > .mat-mdc-row.mat-ripple {
+      overflow: clip;
+    }
+  }
 }
 
 .paginator {
-	min-width: 300px;
-	z-index: 1;
+  min-width: 300px;
+  z-index: 1;
 
-	.mat-mdc-paginator-container {
-		flex-wrap: nowrap;
-		border-top-color: var(--mat-table-row-item-outline-color);
-		border-top-width: var(--mat-table-row-item-outline-width);
-		border-top-style: solid;
+  .mat-mdc-paginator-container {
+    flex-wrap: nowrap;
+    border-top-color: var(--mat-table-row-item-outline-color);
+    border-top-width: var(--mat-table-row-item-outline-width);
+    border-top-style: solid;
 
-		.mat-mdc-paginator-page-size {
-			min-width: 0;
-			flex-shrink: 3;
+    .mat-mdc-paginator-page-size {
+      min-width: 0;
+      flex-shrink: 3;
 
-			.mat-mdc-form-field {
-				flex-shrink: 1;
-				min-width: 50px;
-			}
+      .mat-mdc-form-field {
+        flex-shrink: 1;
+        min-width: 50px;
+      }
 
-			.mat-mdc-paginator-page-size-label {
-				flex-shrink: 3;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				overflow: hidden;
-			}
-		}
+      .mat-mdc-paginator-page-size-label {
+        flex-shrink: 3;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
 
-		.mat-mdc-paginator-range-actions {
-			min-width: 0;
+    .mat-mdc-paginator-range-actions {
+      min-width: 0;
 
-			.mat-mdc-paginator-range-label {
-				flex-shrink: 3;
-				text-overflow: ellipsis;
-				white-space: nowrap;
-				overflow: hidden;
-			}
+      .mat-mdc-paginator-range-label {
+        flex-shrink: 3;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
 
-			.mat-mdc-icon-button {
-				flex-shrink: 3;
-			}
-		}
-	}
+      .mat-mdc-icon-button {
+        flex-shrink: 3;
+      }
+    }
+  }
 }

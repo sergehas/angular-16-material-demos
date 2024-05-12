@@ -1,7 +1,7 @@
-import { ItemDataSource } from './item-data-source';
+import { ItemDataSource } from "./item-data-source";
 
-describe('RecordDataSource', () => {
-  it('should create an instance', () => {
+describe("RecordDataSource", () => {
+  it("should create an instance", () => {
     expect(new ItemDataSource()).toBeTruthy();
   });
 });

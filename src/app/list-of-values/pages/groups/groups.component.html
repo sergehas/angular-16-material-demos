@@ -1,13 +1,13 @@
 <mat-accordion multi class="group-list">
-	<mat-expansion-panel *ngFor="let g of groups$ | async">
-		<mat-expansion-panel-header>
-			<mat-panel-title>
-				{{ g.name }}
-			</mat-panel-title>
-			<mat-panel-description>
-				{{ g.label }}
-			</mat-panel-description>
-		</mat-expansion-panel-header>
-		<app-values [group]="g.name"></app-values>
-	</mat-expansion-panel>
+  <mat-expansion-panel *ngFor="let g of groups$ | async">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{ g.name }}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{ g.label }}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <app-values [group]="g.name"></app-values>
+  </mat-expansion-panel>
 </mat-accordion>
