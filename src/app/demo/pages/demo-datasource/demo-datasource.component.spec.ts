@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DemoDatasourceComponent } from './demo-datasource.component';
+import { DemoDatasourceComponent } from "./demo-datasource.component";
 
-describe('DemoDatasourceComponent', () => {
+describe("DemoDatasourceComponent", () => {
   let component: DemoDatasourceComponent;
   let fixture: ComponentFixture<DemoDatasourceComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [DemoDatasourceComponent]
+      declarations: [DemoDatasourceComponent],
     });
     fixture = TestBed.createComponent(DemoDatasourceComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

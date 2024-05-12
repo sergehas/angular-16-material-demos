@@ -44,9 +44,7 @@
         },
         {
           "name": "Antartica",
-          "icons": [
-            "assets/countries/Antartica/aq.svg"
-          ],
+          "icons": ["assets/countries/Antartica/aq.svg"],
           "categories": []
         },
         {

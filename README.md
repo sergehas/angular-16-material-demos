@@ -38,10 +38,7 @@ add a main feature page to `demo`: `ng generate component demo/pages/demo -m dem
 then add to `demo-routing.module.ts`
 
 ```typescript
-const routes: Routes = [
-    {   path: 'demo', component: DemoComponent,
-    },
-];
+const routes: Routes = [{ path: "demo", component: DemoComponent }];
 ```
 
 then import this module in `app.module.ts`:
@@ -67,13 +64,11 @@ then add to `demo-routing.module.ts`
 ```typescript
 const routes: Routes = [
   {
-    path: 'demo',
+    path: "demo",
     component: DemoComponent,
     children: [
       // list "sub" pages from this demo feature components
-      { path: 'demo-table', component: DemoTableComponent,
-      data: { animation: "slideRight" },
-      },
+      { path: "demo-table", component: DemoTableComponent, data: { animation: "slideRight" } },
     ],
   },
 ];
@@ -176,4 +171,3 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-

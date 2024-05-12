@@ -1,35 +1,38 @@
 code {
-    background-color:
-        color-mix(in srgb, var(--mat-badge-background-color) 10%, transparent);
-    color: var(--mat-badge-background-color);
-    padding: 4px 8px;
-    border-radius: 4px;
-    margin: 0 0.1rem;
+  background-color: color-mix(
+    in srgb,
+    var(--mat-badge-background-color) 10%,
+    transparent
+  );
+  color: var(--mat-badge-background-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 0 0.1rem;
 }
 
 .demo-options {
-    margin: 20px 10px;
+  margin: 20px 10px;
 
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    margin-bottom: 10px;
+  }
+
+  dd {
+    margin-top: 8px;
+    margin-bottom: 16px;
+  }
+
+  .label-container {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
+    margin: 20px 0;
+    column-gap: 16px;
 
-    & > * {
-        margin-bottom: 10px;
+    .value-label {
+      font-weight: 600;
     }
-
-    dd {
-        margin-top: 8px;
-        margin-bottom: 16px;
-    }
-
-    .label-container {
-        display: flex;
-        justify-content: flex-start;
-        margin: 20px 0;
-        column-gap: 16px;
-
-        .value-label {
-            font-weight: 600;
-        }
-    }
+  }
 }

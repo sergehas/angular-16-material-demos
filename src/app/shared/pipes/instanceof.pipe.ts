@@ -1,8 +1,8 @@
 import { Pipe, PipeTransform } from "@angular/core";
-type AbstractType<T> = abstract new (...args: any[]) => T;
+type AbstractType<T> = abstract new (...args: unknown[]) => T;
 @Pipe({
-	name: "instanceof",
-	standalone: true,
+  name: "instanceof",
+  standalone: true,
 })
 /**
  * check withe a value is an instance of the give class.
@@ -10,12 +10,12 @@ type AbstractType<T> = abstract new (...args: any[]) => T;
  *
  */
 export class InstanceofPipe implements PipeTransform {
-	/**
-	 * @param value : the value to check class
-	 * @param type: the class to check
-	 * @returns tue if value is an instance of class, false otherwise.
-	 */
-	public transform<V, R>(value: V, type: AbstractType<R>): boolean {
-		return value instanceof type;
-	}
+  /**
+   * @param value : the value to check class
+   * @param type: the class to check
+   * @returns tue if value is an instance of class, false otherwise.
+   */
+  public transform<V, R>(value: V, type: AbstractType<R>): boolean {
+    return value instanceof type;
+  }
 }

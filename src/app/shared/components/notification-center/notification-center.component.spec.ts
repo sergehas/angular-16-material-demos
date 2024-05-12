@@ -1,11 +1,11 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { of } from 'rxjs';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
+import { of } from "rxjs";
 
-import { Notification } from 'src/app/core/models/notification';
-import { NotificationService } from 'src/app/core/services/notification.service';
-import { NotificationCenterComponent } from './notification-center.component';
+import { Notification } from "src/app/core/models/notification";
+import { NotificationService } from "src/app/core/services/notification.service";
+import { NotificationCenterComponent } from "./notification-center.component";
 
-describe('NotificationCenterComponent', () => {
+describe("NotificationCenterComponent", () => {
   let component: NotificationCenterComponent;
   let fixture: ComponentFixture<NotificationCenterComponent>;
   let service: Partial<NotificationService>;
@@ -13,20 +13,19 @@ describe('NotificationCenterComponent', () => {
   beforeEach(() => {
     const n = new Notification({ severity: "info", message: "fake" });
     service = {
-      notification$: of(n)
-    }
+      notification$: of(n),
+    };
     //const getNotification$Spy = service.notification$.and.returnValue(of(n));
     TestBed.configureTestingModule({
       imports: [NotificationCenterComponent],
       providers: [{ provide: NotificationService, useValue: service }],
-
     });
     fixture = TestBed.createComponent(NotificationCenterComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

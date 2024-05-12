@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Subject } from "rxjs";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ScrollService {
   private readonly scrollSubject = new Subject<void>();
   readonly scrolling$ = this.scrollSubject.asObservable();
-  constructor() { }
+  constructor() {}
 
   scroll() {
     //console.debug("scroll detected");

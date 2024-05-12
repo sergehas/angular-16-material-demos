@@ -1,51 +1,48 @@
 import { Injectable } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
-type serializable = object | Object;
-interface ICache {
-	[key: string]: BehaviorSubject<any>;
+type serializable = object | unknown;
+interface Cache<T extends serializable> extends Map<string, BehaviorSubject<T>> {
+
 }
 
 @Injectable({
-	providedIn: "root",
+  providedIn: "root",
 })
 export class StorageService {
-	private cache: ICache;
-	private storage: Storage;
+  private _cache: Cache<serializable>;
+  private _storage: Storage;
 
-	constructor() {
-		this.storage = localStorage; //could be SessionStorage or LocalStorage
-		this.cache = Object.create(null);
-	}
+  constructor() {
+    this._storage = localStorage; //could be SessionStorage or LocalStorage
+    this._cache = new Map<string, BehaviorSubject<serializable>>();
+  }
 
-	setItem<T extends serializable>(key: string, value: T): BehaviorSubject<T> {
-		this.storage.setItem(key, JSON.stringify(value));
+  setItem<T extends serializable>(key: string, value: T): BehaviorSubject<T> {
+    this._storage.setItem(key, JSON.stringify(value));
+    const existing = this._cache.get(key);
+    if (existing) {
+      existing.next(value);
+      return existing as BehaviorSubject<T>;
+    }
+    this._cache.set(key, new BehaviorSubject<unknown>(value));
+    return this._cache.get(key)! as BehaviorSubject<T>;
+  }
 
-		if (this.cache[key]) {
-			this.cache[key].next(value);
-			return this.cache[key];
-		}
+  getItem<T extends serializable>(key: string): BehaviorSubject<T> | undefined {
+    const existing = this._cache.get(key);
+    if (existing) {
+      return existing as BehaviorSubject<T>;
+    }
+    const i = this._storage.getItem(key);
+    if (i) {
+      return this.setItem(key, JSON.parse(i!));
+    }
+    return undefined;
+  }
 
-		return (this.cache[key] = new BehaviorSubject(value));
-	}
-
-	getItem<T extends serializable>(
-		key: string
-	): BehaviorSubject<T | undefined> {
-		if (this.cache[key]) {
-			return this.cache[key];
-		}
-		const i = this.storage.getItem(key);
-		if (i) {
-			return (this.cache[key] = new BehaviorSubject<T | undefined>(
-				JSON.parse(i!)
-			));
-		}
-		return new BehaviorSubject<T | undefined>(undefined);
-	}
-
-	removeItem(key: string) {
-		this.storage.removeItem(key);
-		if (this.cache[key]) this.cache[key].next(undefined);
-	}
+  removeItem(key: string) {
+    this._storage.removeItem(key);
+    if (this._cache.get(key)) this._cache.get(key)?.next(undefined);
+  }
 }

@@ -10,7 +10,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
-import { MatRadioModule } from '@angular/material/radio';
+import { MatRadioModule } from "@angular/material/radio";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSliderModule } from "@angular/material/slider";
@@ -32,51 +32,51 @@ import { DemoExportComponent } from "./pages/demo-export/demo-export.component";
 import { DemoI18nComponent } from "./pages/demo-i18n/demo-i18n.component";
 import { DemoIconsComponent } from "./pages/demo-icons/demo-icons.component";
 import { DemoNotifComponent } from "./pages/demo-notif/demo-notif.component";
-import { DemoStickyComponent } from './pages/demo-sticky/demo-sticky.component';
+import { DemoStickyComponent } from "./pages/demo-sticky/demo-sticky.component";
 import { DemoTableComponent } from "./pages/demo-table/demo-table.component";
 import { DemoComponent } from "./pages/demo.component";
 
 @NgModule({
-	declarations: [
-		DemoComponent,
-		DemoTableComponent,
-		DemoDatasourceComponent,
-		DemoExportComponent,
-		DemoIconsComponent,
-		DemoI18nComponent,
-		DemoNotifComponent,
-		DemoStickyComponent,
-	],
-	imports: [
-		CommonModule,
-		MatProgressBarModule,
-		MatTableModule,
-		MatPaginatorModule,
-		MatSortModule,
-		MatIconModule,
-		MatButtonModule,
-		MatBadgeModule,
-		MatDividerModule,
-		FormsModule,
-		MatRadioModule,
-		MatSlideToggleModule,
-		MatInputModule,
-		MatFormFieldModule,
-		MatSliderModule,
-		MatDatepickerModule,
-		ReactiveFormsModule,
-		MatSelectModule,
+  declarations: [
+    DemoComponent,
+    DemoTableComponent,
+    DemoDatasourceComponent,
+    DemoExportComponent,
+    DemoIconsComponent,
+    DemoI18nComponent,
+    DemoNotifComponent,
+    DemoStickyComponent,
+  ],
+  imports: [
+    CommonModule,
+    MatProgressBarModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatIconModule,
+    MatButtonModule,
+    MatBadgeModule,
+    MatDividerModule,
+    FormsModule,
+    MatRadioModule,
+    MatSlideToggleModule,
+    MatInputModule,
+    MatFormFieldModule,
+    MatSliderModule,
+    MatDatepickerModule,
+    ReactiveFormsModule,
+    MatSelectModule,
 
-		TranslateModule,
-		LocalizedDatePipe,
+    TranslateModule,
+    LocalizedDatePipe,
 
-		TabsNavComponent,
-		TableExpandableRowsComponent,
-		IconTreeComponent,
-		IconSelectComponent,
-		StickDirective,
+    TabsNavComponent,
+    TableExpandableRowsComponent,
+    IconTreeComponent,
+    IconSelectComponent,
+    StickDirective,
 
-		DemoRoutingModule,
-	],
+    DemoRoutingModule,
+  ],
 })
-export class DemoModule { }
+export class DemoModule {}

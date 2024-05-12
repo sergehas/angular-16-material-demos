@@ -1,10 +1,10 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { Category } from 'src/app/core/icons/models/category';
-import { IconsService } from 'src/app/core/icons/services/icons.service';
-import { IconTreeComponent } from './icon-tree.component';
+import { Category } from "src/app/core/icons/models/category";
+import { IconsService } from "src/app/core/icons/services/icons.service";
+import { IconTreeComponent } from "./icon-tree.component";
 
-describe('IconTreeComponent', () => {
+describe("IconTreeComponent", () => {
   let component: IconTreeComponent;
   let fixture: ComponentFixture<IconTreeComponent>;
 
@@ -13,8 +13,10 @@ describe('IconTreeComponent', () => {
     //const iconsService = jasmine.createSpyObj('IconsService', ['getIconslib']);
 
     const iconsService: Partial<IconsService> = {
-      getIconslib: () => { return category }
-    }
+      getIconslib: () => {
+        return category;
+      },
+    };
     TestBed.configureTestingModule({
       imports: [IconTreeComponent],
       providers: [{ provide: IconsService, useValue: iconsService }],
@@ -24,7 +26,7 @@ describe('IconTreeComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

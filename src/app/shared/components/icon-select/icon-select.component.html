@@ -1,27 +1,50 @@
 <div class="input-wrapper">
-	<button class="icon-btn" aria-label="Select a icon" #input matTooltip="{{ tooltip }}" [disabled]="disabled"
-		[mat-menu-trigger-for]="iconMenu">
-		<div class="icon-value">
-			<!-- <mat-icon class="placeholder" *ngIf="!value">more_horiz</mat-icon> -->
-			<span class="placeholder" *ngIf="!value"></span>
-			<mat-icon *ngIf="value" [svgIcon]="value!"></mat-icon>
-			<div class="mat-mdc-select-arrow-wrapper">
-				<div class="mat-mdc-select-arrow">
-					<svg viewBox="0 0 24 24" width="24px" height="24px" focusable="false" aria-hidden="true">
-						<path d="M7 10l5 5 5-5z" />
-					</svg>
-				</div>
-			</div>
-		</div>
-	</button>
+  <button
+    class="icon-btn"
+    aria-label="Select a icon"
+    #input
+    matTooltip="{{ tooltip }}"
+    [disabled]="disabled"
+    [mat-menu-trigger-for]="iconMenu"
+  >
+    <div class="icon-value">
+      <!-- <mat-icon class="placeholder" *ngIf="!value">more_horiz</mat-icon> -->
+      <span class="placeholder" *ngIf="!value"></span>
+      <mat-icon *ngIf="value" [svgIcon]="value!"></mat-icon>
+      <div class="mat-mdc-select-arrow-wrapper">
+        <div class="mat-mdc-select-arrow">
+          <svg
+            viewBox="0 0 24 24"
+            width="24px"
+            height="24px"
+            focusable="false"
+            aria-hidden="true"
+          >
+            <path d="M7 10l5 5 5-5z" />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </button>
 </div>
 <mat-menu #iconMenu="matMenu" xPosition="after" yPosition="below">
-	<button mat-icon-button *ngIf="value" matSuffix aria-label="clear icon" (click)="value=null" class="clear-button ">
-		<mat-icon>close</mat-icon>
-	</button>
+  <button
+    mat-icon-button
+    *ngIf="value"
+    matSuffix
+    aria-label="clear icon"
+    (click)="value = null"
+    class="clear-button"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
 
-	<!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
+  <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
     <mat-icon>close</mat-icon>
   </button> -->
-	<app-icon-tree [expanded]="true" [value]="value" (valueChange)="onSelectionChange($event)"></app-icon-tree>
+  <app-icon-tree
+    [expanded]="true"
+    [value]="value"
+    (valueChange)="onSelectionChange($event)"
+  ></app-icon-tree>
 </mat-menu>

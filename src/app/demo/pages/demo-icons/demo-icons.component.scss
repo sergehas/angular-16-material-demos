@@ -1,51 +1,53 @@
 code {
-	background-color:
-		color-mix(in srgb, var(--mat-badge-background-color) 10%, transparent);
-	color: var(--mat-badge-background-color);
-	padding: 4px 8px;
-	border-radius: 4px;
-	margin: 0 0.1rem;
+  background-color: color-mix(
+    in srgb,
+    var(--mat-badge-background-color) 10%,
+    transparent
+  );
+  color: var(--mat-badge-background-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 0 0.1rem;
 }
 
 .demo-options {
-	margin: 20px 10px 0;
+  margin: 20px 10px 0;
 
-	display: flex;
-	flex-direction: column;
+  display: flex;
+  flex-direction: column;
 
-	& > * {
-		margin-bottom: 16px;
-	}
+  & > * {
+    margin-bottom: 16px;
+  }
 
-	.label-container {
-		display: flex;
-		justify-content: space-between;
-		margin: 20px 10px 0;
+  .label-container {
+    display: flex;
+    justify-content: space-between;
+    margin: 20px 10px 0;
 
-		.value-label {
-			font-weight: 600;
-		}
-	}
+    .value-label {
+      font-weight: 600;
+    }
+  }
 }
 
 .demo-container {
-	display: flex;
-	flex-direction: column;
-	row-gap: 16px;
-	padding: 16px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 16px;
+  padding: 16px;
 
-	.label-icon {
-		display: flex;
-		align-items: center;
-		column-gap: 16px;
-	}
+  .label-icon {
+    display: flex;
+    align-items: center;
+    column-gap: 16px;
+  }
 }
 
-
 .field-demo-container {
-	display: flex;
-	flex-direction: row;
-	row-gap: 16px;
-	column-gap: 16px;
-	margin: 16px 0;
+  display: flex;
+  flex-direction: row;
+  row-gap: 16px;
+  column-gap: 16px;
+  margin: 16px 0;
 }

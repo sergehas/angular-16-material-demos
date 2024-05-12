@@ -3,8 +3,7 @@ import { CommonModule } from "@angular/common";
 import { NgModule } from "@angular/core";
 
 @NgModule({
-	declarations: [
-	],
-	imports: [CommonModule, DragDropModule],
+  declarations: [],
+  imports: [CommonModule, DragDropModule],
 })
-export class SharedModule { }
+export class SharedModule {}

@@ -1,15 +1,21 @@
-import { CommonModule } from '@angular/common';
-import { Component, Input, ViewEncapsulation } from '@angular/core';
-import { MatButtonModule } from '@angular/material/button';
-import { MatCardModule } from '@angular/material/card';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressBarModule, ProgressBarMode } from '@angular/material/progress-bar';
+import { CommonModule } from "@angular/common";
+import { Component, Input, ViewEncapsulation } from "@angular/core";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatIconModule } from "@angular/material/icon";
+import {
+  MatProgressBarModule,
+  ProgressBarMode,
+} from "@angular/material/progress-bar";
 
-import { Notification, ProgressNotification } from "src/app/core/models/notification";
-import { NotificationService } from 'src/app/core/services/notification.service';
+import {
+  Notification,
+  ProgressNotification,
+} from "src/app/core/models/notification";
+import { NotificationService } from "src/app/core/services/notification.service";
 
 @Component({
-  selector: 'app-notification',
+  selector: "app-notification",
   standalone: true,
   imports: [
     CommonModule,
@@ -18,16 +24,14 @@ import { NotificationService } from 'src/app/core/services/notification.service'
     MatButtonModule,
     MatProgressBarModule,
   ],
-  templateUrl: './notification.component.html',
-  styleUrl: './notification.component.scss',
-  encapsulation: ViewEncapsulation.None
+  templateUrl: "./notification.component.html",
+  styleUrl: "./notification.component.scss",
+  encapsulation: ViewEncapsulation.None,
 })
 export class NotificationComponent {
-
   @Input() notification!: Notification;
 
-  constructor(private service: NotificationService) {
-  }
+  constructor(private service: NotificationService) {}
 
   //demo val
   _progressColor = "primary";
@@ -36,8 +40,11 @@ export class NotificationComponent {
     return this.notification instanceof ProgressNotification;
   }
   get progressMode(): ProgressBarMode {
-    if (this.hasProgress && (this.notification as ProgressNotification).progress.position.total > 0) {
-      return "determinate"
+    if (
+      this.hasProgress &&
+      (this.notification as ProgressNotification).progress.position.total > 0
+    ) {
+      return "determinate";
     }
     return "indeterminate";
   }
@@ -47,7 +54,10 @@ export class NotificationComponent {
   }
 
   get progressValue(): number {
-    if (this.hasProgress && (this.notification as ProgressNotification).progress.position.total > 0) {
+    if (
+      this.hasProgress &&
+      (this.notification as ProgressNotification).progress.position.total > 0
+    ) {
       const p = (this.notification as ProgressNotification).progress.position;
       console.info(`progress is ${(p.value / p.total) * 100}`);
       return (p.value / p.total) * 100;

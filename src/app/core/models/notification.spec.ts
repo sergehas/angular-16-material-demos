@@ -1,7 +1,7 @@
-import { Notification } from './notification';
+import { Notification } from "./notification";
 
-describe('Notification', () => {
-  it('should create an instance', () => {
+describe("Notification", () => {
+  it("should create an instance", () => {
     expect(new Notification({ severity: "info", message: "msg" })).toBeTruthy();
   });
 });

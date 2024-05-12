@@ -1,15 +1,14 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
-import { Sort } from '@angular/material/sort';
-import { Observable, of } from 'rxjs';
-import { HttpService, Page } from '../../services/http-service';
-import { Item } from '../models/item';
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Sort } from "@angular/material/sort";
+import { Observable, of } from "rxjs";
+import { HttpService, Page } from "../../services/http-service";
+import { Item } from "../models/item";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class ItemService extends HttpService<Item> {
-
   itemCount = 37;
   _attributeCount = 5;
 
@@ -21,16 +20,17 @@ export class ItemService extends HttpService<Item> {
   }
 
   private generateHeaders(): string[] {
-    return Array.from(Array(this._attributeCount).keys()).map(i => `attr${i}`);
+    return Array.from(Array(this._attributeCount).keys()).map(
+      (i) => `attr${i}`
+    );
   }
 
   private generateItem(v: number): Item {
-    let it = {} as Item;
-    this.attributeHeaders.forEach(h => {
-      it[h] = `val ${h} #${v}`
-    })
+    const it = {} as Item;
+    this.attributeHeaders.forEach((h) => {
+      it[h] = `val ${h} #${v}`;
+    });
     return it;
-
   }
 
   set attributeCount(c: number) {
@@ -42,24 +42,23 @@ export class ItemService extends HttpService<Item> {
     return [...this.attributeHeaders];
   }
 
-  override count(filter?: Partial<Item>): Observable<number> {
+  override count(_filter?: Partial<Item> | undefined): Observable<number> {
     return of(this.itemCount);
   }
 
   override find(
-    filter: Partial<Item>,
-    sort: Sort | undefined,
+    _filter: Partial<Item> | undefined,
+    _sort: Sort | undefined,
     page: Page | undefined
   ): Observable<Item[]> {
-    let start = page ? page.pageNumber * page.pageSize : 0;
+    const start = page ? page.pageNumber * page.pageSize : 0;
     let end = page ? (page.pageNumber + 1) * page.pageSize : this.itemCount;
     end = Math.min(end, this.itemCount);
     console.info(`generating fake items from ${start} to ${end}`);
-    let data: Item[] = [];
+    const data: Item[] = [];
     for (let i = start; i < end; i++) {
       data.push(this.generateItem(i));
     }
     return of(data);
   }
-
 }

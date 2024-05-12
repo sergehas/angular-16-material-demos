@@ -2,17 +2,17 @@
 @use "@angular/material" as mat;
 
 @mixin theme($theme) {
-	// $primary: map.get($theme, primary);
-	$accent: map.get($theme, accent);
-	// $warn: map.get($theme, warn);
-	// $background: map.get($theme, background);
-	// $foreground: map.get($theme, foreground);
-	// $is-dark-theme: map.get($theme, is-dark);
-	$indicator-color: mat.get-color-from-palette($accent);
+  // $primary: map.get($theme, primary);
+  $accent: map.get($theme, accent);
+  // $warn: map.get($theme, warn);
+  // $background: map.get($theme, background);
+  // $foreground: map.get($theme, foreground);
+  // $is-dark-theme: map.get($theme, is-dark);
+  $indicator-color: mat.get-color-from-palette($accent);
 
-	.tabs-nav {
-		--mdc-tab-indicator-active-indicator-color: #{$indicator-color};
-		--mat-tab-header-active-hover-indicator-color: #{$indicator-color};
-		--mat-tab-header-active-focus-indicator-color: #{$indicator-color};
-	}
+  .tabs-nav {
+    --mdc-tab-indicator-active-indicator-color: #{$indicator-color};
+    --mat-tab-header-active-hover-indicator-color: #{$indicator-color};
+    --mat-tab-header-active-focus-indicator-color: #{$indicator-color};
+  }
 }

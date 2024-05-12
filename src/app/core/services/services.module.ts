@@ -7,17 +7,23 @@ import { SheetExportService } from "./sheet-export.service";
 import { StorageService } from "./storage.service";
 
 @NgModule({
-	declarations: [],
-	imports: [CommonModule],
-	providers: [ScrollService, StorageService, NotificationService, ExcelExportService, SheetExportService],
+  declarations: [],
+  imports: [CommonModule],
+  providers: [
+    ScrollService,
+    StorageService,
+    NotificationService,
+    ExcelExportService,
+    SheetExportService,
+  ],
 })
 export class ServicesModule {
-	/** guarde to avoid multiple import */
-	constructor(@Optional() @SkipSelf() core: ServicesModule) {
-		if (core) {
-			throw new Error(
-				"You should import ServiceModule module only in the root module"
-			);
-		}
-	}
+  /** guarde to avoid multiple import */
+  constructor(@Optional() @SkipSelf() core: ServicesModule) {
+    if (core) {
+      throw new Error(
+        "You should import ServiceModule module only in the root module"
+      );
+    }
+  }
 }

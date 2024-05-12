@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { DemoNotifComponent } from './demo-notif.component';
+import { DemoNotifComponent } from "./demo-notif.component";
 
-describe('DemoNotifComponent', () => {
+describe("DemoNotifComponent", () => {
   let component: DemoNotifComponent;
   let fixture: ComponentFixture<DemoNotifComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DemoNotifComponent]
-    })
-    .compileComponents();
-    
+      imports: [DemoNotifComponent],
+    }).compileComponents();
+
     fixture = TestBed.createComponent(DemoNotifComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
-  it('should create', () => {
+  it("should create", () => {
     expect(component).toBeTruthy();
   });
 });

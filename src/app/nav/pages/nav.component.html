@@ -1,107 +1,136 @@
-<app-tabs-nav sticky path="navigation" (activate)="isactive=false" (deactivate)="isactive=true"></app-tabs-nav>
+<app-tabs-nav sticky path="navigation" (activate)="isactive = false" (deactivate)="isactive = true"></app-tabs-nav>
 <div *ngIf="isactive">
-    <section>
-        <h1>This demo illustrate navigation components & behaviours</h1>
-        <h2>Overview</h2>
-        <p>
-            all GUI (display) components rely on loaded <code>&lt;module&gt;-routing.module.ts</code>. So have a look to
-            these modules, more specificaly to the <code>data</code> attribute of routes!
-        </p>
-        <p>
-            There is no exta conf : just define routes + data in <code>&lt;module&gt;-routing.module.ts</code>, then
-            refer to them in the <code>*-nav</code> components. Higligting the active route (tree or tab) is managed
-            automatically.
-        </p>
-        <p>
-            All the demo pages are using <code>tab-nav</code>, & the main menu on the left is a <code>tree-nav</code>.
-        </p>
-        <mat-divider></mat-divider>
-    </section>
-    <section class="demo-options">
-        <h2>Routes</h2>
-        <dl>
-            <dt><code>data.icon</code> (optional)</dt>
-            <dd>define the icon to display on the right of the navigaiton item. This is a
-                <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon</code></a> name
-            </dd>
-            <dt><code>data.animation</code> (optional)</dt>
-            <dd> define the animation to apply when this route is activated</dd>
-            <dt><code>data.roles</code> (optional)</dt>
-            <dd> define the (user) roles authorized to access the route (used by guard)</dd>
-        </dl>
-        <mat-divider></mat-divider>
-    </section>
-    <section class="demo-options">
-        <h2><code>tab-nav</code> component</h2>
-        <p>
-            Display children routes of the given <code>&#64;Input path</code>as tabs. If specfied, navigate
-            automaticaly to
-            the <code>&#64;Input default</code>child path.
-        </p>
-        <dl>
-            <dt><code>&lt;Route&gt;.data.icon</code>(optional) </dt>
-            <dd>define the icon to display on the right of the navigaiton item. This is a
-                <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon</code></a>name
-            </dd>
-            <dt><code>&lt;Route&gt;.data.animation</code>(optional) </dt>
-            <dd>define animation to apply when entering/leaving teh route. allowed values are(see
-                <code>src/app/shared/animations/route-animation.ts</code>):
-                <ul>
-                    <li><code>slideTop</code>view slides from top when entering. Reverse when leaving</li>
-                    <li><code>slideBottom</code>view slides from bottom when entering. Reverse when leaving</li>
-                    <li><code>slideLeft</code>view slides from left when entering. Reverse when leaving</li>
-                    <li><code>slideRight</code>view slides from right when entering. Reverse when leaving</li>
-                    <li><code>slideTab</code>applicable only to routes display as tab-nav. Slide from lef or right
-                        depending on the previous active tab. See <a
-                            href="https://github.com/angular/components/issues/18169">angular component issue</a>
-                        for details</li>
-                </ul>
-            </dd>
-        </dl>
-        <mat-divider></mat-divider>
-    </section>
-    <section class="demo-options">
-        <h2><code>tree-nav</code> component</h2>
-        <p>
-            Display all routes in a tree view.
-        </p>
-        <dl>
-            <dt><code>&lt;Route&gt;.data.icon</code>(optional) </dt>
-            <dd>same as for <code>tab-nav</code> </dd>
-            <dt><code>&lt;Route&gt;.data.animation</code>(optional) </dt>
-            <dd>same as for <code>tab-nav</code>, but <code>slideTab</code> is of course not usable (no tabs here).</dd>
-        </dl>
-        <mat-divider></mat-divider>
-    </section>
-    <section class="demo-options">
-        <h2><code>LoginService</code> Service</h2>
-        <p>
-            this service (to be adapated to support login/auth process) is the base service for all permission checks
-            (dorectives & guards) feature.
-        </p>
-        <mat-divider></mat-divider>
-    </section>
-    <section class="demo-options">
-        <h2><code>any-roles</code> and <code>all-roles</code> directives</h2>
-        <p>
-            check & report if user has role(s)
-        </p>
-        <dl>
-            <dt><code>&#64;Input</code></dt>
-            <dd>array of required roles (any of or all of depending on the directive</dd>
-            <dt><code>&#64;granted:boolean </code></dt>
-            <dd>true if user are required role(s)</dd>
-        </dl>
-        <h3>Sample</h3>
-        <code>&lt;div [any-roles]="['ADMIN', 'READER']" (granted)="myCompGranted=$event" &gt;...</code>
-        <mat-divider></mat-divider>
-    </section>
-    <section class="demo-options">
-        <h2><code>anyRoleGuard</code> and <code>allRoleGuard</code> guards</h2>
-        <p>
-            route guard (<code>CanActivateFn</code>) using <code>&lt;Route&gt;.data.roles</code>
-        </p>
-        <p>use them as <code>canActivate</code> function in your routing modules</p>
-        <mat-divider></mat-divider>
-    </section>
+  <section>
+    <h1>This demo illustrate navigation components & behaviours</h1>
+    <h2>Overview</h2>
+    <p>
+      all GUI (display) components rely on loaded
+      <code>&lt;module&gt;-routing.module.ts</code>. So have a look to these
+      modules, more specificaly to the <code>data</code> attribute of routes!
+    </p>
+    <p>
+      There is no exta conf : just define routes + data in
+      <code>&lt;module&gt;-routing.module.ts</code>, then refer to them in the
+      <code>*-nav</code> components. Higligting the active route (tree or tab)
+      is managed automatically.
+    </p>
+    <p>
+      All the demo pages are using <code>tab-nav</code>, & the main menu on the
+      left is a <code>app-tree-nav</code>.
+    </p>
+    <mat-divider></mat-divider>
+  </section>
+  <section class="demo-options">
+    <h2>Routes</h2>
+    <dl>
+      <dt><code>data.icon</code> (optional)</dt>
+      <dd>
+        define the icon to display on the right of the navigaiton item. This is
+        a
+        <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon</code></a>
+        name
+      </dd>
+      <dt><code>data.animation</code> (optional)</dt>
+      <dd>define the animation to apply when this route is activated</dd>
+      <dt><code>data.roles</code> (optional)</dt>
+      <dd>
+        define the (user) roles authorized to access the route (used by guard)
+      </dd>
+    </dl>
+    <mat-divider></mat-divider>
+  </section>
+  <section class="demo-options">
+    <h2><code>tab-nav</code> component</h2>
+    <p>
+      Display children routes of the given <code>&#64;Input path</code>as tabs.
+      If specfied, navigate automaticaly to the
+      <code>&#64;Input default</code>child path.
+    </p>
+    <dl>
+      <dt><code>&lt;Route&gt;.data.icon</code>(optional)</dt>
+      <dd>
+        define the icon to display on the right of the navigaiton item. This is
+        a
+        <a href="https://fonts.google.com/icons?icon.set=Material+Icons"><code>fontIcon</code></a>name
+      </dd>
+      <dt><code>&lt;Route&gt;.data.animation</code>(optional)</dt>
+      <dd>
+        define animation to apply when entering/leaving teh route. allowed
+        values are(see
+        <code>src/app/shared/animations/route-animation.ts</code>):
+        <ul>
+          <li>
+            <code>slideTop</code>view slides from top when entering. Reverse
+            when leaving
+          </li>
+          <li>
+            <code>slideBottom</code>view slides from bottom when entering.
+            Reverse when leaving
+          </li>
+          <li>
+            <code>slideLeft</code>view slides from left when entering. Reverse
+            when leaving
+          </li>
+          <li>
+            <code>slideRight</code>view slides from right when entering. Reverse
+            when leaving
+          </li>
+          <li>
+            <code>slideTab</code>applicable only to routes display as tab-nav.
+            Slide from lef or right depending on the previous active tab. See
+            <a href="https://github.com/angular/components/issues/18169">angular component issue</a>
+            for details
+          </li>
+        </ul>
+      </dd>
+    </dl>
+    <mat-divider></mat-divider>
+  </section>
+  <section class="demo-options">
+    <h2><code>tree-nav</code> component</h2>
+    <p>Display all routes in a tree view.</p>
+    <dl>
+      <dt><code>&lt;Route&gt;.data.icon</code>(optional)</dt>
+      <dd>same as for <code>tab-nav</code></dd>
+      <dt><code>&lt;Route&gt;.data.animation</code>(optional)</dt>
+      <dd>
+        same as for <code>tab-nav</code>, but <code>slideTab</code> is of course
+        not usable (no tabs here).
+      </dd>
+    </dl>
+    <mat-divider></mat-divider>
+  </section>
+  <section class="demo-options">
+    <h2><code>LoginService</code> Service</h2>
+    <p>
+      this service (to be adapated to support login/auth process) is the base
+      service for all permission checks (dorectives & guards) feature.
+    </p>
+    <mat-divider></mat-divider>
+  </section>
+  <section class="demo-options">
+    <h2><code>appAnyRoles</code> and <code>appAllRoles</code> directives</h2>
+    <p>check & report if user has role(s)</p>
+    <dl>
+      <dt><code>&#64;Input</code></dt>
+      <dd>
+        array of required roles (any of or all of depending on the directive
+      </dd>
+      <dt><code>&#64;granted:boolean </code></dt>
+      <dd>true if user are required role(s)</dd>
+    </dl>
+    <h3>Sample</h3>
+    <code>&lt;div [appAnyRoles]="['ADMIN', 'READER']"
+      (granted)="myCompGranted=$event" &gt;...</code>
+    <mat-divider></mat-divider>
+  </section>
+  <section class="demo-options">
+    <h2><code>anyRoleGuard</code> and <code>allRoleGuard</code> guards</h2>
+    <p>
+      route guard (<code>CanActivateFn</code>) using
+      <code>&lt;Route&gt;.data.roles</code>
+    </p>
+    <p>use them as <code>canActivate</code> function in your routing modules</p>
+    <mat-divider></mat-divider>
+  </section>
 </div>

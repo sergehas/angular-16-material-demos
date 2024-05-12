@@ -1,2 +1,1 @@
-export class ItemDataSource {
-}
+export class ItemDataSource {}

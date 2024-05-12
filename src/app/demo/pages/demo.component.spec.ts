@@ -7,25 +7,25 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Router } from "@angular/router";
 
 describe("DemoComponent", () => {
-	let component: DemoComponent;
-	let fixture: ComponentFixture<DemoComponent>;
+  let component: DemoComponent;
+  let fixture: ComponentFixture<DemoComponent>;
 
-	beforeEach(() => {
-		TestBed.configureTestingModule({
-			declarations: [DemoComponent],
-			imports: [
-				TabsNavComponent,
-				RouterTestingModule.withRoutes([]),
-				NoopAnimationsModule,
-			],
-		});
-		fixture = TestBed.createComponent(DemoComponent);
-		TestBed.inject(Router);
-		component = fixture.componentInstance;
-		fixture.detectChanges();
-	});
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      declarations: [DemoComponent],
+      imports: [
+        TabsNavComponent,
+        RouterTestingModule.withRoutes([]),
+        NoopAnimationsModule,
+      ],
+    });
+    fixture = TestBed.createComponent(DemoComponent);
+    TestBed.inject(Router);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-	it("should create", () => {
-		expect(component).toBeTruthy();
-	});
+  it("should create", () => {
+    expect(component).toBeTruthy();
+  });
 });

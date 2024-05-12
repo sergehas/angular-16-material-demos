@@ -1,7 +1,7 @@
-import { NavBuilder } from './nav-builder';
+import { NavBuilder } from "./nav-builder";
 
-describe('NavBuilder', () => {
-  it('should create an instance', () => {
+describe("NavBuilder", () => {
+  it("should create an instance", () => {
     expect(new NavBuilder()).toBeTruthy();
   });
 });

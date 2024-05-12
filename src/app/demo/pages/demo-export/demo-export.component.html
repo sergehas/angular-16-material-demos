@@ -1,72 +1,83 @@
 <section>
-	<h1>This demo illustrate exporting asynchronously a datasource to excel</h1>
-	<h2>Overview</h2>
-	<p>
-		use http datasouce supporting <b>natively sorting & paging.</b><br />
-		based on mat table, is comes with custimizable header (sticky) & columns
-		(ordering, visibility, stickiness ...& addtional conf), and the
-		capability to automaticaly "hide" columns not fitting within the veiw
-		port. A real table, but (really ) responsive!
-	</p>
-	<h3>TODO</h3>
-	<ul>
-		<li>
-			add i18n support (easy)
-		</li>
-	</ul>
+  <h1>This demo illustrate exporting asynchronously a datasource to excel</h1>
+  <h2>Overview</h2>
+  <p>
+    use http datasouce supporting <b>natively sorting & paging.</b><br />
+    based on mat table, is comes with custimizable header (sticky) & columns
+    (ordering, visibility, stickiness ...& addtional conf), and the capability
+    to automaticaly "hide" columns not fitting within the veiw port. A real
+    table, but (really ) responsive!
+  </p>
+  <h3>TODO</h3>
+  <ul>
+    <li>add i18n support (easy)</li>
+  </ul>
 </section>
 <mat-divider></mat-divider>
 <section class="demo-options">
-	<div class="label-container">
-		<mat-form-field appearance="outline">
-			<mat-label>Nb of columns</mat-label>
-			<input matInput type="number" [formControl]="cols" placeholder="5">
-			<mat-hint>Number of cols. for items</mat-hint>
-		</mat-form-field>
-		<mat-form-field appearance="outline">
-			<mat-label>Nb of rows</mat-label>
-			<input matInput type="number" [formControl]="rows" placeholder="37">
-			<mat-hint>The number of items</mat-hint>
-		</mat-form-field>
-		<mat-form-field appearance="outline">
-			<mat-label>Page size</mat-label>
-			<input matInput type="number" [formControl]="pageSize" placeholder="100">
-			<mat-hint>The number of items per page</mat-hint>
-		</mat-form-field>
-		<mat-form-field appearance="outline">
-			<mat-label>Library</mat-label>
-			<mat-select [formControl]="library">
-				<mat-option value="exceljs">ExcelJS</mat-option>
-				<mat-option value="xslx">SheetJS/XLSX</mat-option>
-			</mat-select>
-		</mat-form-field>
+  <div class="label-container">
+    <mat-form-field appearance="outline">
+      <mat-label>Nb of columns</mat-label>
+      <input matInput type="number" [formControl]="cols" placeholder="5" />
+      <mat-hint>Number of cols. for items</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Nb of rows</mat-label>
+      <input matInput type="number" [formControl]="rows" placeholder="37" />
+      <mat-hint>The number of items</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Page size</mat-label>
+      <input
+        matInput
+        type="number"
+        [formControl]="pageSize"
+        placeholder="100"
+      />
+      <mat-hint>The number of items per page</mat-hint>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+      <mat-label>Library</mat-label>
+      <mat-select [formControl]="library">
+        <mat-option value="exceljs">ExcelJS</mat-option>
+        <mat-option value="xslx">SheetJS/XLSX</mat-option>
+      </mat-select>
+    </mat-form-field>
 
-		<button mat-flat-button (click)="export()" color="accent">
-			Export
-		</button>
-	</div>
+    <button mat-flat-button (click)="export()" color="accent">Export</button>
+  </div>
 </section>
 <section class="demo-options">
-	<div class="demo-log">
-		<h2>Datasource event log</h2>
+  <div class="demo-log">
+    <h2>Datasource event log</h2>
 
-		<button mat-flat-button class="icon-only" color="accent" matBadgePosition="below before"
-			[matBadgeHidden]="exportEvents.length === 0" [matBadge]="exportEvents.length" matBadgeColor="primary"
-			(click)="resetProgress()">
-			<mat-icon>delete</mat-icon>
-			clear
-		</button>
-	</div>
-	<mat-progress-bar class="example-margin" [mode]="progressMode" [value]="progressValue" [color]="progressColor">
-	</mat-progress-bar>
+    <button
+      mat-flat-button
+      class="icon-only"
+      color="accent"
+      matBadgePosition="below before"
+      [matBadgeHidden]="exportEvents.length === 0"
+      [matBadge]="exportEvents.length"
+      matBadgeColor="primary"
+      (click)="resetProgress()"
+    >
+      <mat-icon>delete</mat-icon>
+      clear
+    </button>
+  </div>
+  <mat-progress-bar
+    class="example-margin"
+    [mode]="progressMode"
+    [value]="progressValue"
+    [color]="progressColor"
+  >
+  </mat-progress-bar>
 
-	<div *ngIf="!exportEvents.length">
-		Datasource events will be logged here
-	</div>
+  <div *ngIf="!exportEvents.length">Datasource events will be logged here</div>
 
-	<ul class="logs">
-		<li *ngFor="let event of exportEvents$ | async">
-			[{{ event.timestamp.toISOString() }}] {{ event.message }}
-		</li>
-	</ul>
+  <ul class="logs">
+    <li *ngFor="let event of exportEvents$ | async">
+      [{{ event.timestamp.toISOString() }}] {{ event.message }}
+    </li>
+  </ul>
 </section>

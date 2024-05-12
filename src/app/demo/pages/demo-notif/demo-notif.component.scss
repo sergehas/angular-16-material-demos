@@ -1,54 +1,57 @@
 code {
-    background-color:
-        color-mix(in srgb, var(--mat-badge-background-color) 10%, transparent);
-    color: var(--mat-badge-background-color);
-    padding: 4px 8px;
-    border-radius: 4px;
-    margin: 0 0.1rem;
+  background-color: color-mix(
+    in srgb,
+    var(--mat-badge-background-color) 10%,
+    transparent
+  );
+  color: var(--mat-badge-background-color);
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 0 0.1rem;
 }
 
 .demo-options {
-    margin: 20px 10px;
+  margin: 20px 10px;
 
+  display: flex;
+  flex-direction: column;
+
+  & > * {
+    margin-bottom: 10px;
+  }
+
+  .label-container {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
+    margin: 20px 0;
+    column-gap: 16px;
 
-    & > * {
-        margin-bottom: 10px;
+    .value-label {
+      font-weight: 600;
     }
-
-    .label-container {
-        display: flex;
-        justify-content: flex-start;
-        margin: 20px 0;
-        column-gap: 16px;
-
-        .value-label {
-            font-weight: 600;
-        }
-    }
+  }
 }
 
 .variable-width-container {
-    width: 100%;
-    margin: auto;
+  width: 100%;
+  margin: auto;
 }
 
 .mat-column-title {
-    //max-width: 400px;
-    min-width: 350px;
-    flex-basis: 350px;
+  //max-width: 400px;
+  min-width: 350px;
+  flex-basis: 350px;
 }
 
 .mat-column-number {
-    max-width: 40px;
-    min-width: 40px;
-    flex-basis: 40px;
+  max-width: 40px;
+  min-width: 40px;
+  flex-basis: 40px;
 }
 
 .mat-column-created,
 .mat-column-state {
-    max-width: 150px;
-    min-width: 115px;
-    flex-basis: 115px;
+  max-width: 150px;
+  min-width: 115px;
+  flex-basis: 115px;
 }
