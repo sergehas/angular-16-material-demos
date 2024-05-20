@@ -1,7 +1,7 @@
 <div class="root-container" [class.root-is-mobile]="isHandset$ | async">
   <mat-toolbar color="primary" class="root-toolbar">
     <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="snav.toggle()"
-      *ngIf="isHandset$ | async">
+      *ngIf="(isHandset$ | async) || true">
       <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
     <button routerLink="/" mat-flat-button color="primary">

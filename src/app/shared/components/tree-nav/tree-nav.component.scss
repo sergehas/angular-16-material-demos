@@ -16,8 +16,19 @@
     padding-left: 0;
   }
 
-  .menu-icon {
-    flex: 1 0 auto;
+  .menu-item {
+
+    & > * {
+      display: flex;
+    }
+
+    .menu-icon {
+      flex: 1 0 auto;
+    }
+
+    .menu-label {
+      visibility: visible;
+    }
   }
 
   .mdc-list-item {

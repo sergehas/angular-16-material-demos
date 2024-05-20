@@ -6,7 +6,7 @@
       <!-- use a disabled button to provide padding for tree leaf -->
       <button mat-icon-button disabled class="tree-button">&nbsp;</button>
       <mat-icon class="menu-icon" mat-list-icon [fontIcon]="node.icon"></mat-icon>
-      <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive">{{
+      <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive" class="menu-label">{{
         node.name
         }}</a>
     </mat-tree-node>
@@ -18,10 +18,13 @@
           {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
         </mat-icon>
       </button>
-      <mat-icon class="menu-icon" mat-list-icon [fontIcon]="node.icon"></mat-icon>
-      <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive">{{
-        node.name
-        }}</a>
+      <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive" class="menu-item">
+        <mat-icon class="menu-icon" mat-list-icon [fontIcon]="node.icon"></mat-icon>
+        <span class="menu-label">
+          {{
+          node.name
+          }}</span>
+      </a>
     </mat-tree-node>
   </mat-tree>
 </mat-nav-list>
