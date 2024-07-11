@@ -4,12 +4,14 @@ import { ProgressBarMode } from "@angular/material/progress-bar";
 import { BehaviorSubject } from "rxjs";
 import { Item } from "src/app/core/item/models/item";
 import { ItemService } from "src/app/core/item/services/item.service";
+import { ProgressNotification } from "src/app/core/models/notification";
 import {
   PageableDataSource,
   Paginator,
 } from "src/app/core/models/pageable-data-source";
 import { STAGE } from "src/app/core/models/progress";
 import { ExcelExportService } from "src/app/core/services/excel-export.service";
+import { NotificationService } from "src/app/core/services/notification.service";
 import { SheetExportService } from "src/app/core/services/sheet-export.service";
 
 type LogItem = {
@@ -28,12 +30,14 @@ export class DemoExportComponent {
   progressMode: ProgressBarMode = "determinate";
   progressColor = "primary";
   progressValue = 0;
+  private _notif?: ProgressNotification;
 
   constructor(
     readonly exportService: ExcelExportService,
     readonly sheetService: SheetExportService,
-    readonly dataService: ItemService
-  ) {
+    readonly dataService: ItemService,
+    private notifService: NotificationService) {
+
     //constructor(readonly exportService: SheetExportService, readonly dataService: ItemService) {
     //console.debug(`initializing datasource`);
   }
@@ -52,15 +56,27 @@ export class DemoExportComponent {
 
   export(): void {
     this.resetProgress();
-    const dataSource = new PageableDataSource<Item, Paginator>(this.dataService);
+
+    this._notif=this.notifService.notify(
+      new ProgressNotification({
+        severity: "info",
+        message: `Export demo`,
+        show: false,
+        persistent: true,
+      })
+    ) as ProgressNotification;
     const p = new Paginator(this.pageSize.value!);
     this.dataService.itemCount = this.rows.value!;
     this.dataService.attributeCount = this.cols.value!;
+    const dataSource = new PageableDataSource<Item, Paginator>(this.dataService);
     dataSource.paginator = p;
     dataSource.length$.subscribe((l) => {
       console.log(`export datasource length is ${l}`);
       p.length = l;
     });
+    dataSource.error$.subscribe((e)=>{
+      this._notif!.severity = "sever";
+    })
     const service =
       this.library.value === "xslx" ? this.sheetService : this.exportService;
 
@@ -74,13 +90,17 @@ export class DemoExportComponent {
           this.progressColor = "primary";
           break;
         case STAGE.ERROR:
+          this._notif!.severity = "sever";
+          break;
         case STAGE.PARTIAL:
           this.progressColor = "warn";
+          this._notif!.severity = "warn";
           break;
         case STAGE.PROGRESS:
           this.progressColor = "accent";
           break;
       }
+      this._notif!.setProgress(e.position.value, e.position.total, e.stage);
       this.progressValue = Math.ceil(
         (e.position.value / e.position.total) * 100
       );

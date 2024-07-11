@@ -15,7 +15,7 @@ export class NotificationService {
   constructor() {}
 
   notify(notif: Notification, propagate = true): Notification {
-    console.log("Notif: ", notif);
+    console.log("[NotificationService] Notif: ", notif);
     if (propagate) {
       this.notificationSubject.next(notif);
     }
@@ -26,17 +26,17 @@ export class NotificationService {
   }
 
   dismiss(notif: Notification): void {
-    console.log("Dismiss: ", notif);
-    console.log("notif found:", this.cache.has(notif));
+    console.log("[NotificationService] Dismiss: ", notif);
+    console.log("[NotificationService] notif found:", this.cache.has(notif));
     this.cache.delete(notif);
   }
   update(notif: Notification): void {
-    console.log("Update: ", notif);
+    console.log("[NotificationService] Update: ", notif);
 
     if (notif.persistent) {
       this.cache.add(notif);
     } else if (this.cache.has(notif)) {
-      console.log("notif was persistent,  delete it");
+      console.log("[NotificationService] notif was persistent,  delete it");
       this.cache.delete(notif);
     }
   }
