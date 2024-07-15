@@ -1,7 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
-import { Observable, of } from "rxjs";
+import { Observable, of, throwError } from "rxjs";
 import { HttpService, Page } from "../../services/http-service";
 import { Item } from "../models/item";
 
@@ -56,6 +56,9 @@ export class ItemService extends HttpService<Item> {
     end = Math.min(end, this.itemCount);
     console.info(`generating fake items from ${start} to ${end}`);
     const data: Item[] = [];
+    if (end < 0) {
+      return throwError(()=>new Error("number of items cannot be negative"));
+    }
     for (let i = start; i < end; i++) {
       data.push(this.generateItem(i));
     }

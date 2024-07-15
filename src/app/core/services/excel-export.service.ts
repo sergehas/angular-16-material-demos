@@ -3,7 +3,7 @@ import Excel, { Workbook } from "exceljs";
 
 import { MatPaginator } from "@angular/material/paginator";
 import { saveAs } from "file-saver";
-import { BehaviorSubject, Observable, map } from "rxjs";
+import { BehaviorSubject, Observable, Subscription, map } from "rxjs";
 import { Progress, STAGE } from "src/app/core/models/progress";
 import { PageableDataSource, Paginator } from "../models/pageable-data-source";
 import { NotificationService } from "./notification.service";
@@ -18,6 +18,7 @@ export class ExcelExportService {
     source: PageableDataSource<T, P>,
     headers: string[]
   ): Observable<Progress> {
+    let dataSub:Subscription;
     const status = new Progress();
     const statusSubject = new BehaviorSubject<Progress>(status);
     console.log(`[excel-export] starting export`);
@@ -64,9 +65,26 @@ export class ExcelExportService {
     worksheet.columns = headers.map((h) => {
       return { header: h, key: h };
     });
-    source.loadPage();
     status.position.total = source.length;
-    source.connect().subscribe((data) => {
+    source.count();
+    source.loadPage();
+    /**
+     * use the pager observable to get the datasource size
+     */
+    source.length$.subscribe((len) => {
+      console.info(`[excel-export] row count to export: ${len}`);
+      status.position.total = len;
+      statusSubject.next(status);
+    });
+
+    source.error$.subscribe((e)=>{
+      status.stage = STAGE.ERROR;
+      dataSub?.unsubscribe();
+      statusSubject.next(status);
+
+    });
+    
+    dataSub=source.connect().subscribe((data) => {
       //whenever data are available, add them to export
       console.info(
         `[excel-export] exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`
@@ -98,19 +116,6 @@ export class ExcelExportService {
         finalizeWorkbook(workbook);
       }
     });
-
-    /**
-     * use the pager observable to get the datasource size
-     */
-    source.length$.pipe(
-      map((len) => {
-        //when the counting is done, then update notification
-        console.info(`[excel-export] row count to export: ${len}`);
-        status.position.total = len;
-        statusSubject.next(status);
-      })
-    );
-    source.count();
 
     return statusSubject.asObservable();
   }

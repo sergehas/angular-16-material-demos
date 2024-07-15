@@ -13,7 +13,7 @@ export interface NotificationDef {
 
 export class Notification implements NotificationDef {
   readonly id: string;
-  readonly severity: NotificationSeverity;
+  protected _severity: NotificationSeverity;
   message: string;
   readonly date: Date;
   readonly ref?: string;
@@ -22,13 +22,18 @@ export class Notification implements NotificationDef {
 
   constructor(def: NotificationDef) {
     this.id = uuid();
-    this.severity = def.severity;
+    this._severity = def.severity;
     this.message = def.message;
     this.date = def.date ?? new Date();
     this.ref = def.ref;
     this.persistent = def.persistent === undefined ? true : def.persistent;
     this.show = def.show === undefined ? true : def.show;
   }
+
+  get severity() :NotificationSeverity {
+    return this._severity;
+  }
+
 }
 
 export class ProgressNotification extends Notification {
@@ -38,7 +43,13 @@ export class ProgressNotification extends Notification {
     super(def);
     this.progress = new Progress();
   }
-
+  
+  override set severity(s: NotificationSeverity) {
+    this._severity=s;
+  }
+  override get severity() :NotificationSeverity {
+    return this._severity;
+  }
   setProgress(value: number, total?: number, stage?: STAGE): void {
     this.progress.position.value = value;
     if (total !== undefined) {
