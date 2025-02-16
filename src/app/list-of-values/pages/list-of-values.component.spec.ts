@@ -1,6 +1,5 @@
-import { ComponentFixture, TestBed } from "@angular/core/testing";
-
 import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Observable } from "rxjs";
@@ -10,15 +9,25 @@ import { TabsNavComponent } from "src/app/shared/components/tabs-nav/tabs-nav.co
 import { ListOfValuesModule } from "../list-of-values.module";
 import { ListOfValuesComponent } from "./list-of-values.component";
 
+/**
+ * Mock implementation of GroupsService for testing purposes.
+ */
 class MockGroupsService {
-  count(): Observable<number> { return new Observable(observer => observer.next(11)); }
+  count(): Observable<number> {
+    return new Observable(observer => observer.next(11));
+  }
 }
 
+/**
+ * Mock implementation of ValuesService for testing purposes.
+ */
 class MockValuesService {
   getValues() {
     return ['Value1', 'Value2', 'Value3'];
   }
-  count(): Observable<number> { return new Observable(observer => observer.next(101)); }
+  count(): Observable<number> {
+    return new Observable(observer => observer.next(101));
+  }
 }
 
 describe("ListOfValuesComponent", () => {
@@ -27,7 +36,13 @@ describe("ListOfValuesComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TabsNavComponent, ListOfValuesModule, HttpClientTestingModule, RouterTestingModule, NoopAnimationsModule],
+      imports: [
+        TabsNavComponent,
+        ListOfValuesModule,
+        HttpClientTestingModule,
+        RouterTestingModule,
+        NoopAnimationsModule
+      ],
       declarations: [ListOfValuesComponent],
       providers: [
         ListOfValuesComponent,

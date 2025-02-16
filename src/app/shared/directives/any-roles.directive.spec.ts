@@ -4,9 +4,9 @@ import { By } from '@angular/platform-browser';
 import { LoginService, SignedUser } from 'src/app/core/services/login.service';
 import { AnyRolesDirective } from './any-roles.directive';
 
-
-
-
+/**
+ * Test component to host the directive.
+ */
 @Component({
   template: `<span class="none" [appAnyRoles]="[]"></span>
              <span class="allowed" [appAnyRoles]="['ADMIN', 'AUTHOR']"></span>
@@ -15,8 +15,6 @@ import { AnyRolesDirective } from './any-roles.directive';
   standalone: true,
 })
 class TestComponent { }
-
-
 
 describe('AnyRolesDirective', () => {
   let directives: AnyRolesDirective[];
@@ -33,7 +31,8 @@ describe('AnyRolesDirective', () => {
 
     fixture = TestBed.configureTestingModule({
       imports: [AnyRolesDirective, TestComponent],
-      providers: [AnyRolesDirective,
+      providers: [
+        AnyRolesDirective,
         { provide: LoginService, useValue: mockLoginService },
       ],
     }).createComponent(TestComponent);
