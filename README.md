@@ -171,3 +171,10 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## links
+
+- rail menu <https://stackblitz.com/edit/angular-side-nav-icon?file=src%2Fapp%2Fside-nav%2Fside-nav.component.html>
+- filterable column <https://www.freakyjolly.com/angular-material-table-custom-filter-using-select-box/>, <https://github.com/malbarmavi/mat-table-column-filter>
+- various demos <https://github.com/railsstudent/ng-rxjs-30/tree/main/projects>
+- material icons <https://fonts.google.com/icons?selected=Material+Symbols+Outlined:assistant_direction:FILL>
