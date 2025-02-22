@@ -1,23 +1,25 @@
+import { CommonModule } from "@angular/common";
 import {
+  AfterViewInit,
   Component,
   ElementRef,
   EventEmitter,
+  forwardRef,
   Input,
   OnDestroy,
   OnInit,
-  Output,
-  forwardRef,
-  Self,
   Optional,
+  Output,
+  Self,
   ViewChild,
   ViewEncapsulation,
 } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { MatIconModule } from "@angular/material/icon";
 import { ErrorStateMatcher, MatRippleModule } from "@angular/material/core";
-import { MatTooltipModule } from "@angular/material/tooltip";
+import { MatIconModule } from "@angular/material/icon";
 import { MatMenuModule, MatMenuTrigger } from "@angular/material/menu";
+import { MatTooltipModule } from "@angular/material/tooltip";
 
+import { FocusMonitor } from "@angular/cdk/a11y";
 import {
   FormControl,
   FormGroupDirective,
@@ -27,11 +29,10 @@ import {
 } from "@angular/forms";
 import { MatFormFieldControl } from "@angular/material/form-field";
 import { Subscription } from "rxjs";
-import { FocusMonitor } from "@angular/cdk/a11y";
 
-import { IconTreeComponent } from "../icon-tree/icon-tree.component";
-import { AbstractMatFormField } from "../abstract-mat-form-field";
 import { MatButtonModule } from "@angular/material/button";
+import { AbstractMatFormField } from "../abstract-mat-form-field";
+import { IconTreeComponent } from "../icon-tree/icon-tree.component";
 /**
  *
  *
@@ -67,13 +68,12 @@ import { MatButtonModule } from "@angular/material/button";
 })
 export class IconSelectComponent
   extends AbstractMatFormField<string>
-  implements OnInit, OnDestroy
-{
+  implements AfterViewInit, OnDestroy {
   private subscription: Subscription | null = null;
   protected control = new FormControl();
   //visual element to  focus
   @ViewChild("button", { static: false })
-  private ctrl: HTMLElement | undefined;
+  private readonly ctrl: HTMLElement | undefined;
   @ViewChild(MatMenuTrigger) iconMenu: MatMenuTrigger | null = null;
 
   /* input value & output valueChange work together */
@@ -112,7 +112,9 @@ export class IconSelectComponent
     this.value = value;
   }
 
-  public ngOnInit(): void {
+
+  public ngAfterViewInit(): void {
+    //public ngOnInit(): void {
     this.subscription = this.valueChange.subscribe((value) => {
       this.iconMenu?.closeMenu();
       super.value = value;

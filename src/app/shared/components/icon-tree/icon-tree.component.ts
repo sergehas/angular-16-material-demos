@@ -1,11 +1,11 @@
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { CommonModule } from "@angular/common";
 import {
-  AfterViewInit,
   Component,
   EventEmitter,
   Input,
-  Output,
+  OnInit,
+  Output
 } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
@@ -27,7 +27,7 @@ import { IconsService } from "src/app/core/icons/services/icons.service";
     MatRippleModule,
   ],
 })
-export class IconTreeComponent implements AfterViewInit {
+export class IconTreeComponent implements OnInit {
   @Input() value: string | null = null;
   @Output() valueChange = new EventEmitter<string | null>();
   @Input() expanded = false;
@@ -35,11 +35,11 @@ export class IconTreeComponent implements AfterViewInit {
   treeControl = new NestedTreeControl<Category>((node) => node.categories);
   dataSource = new MatTreeNestedDataSource<Category>();
 
-  constructor(private service: IconsService) {
+  constructor(private readonly service: IconsService) {
     this.dataSource.data = this.service.getIconslib().categories;
     this.treeControl.dataNodes = this.dataSource.data;
   }
-  ngAfterViewInit() {
+  ngOnInit() {
     if (this.expanded) {
       this.treeControl.expandAll();
     }

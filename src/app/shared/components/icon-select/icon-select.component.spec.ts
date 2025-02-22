@@ -1,5 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { IconSelectComponent } from "./icon-select.component";
 
 describe("IconSelectComponent", () => {
@@ -9,6 +11,8 @@ describe("IconSelectComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [IconSelectComponent],
+      providers: [provideHttpClient(),
+      provideHttpClientTesting()],
     });
     fixture = TestBed.createComponent(IconSelectComponent);
     component = fixture.componentInstance;

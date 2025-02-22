@@ -91,8 +91,8 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | undefined;
 
   ngOnInit(): void {
-    if ((!this.options || !this.options!.columns) && !this.columnOptions) {
-      throw "Table must have a config or a column definition";
+    if ((!this.options?.columns) && !this.columnOptions) {
+      throw new Error("Table must have a config or a column definition");
     }
 
     //here, we at least have a column config if no options

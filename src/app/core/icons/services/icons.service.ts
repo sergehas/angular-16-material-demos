@@ -23,14 +23,14 @@ export class IconsService {
   }
 
   constructor(
-    private http: HttpClient,
-    private matIconRegistry: MatIconRegistry,
-    private domSanitizer: DomSanitizer
-  ) {}
+    private readonly http: HttpClient,
+    private readonly matIconRegistry: MatIconRegistry,
+    private readonly domSanitizer: DomSanitizer
+  ) { }
 
   private load(data: incoLibFormat) {
     const cat = new Category(data.name);
-    data.icons.map((i) => {
+    data.icons.forEach((i) => {
       const icon = cat.addIcon(i);
       console.debug(`[IconsService] registering ${icon.name} in ${NAMESPACE}`);
       this.matIconRegistry.addSvgIconInNamespace(
@@ -39,7 +39,7 @@ export class IconsService {
         this.domSanitizer.bypassSecurityTrustResourceUrl(icon.path)
       );
     });
-    data.categories.map((c) => {
+    data.categories.forEach((c) => {
       cat.categories.push(this.load(c));
     });
     return cat;

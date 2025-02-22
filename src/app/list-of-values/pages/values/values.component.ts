@@ -6,7 +6,7 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  inject,
+  inject
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
@@ -16,7 +16,7 @@ import {
 } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
-import { Subject, tap } from "rxjs";
+import { BehaviorSubject, tap } from "rxjs";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { Value } from "src/app/core/value-list/models/value";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
@@ -27,20 +27,19 @@ import { ValuesService } from "src/app/core/value-list/services/values.service";
   styleUrls: ["./values.component.scss"],
 })
 export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  @ViewChild(MatSort) sort!: MatSort | undefined;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @Input() group?: string;
 
   dataSource!: PageableDataSource<Value>;
-  private _page = new Subject<Value[]>();
+  private readonly _page = new BehaviorSubject<Value[]>([]);
 
-  get page(): Subject<Value[]> {
+  get page(): BehaviorSubject<Value[]> {
     return this._page;
   }
 
   constructor(
-    private service: ValuesService,
-    private dialog: MatDialog
+    private readonly service: ValuesService,
+    private readonly dialog: MatDialog
   ) {
     this.dataSource = new PageableDataSource<Value>(this.service);
   }
@@ -48,21 +47,20 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     //just for debug
     this.dataSource.loading$
-      .pipe(tap((b) => console.info(`loading: ${b}`)))
+      .pipe(tap((b) => console.info(`loading ${this.group}: ${b}`)))
       .subscribe();
     this.dataSource.counting$
-      .pipe(tap((b) => console.info(`counting: ${b}`)))
+      .pipe(tap((b) => console.info(`counting ${this.group}: ${b}`)))
       .subscribe();
   }
 
-  ngAfterViewInit() {
+  ngAfterViewInit(): void {
+    console.log("set pager");
     this.dataSource.filter = { group: this.group! };
     this.dataSource.sort = new MatSort();
-    //this.dataSource.sort = new MatSort();
-    console.log("set pager");
     this.dataSource.paginator = this.paginator;
     //sorting fires event, which is fireing page loading
-    this.dataSource.sort.sort({ id: "name", start: "asc" } as MatSortable);
+    this.dataSource.sort?.sort({ id: "name", start: "asc" } as MatSortable);
     this.dataSource.connect().subscribe((data) => {
       //as data is readonly, we must clone it to be able to set _page
       this._page.next(data.map((i) => i));
@@ -94,7 +92,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log("The dialog was closed with:", result);
       if (result !== undefined) {
         this.service.save(result).subscribe((v) => {
-          console.info(`after save: ${v}`);
+          console.info(`after save: ${JSON.stringify(v, null, 2)}`);
           console.log("refreshing");
           this.dataSource.count();
           this.dataSource.loadPage();
@@ -115,7 +113,7 @@ export enum EditMode {
   styleUrls: ["./value-edit.dialog.scss"],
 })
 export class ValueEditDialog {
-  private _fb = inject(FormBuilder);
+  private readonly _fb = inject(FormBuilder);
   valueForm: FormGroup;
 
   constructor(

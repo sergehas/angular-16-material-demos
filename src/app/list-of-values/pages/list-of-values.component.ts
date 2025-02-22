@@ -14,8 +14,8 @@ export class ListOfValuesComponent {
   countValues$: Observable<number>;
   isDashboardActive = true;
   constructor(
-    private groupsService: GroupsService,
-    private valuesService: ValuesService,
+    private readonly groupsService: GroupsService,
+    private readonly valuesService: ValuesService,
     public router: Router
   ) {
     this.countGroups$ = this.groupsService.count();

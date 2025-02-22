@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
 
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { ListOfValuesModule } from "../../list-of-values.module";
 import { ValuesComponent } from "./values.component";
 
 describe("ValuesComponent", () => {
@@ -12,6 +14,7 @@ describe("ValuesComponent", () => {
 
     TestBed.configureTestingModule({
       declarations: [ValuesComponent],
+      imports: [ListOfValuesModule, NoopAnimationsModule],
       providers: [{ provide: ValuesService, useValue: service }],
     });
     fixture = TestBed.createComponent(ValuesComponent);
@@ -21,5 +24,6 @@ describe("ValuesComponent", () => {
 
   it("should create", () => {
     expect(component).toBeTruthy();
-  });
+  })
+
 });

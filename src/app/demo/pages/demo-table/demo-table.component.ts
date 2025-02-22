@@ -35,7 +35,7 @@ export class DemoTableComponent {
 
   selection = new SelectionModel<Issue>(true, []);
 
-  constructor(private service: GithubService) {
+  constructor(private readonly service: GithubService) {
     this.dataSource = new PageableDataSource<Issue>(this.service);
   }
 

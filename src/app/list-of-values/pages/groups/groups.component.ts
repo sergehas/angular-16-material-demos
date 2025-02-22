@@ -14,7 +14,7 @@ export class GroupsComponent {
 
   groups$: Observable<Group[]>;
 
-  constructor(private groupsService: GroupsService) {
+  constructor(private readonly groupsService: GroupsService) {
     this.groups$ = this.groupsService.find(undefined, undefined, undefined);
   }
 }

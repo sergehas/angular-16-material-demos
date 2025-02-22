@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { Component, OnInit, ViewChild } from "@angular/core";
 import { FormControl } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
@@ -16,7 +16,7 @@ import {
   templateUrl: "./demo-datasource.component.html",
   styleUrls: ["./demo-datasource.component.scss"],
 })
-export class DemoDatasourceComponent implements AfterViewInit {
+export class DemoDatasourceComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -30,7 +30,7 @@ export class DemoDatasourceComponent implements AfterViewInit {
   filter = new FormControl("");
   private _sub?: Subscription;
 
-  constructor(private service: GithubService) {
+  constructor(private readonly service: GithubService) {
     this.dataSource = new PageableDataSource<Issue>(
       this.service,
       this.autoloadEnabled
@@ -89,7 +89,7 @@ export class DemoDatasourceComponent implements AfterViewInit {
     this._setDatasource();
   }
 
-  ngAfterViewInit() {
+  ngOnInit() {
     this._setDatasource();
   }
 }

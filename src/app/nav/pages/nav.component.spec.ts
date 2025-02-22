@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { provideRouter } from "@angular/router";
+import { TabsNavComponent } from "src/app/shared/components/tabs-nav/tabs-nav.component";
+import { NavModule } from "../nav.module";
 import { NavComponent } from "./nav.component";
 
 describe("NavComponent", () => {
@@ -8,7 +12,9 @@ describe("NavComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [TabsNavComponent, NavModule, NoopAnimationsModule],
       declarations: [NavComponent],
+      providers: [provideRouter([])],
     }).compileComponents();
 
     fixture = TestBed.createComponent(NavComponent);
