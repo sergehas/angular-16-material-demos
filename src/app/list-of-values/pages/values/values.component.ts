@@ -1,12 +1,11 @@
 import {
-  AfterViewInit,
   Component,
   Inject,
   Input,
   OnDestroy,
   OnInit,
   ViewChild,
-  inject,
+  inject
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import {
@@ -26,21 +25,21 @@ import { ValuesService } from "src/app/core/value-list/services/values.service";
   templateUrl: "./values.component.html",
   styleUrls: ["./values.component.scss"],
 })
-export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
+export class ValuesComponent implements OnInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort!: MatSort | undefined;
   @Input() group?: string;
 
   dataSource!: PageableDataSource<Value>;
-  private _page = new Subject<Value[]>();
+  private readonly _page = new Subject<Value[]>();
 
   get page(): Subject<Value[]> {
     return this._page;
   }
 
   constructor(
-    private service: ValuesService,
-    private dialog: MatDialog
+    private readonly service: ValuesService,
+    private readonly dialog: MatDialog
   ) {
     this.dataSource = new PageableDataSource<Value>(this.service);
   }
@@ -53,12 +52,9 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataSource.counting$
       .pipe(tap((b) => console.info(`counting: ${b}`)))
       .subscribe();
-  }
-
-  ngAfterViewInit() {
     this.dataSource.filter = { group: this.group! };
     this.dataSource.sort = new MatSort();
-    //this.dataSource.sort = new MatSort();
+
     console.log("set pager");
     this.dataSource.paginator = this.paginator;
     //sorting fires event, which is fireing page loading
@@ -94,7 +90,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
       console.log("The dialog was closed with:", result);
       if (result !== undefined) {
         this.service.save(result).subscribe((v) => {
-          console.info(`after save: ${v}`);
+          console.info(`after save: ${JSON.stringify(v, null, 2)}`);
           console.log("refreshing");
           this.dataSource.count();
           this.dataSource.loadPage();
@@ -115,7 +111,7 @@ export enum EditMode {
   styleUrls: ["./value-edit.dialog.scss"],
 })
 export class ValueEditDialog {
-  private _fb = inject(FormBuilder);
+  private readonly _fb = inject(FormBuilder);
   valueForm: FormGroup;
 
   constructor(

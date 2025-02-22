@@ -12,7 +12,7 @@ export type GroupCrtieria = { name?: string };
   providedIn: "root",
 })
 export class GroupsService extends HttpService<Group> {
-  static HREF = "assets/mockup/groups.json";
+  static readonly HREF = "assets/mockup/groups.json";
 
   constructor(http: HttpClient) {
     super(http, GroupsService.HREF);
@@ -58,7 +58,7 @@ export class GroupsService extends HttpService<Group> {
     return super.find(criteria, sort, page).pipe(
       // filtering/sorting apply client side... must of couse be done by "real" API, not by GUI
       map((groups) => this._filter(groups, criteria)),
-      map((groups) => groups.sort((a, b) => a.name.localeCompare(b.name))),
+      map((groups) => { return groups.sort((a, b) => a.name.localeCompare(b.name)) }),
       map((groups) => this._page(groups, page))
     );
   }

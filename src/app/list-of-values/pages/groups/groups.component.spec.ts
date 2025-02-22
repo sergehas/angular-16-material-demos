@@ -1,5 +1,9 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
+import { provideHttpClient } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { ListOfValuesModule } from "../../list-of-values.module";
 import { GroupsComponent } from "./groups.component";
 
 describe("GroupsComponent", () => {
@@ -9,6 +13,9 @@ describe("GroupsComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [GroupsComponent],
+      imports: [ListOfValuesModule, NoopAnimationsModule],
+      providers: [provideHttpClient(),
+      provideHttpClientTesting(),]
     });
     fixture = TestBed.createComponent(GroupsComponent);
     component = fixture.componentInstance;

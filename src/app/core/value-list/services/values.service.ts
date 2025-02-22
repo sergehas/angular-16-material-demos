@@ -12,13 +12,19 @@ export type ValueCrtieria = { name?: string; group?: string };
   providedIn: "root",
 })
 export class ValuesService extends HttpService<Value> {
-  static HREF = "assets/mockup/values.json";
+  static readonly HREF = "assets/mockup/values.json";
   private _updatedCache: Value[] = [];
 
   constructor(http: HttpClient) {
     super(http, ValuesService.HREF);
   }
 
+  /**
+   * Filters the values array based on criteria.
+   * @param values Array of values to filter.
+   * @param criteria Criteria to filter values.
+   * @returns Filtered array of values.
+   */
   private _filter(values: Value[], criteria?: ValueCrtieria): Value[] {
     console.debug("filtering :", values);
     if (!criteria) {
@@ -31,6 +37,12 @@ export class ValuesService extends HttpService<Value> {
     );
   }
 
+  /**
+   * Paginates the values array.
+   * @param values Array of values to paginate.
+   * @param page Page information for pagination.
+   * @returns Paginated array of values.
+   */
   private _page(values: Value[], page?: Page): Value[] {
     if (!page) {
       return values;
@@ -39,7 +51,13 @@ export class ValuesService extends HttpService<Value> {
     return values.slice(start, start + page.pageSize);
   }
 
-  private _merge(baseline: Value[], patchValues: Value[]) {
+  /**
+   * Merges the baseline values array with the patch values array.
+   * @param baseline Baseline array of values.
+   * @param patchValues Patch array of values.
+   * @returns Merged array of values.
+   */
+  private _merge(baseline: Value[], patchValues: Value[]): Value[] {
     const r = [...baseline];
     const predicate = (b: Value, p: Value) =>
       b.group === p.group && b.name === p.name;
@@ -55,6 +73,11 @@ export class ValuesService extends HttpService<Value> {
     return r;
   }
 
+  /**
+   * Counts the number of values based on criteria.
+   * @param criteria Criteria to filter values.
+   * @returns Observable of the number of values.
+   */
   override count(criteria?: ValueCrtieria): Observable<number> {
     let params = new HttpParams();
     params = params.set("q", this.encodeFilter(criteria));
@@ -70,6 +93,13 @@ export class ValuesService extends HttpService<Value> {
       );
   }
 
+  /**
+   * Finds values based on criteria, sort, and pagination.
+   * @param criteria Criteria to filter values.
+   * @param sort Sort information.
+   * @param page Page information for pagination.
+   * @returns Observable of the array of values.
+   */
   override find(
     criteria: ValueCrtieria | undefined,
     sort: Sort | undefined,
@@ -88,11 +118,16 @@ export class ValuesService extends HttpService<Value> {
       // filtering/sorting apply client side... must of couse be done by "real" API, not by GUI
       map((values) => this._filter(values, criteria)),
       tap((values) => console.log("filtered: ", values)),
-      map((values) => values.sort((a, b) => a.name.localeCompare(b.name))),
+      map((values) => { return values.sort((a, b) => a.name.localeCompare(b.name)) }),
       map((values) => this._page(values, page))
     );
   }
 
+  /**
+   * Saves a value and updates the cache.
+   * @param v Value to save.
+   * @returns Observable of the saved value.
+   */
   save(v: Value): Observable<Value> {
     this._updatedCache = this._merge(this._updatedCache, [v]);
     console.info(
