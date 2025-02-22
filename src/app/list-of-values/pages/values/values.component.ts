@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   Component,
   Inject,
   Input,
@@ -15,7 +16,7 @@ import {
 } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
-import { Subject, tap } from "rxjs";
+import { BehaviorSubject, tap } from "rxjs";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { Value } from "src/app/core/value-list/models/value";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
@@ -25,15 +26,14 @@ import { ValuesService } from "src/app/core/value-list/services/values.service";
   templateUrl: "./values.component.html",
   styleUrls: ["./values.component.scss"],
 })
-export class ValuesComponent implements OnInit, OnDestroy {
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  @ViewChild(MatSort) sort!: MatSort | undefined;
+export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
   @Input() group?: string;
 
   dataSource!: PageableDataSource<Value>;
-  private readonly _page = new Subject<Value[]>();
+  private readonly _page = new BehaviorSubject<Value[]>([]);
 
-  get page(): Subject<Value[]> {
+  get page(): BehaviorSubject<Value[]> {
     return this._page;
   }
 
@@ -47,18 +47,20 @@ export class ValuesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     //just for debug
     this.dataSource.loading$
-      .pipe(tap((b) => console.info(`loading: ${b}`)))
+      .pipe(tap((b) => console.info(`loading ${this.group}: ${b}`)))
       .subscribe();
     this.dataSource.counting$
-      .pipe(tap((b) => console.info(`counting: ${b}`)))
+      .pipe(tap((b) => console.info(`counting ${this.group}: ${b}`)))
       .subscribe();
+  }
+
+  ngAfterViewInit(): void {
+    console.log("set pager");
     this.dataSource.filter = { group: this.group! };
     this.dataSource.sort = new MatSort();
-
-    console.log("set pager");
     this.dataSource.paginator = this.paginator;
     //sorting fires event, which is fireing page loading
-    this.dataSource.sort.sort({ id: "name", start: "asc" } as MatSortable);
+    this.dataSource.sort?.sort({ id: "name", start: "asc" } as MatSortable);
     this.dataSource.connect().subscribe((data) => {
       //as data is readonly, we must clone it to be able to set _page
       this._page.next(data.map((i) => i));
