@@ -6,15 +6,13 @@ import {
   MAT_DATE_LOCALE,
 } from "@angular/material/core";
 import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
+import { Subscription } from "rxjs";
+
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
 // syntax. However, rollup creates a synthetic default module and we thus need to import it using
 // the `default as` syntax.
 
-//const moment = _rollupMoment || _moment;
-
-// tslint:disable-next-line:no-duplicate-imports
-import { Subscription } from "rxjs";
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -60,7 +58,7 @@ export class DemoI18nComponent implements OnDestroy {
     this.translateService.get("format.weekYear").subscribe(onTranslation);
   }
 
-  constructor(private translateService: TranslateService) {
+  constructor(private readonly translateService: TranslateService) {
     this._updateFormat();
 
     this._onLangChange = this.translateService.onLangChange.subscribe(

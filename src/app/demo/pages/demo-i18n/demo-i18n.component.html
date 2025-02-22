@@ -38,10 +38,8 @@
       <input matStartDate placeholder="Start date" />
       <input matEndDate placeholder="End date" />
     </mat-date-range-input>
-    <mat-hint
-      >{{ "format.weekYear" | translate }} –
-      {{ "format.weekYear" | translate }}</mat-hint
-    >
+    <mat-hint>{{ "format.weekYear" | translate }} –
+      {{ "format.weekYear" | translate }}</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-date-range-picker #picker></mat-date-range-picker>
   </mat-form-field>
