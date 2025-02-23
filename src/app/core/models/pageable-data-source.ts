@@ -13,7 +13,7 @@ import {
   merge,
   noop,
   of as observableOf,
-  tap,
+  tap
 } from "rxjs";
 import { Filter, HttpService, Page } from "../services/http-service";
 
@@ -119,7 +119,7 @@ export class PageableDataSource<
   ) {
     super();
     this.autoload = autoload;
-    if ((this.autoload = autoload)) this._filterChange.next({ autoload: true });
+    if (this.autoload) this._filterChange.next({ autoload: true });
     this.updateChangeSubscription();
   }
 
@@ -156,18 +156,16 @@ export class PageableDataSource<
     this.countSubject.subscribe(() => (this._shouldCount = false));
     const filterChange = this._filterChange;
     const sortChange: Observable<Sort | null | void> = this.sort
-      ? (merge(
-          this.sort.sortChange,
-          this.sort.initialized
-        ) as Observable<Sort | void>)
-      : observableOf(null);
+      ? merge(
+        this.sort.sortChange,
+        this.sort.initialized
+      ) : observableOf(null);
 
     const pageChange: Observable<PageEvent | null | void> = this.paginator
-      ? (merge(
-          this.paginator.page,
-          this.paginator.initialized
-        ) as Observable<PageEvent | void>)
-      : observableOf(null);
+      ? merge(
+        this.paginator.page,
+        this.paginator.initialized
+      ) : observableOf(null);
 
     // reset the paginator after sorting
     sortChange.subscribe((e) => {
@@ -194,8 +192,6 @@ export class PageableDataSource<
     const changes: Observable<
       [Filter | undefined, void | Sort | null, void | PageEvent | null]
     > = combineLatest([filterChange, sortChange, pageChange]);
-    //const changes =combineLatest([initalChange, sortChange, pageChange]);
-    //const changes= combineLatest([sortChange, pageChange]);
 
     // The purpose of this intermediate `filteredEventStream` subscrption is to break the flow of events, by filtering it in order to have only the latest event.
     // More specificaly when the paginator and/or the sort are set.
@@ -241,9 +237,9 @@ export class PageableDataSource<
       this._sort,
       this._paginator
         ? {
-            pageNumber: this._paginator.pageIndex,
-            pageSize: this._paginator.pageSize,
-          }
+          pageNumber: this._paginator.pageIndex,
+          pageSize: this._paginator.pageSize,
+        }
         : undefined
     );
   }

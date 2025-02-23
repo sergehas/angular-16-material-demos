@@ -6,13 +6,13 @@ import { Notification } from "src/app/core/models/notification";
   providedIn: "root",
 })
 export class NotificationService {
-  private cache = new Set<Notification>();
-  private notificationCacheSubject = new BehaviorSubject(this.cache);
-  public notifications$ = this.notificationCacheSubject.asObservable();
-  private notificationSubject = new Subject<Notification>();
-  public notification$ = this.notificationSubject.asObservable();
+  private readonly cache = new Set<Notification>();
+  private readonly notificationCacheSubject = new BehaviorSubject(this.cache);
+  public readonly notifications$ = this.notificationCacheSubject.asObservable();
+  private readonly notificationSubject = new Subject<Notification>();
+  public readonly notification$ = this.notificationSubject.asObservable();
 
-  constructor() {}
+  constructor() { }
 
   notify(notif: Notification, propagate = true): Notification {
     console.log("[NotificationService] Notif: ", notif);
@@ -46,5 +46,7 @@ export class NotificationService {
     this.notificationCacheSubject.next(this.cache);
   }
 
-  load() {}
+  load(): void {
+    this.notificationCacheSubject.next(this.cache);
+  }
 }
