@@ -20,10 +20,12 @@
 }
 
 @mixin theme($theme) {
-  // with angular native colors
-  // $success: map.get($theme, primary);
-  // $warning: map.get($theme, accent);
-  // $error: map.get($theme, warn);
+  /* // with angular native colors
+   $success: map.get($theme, primary);
+   $warning: map.get($theme, accent);
+   $error: map.get($theme, warn);
+  */
+
   // with extended  colors
   $success: map.get($theme, success);
   $warning: map.get($theme, warning);
@@ -34,9 +36,11 @@
   .notif-snack-info {
     @include styleSnackbar($success, $override);
   }
+
   .notif-snack-warn {
     @include styleSnackbar($warning, $override);
   }
+
   .notif-snack-sever {
     @include styleSnackbar($error, $override);
   }

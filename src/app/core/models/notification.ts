@@ -26,14 +26,13 @@ export class Notification implements NotificationDef {
     this.message = def.message;
     this.date = def.date ?? new Date();
     this.ref = def.ref;
-    this.persistent = def.persistent === undefined ? true : def.persistent;
-    this.show = def.show === undefined ? true : def.show;
+    this.persistent = def.persistent ?? true;
+    this.show = def.show ?? true;
   }
 
-  get severity() :NotificationSeverity {
+  get severity(): NotificationSeverity {
     return this._severity;
   }
-
 }
 
 export class ProgressNotification extends Notification {
@@ -43,11 +42,11 @@ export class ProgressNotification extends Notification {
     super(def);
     this.progress = new Progress();
   }
-  
+
   override set severity(s: NotificationSeverity) {
-    this._severity=s;
+    this._severity = s;
   }
-  override get severity() :NotificationSeverity {
+  override get severity(): NotificationSeverity {
     return this._severity;
   }
   setProgress(value: number, total?: number, stage?: STAGE): void {

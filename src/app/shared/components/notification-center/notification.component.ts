@@ -31,7 +31,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 export class NotificationComponent {
   @Input() notification!: Notification;
 
-  constructor(private service: NotificationService) {}
+  constructor(private readonly service: NotificationService) { }
 
   //demo val
   _progressColor = "primary";

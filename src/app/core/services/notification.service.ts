@@ -12,7 +12,7 @@ export class NotificationService {
   private readonly notificationSubject = new Subject<Notification>();
   public readonly notification$ = this.notificationSubject.asObservable();
 
-  constructor() { }
+  constructor() {}
 
   notify(notif: Notification, propagate = true): Notification {
     console.log("[NotificationService] Notif: ", notif);

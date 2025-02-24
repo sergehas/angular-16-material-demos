@@ -3,7 +3,7 @@ import Excel, { Workbook } from "exceljs";
 
 import { MatPaginator } from "@angular/material/paginator";
 import { saveAs } from "file-saver";
-import { BehaviorSubject, Observable, Subscription, map } from "rxjs";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { Progress, STAGE } from "src/app/core/models/progress";
 import { PageableDataSource, Paginator } from "../models/pageable-data-source";
 import { NotificationService } from "./notification.service";
@@ -12,13 +12,13 @@ import { NotificationService } from "./notification.service";
   providedIn: "root",
 })
 export class ExcelExportService {
-  constructor(protected notifService: NotificationService) { }
+  constructor(protected notifService: NotificationService) {}
 
   export<T, P extends MatPaginator | Paginator = MatPaginator>(
     source: PageableDataSource<T, P>,
     headers: string[]
   ): Observable<Progress> {
-    let dataSub:Subscription;
+    let dataSub: Subscription;
     const status = new Progress();
     const statusSubject = new BehaviorSubject<Progress>(status);
     console.log(`[excel-export] starting export`);
@@ -44,7 +44,7 @@ export class ExcelExportService {
         })
         .catch((e) => {
           stage = STAGE.ERROR;
-          console.error("[excel-export] failure:", e)
+          console.error("[excel-export] failure:", e);
         })
         .finally(() => {
           console.info(`[excel-export] export done`);
@@ -59,7 +59,6 @@ export class ExcelExportService {
     /**
      * manage (export) pages
      */
-    //const workbook = new Excel.stream.xlsx.WorkbookWriter({ filename: "export-service" });
     const workbook = new Excel.Workbook();
     const worksheet = workbook.addWorksheet("export");
     worksheet.columns = headers.map((h) => {
@@ -77,14 +76,13 @@ export class ExcelExportService {
       statusSubject.next(status);
     });
 
-    source.error$.subscribe((e)=>{
+    source.error$.subscribe((e) => {
       status.stage = STAGE.ERROR;
       dataSub?.unsubscribe();
       statusSubject.next(status);
-
     });
-    
-    dataSub=source.connect().subscribe((data) => {
+
+    dataSub = source.connect().subscribe((data) => {
       //whenever data are available, add them to export
       console.info(
         `[excel-export] exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`
@@ -95,12 +93,7 @@ export class ExcelExportService {
         statusSubject.next(status);
       }
       console.info(`[excel-export] new rows to export: ${data.length}`);
-      // if (data.length <= 0) {
-      //   // errors
-      //   console.warn("fetching data failed");
-      //   await finalizeWorkbook(workbook, STAGE.PARTIAL);
-      //   return;
-      // }
+
       data.forEach((r) => {
         worksheet.addRow(r);
       });
@@ -108,8 +101,6 @@ export class ExcelExportService {
         console.info(`[excel-export] export next page`);
         source.paginator.nextPage();
       } else {
-        // worksheet.commit();
-        // await workbook.commit();
         console.info(
           `no more page. Last page was ${source.paginator?.pageIndex}`
         );

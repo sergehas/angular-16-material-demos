@@ -22,7 +22,9 @@ export class DemoDatasourceComponent implements AfterViewInit {
 
   dataSource!: PageableDataSource<Issue>;
   displayedColumns: string[] = ["created", "state", "number", "title"];
-  dataSourceEvents$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
+  dataSourceEvents$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
+    []
+  );
   // demo purpose features
   paginatorEnabled = true;
   sortEnabled = true;
@@ -70,9 +72,8 @@ export class DemoDatasourceComponent implements AfterViewInit {
       )
     ).subscribe((e) => {
       console.info("[demo datasource] event received", e);
-      this.dataSourceEvents$.value.push(`[${new Date().toISOString()}]: ${e}`)
-    }
-    );
+      this.dataSourceEvents$.value.push(`[${new Date().toISOString()}]: ${e}`);
+    });
     //manage default sort: must be done BEFORE managing events!
     if (this.sortEnabled) {
       this.dataSource.sort = this.sort;

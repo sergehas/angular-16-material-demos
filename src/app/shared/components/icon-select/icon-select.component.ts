@@ -7,7 +7,6 @@ import {
   forwardRef,
   Input,
   OnDestroy,
-  OnInit,
   Optional,
   Output,
   Self,
@@ -39,7 +38,7 @@ import { IconTreeComponent } from "../icon-tree/icon-tree.component";
  * @export
  * @class IconSelectComponent
  * @extends {AbstractMatFormField<string>} to inherit of almost all behaviors & attributes of a form field
- * @implements {OnInit} for subscribing on value change of nested component
+ * @implements {AfterViewInit} for subscribing on value change of nested component
  * @implements {OnDestroy} to destroy subscription
  */
 @Component({
@@ -68,7 +67,8 @@ import { IconTreeComponent } from "../icon-tree/icon-tree.component";
 })
 export class IconSelectComponent
   extends AbstractMatFormField<string>
-  implements AfterViewInit, OnDestroy {
+  implements AfterViewInit, OnDestroy
+{
   private subscription: Subscription | null = null;
   protected control = new FormControl();
   //visual element to  focus
@@ -112,9 +112,7 @@ export class IconSelectComponent
     this.value = value;
   }
 
-
   public ngAfterViewInit(): void {
-    //public ngOnInit(): void {
     this.subscription = this.valueChange.subscribe((value) => {
       this.iconMenu?.closeMenu();
       super.value = value;

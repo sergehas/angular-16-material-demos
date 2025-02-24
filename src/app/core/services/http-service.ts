@@ -8,7 +8,12 @@ export type Page = {
   pageSize: number;
 };
 
-export type FilterValue = string | boolean | number | Date | (string | boolean | number | Date);
+export type FilterValue =
+  | string
+  | boolean
+  | number
+  | Date
+  | (string | boolean | number | Date);
 export type Filter = Record<string, FilterValue>;
 
 /**
@@ -26,9 +31,9 @@ export abstract class HttpService<T> {
    * Initializes the HTTP service with the provided HttpClient and base URL.
    * @param http The HttpClient to use for making requests.
    * @param baseUrl The base URL for the API.
-   * 
-   * the default verbs & URLs are: 
-   * 
+   *
+   * the default verbs & URLs are:
+   *
    * * `count`: `GET` `${baseUrl}/count`
    *   * the optional parameter (search criteria) is passed as a query string : `q={criteria as json}`
    * * `find`: `GET`: `${baseUrl}`
@@ -39,10 +44,12 @@ export abstract class HttpService<T> {
    * * `create`: `POST` `${baseUrl}`
    * * `delete`: `DELETE` ${baseUrl}/${id}`
    * * `update`: `PUT` ${baseUrl}/${id}`
-   * 
+   *
    */
-  constructor(readonly http: HttpClient, protected baseUrl: string) {
-  }
+  constructor(
+    readonly http: HttpClient,
+    protected baseUrl: string
+  ) {}
 
   /**
    * Encodes a filter object into a query string.
@@ -123,14 +130,21 @@ export abstract class HttpService<T> {
     });
   }
   delete(id: keyof T): Observable<T> {
-    return this.http.delete<T>(`${this.baseUrl}/${encodeURIComponent(String(id))}`, {
-      headers: this.headers,
-    });
+    return this.http.delete<T>(
+      `${this.baseUrl}/${encodeURIComponent(String(id))}`,
+      {
+        headers: this.headers,
+      }
+    );
   }
 
   update(id: keyof T, item: T): Observable<T> {
-    return this.http.put<T>(`${this.baseUrl}/${encodeURIComponent(String(id))}`, item, {
-      headers: this.headers,
-    });
+    return this.http.put<T>(
+      `${this.baseUrl}/${encodeURIComponent(String(id))}`,
+      item,
+      {
+        headers: this.headers,
+      }
+    );
   }
 }

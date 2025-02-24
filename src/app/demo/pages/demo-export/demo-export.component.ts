@@ -36,8 +36,8 @@ export class DemoExportComponent {
     readonly exportService: ExcelExportService,
     readonly sheetService: SheetExportService,
     readonly dataService: ItemService,
-    private notifService: NotificationService) {
-
+    private readonly notifService: NotificationService
+  ) {
     //constructor(readonly exportService: SheetExportService, readonly dataService: ItemService) {
     //console.debug(`initializing datasource`);
   }
@@ -57,7 +57,7 @@ export class DemoExportComponent {
   export(): void {
     this.resetProgress();
 
-    this._notif=this.notifService.notify(
+    this._notif = this.notifService.notify(
       new ProgressNotification({
         severity: "info",
         message: `Export demo`,
@@ -68,15 +68,18 @@ export class DemoExportComponent {
     const p = new Paginator(this.pageSize.value!);
     this.dataService.itemCount = this.rows.value!;
     this.dataService.attributeCount = this.cols.value!;
-    const dataSource = new PageableDataSource<Item, Paginator>(this.dataService);
+    const dataSource = new PageableDataSource<Item, Paginator>(
+      this.dataService
+    );
     dataSource.paginator = p;
     dataSource.length$.subscribe((l) => {
-      console.log(`export datasource length is ${l}`);
+      console.log(`[demo-export] datasource length is ${l}`);
       p.length = l;
     });
-    dataSource.error$.subscribe((e)=>{
+    dataSource.error$.subscribe((e) => {
       this._notif!.severity = "sever";
-    })
+      console.error(`[demo-export] datasource error: ${e}`);
+    });
     const service =
       this.library.value === "xslx" ? this.sheetService : this.exportService;
 
@@ -111,5 +114,4 @@ export class DemoExportComponent {
       this.exportEvents$.next(this.exportEvents);
     });
   }
-
 }

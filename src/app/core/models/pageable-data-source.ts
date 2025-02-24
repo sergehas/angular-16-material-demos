@@ -13,7 +13,7 @@ import {
   merge,
   noop,
   of as observableOf,
-  tap
+  tap,
 } from "rxjs";
 import { Filter, HttpService, Page } from "../services/http-service";
 
@@ -156,16 +156,12 @@ export class PageableDataSource<
     this.countSubject.subscribe(() => (this._shouldCount = false));
     const filterChange = this._filterChange;
     const sortChange: Observable<Sort | null | void> = this.sort
-      ? merge(
-        this.sort.sortChange,
-        this.sort.initialized
-      ) : observableOf(null);
+      ? merge(this.sort.sortChange, this.sort.initialized)
+      : observableOf(null);
 
     const pageChange: Observable<PageEvent | null | void> = this.paginator
-      ? merge(
-        this.paginator.page,
-        this.paginator.initialized
-      ) : observableOf(null);
+      ? merge(this.paginator.page, this.paginator.initialized)
+      : observableOf(null);
 
     // reset the paginator after sorting
     sortChange.subscribe((e) => {
@@ -237,9 +233,9 @@ export class PageableDataSource<
       this._sort,
       this._paginator
         ? {
-          pageNumber: this._paginator.pageIndex,
-          pageSize: this._paginator.pageSize,
-        }
+            pageNumber: this._paginator.pageIndex,
+            pageSize: this._paginator.pageSize,
+          }
         : undefined
     );
   }

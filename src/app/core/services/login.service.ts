@@ -46,7 +46,7 @@ export class SignedUser {
  * fake login serivce. Host the supposed logged in user
  */
 export class LoginService {
-  private _user = new SignedUser();
+  private readonly _user = new SignedUser();
   constructor() {
     this.login();
   }

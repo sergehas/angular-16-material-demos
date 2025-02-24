@@ -14,8 +14,7 @@ describe("DemoDatasourceComponent", () => {
     TestBed.configureTestingModule({
       imports: [DemoModule, NoopAnimationsModule],
       declarations: [DemoDatasourceComponent],
-      providers: [provideHttpClient(),
-      provideHttpClientTesting(),]
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     fixture = TestBed.createComponent(DemoDatasourceComponent);
     component = fixture.componentInstance;

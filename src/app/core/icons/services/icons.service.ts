@@ -2,6 +2,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
+import { lastValueFrom } from "rxjs";
 import { Category, NAMESPACE } from "../models/category";
 
 type incoLibFormat = {
@@ -17,7 +18,7 @@ export class IconsService {
   private iconlib = new Category("root");
 
   async loadConfiguration() {
-    const libData = await this.http.get("assets/iconlib.json").toPromise();
+    const libData = await lastValueFrom(this.http.get("assets/iconlib.json"));
     this.iconlib = this.load(libData as incoLibFormat);
     console.info("[IconsService] iconlib build: ", this.iconlib);
   }
@@ -26,7 +27,7 @@ export class IconsService {
     private readonly http: HttpClient,
     private readonly matIconRegistry: MatIconRegistry,
     private readonly domSanitizer: DomSanitizer
-  ) { }
+  ) {}
 
   private load(data: incoLibFormat) {
     const cat = new Category(data.name);

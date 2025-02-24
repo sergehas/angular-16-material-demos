@@ -14,8 +14,7 @@ describe("DemoExportComponent", () => {
     await TestBed.configureTestingModule({
       imports: [DemoModule, NoopAnimationsModule],
       declarations: [DemoExportComponent],
-      providers: [provideHttpClient(),
-      provideHttpClientTesting(),]
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DemoExportComponent);

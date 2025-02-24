@@ -118,7 +118,9 @@ export class ValuesService extends HttpService<Value> {
       // filtering/sorting apply client side... must of couse be done by "real" API, not by GUI
       map((values) => this._filter(values, criteria)),
       tap((values) => console.log("filtered: ", values)),
-      map((values) => { return values.sort((a, b) => a.name.localeCompare(b.name)) }),
+      map((values) => {
+        return values.sort((a, b) => a.name.localeCompare(b.name));
+      }),
       map((values) => this._page(values, page))
     );
   }

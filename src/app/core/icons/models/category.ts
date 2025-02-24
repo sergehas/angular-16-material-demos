@@ -28,7 +28,7 @@ export class Icon {
 
 export class Category {
   name: string;
-  private _icons: Array<Icon> = [];
+  private readonly _icons: Array<Icon> = [];
   categories: Array<Category> = [];
 
   constructor(name: string) {

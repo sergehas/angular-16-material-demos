@@ -8,7 +8,7 @@ import {
 import { HttpClient } from "@angular/common/http";
 import { HttpService } from "./http-service";
 
-class TestHttpService extends HttpService<any> { }
+class TestHttpService extends HttpService<any> {}
 
 describe("Http-Service", () => {
   let service: HttpService<any>;
@@ -66,7 +66,9 @@ describe("Http-Service", () => {
     service.find({ z: 47 }, undefined, undefined).subscribe((data) => {
       expect(data).toEqual(testData);
     });
-    const req = httpTestingController.expectOne("?q=%257B%2522z%2522%253A47%257D");
+    const req = httpTestingController.expectOne(
+      "?q=%257B%2522z%2522%253A47%257D"
+    );
     expect(req.request.method).toEqual("GET");
     req.flush({ items: testData });
     httpTestingController.verify();
@@ -74,9 +76,11 @@ describe("Http-Service", () => {
   it("should find with sort", () => {
     const testData = [{ d: 1 }, { d: 2 }, { d: 3 }];
     service = new TestHttpService(httpClient, "");
-    service.find(undefined, { active: "d", direction: 'asc' }, undefined).subscribe((data) => {
-      expect(data).toEqual(testData);
-    });
+    service
+      .find(undefined, { active: "d", direction: "asc" }, undefined)
+      .subscribe((data) => {
+        expect(data).toEqual(testData);
+      });
     const req = httpTestingController.expectOne("?sort=d&order=asc");
     expect(req.request.method).toEqual("GET");
     req.flush({ items: testData });
@@ -85,9 +89,11 @@ describe("Http-Service", () => {
   it("should find with page", () => {
     const testData = [{ d: 1 }, { d: 2 }, { d: 3 }];
     service = new TestHttpService(httpClient, "");
-    service.find(undefined, undefined, { pageNumber: 43, pageSize: 13 }).subscribe((data) => {
-      expect(data).toEqual(testData);
-    });
+    service
+      .find(undefined, undefined, { pageNumber: 43, pageSize: 13 })
+      .subscribe((data) => {
+        expect(data).toEqual(testData);
+      });
     const req = httpTestingController.expectOne("?pageSize=13&page=44");
     expect(req.request.method).toEqual("GET");
     req.flush({ items: testData });
@@ -147,5 +153,4 @@ describe("Http-Service", () => {
     req.flush("as is");
     httpTestingController.verify();
   });
-
 });
