@@ -21,7 +21,7 @@ const datePipeMock = {
 
 // Mock TranslatePipe
 @Pipe({
-  name: "translate"
+  name: "translate",
 })
 export class TranslateMockPipe implements PipeTransform {
   public name: string = "translate";
@@ -39,7 +39,8 @@ describe("DemoI18nComponent", () => {
     TestBed.configureTestingModule({
       imports: [DemoModule, NoopAnimationsModule],
       declarations: [DemoI18nComponent, TranslateMockPipe],
-      providers: [DatePipe,
+      providers: [
+        DatePipe,
         { provide: TranslateService, useValue: translateServiceMock },
         { provide: TranslatePipe, UseValue: TranslateMockPipe },
       ],

@@ -1,10 +1,4 @@
-import {
-  animate,
-  state,
-  style,
-  transition,
-  trigger,
-} from "@angular/animations";
+import { animate, state, style, transition, trigger } from "@angular/animations";
 import { SelectionModel } from "@angular/cdk/collections";
 import { CommonModule, DatePipe } from "@angular/common";
 import {
@@ -27,10 +21,7 @@ import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort, MatSortModule, MatSortable } from "@angular/material/sort";
 
 import { tap } from "rxjs";
-import {
-  DatasourceError,
-  PageableDataSource,
-} from "src/app/core/models/pageable-data-source";
+import { DatasourceError, PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { InstanceofPipe } from "../../pipes/instanceof.pipe";
 import { TableConfigEditorComponent } from "../table-config-editor/table-config-editor.component";
 import { ColumnConfig, TableConfig } from "./table-config";
@@ -47,10 +38,7 @@ import { ColumnConfig, TableConfig } from "./table-config";
     trigger("detailExpand", [
       state("collapsed", style({ height: "0px", minHeight: "0" })),
       state("expanded", style({ height: "*" })),
-      transition(
-        "expanded <=> collapsed",
-        animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")
-      ),
+      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
     ]),
   ],
   standalone: true,
@@ -91,14 +79,13 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | undefined;
 
   ngOnInit(): void {
-    if ((!this.options?.columns) && !this.columnOptions) {
+    if (!this.options?.columns && !this.columnOptions) {
       throw new Error("Table must have a config or a column definition");
     }
 
     //here, we at least have a column config if no options
     this.options =
-      this.options ??
-      new TableConfig({ name: "", columns: this.columnOptions!.columns });
+      this.options ?? new TableConfig({ name: "", columns: this.columnOptions!.columns });
     //now we had column options, then ensure the columns config is also set
     if (this.columnOptions) {
       this.options.columns = this.columnOptions;

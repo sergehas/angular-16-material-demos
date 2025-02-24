@@ -11,12 +11,7 @@ export interface MenuNode {
   granted?: boolean;
 }
 export class NavBuilder {
-  static nodeFromPath(
-    parent: string,
-    path?: string,
-    icon?: string,
-    roles?: Role[]
-  ): MenuNode {
+  static nodeFromPath(parent: string, path?: string, icon?: string, roles?: Role[]): MenuNode {
     const currentPath = path ? `${parent}/${path}` : parent;
     return { name: path!, path: `${currentPath}`, icon: icon, roles: roles };
   }

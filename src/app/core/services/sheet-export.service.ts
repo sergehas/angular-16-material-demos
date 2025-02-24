@@ -27,10 +27,7 @@ export class SheetExportService {
      * @param stage
      * @returns
      */
-    const finalizeWorkbook = async (
-      rows: T[],
-      stage = STAGE.SUCCESS
-    ): Promise<void> => {
+    const finalizeWorkbook = async (rows: T[], stage = STAGE.SUCCESS): Promise<void> => {
       console.info(`[sheet-export] building worksheet...`);
       const ws = utils.json_to_sheet(rows);
       console.info(`[sheet-export] building worksheet...`);
@@ -86,9 +83,7 @@ export class SheetExportService {
         console.info(`[sheet-export] export next page`);
         source.paginator.nextPage();
       } else {
-        console.info(
-          `[sheet-export] no more page. Last page was ${source.paginator?.pageIndex}`
-        );
+        console.info(`[sheet-export] no more page. Last page was ${source.paginator?.pageIndex}`);
         finalizeWorkbook(fullData);
       }
     });

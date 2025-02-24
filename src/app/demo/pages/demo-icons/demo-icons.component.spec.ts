@@ -14,7 +14,6 @@ import { DemoIconsComponent } from "./demo-icons.component";
  * Mock implementation of IconService for testing purposes.
  */
 class MockIconsService {
-
   getIconslib(): Category {
     const r = new Category("root");
     r.addCategory("brands").addIcon("azure");
@@ -30,9 +29,10 @@ describe("DemoIconsComponent", () => {
     TestBed.configureTestingModule({
       imports: [DemoModule, NoopAnimationsModule],
       declarations: [DemoIconsComponent],
-      providers: [provideHttpClient(),
-      provideHttpClientTesting(),
-      { provide: IconsService, useClass: MockIconsService },
+      providers: [
+        provideHttpClient(),
+        provideHttpClientTesting(),
+        { provide: IconsService, useClass: MockIconsService },
         // { provide: MatIconRegistry, useClass: FakeMatIconRegistry }
       ],
     }).compileComponents();
@@ -41,13 +41,15 @@ describe("DemoIconsComponent", () => {
     fixture.detectChanges();
   });
 
-
-  beforeEach(inject([MatIconRegistry, DomSanitizer], (mir: MatIconRegistry, sanitizer: DomSanitizer) => {
-    // The `MatIconRegistry` will make GET requests to fetch any SVG icons that are in the registry. More on this below...
-    const sanitizedUrl = sanitizer.bypassSecurityTrustResourceUrl("/fakeIconPath");
-    // Make sure that the icon name matches the icon name your component would be looking up.
-    mir.addSvgIconInNamespace("parameter", "brands-azure", sanitizedUrl);
-  }));
+  beforeEach(inject(
+    [MatIconRegistry, DomSanitizer],
+    (mir: MatIconRegistry, sanitizer: DomSanitizer) => {
+      // The `MatIconRegistry` will make GET requests to fetch any SVG icons that are in the registry. More on this below...
+      const sanitizedUrl = sanitizer.bypassSecurityTrustResourceUrl("/fakeIconPath");
+      // Make sure that the icon name matches the icon name your component would be looking up.
+      mir.addSvgIconInNamespace("parameter", "brands-azure", sanitizedUrl);
+    }
+  ));
 
   it("should create", async () => {
     expect(component).toBeTruthy();

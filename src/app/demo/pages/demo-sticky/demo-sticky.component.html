@@ -3,33 +3,26 @@
     <h1>This demo illustrate usage of the <code>appStick</code></h1>
     <h2 [appStick]="topRef">Overview</h2>
     <p>
-      In a complex layout like in a angular material app, it is very hard to get
-      the scrolling on the proper (content) area. Generally speaking, and as it
-      is in this demo app, the scrolling area is the mat drawer (in
-      <code>app.component.html</code>), not the "page" component (and event
-      more, not a tab in a page component). This lead to the
-      <code>position:sticky</code> CSS attribute is not working in a page
-      component, becaus teh scrolling is applied to (grand) grand parent of this
-      page.
+      In a complex layout like in a angular material app, it is very hard to get the scrolling on
+      the proper (content) area. Generally speaking, and as it is in this demo app, the scrolling
+      area is the mat drawer (in
+      <code>app.component.html</code>), not the "page" component (and event more, not a tab in a
+      page component). This lead to the <code>position:sticky</code> CSS attribute is not working in
+      a page component, becaus teh scrolling is applied to (grand) grand parent of this page.
     </p>
-    <p>
-      This directive try to mimic the native <code>position:sticky</code> CSS
-      attribute.
-    </p>
+    <p>This directive try to mimic the native <code>position:sticky</code> CSS attribute.</p>
     <mat-divider></mat-divider>
   </section>
   <section>
     <h2 [appStick]="topRef">principle</h2>
     <p>
-      <code>&lt;The app-stick&gt;</code> rely on a scroll event. The scrolling
-      event is provided by the <code>ScrollService</code>. This
-      <code>ScrollService</code> is (usually) injected in the
-      <code>app.component</code>, & is fed by scrolling event of the main
-      scrollable HTML element
+      <code>&lt;The app-stick&gt;</code> rely on a scroll event. The scrolling event is provided by
+      the <code>ScrollService</code>. This <code>ScrollService</code> is (usually) injected in the
+      <code>app.component</code>, & is fed by scrolling event of the main scrollable HTML element
     </p>
     <p>
-      The <code>&lt;appStick&gt;</code> consume this event, an then compute the
-      relative position of the sticked element & its stick reference
+      The <code>&lt;appStick&gt;</code> consume this event, an then compute the relative position of
+      the sticked element & its stick reference
     </p>
     <mat-divider></mat-divider>
   </section>
@@ -38,14 +31,13 @@
     <dl>
       <dt>stick reference</dt>
       <dd>
-        (parent) element the sticked node should stick to. this reference node
-        should have a css position set to "relative". Anyway, it is enforced
-        automatically by the directive
+        (parent) element the sticked node should stick to. this reference node should have a css
+        position set to "relative". Anyway, it is enforced automatically by the directive
       </dd>
       <dt>stickable element</dt>
       <dd>
-        the element where the <code>appStick</code> directive is used. It should
-        be a child element of the reference element.
+        the element where the <code>appStick</code> directive is used. It should be a child element
+        of the reference element.
       </dd>
       <dt><code>appStick</code> value</dt>
       <dd>the stick reference node</dd>
@@ -58,18 +50,17 @@
       <dt>scrolling</dt>
       <dd>
         when scrolling enough, the css position of the sticked element is set to
-        <code>absolute</code> (that' why the ref. element position must be
-        <code>relative</code>)
+        <code>absolute</code> (that' why the ref. element position must be <code>relative</code>)
       </dd>
       <dt>sticked class</dt>
       <dd>
-        when the element become sticked, the <code>app-sticked</code> css class
-        is added (& removed when not sticked anymore)
+        when the element become sticked, the <code>app-sticked</code> css class is added (& removed
+        when not sticked anymore)
       </dd>
       <dt><code>background</code></dt>
       <dd>
-        as the sticked element will overlap (when scrolling) other elements, it
-        should have a background (so no be transparent)
+        as the sticked element will overlap (when scrolling) other elements, it should have a
+        background (so no be transparent)
       </dd>
     </dl>
     <mat-divider></mat-divider>
@@ -77,12 +68,10 @@
   <section>
     <h2 [appStick]="topRef">Sample code</h2>
     <code class="mat-elevation-z2" style="display: block">
-      &lt;div #myStyckRef&gt; &lt;!-- define the initial position to stick to
-      --&gt;<br />
+      &lt;div #myStyckRef&gt; &lt;!-- define the initial position to stick to --&gt;<br />
       ...<br />
-      &lt;h1 [appStick]=#myStyckRef&gt;First section title&lt;h1&gt;&lt;!-- this
-      element should stick when reaching the initial/reference position
-      --&gt;<br />
+      &lt;h1 [appStick]=#myStyckRef&gt;First section title&lt;h1&gt;&lt;!-- this element should
+      stick when reaching the initial/reference position --&gt;<br />
       ...<br />
       &lt;h1 [appStick]=#myStyckRef&gt;Second section title&lt;h1&gt;<br />
       &lt;/div&gt;
@@ -96,23 +85,20 @@
       <code>&lt;h2&gt;</code> is sticky)
     </h2>
     <p>
-      s simply dummy text of the printing and typesetting industry. Lorem Ipsum
-      has been the industry's standard dummy text ever since the 1500s, when an
-      unknown printer took a galley of type and scrambled it to make a type
-      specimen book. It has survived not only five centuries, but also the leap
-      into electronic typesetting, remaining essentially unchanged. It was
-      popularised in the 1960s with the release of Letraset sheets containing
-      Lorem Ipsum passages, and more recently with desktop publishing software
-      like Aldus PageMaker including versions of Lorem Ipsum.
+      s simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+      industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of
+      type and scrambled it to make a type specimen book. It has survived not only five centuries,
+      but also the leap into electronic typesetting, remaining essentially unchanged. It was
+      popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages,
+      and more recently with desktop publishing software like Aldus PageMaker including versions of
+      Lorem Ipsum.
     </p>
     <p>
-      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-      tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-      veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-      commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-      velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-      cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-      est laborum.
+      Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+      labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+      laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+      voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+      non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
     </p>
   </section>
 </div>

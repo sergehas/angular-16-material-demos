@@ -4,10 +4,7 @@
   <p>user notification service to generate a notification.</p>
   <dl>
     <dt><code>persistent</code></dt>
-    <dd>
-      controls whether the notification is "persisted" in the notification
-      center
-    </dd>
+    <dd>controls whether the notification is "persisted" in the notification center</dd>
     <dt><code>show</code></dt>
     <dd>controls whether the notification is displayed in a snack bar</dd>
   </dl>
@@ -34,13 +31,7 @@
   <div class="label-container">
     <mat-form-field hintLabel="Number (<0 means unknown)">
       <mat-label>total</mat-label>
-      <input
-        matInput
-        type="number"
-        min="-1"
-        placeholder="Progress total"
-        [formControl]="total"
-      />
+      <input matInput type="number" min="-1" placeholder="Progress total" [formControl]="total" />
     </mat-form-field>
 
     <mat-form-field hintLabel="Number">

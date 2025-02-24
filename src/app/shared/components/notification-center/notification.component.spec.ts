@@ -9,11 +9,7 @@ describe("NotificationComponent", () => {
   let fixture: ComponentFixture<NotificationComponent>;
 
   beforeEach(async () => {
-    const service = jasmine.createSpyObj("NotificationService", [
-      "notify",
-      "dismiss",
-      "update",
-    ]);
+    const service = jasmine.createSpyObj("NotificationService", ["notify", "dismiss", "update"]);
 
     await TestBed.configureTestingModule({
       imports: [NotificationComponent],

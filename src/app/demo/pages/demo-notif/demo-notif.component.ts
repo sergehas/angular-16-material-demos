@@ -116,10 +116,7 @@ export class DemoNotifComponent {
     }
   }
 
-  private logNotif(
-    notif: Notification,
-    action: "add" | "update" = "add"
-  ): void {
+  private logNotif(notif: Notification, action: "add" | "update" = "add"): void {
     this.notifs.push({
       message: notif.message,
       id: notif.id,

@@ -12,11 +12,7 @@ describe("ArtInstituteComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ArtInstituteComponent],
-      imports: [
-        TabsNavComponent,
-        RouterTestingModule.withRoutes([]),
-        NoopAnimationsModule,
-      ],
+      imports: [TabsNavComponent, RouterTestingModule.withRoutes([]), NoopAnimationsModule],
     });
     fixture = TestBed.createComponent(ArtInstituteComponent);
     component = fixture.componentInstance;

@@ -11,11 +11,7 @@ describe("TabsNavComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        TabsNavComponent,
-        RouterTestingModule.withRoutes([]),
-        NoopAnimationsModule,
-      ],
+      imports: [TabsNavComponent, RouterTestingModule.withRoutes([]), NoopAnimationsModule],
     });
     fixture = TestBed.createComponent(TabsNavComponent);
     TestBed.inject(Router);

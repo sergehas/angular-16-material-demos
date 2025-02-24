@@ -1,10 +1,6 @@
 import { Component, OnDestroy } from "@angular/core";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from "@angular/material/core";
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
 import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 
@@ -12,7 +8,6 @@ import { Subscription } from "rxjs";
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
 // syntax. However, rollup creates a synthetic default module and we thus need to import it using
 // the `default as` syntax.
-
 
 // See the Moment.js docs for the meaning of these formats:
 // https://momentjs.com/docs/#/displaying/format/
@@ -61,12 +56,10 @@ export class DemoI18nComponent implements OnDestroy {
   constructor(private readonly translateService: TranslateService) {
     this._updateFormat();
 
-    this._onLangChange = this.translateService.onLangChange.subscribe(
-      (_event: LangChangeEvent) => {
-        // we want to make sure it doesn't return the same value until it's been updated
-        this._updateFormat();
-      }
-    );
+    this._onLangChange = this.translateService.onLangChange.subscribe((_event: LangChangeEvent) => {
+      // we want to make sure it doesn't return the same value until it's been updated
+      this._updateFormat();
+    });
   }
 
   ngOnDestroy(): void {

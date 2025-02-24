@@ -11,8 +11,7 @@ describe("IconSelectComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [IconSelectComponent],
-      providers: [provideHttpClient(),
-      provideHttpClientTesting()],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     fixture = TestBed.createComponent(IconSelectComponent);
     component = fixture.componentInstance;

@@ -11,16 +11,8 @@ import {
   Optional,
   Self,
 } from "@angular/core";
-import {
-  ControlValueAccessor,
-  FormGroupDirective,
-  NgControl,
-  NgForm,
-} from "@angular/forms";
-import {
-  ErrorStateMatcher,
-  mixinErrorState
-} from "@angular/material/core";
+import { ControlValueAccessor, FormGroupDirective, NgControl, NgForm } from "@angular/forms";
+import { ErrorStateMatcher, mixinErrorState } from "@angular/material/core";
 import { MatFormFieldControl } from "@angular/material/form-field";
 import { Subject } from "rxjs";
 
@@ -52,13 +44,14 @@ const _AbstractMatFormField = mixinErrorState(
        * @docs-private
        */
       public ngControl: NgControl
-    ) { }
+    ) {}
   }
 );
 @Directive()
 export abstract class AbstractMatFormField<T>
   extends mixinErrorState(_AbstractMatFormField)
-  implements DoCheck, OnDestroy, ControlValueAccessor, MatFormFieldControl<T> {
+  implements DoCheck, OnDestroy, ControlValueAccessor, MatFormFieldControl<T>
+{
   protected onChange?: (value: T | null) => void;
   protected onTouched?: () => void;
 
@@ -87,12 +80,10 @@ export abstract class AbstractMatFormField<T>
       this.ngControl.valueAccessor = this;
     }
 
-    _focusMonitor
-      .monitor(this._elementRef.nativeElement, true)
-      .subscribe((origin) => {
-        this.focused = !!origin;
-        this.stateChanges.next();
-      });
+    _focusMonitor.monitor(this._elementRef.nativeElement, true).subscribe((origin) => {
+      this.focused = !!origin;
+      this.stateChanges.next();
+    });
   }
 
   public ngDoCheck(): void {

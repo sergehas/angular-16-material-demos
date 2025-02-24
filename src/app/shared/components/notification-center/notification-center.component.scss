@@ -14,9 +14,7 @@
     box-sizing: border-box;
     text-transform: var(--mdc-outlined-button-label-text-transform);
     height: var(--mdc-outlined-button-container-height);
-    --mat-standard-button-toggle-height: var(
-      --mdc-outlined-button-container-height
-    );
+    --mat-standard-button-toggle-height: var(--mdc-outlined-button-container-height);
   }
 }
 .notif-list {

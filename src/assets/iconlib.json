@@ -4,11 +4,7 @@
   "categories": [
     {
       "name": "brands",
-      "icons": [
-        "assets/brands/aws.svg",
-        "assets/brands/azure.svg",
-        "assets/brands/gcp.svg"
-      ],
+      "icons": ["assets/brands/aws.svg", "assets/brands/azure.svg", "assets/brands/gcp.svg"],
       "categories": []
     },
     {

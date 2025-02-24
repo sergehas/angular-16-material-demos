@@ -59,8 +59,7 @@ export class ValuesService extends HttpService<Value> {
    */
   private _merge(baseline: Value[], patchValues: Value[]): Value[] {
     const r = [...baseline];
-    const predicate = (b: Value, p: Value) =>
-      b.group === p.group && b.name === p.name;
+    const predicate = (b: Value, p: Value) => b.group === p.group && b.name === p.name;
     patchValues.forEach((p) => {
       const i = r.findIndex((b) => predicate(p, b));
       if (i > -1) {
@@ -105,14 +104,7 @@ export class ValuesService extends HttpService<Value> {
     sort: Sort | undefined,
     page: Page | undefined
   ): Observable<Value[]> {
-    console.debug(
-      "call find with criteria: ",
-      criteria,
-      " sort: ",
-      sort,
-      " pager: ",
-      page
-    );
+    console.debug("call find with criteria: ", criteria, " sort: ", sort, " pager: ", page);
     return super.find(criteria, sort, page).pipe(
       map((values) => this._merge(values, this._updatedCache)),
       // filtering/sorting apply client side... must of couse be done by "real" API, not by GUI
@@ -132,9 +124,7 @@ export class ValuesService extends HttpService<Value> {
    */
   save(v: Value): Observable<Value> {
     this._updatedCache = this._merge(this._updatedCache, [v]);
-    console.info(
-      `saved value: ${JSON.stringify(v)}, cache size: ${this._updatedCache.length}`
-    );
+    console.info(`saved value: ${JSON.stringify(v)}, cache size: ${this._updatedCache.length}`);
     return of(v);
   }
 }

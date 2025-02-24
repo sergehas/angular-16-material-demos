@@ -32,9 +32,7 @@ export class IconsModule {
   /** guard to avoid multiple import */
   constructor(@Optional() @SkipSelf() core: IconsModule) {
     if (core) {
-      throw new Error(
-        "You should import IconsModule module only in the root module"
-      );
+      throw new Error("You should import IconsModule module only in the root module");
     }
   }
 }

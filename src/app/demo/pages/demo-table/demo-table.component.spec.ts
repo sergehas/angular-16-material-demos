@@ -14,8 +14,7 @@ describe("DemoTableComponent", () => {
     TestBed.configureTestingModule({
       declarations: [DemoTableComponent],
       imports: [DemoModule, NoopAnimationsModule],
-      providers: [provideHttpClient(),
-      provideHttpClientTesting(),]
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     fixture = TestBed.createComponent(DemoTableComponent);
     component = fixture.componentInstance;

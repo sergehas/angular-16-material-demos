@@ -25,9 +25,7 @@ export class SignedUser {
     return self;
   }
   static clone(u: SignedUser): SignedUser {
-    return SignedUser.from(u.name!, u.lastname!, u.id!, u.isLoggedIn, [
-      ...u.roles,
-    ]);
+    return SignedUser.from(u.name!, u.lastname!, u.id!, u.isLoggedIn, [...u.roles]);
   }
   hasAnyRoles(roles: Role | Role[]): boolean {
     const r = [...roles] as Role[];

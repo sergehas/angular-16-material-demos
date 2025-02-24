@@ -24,9 +24,7 @@
     class="table"
     [class.autohide]="options!.responsive"
     [style.max-height]="
-      options!.paginator
-        ? 'calc(' + maxHeight + ' - var(--pagaginator-height))'
-        : maxHeight
+      options!.paginator ? 'calc(' + maxHeight + ' - var(--pagaginator-height))' : maxHeight
     "
   >
     <ng-container
@@ -36,11 +34,7 @@
     >
       <!-- Checkbox Column (header)-->
       <ng-container *ngIf="column.selector">
-        <mat-header-cell
-          *matHeaderCellDef
-          class="selector-column"
-          [hidden]="column.hidden"
-        >
+        <mat-header-cell *matHeaderCellDef class="selector-column" [hidden]="column.hidden">
           <mat-checkbox
             (change)="$event ? toggleAllRows() : null"
             [checked]="selection!.hasValue() && isAllSelected()"
@@ -48,11 +42,7 @@
           >
           </mat-checkbox>
         </mat-header-cell>
-        <mat-cell
-          *matCellDef="let row"
-          class="selector-column"
-          [hidden]="column.hidden"
-        >
+        <mat-cell *matCellDef="let row" class="selector-column" [hidden]="column.hidden">
           <mat-checkbox
             (click)="$event.stopPropagation()"
             (change)="$event ? selection!.toggle(row) : null"
@@ -73,16 +63,8 @@
           {{ column.name }}
         </mat-header-cell>
         <mat-cell *matCellDef="let row" [hidden]="column.hidden">
-          <span
-            *ngIf="
-              row[column.name] | instanceof: Date;
-              then dateSpan;
-              else regularSpan
-            "
-          ></span>
-          <ng-template #dateSpan>{{
-            row[column.name] | date: "YYYY-MM-dd"
-          }}</ng-template>
+          <span *ngIf="row[column.name] | instanceof: Date; then dateSpan; else regularSpan"></span>
+          <ng-template #dateSpan>{{ row[column.name] | date: "YYYY-MM-dd" }}</ng-template>
           <ng-template #regularSpan>{{ row[column.name] }}</ng-template>
         </mat-cell>
       </ng-container>
@@ -91,16 +73,10 @@
     <mat-header-row
       *matHeaderRowDef="options!.columns.names; sticky: options!.stickyHeader"
     ></mat-header-row>
-    <mat-row
-      matRipple
-      *matRowDef="let row; columns: options!.columns.names"
-    ></mat-row>
+    <mat-row matRipple *matRowDef="let row; columns: options!.columns.names"></mat-row>
   </mat-table>
 </div>
-<div
-  class="progress-container"
-  *ngIf="dataSource.counting$ | async as counting"
->
+<div class="progress-container" *ngIf="dataSource.counting$ | async as counting">
   <mat-progress-bar
     [mode]="isError(counting) ? 'determinate' : 'query'"
     value="100"

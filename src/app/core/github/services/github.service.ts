@@ -18,15 +18,9 @@ export class GithubService extends HttpService<Issue> {
     super(http, GithubService.href);
     this.headers = this.headers.set("accept", "application/vnd.github+json");
   }
-  private _BuildQuery(
-    params: HttpParams,
-    filter?: { query: string }
-  ): HttpParams {
+  private _BuildQuery(params: HttpParams, filter?: { query: string }): HttpParams {
     if (filter?.query) {
-      params = params.set(
-        "q",
-        `${GithubService.repo} ${filter.query.replaceAll(/\s+/g, " ")}`
-      );
+      params = params.set("q", `${GithubService.repo} ${filter.query.replaceAll(/\s+/g, " ")}`);
     } else {
       params = params.set("q", GithubService.repo);
     }
@@ -67,9 +61,7 @@ export class GithubService extends HttpService<Issue> {
       params = params.set("sort", sort.active).set("order", sort!.direction);
     }
     if (page) {
-      params = params
-        .set("per_page", page.pageSize)
-        .set("page", page.pageNumber + 1);
+      params = params.set("per_page", page.pageSize).set("page", page.pageNumber + 1);
     }
 
     return this.http

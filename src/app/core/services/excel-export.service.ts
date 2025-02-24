@@ -29,10 +29,7 @@ export class ExcelExportService {
      * @param stage
      * @returns
      */
-    const finalizeWorkbook = async (
-      workbook: Workbook,
-      stage = STAGE.SUCCESS
-    ): Promise<void> => {
+    const finalizeWorkbook = async (workbook: Workbook, stage = STAGE.SUCCESS): Promise<void> => {
       console.info(`[excel-export] writing file....`);
       await workbook.xlsx
         .writeBuffer()
@@ -101,9 +98,7 @@ export class ExcelExportService {
         console.info(`[excel-export] export next page`);
         source.paginator.nextPage();
       } else {
-        console.info(
-          `no more page. Last page was ${source.paginator?.pageIndex}`
-        );
+        console.info(`no more page. Last page was ${source.paginator?.pageIndex}`);
         finalizeWorkbook(workbook);
       }
     });

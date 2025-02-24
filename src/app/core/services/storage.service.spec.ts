@@ -37,9 +37,7 @@ describe("StorageService", () => {
 
   describe("setItem", () => {
     it("should serialize and store the scopes in localStorage", () => {
-      service
-        .setItem(storageKey, scopes)
-        .subscribe((x) => expect(x).toEqual(scopes));
+      service.setItem(storageKey, scopes).subscribe((x) => expect(x).toEqual(scopes));
     });
   });
 

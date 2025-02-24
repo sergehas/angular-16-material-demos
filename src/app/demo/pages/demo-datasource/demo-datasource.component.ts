@@ -6,10 +6,7 @@ import { BehaviorSubject, Subscription, map, merge } from "rxjs";
 import { Issue } from "src/app/core/github/models/issue";
 
 import { GithubService } from "src/app/core/github/services/github.service";
-import {
-  DatasourceError,
-  PageableDataSource,
-} from "src/app/core/models/pageable-data-source";
+import { DatasourceError, PageableDataSource } from "src/app/core/models/pageable-data-source";
 
 @Component({
   selector: "app-demo-datasource",
@@ -22,9 +19,7 @@ export class DemoDatasourceComponent implements AfterViewInit {
 
   dataSource!: PageableDataSource<Issue>;
   displayedColumns: string[] = ["created", "state", "number", "title"];
-  dataSourceEvents$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>(
-    []
-  );
+  dataSourceEvents$: BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
   // demo purpose features
   paginatorEnabled = true;
   sortEnabled = true;
@@ -33,10 +28,7 @@ export class DemoDatasourceComponent implements AfterViewInit {
   private _sub?: Subscription;
 
   constructor(private readonly service: GithubService) {
-    this.dataSource = new PageableDataSource<Issue>(
-      this.service,
-      this.autoloadEnabled
-    );
+    this.dataSource = new PageableDataSource<Issue>(this.service, this.autoloadEnabled);
   }
 
   setFilter() {
@@ -87,10 +79,7 @@ export class DemoDatasourceComponent implements AfterViewInit {
     console.info("resetting datasource");
     this._sub?.unsubscribe();
     this.filter.setValue(null);
-    this.dataSource = new PageableDataSource<Issue>(
-      this.service,
-      this.autoloadEnabled
-    );
+    this.dataSource = new PageableDataSource<Issue>(this.service, this.autoloadEnabled);
     this._setDatasource();
   }
 

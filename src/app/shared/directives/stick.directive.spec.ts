@@ -10,15 +10,15 @@ import { StickDirective } from "./stick.directive";
  */
 @Component({
   template: `<div #topRef style="position: relative">
-  <section>
-    <h1>This demo illustrate usage of the <code>appStick</code></h1>
-    <h2 [appStick]="topRef">Overview</h2>
-  </section>
-</div>`,
+    <section>
+      <h1>This demo illustrate usage of the <code>appStick</code></h1>
+      <h2 [appStick]="topRef">Overview</h2>
+    </section>
+  </div>`,
   imports: [StickDirective],
   standalone: true,
 })
-class TestComponent { }
+class TestComponent {}
 
 describe("StickDirective", () => {
   let directive: StickDirective;
@@ -29,10 +29,10 @@ describe("StickDirective", () => {
 
   beforeEach(() => {
     mockElementRef = {
-      nativeElement: document.createElement('div'),
+      nativeElement: document.createElement("div"),
     } as ElementRef;
 
-    mockScrollService = jasmine.createSpyObj('ScrollService', [], { scrolling$: mockScrolling$ });
+    mockScrollService = jasmine.createSpyObj("ScrollService", [], { scrolling$: mockScrolling$ });
 
     fixture = TestBed.configureTestingModule({
       imports: [StickDirective, TestComponent],
@@ -41,7 +41,9 @@ describe("StickDirective", () => {
         { provide: ScrollService, useValue: mockScrollService },
       ],
     }).createComponent(TestComponent);
-    directive = fixture.debugElement.query(By.directive(StickDirective)).injector.get(StickDirective);
+    directive = fixture.debugElement
+      .query(By.directive(StickDirective))
+      .injector.get(StickDirective);
   });
 
   it("should create an instance", () => {

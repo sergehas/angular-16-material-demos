@@ -29,9 +29,7 @@ export class GroupsService extends HttpService<Group> {
     if (!criteria) {
       return groups;
     }
-    return groups.filter((g) =>
-      criteria?.name ? g.name.startsWith(criteria.name) : true
-    );
+    return groups.filter((g) => (criteria?.name ? g.name.startsWith(criteria.name) : true));
   }
 
   override count(criteria?: GroupCrtieria): Observable<number> {

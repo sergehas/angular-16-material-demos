@@ -12,11 +12,7 @@ describe("VoidNavComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [VoidNavComponent],
-      imports: [
-        TabsNavComponent,
-        RouterTestingModule.withRoutes([]),
-        NoopAnimationsModule,
-      ],
+      imports: [TabsNavComponent, RouterTestingModule.withRoutes([]), NoopAnimationsModule],
     });
     fixture = TestBed.createComponent(VoidNavComponent);
     component = fixture.componentInstance;

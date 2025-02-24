@@ -14,8 +14,7 @@ describe("GroupsComponent", () => {
     TestBed.configureTestingModule({
       declarations: [GroupsComponent],
       imports: [ListOfValuesModule, NoopAnimationsModule],
-      providers: [provideHttpClient(),
-      provideHttpClientTesting(),]
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     fixture = TestBed.createComponent(GroupsComponent);
     component = fixture.componentInstance;

@@ -5,10 +5,7 @@ import { BehaviorSubject } from "rxjs";
 import { Item } from "src/app/core/item/models/item";
 import { ItemService } from "src/app/core/item/services/item.service";
 import { ProgressNotification } from "src/app/core/models/notification";
-import {
-  PageableDataSource,
-  Paginator,
-} from "src/app/core/models/pageable-data-source";
+import { PageableDataSource, Paginator } from "src/app/core/models/pageable-data-source";
 import { STAGE } from "src/app/core/models/progress";
 import { ExcelExportService } from "src/app/core/services/excel-export.service";
 import { NotificationService } from "src/app/core/services/notification.service";
@@ -68,9 +65,7 @@ export class DemoExportComponent {
     const p = new Paginator(this.pageSize.value!);
     this.dataService.itemCount = this.rows.value!;
     this.dataService.attributeCount = this.cols.value!;
-    const dataSource = new PageableDataSource<Item, Paginator>(
-      this.dataService
-    );
+    const dataSource = new PageableDataSource<Item, Paginator>(this.dataService);
     dataSource.paginator = p;
     dataSource.length$.subscribe((l) => {
       console.log(`[demo-export] datasource length is ${l}`);
@@ -80,8 +75,7 @@ export class DemoExportComponent {
       this._notif!.severity = "sever";
       console.error(`[demo-export] datasource error: ${e}`);
     });
-    const service =
-      this.library.value === "xslx" ? this.sheetService : this.exportService;
+    const service = this.library.value === "xslx" ? this.sheetService : this.exportService;
 
     service.export(dataSource, this.dataService.itemHeaders).subscribe((e) => {
       switch (e.stage) {
@@ -104,9 +98,7 @@ export class DemoExportComponent {
           break;
       }
       this._notif!.setProgress(e.position.value, e.position.total, e.stage);
-      this.progressValue = Math.ceil(
-        (e.position.value / e.position.total) * 100
-      );
+      this.progressValue = Math.ceil((e.position.value / e.position.total) * 100);
       this.exportEvents.push({
         timestamp: new Date(),
         message: `progress  ${this.progressValue}% (${JSON.stringify(e)})`,

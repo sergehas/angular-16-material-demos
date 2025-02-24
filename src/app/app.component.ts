@@ -32,12 +32,10 @@ export class AppComponent implements AfterViewInit {
 
   title = `Angular ${CDK_VERSION.full} Material ${MAT_VERSION.full} demo`;
   private breakpointObserver = inject(BreakpointObserver);
-  isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(Breakpoints.Handset)
-    .pipe(
-      map((result) => result.matches),
-      shareReplay()
-    );
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
+    map((result) => result.matches),
+    shareReplay()
+  );
   notifications$: Observable<Set<Notification>>;
   animation: string = "";
   constructor(
@@ -55,9 +53,7 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.sidenavContainer.scrollable
-      .elementScrolled()
-      .subscribe(() => this.scrollService.scroll());
+    this.sidenavContainer.scrollable.elementScrolled().subscribe(() => this.scrollService.scroll());
   }
   prepareRoute(outlet: RouterOutlet) {
     console.info(
@@ -69,9 +65,7 @@ export class AppComponent implements AfterViewInit {
 
   onActivate(_component: Type<unknown>) {
     const ar = this.outlet.activatedRoute;
-    this.animation =
-      this.outlet.activatedRouteData &&
-      this.outlet.activatedRouteData["animation"];
+    this.animation = this.outlet.activatedRouteData && this.outlet.activatedRouteData["animation"];
     console.info(
       `[app-root] activate animation ${ar?.snapshot.data["animation"]} on route ${ar?.snapshot.url}}`
     );

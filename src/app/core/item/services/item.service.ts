@@ -20,9 +20,7 @@ export class ItemService extends HttpService<Item> {
   }
 
   private generateHeaders(): string[] {
-    return Array.from(Array(this._attributeCount).keys()).map(
-      (i) => `attr${i}`
-    );
+    return Array.from(Array(this._attributeCount).keys()).map((i) => `attr${i}`);
   }
 
   private generateItem(v: number): Item {

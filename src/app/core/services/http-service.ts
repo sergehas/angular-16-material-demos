@@ -8,12 +8,7 @@ export type Page = {
   pageSize: number;
 };
 
-export type FilterValue =
-  | string
-  | boolean
-  | number
-  | Date
-  | (string | boolean | number | Date);
+export type FilterValue = string | boolean | number | Date | (string | boolean | number | Date);
 export type Filter = Record<string, FilterValue>;
 
 /**
@@ -96,9 +91,7 @@ export abstract class HttpService<T> {
       params = params.set("sort", sort.active).set("order", sort.direction);
     }
     if (page) {
-      params = params
-        .set("pageSize", page.pageSize)
-        .set("page", page.pageNumber + 1);
+      params = params.set("pageSize", page.pageSize).set("page", page.pageNumber + 1);
     }
     if (criteria) {
       params = params.set("q", this.encodeFilter(criteria));
@@ -130,21 +123,14 @@ export abstract class HttpService<T> {
     });
   }
   delete(id: keyof T): Observable<T> {
-    return this.http.delete<T>(
-      `${this.baseUrl}/${encodeURIComponent(String(id))}`,
-      {
-        headers: this.headers,
-      }
-    );
+    return this.http.delete<T>(`${this.baseUrl}/${encodeURIComponent(String(id))}`, {
+      headers: this.headers,
+    });
   }
 
   update(id: keyof T, item: T): Observable<T> {
-    return this.http.put<T>(
-      `${this.baseUrl}/${encodeURIComponent(String(id))}`,
-      item,
-      {
-        headers: this.headers,
-      }
-    );
+    return this.http.put<T>(`${this.baseUrl}/${encodeURIComponent(String(id))}`, item, {
+      headers: this.headers,
+    });
   }
 }
