@@ -1,14 +1,14 @@
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { RouterTestingModule } from "@angular/router/testing";
+import { RouterModule } from "@angular/router";
 import { Observable } from "rxjs";
 import { GroupsService } from "src/app/core/value-list/services/groups.service";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
 import { TabsNavComponent } from "src/app/shared/components/tabs-nav/tabs-nav.component";
 import { ListOfValuesModule } from "../list-of-values.module";
 import { ListOfValuesComponent } from "./list-of-values.component";
-import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 /**
  * Mock implementation of GroupsService for testing purposes.
@@ -38,7 +38,12 @@ describe("ListOfValuesComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [ListOfValuesComponent],
-      imports: [TabsNavComponent, ListOfValuesModule, RouterTestingModule, NoopAnimationsModule],
+      imports: [
+        TabsNavComponent,
+        ListOfValuesModule,
+        RouterModule.forRoot([]),
+        NoopAnimationsModule,
+      ],
       providers: [
         ListOfValuesComponent,
         { provide: GroupsService, useClass: MockGroupsService },

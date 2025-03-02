@@ -16,15 +16,6 @@ import { ErrorStateMatcher, mixinErrorState } from "@angular/material/core";
 import { MatFormFieldControl } from "@angular/material/form-field";
 import { Subject } from "rxjs";
 
-// class _AbstractMatFormField implements _AbstractConstructor {
-//     constructor(
-//         public _defaultErrorStateMatcher: ErrorStateMatcher,
-//         public _parentForm: NgForm,
-//         public _parentFormGroup: FormGroupDirective,
-//         public ngControl: NgControl
-//     ) { }
-// }
-
 const _AbstractMatFormField = mixinErrorState(
   class {
     /**

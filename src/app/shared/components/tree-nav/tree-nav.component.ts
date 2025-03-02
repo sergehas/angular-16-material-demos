@@ -34,7 +34,7 @@ interface MenuFlatNode {
   encapsulation: ViewEncapsulation.None,
 })
 export class TreeNavComponent {
-  constructor(private router: Router) {
+  constructor(private readonly router: Router) {
     //menu content
     this.dataSource.data = NavBuilder.buildTree("", this.router.config);
     console.info("[app-tree-nav] menu datasource", this.dataSource.data);
@@ -44,11 +44,10 @@ export class TreeNavComponent {
     console.info(
       `[app-tree-nav] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData["animation"]}`
     );
-    //return this.contexts.getContext("primary")?.route?.snapshot?.data?.["animation"];
     return outlet?.activatedRouteData && outlet.activatedRouteData["animation"];
   }
   //menu
-  private _transformer = (node: MenuNode, level: number): MenuFlatNode => {
+  private readonly _transformer = (node: MenuNode, level: number): MenuFlatNode => {
     return {
       expandable: !!node.children && node.children.length > 0,
       name: node.name,
