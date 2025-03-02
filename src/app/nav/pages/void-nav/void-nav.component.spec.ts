@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { VoidNavComponent } from "./void-nav.component";
-import { TabsNavComponent } from "src/app/shared/components/tabs-nav/tabs-nav.component";
-import { RouterTestingModule } from "@angular/router/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { RouterModule } from "@angular/router";
+import { TabsNavComponent } from "src/app/shared/components/tabs-nav/tabs-nav.component";
+import { VoidNavComponent } from "./void-nav.component";
 
 describe("VoidNavComponent", () => {
   let component: VoidNavComponent;
@@ -12,7 +12,7 @@ describe("VoidNavComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [VoidNavComponent],
-      imports: [TabsNavComponent, RouterTestingModule.withRoutes([]), NoopAnimationsModule],
+      imports: [TabsNavComponent, RouterModule.forRoot([]), NoopAnimationsModule],
     });
     fixture = TestBed.createComponent(VoidNavComponent);
     component = fixture.componentInstance;
