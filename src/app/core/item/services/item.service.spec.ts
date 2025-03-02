@@ -1,8 +1,8 @@
 import { TestBed } from "@angular/core/testing";
 // Http testing module and mocking controller
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 // Other imports
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 import { ItemService } from "./item.service";
 
@@ -12,8 +12,9 @@ describe("ItemService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
+});
     httpClient = TestBed.inject(HttpClient);
   });
 

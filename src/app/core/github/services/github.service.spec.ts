@@ -1,15 +1,16 @@
 import { TestBed } from "@angular/core/testing";
 
 import { GithubService } from "./github.service";
-import { HttpClientModule } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 describe("GithubService", () => {
   let service: GithubService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
-    });
+    imports: [],
+    providers: [provideHttpClient(withInterceptorsFromDi())]
+});
     service = TestBed.inject(GithubService);
   });
 
