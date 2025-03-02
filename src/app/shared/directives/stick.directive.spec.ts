@@ -25,7 +25,7 @@ describe("StickDirective", () => {
   let fixture: ComponentFixture<TestComponent>;
   let mockElementRef: ElementRef;
   let mockScrollService: jasmine.SpyObj<ScrollService>;
-  let mockScrolling$ = new Subject<void>();
+  const mockScrolling$ = new Subject<void>();
 
   beforeEach(() => {
     mockElementRef = {

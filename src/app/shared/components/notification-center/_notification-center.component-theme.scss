@@ -13,12 +13,12 @@
   //override default/native color ?
 
   [value="sever"] {
-    --mat-icon-color: #{mat.get-color-from-palette($error)};
+    --mat-icon-color: #{mat.m2-get-color-from-palette($error)};
   }
   [value="warn"] {
-    --mat-icon-color: #{mat.get-color-from-palette($warning)};
+    --mat-icon-color: #{mat.m2-get-color-from-palette($warning)};
   }
   [value="info"] {
-    --mat-icon-color: #{mat.get-color-from-palette($success)};
+    --mat-icon-color: #{mat.m2-get-color-from-palette($success)};
   }
 }

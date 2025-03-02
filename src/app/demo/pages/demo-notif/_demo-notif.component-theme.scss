@@ -15,16 +15,16 @@
       text-transform: uppercase;
     }
     .success {
-      color: mat.get-color-from-palette($success, "900-contrast");
-      background-color: mat.get-color-from-palette($success);
+      color: mat.m2-get-color-from-palette($success, "900-contrast");
+      background-color: mat.m2-get-color-from-palette($success);
     }
     .warning {
-      color: mat.get-color-from-palette($warning, "900-contrast");
-      background-color: mat.get-color-from-palette($warning);
+      color: mat.m2-get-color-from-palette($warning, "900-contrast");
+      background-color: mat.m2-get-color-from-palette($warning);
     }
     .error {
-      color: mat.get-color-from-palette($error, "900-contrast");
-      background-color: mat.get-color-from-palette($error);
+      color: mat.m2-get-color-from-palette($error, "900-contrast");
+      background-color: mat.m2-get-color-from-palette($error);
     }
   }
 }

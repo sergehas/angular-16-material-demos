@@ -4,8 +4,6 @@ import { TestBed } from "@angular/core/testing";
 import { TranslateService } from "@ngx-translate/core";
 import { LocalizedDatePipe } from "./localized-date.pipe";
 
-let service: TranslateService;
-
 beforeEach(() => {
   TestBed.configureTestingModule({
     providers: [

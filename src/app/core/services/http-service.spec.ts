@@ -1,20 +1,21 @@
 import { TestBed } from "@angular/core/testing";
 // Http testing module and mocking controller
-import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 // Other imports
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { HttpService } from "./http-service";
 
-class TestHttpService extends HttpService<any> {}
+class TestHttpService extends HttpService<Record<string, unknown>> {}
 
 describe("Http-Service", () => {
-  let service: HttpService<any>;
+  let service: HttpService<Record<string, unknown>>;
   let httpClient: HttpClient;
   let httpTestingController: HttpTestingController;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
     });
     httpClient = TestBed.inject(HttpClient);
     httpTestingController = TestBed.inject(HttpTestingController);
@@ -93,7 +94,7 @@ describe("Http-Service", () => {
 
   it("should delete by Id", () => {
     const id = "abcd";
-    const testData = "as is";
+    const testData = { item: "as is" };
     service = new TestHttpService(httpClient, "");
     service.delete("abcd").subscribe((data) => {
       expect(data).toEqual(testData);
@@ -106,7 +107,7 @@ describe("Http-Service", () => {
   });
   it("should delete by Id", () => {
     const id = "abcd";
-    const testData = "as is";
+    const testData = { item: "as is" };
     service = new TestHttpService(httpClient, "");
     service.delete("abcd").subscribe((data) => {
       expect(data).toEqual(testData);
@@ -122,12 +123,12 @@ describe("Http-Service", () => {
     const testData = { name: "a new one" };
     service = new TestHttpService(httpClient, "");
     service.create(testData).subscribe((data) => {
-      expect(data).toEqual("as is");
+      expect(data).toEqual(testData);
     });
     const req = httpTestingController.expectOne("");
     expect(req.request.body).toEqual(testData);
     expect(req.request.method).toEqual("POST");
-    req.flush("as is");
+    req.flush(testData);
     httpTestingController.verify();
   });
 
@@ -136,12 +137,12 @@ describe("Http-Service", () => {
     const testData = { id: id, name: "a new one" };
     service = new TestHttpService(httpClient, "");
     service.update(id, testData).subscribe((data) => {
-      expect(data).toEqual("as is");
+      expect(data).toEqual(testData);
     });
     const req = httpTestingController.expectOne(`/${id}`);
     expect(req.request.body).toEqual(testData);
     expect(req.request.method).toEqual("PUT");
-    req.flush("as is");
+    req.flush(testData);
     httpTestingController.verify();
   });
 });

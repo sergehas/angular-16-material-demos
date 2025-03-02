@@ -3,7 +3,7 @@ import Excel, { Workbook } from "exceljs";
 
 import { MatPaginator } from "@angular/material/paginator";
 import { saveAs } from "file-saver";
-import { BehaviorSubject, Observable, Subscription } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Progress, STAGE } from "src/app/core/models/progress";
 import { PageableDataSource, Paginator } from "../models/pageable-data-source";
 import { NotificationService } from "./notification.service";
@@ -18,7 +18,6 @@ export class ExcelExportService {
     source: PageableDataSource<T, P>,
     headers: string[]
   ): Observable<Progress> {
-    let dataSub: Subscription;
     const status = new Progress();
     const statusSubject = new BehaviorSubject<Progress>(status);
     console.log(`[excel-export] starting export`);
@@ -31,6 +30,7 @@ export class ExcelExportService {
      */
     const finalizeWorkbook = async (workbook: Workbook, stage = STAGE.SUCCESS): Promise<void> => {
       console.info(`[excel-export] writing file....`);
+      let localStage = stage;
       await workbook.xlsx
         .writeBuffer()
         .then((data) => {
@@ -40,12 +40,12 @@ export class ExcelExportService {
           saveAs(blob, "export-service.xlsx");
         })
         .catch((e) => {
-          stage = STAGE.ERROR;
+          localStage = STAGE.ERROR;
           console.error("[excel-export] failure:", e);
         })
         .finally(() => {
           console.info(`[excel-export] export done`);
-          status.stage = stage;
+          status.stage = localStage;
           statusSubject.next(status);
           source.disconnect();
           statusSubject.complete();
@@ -75,11 +75,12 @@ export class ExcelExportService {
 
     source.error$.subscribe((e) => {
       status.stage = STAGE.ERROR;
+      console.error(`[excel-export] error: ${e}`);
       dataSub?.unsubscribe();
       statusSubject.next(status);
     });
 
-    dataSub = source.connect().subscribe((data) => {
+    const dataSub = source.connect().subscribe((data) => {
       //whenever data are available, add them to export
       console.info(
         `[excel-export] exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`

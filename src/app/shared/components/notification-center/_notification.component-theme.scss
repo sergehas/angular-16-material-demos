@@ -2,25 +2,25 @@
 @use "@angular/material" as mat;
 
 @mixin styleNotification($palette) {
-  background: mat.get-color-from-palette($palette);
-  color: mat.get-color-from-palette($palette, "900-contrast");
+  background: mat.m2-get-color-from-palette($palette);
+  color: mat.m2-get-color-from-palette($palette, "900-contrast");
   .notification-title {
     color: color-mix(
       in srgb,
       var(--mat-card-subtitle-text-color) 15%,
-      mat.get-color-from-palette($palette, "900-contrast")
+      mat.m2-get-color-from-palette($palette, "900-contrast")
     );
   }
   .notification-footer {
     .notification-progress-bar {
-      --mdc-linear-progress-active-indicator-color: #{mat.get-color-from-palette(
+      --mdc-linear-progress-active-indicator-color: #{mat.m2-get-color-from-palette(
           $palette,
           "900-contrast"
         )};
       --mdc-linear-progress-track-color: color-mix(
         in srgb,
-        #{mat.get-color-from-palette($palette)} 66%,
-        #{mat.get-color-from-palette($palette, "900-contrast")}
+        #{mat.m2-get-color-from-palette($palette)} 66%,
+        #{mat.m2-get-color-from-palette($palette, "900-contrast")}
       );
     }
   }

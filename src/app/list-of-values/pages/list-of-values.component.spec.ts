@@ -1,7 +1,8 @@
-import { HttpClientTestingModule } from "@angular/common/http/testing";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { RouterTestingModule } from "@angular/router/testing";
+import { RouterModule } from "@angular/router";
 import { Observable } from "rxjs";
 import { GroupsService } from "src/app/core/value-list/services/groups.service";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
@@ -36,19 +37,20 @@ describe("ListOfValuesComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
+      declarations: [ListOfValuesComponent],
       imports: [
         TabsNavComponent,
         ListOfValuesModule,
-        HttpClientTestingModule,
-        RouterTestingModule,
+        RouterModule.forRoot([]),
         NoopAnimationsModule,
       ],
-      declarations: [ListOfValuesComponent],
       providers: [
         ListOfValuesComponent,
         { provide: GroupsService, useClass: MockGroupsService },
         { provide: ValuesService, useClass: MockValuesService },
-      ], // Inject the Mock services
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ListOfValuesComponent);

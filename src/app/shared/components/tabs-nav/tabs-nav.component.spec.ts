@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { RouterTestingModule } from "@angular/router/testing";
 
-import { TabsNavComponent } from "./tabs-nav.component";
-import { Router } from "@angular/router";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
+import { Router, RouterModule } from "@angular/router";
+import { TabsNavComponent } from "./tabs-nav.component";
 
 describe("TabsNavComponent", () => {
   let component: TabsNavComponent;
@@ -11,7 +10,7 @@ describe("TabsNavComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [TabsNavComponent, RouterTestingModule.withRoutes([]), NoopAnimationsModule],
+      imports: [TabsNavComponent, RouterModule.forRoot([]), NoopAnimationsModule],
     });
     fixture = TestBed.createComponent(TabsNavComponent);
     TestBed.inject(Router);

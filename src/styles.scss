@@ -7,14 +7,14 @@
 @include mat.core();
 
 // Define the light theme.
-$primary: mat.$indigo-palette;
-$accent: mat.$pink-palette;
+$primary: mat.$m2-indigo-palette;
+$accent: mat.$m2-pink-palette;
 // The warn palette is optional (defaults to red).
-$warn: mat.$red-palette;
+$warn: mat.$m2-red-palette;
 
-$success: mat.$green-palette;
-$warning: mat.$orange-palette;
-$error: mat.$red-palette;
+$success: mat.$m2-green-palette;
+$warning: mat.$m2-orange-palette;
+$error: mat.$m2-red-palette;
 
 $theme: ex.extend-theme($primary, $accent, $warn, $success, $warning, $error);
 
