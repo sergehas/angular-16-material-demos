@@ -43,7 +43,7 @@ describe("StorageService", () => {
 
   describe("getItem", () => {
     it("should retrieve, deserialize scopes in localStorage and returns subscription for any changes there on after", () => {
-      service.setItem(storageKey, scopes).subscribe((x) => {
+      service.setItem(storageKey, scopes).subscribe((_x) => {
         verifyScopesInLocalStorage();
       });
     });

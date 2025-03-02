@@ -15,8 +15,8 @@ const translateServiceMock = {
 };
 
 // Mock DatePipe
-const datePipeMock = {
-  transform: (date: any, format: string) => `Mocked Date: ${date}`,
+const _datePipeMock = {
+  transform: (date: Date, format: string) => `Mocked Date: ${date}, format ${format}`,
 };
 
 // Mock TranslatePipe
@@ -26,7 +26,7 @@ const datePipeMock = {
 export class TranslateMockPipe implements PipeTransform {
   public name: string = "translate";
 
-  public transform(query: string, ...args: any[]): any {
+  public transform(query: string, ..._args: unknown[]): string {
     return query;
   }
 }

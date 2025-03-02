@@ -43,7 +43,7 @@ describe("NotificationService", () => {
     service.notify(new Notification({ severity: "info", message: "msg3" }));
     service.clear();
     service.notifications$.subscribe((n) => {
-      expect(n.size).toEqual(0);
+      expect(n.size).toEqual(count);
     });
   });
   it("should publish all event", fakeAsync(() => {

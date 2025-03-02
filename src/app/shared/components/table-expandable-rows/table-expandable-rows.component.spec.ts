@@ -8,9 +8,9 @@ import { TableConfig } from "./table-config";
 import { TableExpandableRowsComponent } from "./table-expandable-rows.component";
 
 describe("TableExpandableRowsComponent", () => {
-  let component: TableExpandableRowsComponent<any>;
-  let fixture: ComponentFixture<TableExpandableRowsComponent<any>>;
-  let serviceSpy: jasmine.SpyObj<HttpService<any>>;
+  let component: TableExpandableRowsComponent<unknown>;
+  let fixture: ComponentFixture<TableExpandableRowsComponent<unknown>>;
+  let serviceSpy: jasmine.SpyObj<HttpService<unknown>>;
 
   beforeEach(() => {
     serviceSpy = jasmine.createSpyObj("HttpService", ["get", "count", "find"]);
