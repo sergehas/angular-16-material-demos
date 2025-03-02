@@ -4,7 +4,10 @@
 @mixin styleSnackbar($palette, $override: true) {
   @if $override {
     --mdc-snackbar-container-color: #{mat.m2-get-color-from-palette($palette)};
-    --mdc-snackbar-supporting-text-color: #{mat.m2-get-color-from-palette($palette, "900-contrast")};
+    --mdc-snackbar-supporting-text-color: #{mat.m2-get-color-from-palette(
+        $palette,
+        "900-contrast"
+      )};
     --mat-icon-color: #{mat.m2-get-color-from-palette($palette, "900-contrast")};
 
     --mat-snack-bar-button-color: #{mat.m2-get-color-from-palette($palette, "A100-contrast")};

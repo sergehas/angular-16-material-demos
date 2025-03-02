@@ -13,9 +13,9 @@ describe("IconsService", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [],
-    providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()]
-});
+      imports: [],
+      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+    });
     httpTestingController = TestBed.inject(HttpTestingController);
     iconRegistry = TestBed.inject(MatIconRegistry);
     service = TestBed.inject(IconsService);
