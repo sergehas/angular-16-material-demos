@@ -21,9 +21,7 @@ export class ServicesModule {
   /** guarde to avoid multiple import */
   constructor(@Optional() @SkipSelf() core: ServicesModule) {
     if (core) {
-      throw new Error(
-        "You should import ServiceModule module only in the root module"
-      );
+      throw new Error("You should import ServiceModule module only in the root module");
     }
   }
 }

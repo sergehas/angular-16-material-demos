@@ -11,9 +11,7 @@ export class GithubModule {
   /** guarde to avoid multiple import */
   constructor(@Optional() @SkipSelf() core: GithubModule) {
     if (core) {
-      throw new Error(
-        "You should import GithubModule module only in the root module"
-      );
+      throw new Error("You should import GithubModule module only in the root module");
     }
   }
 }

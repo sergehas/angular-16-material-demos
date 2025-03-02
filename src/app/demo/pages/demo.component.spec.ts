@@ -13,11 +13,7 @@ describe("DemoComponent", () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [DemoComponent],
-      imports: [
-        TabsNavComponent,
-        RouterTestingModule.withRoutes([]),
-        NoopAnimationsModule,
-      ],
+      imports: [TabsNavComponent, RouterTestingModule.withRoutes([]), NoopAnimationsModule],
     });
     fixture = TestBed.createComponent(DemoComponent);
     TestBed.inject(Router);

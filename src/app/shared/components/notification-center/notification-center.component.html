@@ -3,11 +3,7 @@
     <mat-icon>swap_vert</mat-icon>
     clear
   </button>
-  <mat-button-toggle-group
-    [formControl]="severityFilter"
-    class="severity-filter"
-    multiple
-  >
+  <mat-button-toggle-group [formControl]="severityFilter" class="severity-filter" multiple>
     <mat-button-toggle value="sever">
       <mat-icon>error</mat-icon>
     </mat-button-toggle>
@@ -23,9 +19,7 @@
   </button>
 </div>
 <section class="notif-list" [attr.data-sort]="sort">
-  <ng-container
-    *ngFor="let notif of notifications$ | async; trackBy: trackItem"
-  >
+  <ng-container *ngFor="let notif of notifications$ | async; trackBy: trackItem">
     <app-notification
       *ngIf="displayNotification(notif)"
       [class]="'notification-' + notif.severity"

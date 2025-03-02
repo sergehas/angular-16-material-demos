@@ -1,7 +1,4 @@
-<mat-card
-  class="notification-card"
-  [class]="'notification-' + notification.severity"
->
+<mat-card class="notification-card" [class]="'notification-' + notification.severity">
   <mat-card-header class="notification-header">
     <ng-container [ngSwitch]="notification.severity">
       <mat-icon *ngSwitchCase="'sever'">error</mat-icon>
@@ -39,9 +36,7 @@
       >
       </mat-progress-bar>
       <div class="progress-hint" *ngIf="hasProgress">
-        <span *ngIf="progressValue >= 0"
-          >{{ progressValue | number: "1.0-0" }}%</span
-        >
+        <span *ngIf="progressValue >= 0">{{ progressValue | number: "1.0-0" }}%</span>
       </div>
     </div>
   </mat-card-footer>

@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 
 import { MatPaginator } from "@angular/material/paginator";
-import { BehaviorSubject, Observable, Subscription, map } from "rxjs";
+import { BehaviorSubject, Observable } from "rxjs";
 import { Progress, STAGE } from "src/app/core/models/progress";
 import { utils, writeFile } from "xlsx";
 import { PageableDataSource, Paginator } from "../models/pageable-data-source";
@@ -11,13 +11,12 @@ import { NotificationService } from "./notification.service";
   providedIn: "root",
 })
 export class SheetExportService {
-  constructor(protected notifService: NotificationService) { }
+  constructor(protected notifService: NotificationService) {}
 
   export<T, P extends MatPaginator | Paginator = MatPaginator>(
     source: PageableDataSource<T, P>,
     _headers: string[]
   ): Observable<Progress> {
-    let dataSub:Subscription;
     const status = new Progress();
     const statusSubject = new BehaviorSubject<Progress>(status);
     console.log(`[sheet-export] starting export`);
@@ -28,10 +27,7 @@ export class SheetExportService {
      * @param stage
      * @returns
      */
-    const finalizeWorkbook = async (
-      rows: T[],
-      stage = STAGE.SUCCESS
-    ): Promise<void> => {
+    const finalizeWorkbook = async (rows: T[], stage = STAGE.SUCCESS): Promise<void> => {
       console.info(`[sheet-export] building worksheet...`);
       const ws = utils.json_to_sheet(rows);
       console.info(`[sheet-export] building worksheet...`);
@@ -63,14 +59,14 @@ export class SheetExportService {
       status.position.total = len;
       statusSubject.next(status);
     });
-    
-    source.error$.subscribe((e)=>{
+
+    source.error$.subscribe((e) => {
       status.stage = STAGE.ERROR;
-      dataSub?.unsubscribe();
+      console.error(`[sheet-export] error: ${e}`);
       statusSubject.next(status);
-        });
-    
-     source.connect().subscribe((data) => {
+    });
+
+    source.connect().subscribe((data) => {
       //whenever data are available, add them to export
       console.info(
         `[sheet-export] exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`
@@ -81,23 +77,13 @@ export class SheetExportService {
         statusSubject.next(status);
       }
       console.info(`[sheet-export] new rows to export: ${data.length}`);
-      // if (data.length <= 0) {
-      //   // errors
-      //   console.warn("fetching data failed");
-      //   await finalizeWorkbook(workbook, STAGE.PARTIAL);
-      //   return;
-      // }
       fullData.push(...data);
 
       if (source.paginator?.hasNextPage()) {
         console.info(`[sheet-export] export next page`);
         source.paginator.nextPage();
       } else {
-        // worksheet.commit();
-        // await workbook.commit();
-        console.info(
-          `[sheet-export] no more page. Last page was ${source.paginator?.pageIndex}`
-        );
+        console.info(`[sheet-export] no more page. Last page was ${source.paginator?.pageIndex}`);
         finalizeWorkbook(fullData);
       }
     });

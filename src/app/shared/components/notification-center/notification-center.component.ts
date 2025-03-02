@@ -1,10 +1,5 @@
 import { CommonModule } from "@angular/common";
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Inject,
-  inject,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, Inject, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 
@@ -99,7 +94,7 @@ export class NotificationSnackBarComponent {
   constructor(
     @Inject(MAT_SNACK_BAR_DATA) public data: Notification,
     private service: NotificationService
-  ) { }
+  ) {}
 
   close() {
     console.log("close");

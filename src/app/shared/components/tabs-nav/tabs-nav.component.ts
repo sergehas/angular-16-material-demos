@@ -71,7 +71,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
     private router: Router,
     private contexts: ChildrenOutletContexts
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     console.info("[tab-nav] router config", this.router);
@@ -96,24 +96,16 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
       }
       root!.children![index].data![TAB_INDEX_PROP] = index;
       // then build nodes for UI compoent
-      return NavBuilder.nodeFromPath(
-        ".",
-        c.path,
-        c.data["icon"],
-        c.data["roles"]
-      );
+      return NavBuilder.nodeFromPath(".", c.path, c.data["icon"], c.data["roles"]);
     });
   }
   ngAfterViewInit(): void {
     //if the current navgation is this path, then navigate to defautl child route
     if (
       this.default &&
-      this.router.createUrlTree([this.path]).toString() ===
-      this.router.routerState.snapshot.url
+      this.router.createUrlTree([this.path]).toString() === this.router.routerState.snapshot.url
     ) {
-      console.log(
-        `[tab-nav] navigate to default ${this.default} relative to ${this.route}`
-      );
+      console.log(`[tab-nav] navigate to default ${this.default} relative to ${this.route}`);
       this.router.navigate([this.default], { relativeTo: this.route });
     }
   }
@@ -129,12 +121,8 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
     this.activate.emit(route);
     const data = route?.snapshot?.data ?? {};
     this.animation =
-      data["animation"] === TAB_SLIDE_ANIMATION
-        ? data[TAB_INDEX_PROP]
-        : data["animation"];
-    console.info(
-      `[tab-nav] activate animation ${this.animation} on route ${route?.snapshot.url}}`
-    );
+      data["animation"] === TAB_SLIDE_ANIMATION ? data[TAB_INDEX_PROP] : data["animation"];
+    console.info(`[tab-nav] activate animation ${this.animation} on route ${route?.snapshot.url}}`);
   }
 
   // prepareRoute(outlet: RouterOutlet) {
@@ -149,9 +137,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
   onDeactivate(component: Type<unknown>) {
     this.deactivate.emit(component);
 
-    console.info(
-      `[tab-nav] deactivate route. outlet is active:  ${this.outlet?.isActivated}`
-    );
+    console.info(`[tab-nav] deactivate route. outlet is active:  ${this.outlet?.isActivated}`);
   }
 
   onFocus(index: number) {

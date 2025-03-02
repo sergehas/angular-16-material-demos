@@ -2,17 +2,16 @@
 @use "sass:map";
 
 @use "./app/app.component-theme" as app;
-@use "./app/shared/components/table-expandable-rows/table-expandable-rows.component-theme"
-  as table-expandable-rows;
+@use "./app/shared/components/table-expandable-rows/table-expandable-rows.component-theme" as
+  table-expandable-rows;
 
 @use "./app/shared/components/tree-nav/tree-nav.component-theme" as tree-nav;
 @use "./app/shared/components/tabs-nav/tabs-nav.component-theme" as tabs-nav;
-@use "./app/shared/components/notification-center/notification.component-theme"
-  as notification;
-@use "./app/shared/components/notification-center/notification-snack-bar.component-theme"
-  as notification-snack;
-@use "./app/shared/components/notification-center/notification-center.component-theme"
-  as notification-center;
+@use "./app/shared/components/notification-center/notification.component-theme" as notification;
+@use "./app/shared/components/notification-center/notification-snack-bar.component-theme" as
+  notification-snack;
+@use "./app/shared/components/notification-center/notification-center.component-theme" as
+  notification-center;
 
 @use "./app/demo/pages/demo-notif/demo-notif.component-theme" as demo-notif;
 

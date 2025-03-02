@@ -25,15 +25,9 @@ describe("NotificationService", () => {
   });
   it("should remove a notif", () => {
     let count = 0;
-    const n1 = service.notify(
-      new Notification({ severity: "info", message: "msg" })
-    );
-    const n2 = service.notify(
-      new Notification({ severity: "info", message: "msg2" })
-    );
-    const n3 = service.notify(
-      new Notification({ severity: "info", message: "msg3" })
-    );
+    const n1 = service.notify(new Notification({ severity: "info", message: "msg" }));
+    const n2 = service.notify(new Notification({ severity: "info", message: "msg2" }));
+    const n3 = service.notify(new Notification({ severity: "info", message: "msg3" }));
     service.dismiss(n2);
     service.notifications$.subscribe((n) => {
       count = n.size;
@@ -44,15 +38,9 @@ describe("NotificationService", () => {
   });
   it("should clear all notifs", () => {
     const count = 0;
-    const n1 = service.notify(
-      new Notification({ severity: "info", message: "msg" })
-    );
-    const n2 = service.notify(
-      new Notification({ severity: "info", message: "msg2" })
-    );
-    const n3 = service.notify(
-      new Notification({ severity: "info", message: "msg3" })
-    );
+    service.notify(new Notification({ severity: "info", message: "msg" }));
+    service.notify(new Notification({ severity: "info", message: "msg2" }));
+    service.notify(new Notification({ severity: "info", message: "msg3" }));
     service.clear();
     service.notifications$.subscribe((n) => {
       expect(n.size).toEqual(0);

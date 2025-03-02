@@ -119,7 +119,7 @@ export class PageableDataSource<
   ) {
     super();
     this.autoload = autoload;
-    if ((this.autoload = autoload)) this._filterChange.next({ autoload: true });
+    if (this.autoload) this._filterChange.next({ autoload: true });
     this.updateChangeSubscription();
   }
 
@@ -156,17 +156,11 @@ export class PageableDataSource<
     this.countSubject.subscribe(() => (this._shouldCount = false));
     const filterChange = this._filterChange;
     const sortChange: Observable<Sort | null | void> = this.sort
-      ? (merge(
-          this.sort.sortChange,
-          this.sort.initialized
-        ) as Observable<Sort | void>)
+      ? merge(this.sort.sortChange, this.sort.initialized)
       : observableOf(null);
 
     const pageChange: Observable<PageEvent | null | void> = this.paginator
-      ? (merge(
-          this.paginator.page,
-          this.paginator.initialized
-        ) as Observable<PageEvent | void>)
+      ? merge(this.paginator.page, this.paginator.initialized)
       : observableOf(null);
 
     // reset the paginator after sorting
@@ -191,11 +185,8 @@ export class PageableDataSource<
       }
     });
     //reload page on any event
-    const changes: Observable<
-      [Filter | undefined, void | Sort | null, void | PageEvent | null]
-    > = combineLatest([filterChange, sortChange, pageChange]);
-    //const changes =combineLatest([initalChange, sortChange, pageChange]);
-    //const changes= combineLatest([sortChange, pageChange]);
+    const changes: Observable<[Filter | undefined, void | Sort | null, void | PageEvent | null]> =
+      combineLatest([filterChange, sortChange, pageChange]);
 
     // The purpose of this intermediate `filteredEventStream` subscrption is to break the flow of events, by filtering it in order to have only the latest event.
     // More specificaly when the paginator and/or the sort are set.
@@ -247,11 +238,7 @@ export class PageableDataSource<
         : undefined
     );
   }
-  private load(
-    filter: Filter | undefined,
-    sort: Sort | undefined,
-    page: Page | undefined
-  ) {
+  private load(filter: Filter | undefined, sort: Sort | undefined, page: Page | undefined) {
     this.loadingSubject.next(true);
     this.service
       .find(filter, sort, page)

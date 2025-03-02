@@ -15,5 +15,4 @@ export class DemoIconsComponent implements OnInit {
   ngOnInit(): void {
     this.icon.setValue(this.selected);
   }
-
 }

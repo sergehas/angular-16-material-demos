@@ -1,10 +1,4 @@
-import {
-  AfterViewChecked,
-  Directive,
-  ElementRef,
-  Input,
-  Renderer2,
-} from "@angular/core";
+import { AfterViewChecked, Directive, ElementRef, Input, Renderer2 } from "@angular/core";
 import { ScrollService } from "src/app/core/services/scroll.service";
 
 function htmlElementAttribute(value: unknown): HTMLElement {

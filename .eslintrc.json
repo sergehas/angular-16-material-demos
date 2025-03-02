@@ -1,13 +1,9 @@
 {
   "root": true,
-  "ignorePatterns": [
-    "projects/**/*"
-  ],
+  "ignorePatterns": ["projects/**/*"],
   "overrides": [
     {
-      "files": [
-        "*.ts"
-      ],
+      "files": ["*.ts"],
       "extends": [
         "eslint:recommended",
         "plugin:@typescript-eslint/recommended",
@@ -34,10 +30,7 @@
         "@angular-eslint/component-class-suffix": [
           "error",
           {
-            "suffixes": [
-              "Component",
-              "Dialog"
-            ]
+            "suffixes": ["Component", "Dialog"]
           }
         ],
         "@typescript-eslint/no-unused-vars": [
@@ -55,9 +48,7 @@
       }
     },
     {
-      "files": [
-        "*.html"
-      ],
+      "files": ["*.html"],
       "extends": [
         "plugin:@angular-eslint/template/recommended",
         "plugin:@angular-eslint/template/accessibility"
@@ -65,7 +56,5 @@
       "rules": {}
     }
   ],
-  "extends": [
-    "prettier"
-  ]
+  "extends": ["prettier"]
 }

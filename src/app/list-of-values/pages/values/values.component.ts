@@ -6,14 +6,10 @@ import {
   OnDestroy,
   OnInit,
   ViewChild,
-  inject
+  inject,
 } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import {
-  MAT_DIALOG_DATA,
-  MatDialog,
-  MatDialogRef,
-} from "@angular/material/dialog";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
 import { BehaviorSubject, tap } from "rxjs";
@@ -140,10 +136,7 @@ export class ValueEditDialog {
         ]),
       ],
       icon: [data.entity.icon],
-      group: [
-        { value: data.entity.group, disabled: true },
-        Validators.required,
-      ],
+      group: [{ value: data.entity.group, disabled: true }, Validators.required],
     });
 
     if (data.mode === EditMode.EDIT) {

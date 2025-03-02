@@ -1,12 +1,6 @@
 import { NestedTreeControl } from "@angular/cdk/tree";
 import { CommonModule } from "@angular/common";
-import {
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output
-} from "@angular/core";
+import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -19,13 +13,7 @@ import { IconsService } from "src/app/core/icons/services/icons.service";
   templateUrl: "./icon-tree.component.html",
   styleUrls: ["./icon-tree.component.scss"],
   standalone: true,
-  imports: [
-    CommonModule,
-    MatTreeModule,
-    MatIconModule,
-    MatButtonModule,
-    MatRippleModule,
-  ],
+  imports: [CommonModule, MatTreeModule, MatIconModule, MatButtonModule, MatRippleModule],
 })
 export class IconTreeComponent implements OnInit {
   @Input() value: string | null = null;
@@ -52,6 +40,5 @@ export class IconTreeComponent implements OnInit {
     this.valueChange.emit(this.value);
   }
 
-  hasChild = (_: number, node: Category) =>
-    !!node.categories && node.categories.length > 0;
+  hasChild = (_: number, node: Category) => !!node.categories && node.categories.length > 0;
 }

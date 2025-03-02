@@ -5,29 +5,22 @@ import { Observable, map } from "rxjs";
 import { FilterValue, HttpService, Page } from "../../services/http-service";
 import { Issue } from "../models/issue";
 
-
 type Result = { total_count: number; items: Record<string, FilterValue>[] };
 
 @Injectable({
   providedIn: "root",
 })
 export class GithubService extends HttpService<Issue> {
-  static href = "https://api.github.com/search/issues";
-  static repo = "repo:angular/components";
+  static readonly href = "https://api.github.com/search/issues";
+  static readonly repo = "repo:angular/components";
 
   constructor(http: HttpClient) {
     super(http, GithubService.href);
     this.headers = this.headers.set("accept", "application/vnd.github+json");
   }
-  private _BuildQuery(
-    params: HttpParams,
-    filter?: { query: string }
-  ): HttpParams {
-    if (filter && filter.query) {
-      params = params.set(
-        "q",
-        `${GithubService.repo} ${filter.query.replaceAll(/\s+/g, " ")}`
-      );
+  private _BuildQuery(params: HttpParams, filter?: { query: string }): HttpParams {
+    if (filter?.query) {
+      params = params.set("q", `${GithubService.repo} ${filter.query.replaceAll(/\s+/g, " ")}`);
     } else {
       params = params.set("q", GithubService.repo);
     }
@@ -60,21 +53,15 @@ export class GithubService extends HttpService<Issue> {
     sort: Sort | undefined,
     page: Page | undefined
   ): Observable<Issue[]> {
-    // const requestUrl = `${
-    // 	GithubService.href
-    // }?q=repo:angular/components&sort=${sort}&order=${order}&per_page=${pageSize}&page=${
-    // 	pageNumber + 1
-    // }`;
+    // URL is  `<base_url>?q=repo:angular/components&sort=${sort}&order=${order}&per_page=${pageSize}&page=${pageNumber + 1}`;
 
     let params = new HttpParams();
     params = this._BuildQuery(params, filter);
     if (sort) {
-      params = params.set("sort", sort!.active).set("order", sort!.direction);
+      params = params.set("sort", sort.active).set("order", sort!.direction);
     }
     if (page) {
-      params = params
-        .set("per_page", page!.pageSize)
-        .set("page", page!.pageNumber + 1);
+      params = params.set("per_page", page.pageSize).set("page", page.pageNumber + 1);
     }
 
     return this.http

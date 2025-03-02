@@ -14,7 +14,7 @@ import { ListOfValuesComponent } from "./list-of-values.component";
  */
 class MockGroupsService {
   count(): Observable<number> {
-    return new Observable(observer => observer.next(11));
+    return new Observable((observer) => observer.next(11));
   }
 }
 
@@ -23,10 +23,10 @@ class MockGroupsService {
  */
 class MockValuesService {
   getValues() {
-    return ['Value1', 'Value2', 'Value3'];
+    return ["Value1", "Value2", "Value3"];
   }
   count(): Observable<number> {
-    return new Observable(observer => observer.next(101));
+    return new Observable((observer) => observer.next(101));
   }
 }
 
@@ -41,13 +41,13 @@ describe("ListOfValuesComponent", () => {
         ListOfValuesModule,
         HttpClientTestingModule,
         RouterTestingModule,
-        NoopAnimationsModule
+        NoopAnimationsModule,
       ],
       declarations: [ListOfValuesComponent],
       providers: [
         ListOfValuesComponent,
         { provide: GroupsService, useClass: MockGroupsService },
-        { provide: ValuesService, useClass: MockValuesService }
+        { provide: ValuesService, useClass: MockValuesService },
       ], // Inject the Mock services
     }).compileComponents();
 

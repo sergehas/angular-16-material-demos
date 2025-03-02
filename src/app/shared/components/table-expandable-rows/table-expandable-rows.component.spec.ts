@@ -17,10 +17,7 @@ describe("TableExpandableRowsComponent", () => {
     TestBed.configureTestingModule({
       declarations: [],
       imports: [TableExpandableRowsComponent, NoopAnimationsModule],
-      providers: [
-        provideHttpClient(),
-        provideHttpClientTesting(),
-      ],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     fixture = TestBed.createComponent(TableExpandableRowsComponent);
     component = fixture.componentInstance;

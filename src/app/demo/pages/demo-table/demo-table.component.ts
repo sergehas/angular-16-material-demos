@@ -1,9 +1,5 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ViewEncapsulation
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, ViewEncapsulation } from "@angular/core";
 import { Issue } from "src/app/core/github/models/issue";
 import { GithubService } from "src/app/core/github/services/github.service";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
@@ -38,5 +34,4 @@ export class DemoTableComponent {
   constructor(private readonly service: GithubService) {
     this.dataSource = new PageableDataSource<Issue>(this.service);
   }
-
 }

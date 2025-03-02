@@ -26,11 +26,7 @@ describe("LocalizedDatePipe", () => {
   it("create an instance", () => {
     const changeDetectorRef = TestBed.inject(ChangeDetectorRef);
     const service = TestBed.inject(TranslateService);
-    const pipe = new LocalizedDatePipe(
-      service,
-      new DatePipe("en"),
-      changeDetectorRef
-    );
+    const pipe = new LocalizedDatePipe(service, new DatePipe("en"), changeDetectorRef);
     expect(pipe).toBeTruthy();
   });
 });

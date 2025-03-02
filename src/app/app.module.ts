@@ -70,12 +70,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NotificationCenterComponent,
     TreeNavComponent,
   ],
-  providers: [
-    StorageService,
-    NotificationService,
-    ExcelExportService,
-    DatePipe,
-  ],
+  providers: [StorageService, NotificationService, ExcelExportService, DatePipe],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

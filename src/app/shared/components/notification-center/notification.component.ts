@@ -3,27 +3,15 @@ import { Component, Input, ViewEncapsulation } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
-import {
-  MatProgressBarModule,
-  ProgressBarMode,
-} from "@angular/material/progress-bar";
+import { MatProgressBarModule, ProgressBarMode } from "@angular/material/progress-bar";
 
-import {
-  Notification,
-  ProgressNotification,
-} from "src/app/core/models/notification";
+import { Notification, ProgressNotification } from "src/app/core/models/notification";
 import { NotificationService } from "src/app/core/services/notification.service";
 
 @Component({
   selector: "app-notification",
   standalone: true,
-  imports: [
-    CommonModule,
-    MatIconModule,
-    MatCardModule,
-    MatButtonModule,
-    MatProgressBarModule,
-  ],
+  imports: [CommonModule, MatIconModule, MatCardModule, MatButtonModule, MatProgressBarModule],
   templateUrl: "./notification.component.html",
   styleUrl: "./notification.component.scss",
   encapsulation: ViewEncapsulation.None,
@@ -31,7 +19,7 @@ import { NotificationService } from "src/app/core/services/notification.service"
 export class NotificationComponent {
   @Input() notification!: Notification;
 
-  constructor(private service: NotificationService) {}
+  constructor(private readonly service: NotificationService) {}
 
   //demo val
   _progressColor = "primary";

@@ -1,10 +1,6 @@
 import { FlatTreeControl } from "@angular/cdk/tree";
 import { Component, ViewEncapsulation } from "@angular/core";
-import {
-  MatTreeFlatDataSource,
-  MatTreeFlattener,
-  MatTreeModule,
-} from "@angular/material/tree";
+import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule } from "@angular/material/tree";
 import { Router, RouterModule, RouterOutlet } from "@angular/router";
 
 import { CommonModule } from "@angular/common";

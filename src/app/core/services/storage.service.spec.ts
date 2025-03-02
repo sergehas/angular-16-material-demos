@@ -1,5 +1,3 @@
-import { TestBed } from "@angular/core/testing";
-
 import { StorageService } from "./storage.service";
 
 const storageKey = "scopes";
@@ -9,8 +7,7 @@ describe("StorageService", () => {
   let service: StorageService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(StorageService);
+    service = new StorageService(sessionStorage);
 
     const store: Map<string, string> = new Map();
     const mockLocalStorage = {
@@ -40,20 +37,22 @@ describe("StorageService", () => {
 
   describe("setItem", () => {
     it("should serialize and store the scopes in localStorage", () => {
-      service
-        .setItem(storageKey, scopes)
-        .subscribe((x) => expect(x).toEqual(scopes));
+      service.setItem(storageKey, scopes).subscribe((x) => expect(x).toEqual(scopes));
     });
   });
 
   describe("getItem", () => {
     it("should retrieve, deserialize scopes in localStorage and returns subscription for any changes there on after", () => {
       service.setItem(storageKey, scopes).subscribe((x) => {
-        service.getItem(storageKey)?.subscribe((y) => {
-          expect(y).toEqual(scopes);
-        });
+        verifyScopesInLocalStorage();
       });
     });
+
+    function verifyScopesInLocalStorage() {
+      service.getItem(storageKey)?.subscribe((y) => {
+        expect(y).toEqual(scopes);
+      });
+    }
   });
 
   describe("removeItem", () => {

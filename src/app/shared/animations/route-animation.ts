@@ -65,11 +65,9 @@ const translateY = animation([
 ]);
 
 const top = [
-  query(
-    ":enter, :leave",
-    style({ position: "absolute", width: "100%", height: "100%" }),
-    { optional: true }
-  ),
+  query(":enter, :leave", style({ position: "absolute", width: "100%", height: "100%" }), {
+    optional: true,
+  }),
   group([
     query(
       ":enter",
@@ -88,11 +86,9 @@ const top = [
   ]),
 ];
 const bottom = [
-  query(
-    ":enter, :leave",
-    style({ position: "absolute", width: "100%", height: "100%" }),
-    { optional: true }
-  ),
+  query(":enter, :leave", style({ position: "absolute", width: "100%", height: "100%" }), {
+    optional: true,
+  }),
   group([
     query(
       ":enter",

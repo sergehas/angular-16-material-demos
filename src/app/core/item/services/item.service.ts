@@ -20,9 +20,7 @@ export class ItemService extends HttpService<Item> {
   }
 
   private generateHeaders(): string[] {
-    return Array.from(Array(this._attributeCount).keys()).map(
-      (i) => `attr${i}`
-    );
+    return Array.from(Array(this._attributeCount).keys()).map((i) => `attr${i}`);
   }
 
   private generateItem(v: number): Item {
@@ -57,7 +55,7 @@ export class ItemService extends HttpService<Item> {
     console.info(`generating fake items from ${start} to ${end}`);
     const data: Item[] = [];
     if (end < 0) {
-      return throwError(()=>new Error("number of items cannot be negative"));
+      return throwError(() => new Error("number of items cannot be negative"));
     }
     for (let i = start; i < end; i++) {
       data.push(this.generateItem(i));

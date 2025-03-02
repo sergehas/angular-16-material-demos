@@ -1,10 +1,5 @@
 import { DatePipe } from "@angular/common";
-import {
-  ChangeDetectorRef,
-  OnDestroy,
-  Pipe,
-  PipeTransform,
-} from "@angular/core";
+import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform } from "@angular/core";
 import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 
@@ -19,7 +14,7 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
     private translateService: TranslateService,
     private datePipe: DatePipe,
     private _ref: ChangeDetectorRef
-  ) { }
+  ) {}
 
   value: string = "";
   lastKey: string | null = null;
