@@ -37,19 +37,16 @@ describe("ListOfValuesComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    declarations: [ListOfValuesComponent],
-    imports: [TabsNavComponent,
-        ListOfValuesModule,
-        RouterTestingModule,
-        NoopAnimationsModule],
-    providers: [
+      declarations: [ListOfValuesComponent],
+      imports: [TabsNavComponent, ListOfValuesModule, RouterTestingModule, NoopAnimationsModule],
+      providers: [
         ListOfValuesComponent,
         { provide: GroupsService, useClass: MockGroupsService },
         { provide: ValuesService, useClass: MockValuesService },
         provideHttpClient(withInterceptorsFromDi()),
         provideHttpClientTesting(),
-    ]
-}).compileComponents();
+      ],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ListOfValuesComponent);
     component = fixture.componentInstance;
