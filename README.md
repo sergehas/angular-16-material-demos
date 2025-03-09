@@ -180,19 +180,35 @@ by default, the app is accessible at <http://localhost:4200>
 
 #### Recording a test
 
-Adapat the URL of the following command, according to where the app is accessible.
+Adapt the URL of the following command, according to where the app is accessible.
 
 ```shell
 npx playwright codegen http://localhost:4200
 ```
 
-then, follow [Recording a test](https://playwright.dev/docs/codegen#recording-a-test) offcial doc.
+then, follow [Recording a test](https://playwright.dev/docs/codegen#recording-a-test) official doc.
 
 Once you test is recorded, add teh source code to a new or existing to a TypeScript file in `e2e` folder (or subfolder)
 
-### runing e2e tests
+### Running e2e tests (angular)
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+
+### Running e2e tests (standalone)
+
+In this context, the app **must** be started. For local startup, see [Local development](#local-development)
+
+To execute the end-to-end tests on all configured browsers, run
+
+```shell
+npx playwright test
+```
+
+then, to display the test report
+
+```shell
+npx playwright show-report
+```
 
 ## Further help
 

@@ -19,9 +19,22 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[html]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnSave": true
+  },
   "typescript.tsdk": "node_modules\\typescript\\lib",
   "editor.rulers": [100],
   "git.inputValidation": true,
   "git.inputValidationSubjectLength": 100,
-  "git.inputValidationLength": 100
+  "git.inputValidationLength": 100,
+  "json.schemas": []
 }
