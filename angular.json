@@ -90,6 +90,17 @@
           "options": {
             "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
           }
+        },
+        "e2e": {
+          "builder": "playwright-ng-schematics:playwright",
+          "options": {
+            "devServerTarget": "angular-16-material-starter:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "angular-16-material-starter:serve:production"
+            }
+          }
         }
       }
     }
