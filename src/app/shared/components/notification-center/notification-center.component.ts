@@ -17,20 +17,19 @@ import { NotificationService } from "src/app/core/services/notification.service"
 import { NotificationComponent } from "./notification.component";
 
 @Component({
-  selector: "app-notification-center",
-  templateUrl: "./notification-center.component.html",
-  styleUrls: ["./notification-center.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Default,
-  standalone: true,
-  imports: [
-    CommonModule,
-    MatSnackBarModule,
-    MatButtonModule,
-    MatButtonToggleModule,
-    MatIconModule,
-    ReactiveFormsModule,
-    NotificationComponent,
-  ],
+    selector: "app-notification-center",
+    templateUrl: "./notification-center.component.html",
+    styleUrls: ["./notification-center.component.scss"],
+    changeDetection: ChangeDetectionStrategy.Default,
+    imports: [
+        CommonModule,
+        MatSnackBarModule,
+        MatButtonModule,
+        MatButtonToggleModule,
+        MatIconModule,
+        ReactiveFormsModule,
+        NotificationComponent,
+    ]
 })
 export class NotificationCenterComponent {
   //reexpose notif observable
@@ -82,11 +81,10 @@ export class NotificationCenterComponent {
 }
 
 @Component({
-  selector: "app-notification-snack-bar",
-  templateUrl: "notification-snack-bar.component.html",
-  styleUrls: ["./notification-snack-bar.component.scss"],
-  standalone: true,
-  imports: [CommonModule, MatButtonModule, MatSnackBarModule, MatIconModule],
+    selector: "app-notification-snack-bar",
+    templateUrl: "notification-snack-bar.component.html",
+    styleUrls: ["./notification-snack-bar.component.scss"],
+    imports: [CommonModule, MatButtonModule, MatSnackBarModule, MatIconModule]
 })
 export class NotificationSnackBarComponent {
   private snackBarRef = inject(MatSnackBarRef);

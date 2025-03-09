@@ -1,8 +1,13 @@
 import { Component, OnDestroy } from "@angular/core";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
-import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
+import { LangChangeEvent, TranslateService, TranslateModule } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
+import { MatDivider } from "@angular/material/divider";
+import { MatButton } from "@angular/material/button";
+import { MatFormField, MatLabel, MatHint, MatSuffix } from "@angular/material/form-field";
+import { MatDateRangeInput, MatStartDate, MatEndDate, MatDatepickerToggle, MatDateRangePicker } from "@angular/material/datepicker";
+import { LocalizedDatePipe } from "../../../shared/pipes/translation/localized-date.pipe";
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
@@ -24,20 +29,21 @@ const WEEK_FORMATS = {
 };
 
 @Component({
-  selector: "app-demo-i18n",
-  templateUrl: "./demo-i18n.component.html",
-  styleUrls: ["./demo-i18n.component.scss"],
-  providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
-    },
-    { provide: MAT_DATE_FORMATS, useValue: WEEK_FORMATS },
-  ],
+    selector: "app-demo-i18n",
+    templateUrl: "./demo-i18n.component.html",
+    styleUrls: ["./demo-i18n.component.scss"],
+    providers: [
+        // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
+        // application's root module. We provide it at the component level here, due to limitations of
+        // our example generation script.
+        {
+            provide: DateAdapter,
+            useClass: MomentDateAdapter,
+            deps: [MAT_DATE_LOCALE],
+        },
+        { provide: MAT_DATE_FORMATS, useValue: WEEK_FORMATS },
+    ],
+    imports: [MatDivider, MatButton, MatFormField, MatLabel, MatDateRangeInput, MatStartDate, MatEndDate, MatHint, MatDatepickerToggle, MatSuffix, MatDateRangePicker, TranslateModule, LocalizedDatePipe]
 })
 export class DemoI18nComponent implements OnDestroy {
   private _onLangChange: Subscription | undefined;

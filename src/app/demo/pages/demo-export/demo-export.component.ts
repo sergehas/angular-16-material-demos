@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
-import { ProgressBarMode } from "@angular/material/progress-bar";
+import { FormControl, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { ProgressBarMode, MatProgressBar } from "@angular/material/progress-bar";
 import { BehaviorSubject } from "rxjs";
 import { Item } from "src/app/core/item/models/item";
 import { ItemService } from "src/app/core/item/services/item.service";
@@ -10,6 +10,15 @@ import { STAGE } from "src/app/core/models/progress";
 import { ExcelExportService } from "src/app/core/services/excel-export.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { SheetExportService } from "src/app/core/services/sheet-export.service";
+import { MatDivider } from "@angular/material/divider";
+import { MatFormField, MatLabel, MatHint } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { MatSelect } from "@angular/material/select";
+import { MatOption } from "@angular/material/core";
+import { MatButton } from "@angular/material/button";
+import { MatBadge } from "@angular/material/badge";
+import { MatIcon } from "@angular/material/icon";
+import { AsyncPipe } from "@angular/common";
 
 type LogItem = {
   timestamp: Date;
@@ -17,9 +26,10 @@ type LogItem = {
 };
 
 @Component({
-  selector: "app-demo-export",
-  templateUrl: "./demo-export.component.html",
-  styleUrls: ["./demo-export.component.scss"],
+    selector: "app-demo-export",
+    templateUrl: "./demo-export.component.html",
+    styleUrls: ["./demo-export.component.scss"],
+    imports: [MatDivider, MatFormField, MatLabel, MatInput, FormsModule, ReactiveFormsModule, MatHint, MatSelect, MatOption, MatButton, MatBadge, MatIcon, MatProgressBar, AsyncPipe]
 })
 export class DemoExportComponent {
   exportEvents: LogItem[] = [];

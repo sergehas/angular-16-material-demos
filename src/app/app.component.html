@@ -1,14 +1,15 @@
 <div class="root-container" [class.root-is-mobile]="isHandset$ | async">
   <mat-toolbar color="primary" class="root-toolbar">
-    <button
-      type="button"
-      aria-label="Toggle sidenav"
-      mat-icon-button
-      (click)="snav.toggle()"
-      *ngIf="isHandset$ | async"
-    >
-      <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
-    </button>
+    @if (isHandset$ | async) {
+      <button
+        type="button"
+        aria-label="Toggle sidenav"
+        mat-icon-button
+        (click)="snav.toggle()"
+        >
+        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+      </button>
+    }
     <button routerLink="/" mat-flat-button color="primary">
       <h1 class="app-title">
         {{ title }}
@@ -23,37 +24,37 @@
         [matBadgeHidden]="(notifications$ | async)!.size === 0"
         matBadgeColor="warn"
         >notifications</mat-icon
-      >
-    </button>
-  </mat-toolbar>
+        >
+      </button>
+    </mat-toolbar>
 
-  <mat-sidenav-container class="root-sidenav-container" autosize>
-    <mat-sidenav
-      class="root-sidenav"
-      #snav
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false"
-      [fixedInViewport]="(isHandset$ | async) === true"
-      fixedTopGap="56"
-    >
-      <app-tree-nav></app-tree-nav>
-    </mat-sidenav>
+    <mat-sidenav-container class="root-sidenav-container" autosize>
+      <mat-sidenav
+        class="root-sidenav"
+        #snav
+        [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+        [mode]="(isHandset$ | async) ? 'over' : 'side'"
+        [opened]="(isHandset$ | async) === false"
+        [fixedInViewport]="(isHandset$ | async) === true"
+        fixedTopGap="56"
+        >
+        <app-tree-nav></app-tree-nav>
+      </mat-sidenav>
 
-    <mat-sidenav-content>
-      <div class="root-content" [@routeAnimations]="animation">
-        <router-outlet #outlet="outlet" (activate)="onActivate($event)"></router-outlet>
-      </div>
-    </mat-sidenav-content>
-    <mat-sidenav
-      class="notif-sidenav"
-      #snotif
-      position="end"
-      mode="over"
-      [fixedInViewport]="(isHandset$ | async) === true"
-      fixedTopGap="56"
-    >
-      <app-notification-center></app-notification-center>
-    </mat-sidenav>
-  </mat-sidenav-container>
-</div>
+      <mat-sidenav-content>
+        <div class="root-content" [@routeAnimations]="animation">
+          <router-outlet #outlet="outlet" (activate)="onActivate($event)"></router-outlet>
+        </div>
+      </mat-sidenav-content>
+      <mat-sidenav
+        class="notif-sidenav"
+        #snotif
+        position="end"
+        mode="over"
+        [fixedInViewport]="(isHandset$ | async) === true"
+        fixedTopGap="56"
+        >
+        <app-notification-center></app-notification-center>
+      </mat-sidenav>
+    </mat-sidenav-container>
+  </div>

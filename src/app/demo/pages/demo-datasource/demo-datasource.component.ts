@@ -1,17 +1,27 @@
 import { AfterViewInit, Component, ViewChild } from "@angular/core";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
-import { MatSort } from "@angular/material/sort";
+import { MatSort, MatSortHeader } from "@angular/material/sort";
 import { BehaviorSubject, Subscription, map, merge } from "rxjs";
 import { Issue } from "src/app/core/github/models/issue";
 
 import { GithubService } from "src/app/core/github/services/github.service";
 import { DatasourceError, PageableDataSource } from "src/app/core/models/pageable-data-source";
+import { MatDivider } from "@angular/material/divider";
+import { MatSlideToggle } from "@angular/material/slide-toggle";
+import { MatButton } from "@angular/material/button";
+import { MatIcon } from "@angular/material/icon";
+import { MatFormField, MatLabel, MatHint } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { MatTable, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow } from "@angular/material/table";
+import { MatBadge } from "@angular/material/badge";
+import { AsyncPipe, DatePipe } from "@angular/common";
 
 @Component({
-  selector: "app-demo-datasource",
-  templateUrl: "./demo-datasource.component.html",
-  styleUrls: ["./demo-datasource.component.scss"],
+    selector: "app-demo-datasource",
+    templateUrl: "./demo-datasource.component.html",
+    styleUrls: ["./demo-datasource.component.scss"],
+    imports: [MatDivider, MatSlideToggle, FormsModule, MatButton, MatIcon, MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatHint, MatTable, MatSort, MatColumnDef, MatHeaderCellDef, MatHeaderCell, MatCellDef, MatCell, MatSortHeader, MatHeaderRowDef, MatHeaderRow, MatRowDef, MatRow, MatPaginator, MatBadge, AsyncPipe, DatePipe]
 })
 export class DemoDatasourceComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;

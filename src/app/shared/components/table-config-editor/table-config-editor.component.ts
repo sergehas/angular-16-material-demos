@@ -6,7 +6,7 @@ import {
   CdkDragHandle,
   moveItemInArray,
 } from "@angular/cdk/drag-drop";
-import { CommonModule } from "@angular/common";
+
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
@@ -14,20 +14,18 @@ import { FormsModule } from "@angular/forms";
 import { TableColumn, TableConfig } from "../table-expandable-rows/table-config";
 
 @Component({
-  selector: "app-table-config-editor",
-  templateUrl: "./table-config-editor.component.html",
-  styleUrls: ["./table-config-editor.component.scss"],
-  standalone: true,
-  imports: [
-    CommonModule,
+    selector: "app-table-config-editor",
+    templateUrl: "./table-config-editor.component.html",
+    styleUrls: ["./table-config-editor.component.scss"],
+    imports: [
     MatIconModule,
     MatButtonModule,
     MatSlideToggleModule,
     FormsModule,
     CdkDropList,
     CdkDrag,
-    CdkDragHandle,
-  ],
+    CdkDragHandle
+]
 })
 export class TableConfigEditorComponent {
   @Input() options!: TableConfig;

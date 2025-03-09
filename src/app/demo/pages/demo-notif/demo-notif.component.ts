@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { FormControl } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { merge } from "rxjs";
 import {
   Notification,
@@ -8,6 +8,15 @@ import {
   ProgressNotification,
 } from "src/app/core/models/notification";
 import { NotificationService } from "src/app/core/services/notification.service";
+import { MatDivider } from "@angular/material/divider";
+import { MatRadioGroup, MatRadioButton } from "@angular/material/radio";
+import { MatSlideToggle } from "@angular/material/slide-toggle";
+import { MatButton } from "@angular/material/button";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatInput } from "@angular/material/input";
+import { MatBadge } from "@angular/material/badge";
+import { MatIcon } from "@angular/material/icon";
+
 
 type NotifLog = {
   id: string;
@@ -17,9 +26,10 @@ type NotifLog = {
 };
 
 @Component({
-  selector: "app-demo-notif",
-  templateUrl: "./demo-notif.component.html",
-  styleUrl: "./demo-notif.component.scss",
+    selector: "app-demo-notif",
+    templateUrl: "./demo-notif.component.html",
+    styleUrl: "./demo-notif.component.scss",
+    imports: [MatDivider, MatRadioGroup, FormsModule, MatRadioButton, MatSlideToggle, MatButton, MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatBadge, MatIcon]
 })
 export class DemoNotifComponent {
   readonly notifs: NotifLog[] = [];

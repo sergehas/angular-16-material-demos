@@ -9,14 +9,13 @@ import { StickDirective } from "./stick.directive";
  * Test component to host the directive.
  */
 @Component({
-  template: `<div #topRef style="position: relative">
+    template: `<div #topRef style="position: relative">
     <section>
       <h1>This demo illustrate usage of the <code>appStick</code></h1>
       <h2 [appStick]="topRef">Overview</h2>
     </section>
   </div>`,
-  imports: [StickDirective],
-  standalone: true,
+    imports: [StickDirective]
 })
 class TestComponent {}
 

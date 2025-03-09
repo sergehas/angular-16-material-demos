@@ -6,11 +6,15 @@
     matTooltip="{{ tooltip }}"
     [disabled]="disabled"
     [mat-menu-trigger-for]="iconMenu"
-  >
+    >
     <div class="icon-value">
       <!-- <mat-icon class="placeholder" *ngIf="!value">more_horiz</mat-icon> -->
-      <span class="placeholder" *ngIf="!value"></span>
-      <mat-icon *ngIf="value" [svgIcon]="value!"></mat-icon>
+      @if (!value) {
+        <span class="placeholder"></span>
+      }
+      @if (value) {
+        <mat-icon [svgIcon]="value!"></mat-icon>
+      }
       <div class="mat-mdc-select-arrow-wrapper">
         <div class="mat-mdc-select-arrow">
           <svg viewBox="0 0 24 24" width="24px" height="24px" focusable="false" aria-hidden="true">
@@ -22,23 +26,24 @@
   </button>
 </div>
 <mat-menu #iconMenu="matMenu" xPosition="after" yPosition="below">
-  <button
-    mat-icon-button
-    *ngIf="value"
-    matSuffix
-    aria-label="clear icon"
-    (click)="value = null"
-    class="clear-button"
-  >
-    <mat-icon>close</mat-icon>
-  </button>
+  @if (value) {
+    <button
+      mat-icon-button
+      matSuffix
+      aria-label="clear icon"
+      (click)="value = null"
+      class="clear-button"
+      >
+      <mat-icon>close</mat-icon>
+    </button>
+  }
 
   <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
-    <mat-icon>close</mat-icon>
-  </button> -->
-  <app-icon-tree
-    [expanded]="true"
-    [value]="value"
-    (valueChange)="onSelectionChange($event)"
-  ></app-icon-tree>
+  <mat-icon>close</mat-icon>
+</button> -->
+<app-icon-tree
+  [expanded]="true"
+  [value]="value"
+  (valueChange)="onSelectionChange($event)"
+></app-icon-tree>
 </mat-menu>

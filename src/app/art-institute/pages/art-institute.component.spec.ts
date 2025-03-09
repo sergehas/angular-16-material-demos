@@ -11,9 +11,8 @@ describe("ArtInstituteComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [ArtInstituteComponent],
-      imports: [TabsNavComponent, RouterModule.forRoot([]), NoopAnimationsModule],
-    });
+    imports: [TabsNavComponent, RouterModule.forRoot([]), NoopAnimationsModule, ArtInstituteComponent],
+});
     fixture = TestBed.createComponent(ArtInstituteComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

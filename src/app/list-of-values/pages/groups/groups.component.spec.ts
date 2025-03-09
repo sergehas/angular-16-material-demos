@@ -12,10 +12,9 @@ describe("GroupsComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [GroupsComponent],
-      imports: [ListOfValuesModule, NoopAnimationsModule],
-      providers: [provideHttpClient(), provideHttpClientTesting()],
-    });
+    imports: [ListOfValuesModule, NoopAnimationsModule, GroupsComponent],
+    providers: [provideHttpClient(), provideHttpClientTesting()],
+});
     fixture = TestBed.createComponent(GroupsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

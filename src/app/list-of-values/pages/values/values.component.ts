@@ -8,19 +8,27 @@ import {
   ViewChild,
   inject,
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
 import { BehaviorSubject, tap } from "rxjs";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { Value } from "src/app/core/value-list/models/value";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
+import { AsyncPipe } from "@angular/common";
+import { MatButton, MatMiniFabButton } from "@angular/material/button";
+import { MatIcon } from "@angular/material/icon";
+import { MatLabel, MatFormField, MatHint } from "@angular/material/form-field";
+import { CdkScrollable } from "@angular/cdk/scrolling";
+import { MatInput } from "@angular/material/input";
+import { IconSelectComponent } from "../../../shared/components/icon-select/icon-select.component";
 
 @Component({
-  selector: "app-values",
-  templateUrl: "./values.component.html",
-  styleUrls: ["./values.component.scss"],
+    selector: "app-values",
+    templateUrl: "./values.component.html",
+    styleUrls: ["./values.component.scss"],
+    imports: [MatButton, MatIcon, MatLabel, MatMiniFabButton, MatPaginator, AsyncPipe]
 })
 export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -104,9 +112,10 @@ export enum EditMode {
 }
 
 @Component({
-  selector: "app-value-edit-dialog",
-  templateUrl: "value-edit.dialog.html",
-  styleUrls: ["./value-edit.dialog.scss"],
+    selector: "app-value-edit-dialog",
+    templateUrl: "value-edit.dialog.html",
+    styleUrls: ["./value-edit.dialog.scss"],
+    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, FormsModule, ReactiveFormsModule, MatFormField, MatInput, IconSelectComponent, MatHint, MatDialogActions, MatButton, MatDialogClose]
 })
 export class ValueEditDialog {
   private readonly _fb = inject(FormBuilder);

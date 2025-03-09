@@ -1,4 +1,4 @@
-import { CommonModule } from "@angular/common";
+
 import {
   AfterViewInit,
   Component,
@@ -36,28 +36,25 @@ import { IconTreeComponent } from "../icon-tree/icon-tree.component";
  * @implements {OnDestroy} to destroy subscription
  */
 @Component({
-  selector: "app-icon-select",
-  templateUrl: "./icon-select.component.html",
-  styleUrls: ["./icon-select.component.scss"],
-  standalone: true,
-  encapsulation: ViewEncapsulation.None,
-  imports: [
-    CommonModule,
+    selector: "app-icon-select",
+    templateUrl: "./icon-select.component.html",
+    styleUrls: ["./icon-select.component.scss"],
+    encapsulation: ViewEncapsulation.None,
+    imports: [
     MatIconModule,
     MatTooltipModule,
     MatMenuModule,
     MatButtonModule,
     IconTreeComponent,
-
     MatRippleModule,
-    FormsModule,
-  ],
-  providers: [
-    {
-      provide: MatFormFieldControl,
-      useExisting: forwardRef(() => IconSelectComponent),
-    },
-  ],
+    FormsModule
+],
+    providers: [
+        {
+            provide: MatFormFieldControl,
+            useExisting: forwardRef(() => IconSelectComponent),
+        },
+    ]
 })
 export class IconSelectComponent
   extends AbstractMatFormField<string>

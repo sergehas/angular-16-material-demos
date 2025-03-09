@@ -9,8 +9,8 @@ import {
   inject,
 } from "@angular/core";
 import { VERSION as MAT_VERSION } from "@angular/material/core";
-import { MatSidenavContainer } from "@angular/material/sidenav";
-import { RouterOutlet } from "@angular/router";
+import { MatSidenavContainer, MatSidenav, MatSidenavContent } from "@angular/material/sidenav";
+import { RouterOutlet, RouterLink } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable, map, shareReplay } from "rxjs";
 
@@ -18,13 +18,21 @@ import { Notification } from "./core/models/notification";
 import { NotificationService } from "./core/services/notification.service";
 import { ScrollService } from "./core/services/scroll.service";
 import { slideAnimations } from "./shared/animations/route-animation";
+import { MatToolbar } from "@angular/material/toolbar";
+import { AsyncPipe } from "@angular/common";
+import { MatIconButton, MatButton } from "@angular/material/button";
+import { MatIcon } from "@angular/material/icon";
+import { MatBadge } from "@angular/material/badge";
+import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.component";
+import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "./app.component.html",
-  styleUrls: ["./app.component.scss"],
-  animations: [slideAnimations],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    selector: "app-root",
+    templateUrl: "./app.component.html",
+    styleUrls: ["./app.component.scss"],
+    animations: [slideAnimations],
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    imports: [MatToolbar, MatIconButton, MatIcon, MatButton, RouterLink, MatBadge, MatSidenavContainer, MatSidenav, TreeNavComponent, MatSidenavContent, RouterOutlet, NotificationCenterComponent, AsyncPipe]
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;

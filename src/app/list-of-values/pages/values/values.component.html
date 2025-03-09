@@ -1,18 +1,22 @@
 <div>
   <div class="value-list">
-    <button
-      mat-stroked-button
-      *ngFor="let v of page | async"
-      (click)="createOrEdit(v)"
-      class="value-button"
-    >
-      <div class="value-item">
-        <mat-icon *ngIf="v.icon; else noIcon" [svgIcon]="v.icon"></mat-icon>
-        <ng-template #noIcon><mat-icon class="no-icon">image</mat-icon></ng-template>
-        <mat-label class="value-code">{{ v.name }}</mat-label>
-        <mat-label class="value-label">{{ v.label }}</mat-label>
-      </div>
-    </button>
+    @for (v of page | async; track v) {
+      <button
+        mat-stroked-button
+        (click)="createOrEdit(v)"
+        class="value-button"
+        >
+        <div class="value-item">
+          @if (v.icon) {
+            <mat-icon [svgIcon]="v.icon"></mat-icon>
+          } @else {
+            <mat-icon class="no-icon">image</mat-icon>
+          }
+          <mat-label class="value-code">{{ v.name }}</mat-label>
+          <mat-label class="value-label">{{ v.label }}</mat-label>
+        </div>
+      </button>
+    }
     <div class="spacer"></div>
     <button
       mat-mini-fab
@@ -20,7 +24,7 @@
       aria-label="add"
       (click)="createOrEdit()"
       class="add-button"
-    >
+      >
       <mat-icon>add</mat-icon>
     </button>
   </div>
@@ -31,6 +35,6 @@
     showFirstLastButtons
     [length]="dataSource.length$ | async"
     aria-label="Select page"
-  >
+    >
   </mat-paginator>
 </div>

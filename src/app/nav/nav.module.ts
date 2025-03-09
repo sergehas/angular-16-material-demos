@@ -12,16 +12,15 @@ import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSliderModule } from "@angular/material/slider";
 
 @NgModule({
-  declarations: [NavComponent, VoidNavComponent],
-  imports: [
-    TabsNavComponent,
-    NavRoutingModule,
-
-    CommonModule,
-    MatRadioModule,
-    MatSlideToggleModule,
-    MatSliderModule,
-    MatDividerModule,
-  ],
+    imports: [
+        TabsNavComponent,
+        NavRoutingModule,
+        CommonModule,
+        MatRadioModule,
+        MatSlideToggleModule,
+        MatSliderModule,
+        MatDividerModule,
+        NavComponent, VoidNavComponent,
+    ],
 })
 export class NavModule {}

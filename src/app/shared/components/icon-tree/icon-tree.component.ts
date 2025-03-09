@@ -1,5 +1,5 @@
 import { NestedTreeControl } from "@angular/cdk/tree";
-import { CommonModule } from "@angular/common";
+
 import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
@@ -9,11 +9,10 @@ import { Category } from "src/app/core/icons/models/category";
 import { IconsService } from "src/app/core/icons/services/icons.service";
 
 @Component({
-  selector: "app-icon-tree",
-  templateUrl: "./icon-tree.component.html",
-  styleUrls: ["./icon-tree.component.scss"],
-  standalone: true,
-  imports: [CommonModule, MatTreeModule, MatIconModule, MatButtonModule, MatRippleModule],
+    selector: "app-icon-tree",
+    templateUrl: "./icon-tree.component.html",
+    styleUrls: ["./icon-tree.component.scss"],
+    imports: [MatTreeModule, MatIconModule, MatButtonModule, MatRippleModule]
 })
 export class IconTreeComponent implements OnInit {
   @Input() value: string | null = null;

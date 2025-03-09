@@ -1,21 +1,31 @@
 <span class="snack-label" matSnackBarLabel>
-  <ng-container [ngSwitch]="data.severity">
-    <mat-icon *ngSwitchCase="'sever'">error</mat-icon>
-    <mat-icon *ngSwitchCase="'warn'">warning</mat-icon>
-    <mat-icon *ngSwitchCase="'info'">info</mat-icon>
-    <mat-icon *ngSwitchDefault>circle_notifications</mat-icon> </ng-container
-  >{{ data.message }}
-</span>
-<span matSnackBarActions *ngIf="data.persistent">
-  <button mat-icon-button matSnackBarAction (click)="close()" arial-label="OK">
-    <mat-icon>check</mat-icon>
-  </button>
-  <button
-    mat-icon-button
-    matSnackBarAction
-    (click)="dismissNotification(data)"
-    aria-label="Dismiss"
-  >
-    <mat-icon>delete_forever</mat-icon>
-  </button>
-</span>
+  @switch (data.severity) {
+    @case ('sever') {
+      <mat-icon>error</mat-icon>
+    }
+    @case ('warn') {
+      <mat-icon>warning</mat-icon>
+    }
+    @case ('info') {
+      <mat-icon>info</mat-icon>
+    }
+    @default {
+      <mat-icon>circle_notifications</mat-icon>
+      } }
+      {{ data.message }}
+    </span>
+    @if (data.persistent) {
+      <span matSnackBarActions>
+        <button mat-icon-button matSnackBarAction (click)="close()" arial-label="OK">
+          <mat-icon>check</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          matSnackBarAction
+          (click)="dismissNotification(data)"
+          aria-label="Dismiss"
+          >
+          <mat-icon>delete_forever</mat-icon>
+        </button>
+      </span>
+    }

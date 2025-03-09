@@ -22,26 +22,24 @@ import { MatSortModule } from "@angular/material/sort";
 import { IconSelectComponent } from "../shared/components/icon-select/icon-select.component";
 
 @NgModule({
-  declarations: [ListOfValuesComponent, ValuesComponent, GroupsComponent, ValueEditDialog],
-  imports: [
-    CommonModule,
-    MatCardModule,
-    MatRippleModule,
-    MatExpansionModule,
-    MatPaginatorModule,
-    MatSortModule,
-    MatIconModule,
-    MatButtonModule,
-    MatInputModule,
-    FormsModule,
-    MatFormFieldModule,
-    MatDialogModule,
-    ReactiveFormsModule,
-
-    TabsNavComponent,
-    IconSelectComponent,
-
-    ListOfValuesRoutingModule,
-  ],
+    imports: [
+        CommonModule,
+        MatCardModule,
+        MatRippleModule,
+        MatExpansionModule,
+        MatPaginatorModule,
+        MatSortModule,
+        MatIconModule,
+        MatButtonModule,
+        MatInputModule,
+        FormsModule,
+        MatFormFieldModule,
+        MatDialogModule,
+        ReactiveFormsModule,
+        TabsNavComponent,
+        IconSelectComponent,
+        ListOfValuesRoutingModule,
+        ListOfValuesComponent, ValuesComponent, GroupsComponent, ValueEditDialog,
+    ],
 })
 export class ListOfValuesModule {}

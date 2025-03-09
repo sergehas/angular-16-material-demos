@@ -12,10 +12,9 @@ describe("NavComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TabsNavComponent, NavModule, NoopAnimationsModule],
-      declarations: [NavComponent],
-      providers: [provideRouter([])],
-    }).compileComponents();
+    imports: [TabsNavComponent, NavModule, NoopAnimationsModule, NavComponent],
+    providers: [provideRouter([])],
+}).compileComponents();
 
     fixture = TestBed.createComponent(NavComponent);
     component = fixture.componentInstance;

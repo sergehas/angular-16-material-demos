@@ -25,17 +25,19 @@
 <section class="demo-options">
   <h2><code>mat-icon svgIcon</code></h2>
   <div class="mat-elevation-z4 demo-container">
-    <div
-      class="label-icon"
-      *ngFor="
-        let icon of ['brands-gcp', 'countries-Europe-European_Union-se', 'countries-Australia-au']
-      "
-    >
-      <mat-label
-        >icon <code>parameter:{{ icon }}</code>
-      </mat-label>
-      <mat-icon [svgIcon]="'parameter:' + icon"></mat-icon>
-    </div>
+    @for (
+      icon of ['brands-gcp', 'countries-Europe-European_Union-se', 'countries-Australia-au']
+      ; track
+      icon) {
+      <div
+        class="label-icon"
+        >
+        <mat-label
+          >icon <code>parameter:{{ icon }}</code>
+        </mat-label>
+        <mat-icon [svgIcon]="'parameter:' + icon"></mat-icon>
+      </div>
+    }
   </div>
 </section>
 <mat-divider></mat-divider>
@@ -48,7 +50,7 @@
       color="accent"
       matBadgePosition="below before"
       (click)="selected = null"
-    >
+      >
       CLEAR
     </button>
   </div>

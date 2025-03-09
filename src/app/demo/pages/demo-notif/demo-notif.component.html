@@ -43,58 +43,69 @@
         [max]="total.value"
         placeholder="Progress value"
         [formControl]="value"
-      />
-    </mat-form-field>
-  </div>
-</section>
-<mat-divider></mat-divider>
-<section class="demo-options">
-  <h2>with colors</h2>
-  <p>
-    see
-    <code
-      >src/app/shared/components/notification-center/_notification[-snack-bar].component-theme.scss</code
-    >
-    to use (or not) extended colors
-  </p>
-  <div class="color-sample">
-    <div class="color-sample success">success</div>
-    <div class="color-sample warning">warning</div>
-    <div class="color-sample error">error</div>
-  </div>
-</section>
-<section class="demo-options">
+        />
+      </mat-form-field>
+    </div>
+  </section>
   <mat-divider></mat-divider>
-  <div class="demo-log">
-    <h2>notification log</h2>
-    <button
-      mat-flat-button
-      class="icon-only"
-      color="accent"
-      matBadgePosition="below before"
-      [matBadgeHidden]="notifs.length === 0"
-      [matBadge]="notifs.length"
-      matBadgeColor="primary"
-      (click)="notifs.length = 0"
-    >
-      <mat-icon>delete</mat-icon>
-      clear
-    </button>
-  </div>
+  <section class="demo-options">
+    <h2>with colors</h2>
+    <p>
+      see
+      <code
+        >src/app/shared/components/notification-center/_notification[-snack-bar].component-theme.scss</code
+        >
+        to use (or not) extended colors
+      </p>
+      <div class="color-sample">
+        <div class="color-sample success">success</div>
+        <div class="color-sample warning">warning</div>
+        <div class="color-sample error">error</div>
+      </div>
+    </section>
+    <section class="demo-options">
+      <mat-divider></mat-divider>
+      <div class="demo-log">
+        <h2>notification log</h2>
+        <button
+          mat-flat-button
+          class="icon-only"
+          color="accent"
+          matBadgePosition="below before"
+          [matBadgeHidden]="notifs.length === 0"
+          [matBadge]="notifs.length"
+          matBadgeColor="primary"
+          (click)="notifs.length = 0"
+          >
+          <mat-icon>delete</mat-icon>
+          clear
+        </button>
+      </div>
 
-  <div *ngIf="!notifs.length">notification events will be logged here</div>
+      @if (!notifs.length) {
+        <div>notification events will be logged here</div>
+      }
 
-  <ul style="height: 100px; overflow-y: scroll; font-family: monospace">
-    <li *ngFor="let n of notifs.slice().reverse()">
-      <ng-container [ngSwitch]="n.severity">
-        <mat-icon *ngSwitchCase="'sever'">error</mat-icon>
-        <mat-icon *ngSwitchCase="'warn'">warning</mat-icon>
-        <mat-icon *ngSwitchCase="'info'">info</mat-icon>
-        <mat-icon *ngSwitchDefault>circle_notifications</mat-icon>
-      </ng-container>
-
-      {{ n.action }} notification <code>{{ n.id }}</code
-      >, message is <i>{{ n.message }}</i>
-    </li>
-  </ul>
-</section>
+      <ul style="height: 100px; overflow-y: scroll; font-family: monospace">
+        @for (n of notifs.slice().reverse(); track n) {
+          <li>
+            @switch (n.severity) {
+              @case ('sever') {
+                <mat-icon>error</mat-icon>
+              }
+              @case ('warn') {
+                <mat-icon>warning</mat-icon>
+              }
+              @case ('info') {
+                <mat-icon>info</mat-icon>
+              }
+              @default {
+                <mat-icon>circle_notifications</mat-icon>
+              }
+            }
+            {{ n.action }} notification <code>{{ n.id }}</code
+            >, message is <i>{{ n.message }}</i>
+          </li>
+        }
+      </ul>
+    </section>

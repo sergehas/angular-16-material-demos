@@ -54,7 +54,7 @@
       [matBadge]="exportEvents.length"
       matBadgeColor="primary"
       (click)="resetProgress()"
-    >
+      >
       <mat-icon>delete</mat-icon>
       clear
     </button>
@@ -64,14 +64,18 @@
     [mode]="progressMode"
     [value]="progressValue"
     [color]="progressColor"
-  >
+    >
   </mat-progress-bar>
 
-  <div *ngIf="!exportEvents.length">Datasource events will be logged here</div>
+  @if (!exportEvents.length) {
+    <div>Datasource events will be logged here</div>
+  }
 
   <ul class="logs">
-    <li *ngFor="let event of exportEvents$ | async">
-      [{{ event.timestamp.toISOString() }}] {{ event.message }}
-    </li>
+    @for (event of exportEvents$ | async; track event) {
+      <li>
+        [{{ event.timestamp.toISOString() }}] {{ event.message }}
+      </li>
+    }
   </ul>
 </section>

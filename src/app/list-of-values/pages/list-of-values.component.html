@@ -4,17 +4,19 @@
   (deactivate)="isDashboardActive = true"
 ></app-tabs-nav>
 
-<div class="list-of-values-dashboard" *ngIf="isDashboardActive">
-  <mat-card matRipple class="kpi-card" routerLink="./groups">
-    <div class="kpi" mat-card-image>
-      {{ countGroups$ | async }}
-    </div>
-    <mat-card-content>Group of values</mat-card-content>
-  </mat-card>
-  <mat-card class="kpi-card">
-    <div class="kpi" mat-card-image>
-      {{ countValues$ | async }}
-    </div>
-    <mat-card-content>Values</mat-card-content>
-  </mat-card>
-</div>
+@if (isDashboardActive) {
+  <div class="list-of-values-dashboard">
+    <mat-card matRipple class="kpi-card" routerLink="./groups">
+      <div class="kpi" mat-card-image>
+        {{ countGroups$ | async }}
+      </div>
+      <mat-card-content>Group of values</mat-card-content>
+    </mat-card>
+    <mat-card class="kpi-card">
+      <div class="kpi" mat-card-image>
+        {{ countValues$ | async }}
+      </div>
+      <mat-card-content>Values</mat-card-content>
+    </mat-card>
+  </div>
+}
