@@ -37,28 +37,7 @@ export interface MatFieldConfig {
 /** Injection token that can be used to provide the default options for the input. */
 export const APP_FIELD_CONFIG = new InjectionToken<MatFieldConfig>("APP_FIELD_CONFIG");
 
-@Directive({
-  /*   host: {
-    // Native input properties that are overwritten by Angular inputs need to be synced with
-    // the native element. Otherwise property bindings for those don't work.
-    "[id]": "id",
-    "[disabled]": "disabled && !disabledInteractive",
-    "[required]": "required",
-    "[attr.name]": "name || null",
-    "[attr.readonly]": "_getReadonlyAttribute()",
-    "[attr.aria-disabled]": 'disabled && disabledInteractive ? "true" : null',
-    // Only mark the input as invalid for assistive technology if it has a value since the
-    // state usually overlaps with `aria-required` when the input is empty and can be redundant.
-    "[attr.aria-invalid]": "(empty && required) ? null : errorState",
-    "[attr.aria-required]": "required",
-    // Native input properties that are overwritten by Angular inputs need to be synced with
-    // the native input element. Otherwise property bindings for those don't work.
-    "[attr.id]": "id",
-    "(focus)": "_focusChanged(true)",
-    "(blur)": "_focusChanged(false)",
-    "(input)": "_onInput()",
-  }, */
-})
+@Directive({})
 export abstract class AbstractMatFormField<T>
   implements
     MatFormFieldControl<T>,
