@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
 import { lastValueFrom } from "rxjs";
@@ -15,6 +15,10 @@ type incoLibFormat = {
   providedIn: "root",
 })
 export class IconsService {
+  private readonly http = inject(HttpClient);
+  private readonly matIconRegistry = inject(MatIconRegistry);
+  private readonly domSanitizer = inject(DomSanitizer);
+
   private iconlib = new Category("root");
 
   async loadConfiguration() {
@@ -22,12 +26,6 @@ export class IconsService {
     this.iconlib = this.load(libData as incoLibFormat);
     console.info("[IconsService] iconlib build: ", this.iconlib);
   }
-
-  constructor(
-    private readonly http: HttpClient,
-    private readonly matIconRegistry: MatIconRegistry,
-    private readonly domSanitizer: DomSanitizer
-  ) {}
 
   private load(data: incoLibFormat) {
     const cat = new Category(data.name);

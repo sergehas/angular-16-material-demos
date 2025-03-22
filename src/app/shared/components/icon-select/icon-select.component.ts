@@ -6,11 +6,10 @@ import {
   forwardRef,
   Input,
   OnDestroy,
-  Optional,
   Output,
-  Self,
   ViewChild,
   ViewEncapsulation,
+  inject,
 } from "@angular/core";
 import { ErrorStateMatcher, MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -80,14 +79,14 @@ export class IconSelectComponent
   @Input()
   public tooltip: string = "";
 
-  constructor(
-    @Optional() @Self() ngControl: NgControl,
-    @Optional() _parentForm: NgForm,
-    @Optional() _parentFormGroup: FormGroupDirective,
-    _defaultErrorStateMatcher: ErrorStateMatcher,
-    _focusMonitor: FocusMonitor,
-    _elementRef: ElementRef
-  ) {
+  constructor() {
+    const ngControl = inject(NgControl, { optional: true, self: true });
+    const _parentForm = inject(NgForm, { optional: true });
+    const _parentFormGroup = inject(FormGroupDirective, { optional: true });
+    const _defaultErrorStateMatcher = inject(ErrorStateMatcher);
+    const _focusMonitor = inject(FocusMonitor);
+    const _elementRef = inject(ElementRef);
+
     super(
       "app-icon-select",
       ngControl,

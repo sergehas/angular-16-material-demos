@@ -1,5 +1,5 @@
 import { SelectionModel } from "@angular/cdk/collections";
-import { ChangeDetectionStrategy, Component, ViewEncapsulation } from "@angular/core";
+import { ChangeDetectionStrategy, Component, ViewEncapsulation, inject } from "@angular/core";
 import { Issue } from "src/app/core/github/models/issue";
 import { GithubService } from "src/app/core/github/services/github.service";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
@@ -27,6 +27,8 @@ import { TableExpandableRowsComponent } from "../../../shared/components/table-e
   ],
 })
 export class DemoTableComponent {
+  private readonly service = inject(GithubService);
+
   dataSource!: PageableDataSource<Issue>;
   options: TableConfig = new TableConfig({
     paginator: true,
@@ -43,7 +45,7 @@ export class DemoTableComponent {
 
   selection = new SelectionModel<Issue>(true, []);
 
-  constructor(private readonly service: GithubService) {
+  constructor() {
     this.dataSource = new PageableDataSource<Issue>(this.service);
   }
 }

@@ -44,6 +44,10 @@ const TAB_SLIDE_ANIMATION = "tabSlide";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsNavComponent implements OnInit, AfterViewInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private contexts = inject(ChildrenOutletContexts);
+
   @Input() path: string = "";
   @Input() default?: string;
   @Input({ transform: booleanAttribute }) sticky = false;
@@ -56,12 +60,6 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
   navLinks: MenuNode[] = [];
   private _notifService = inject(NotificationService);
   animation: string | number = -1;
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private contexts: ChildrenOutletContexts
-  ) {}
 
   ngOnInit(): void {
     console.info("[tab-nav] router config", this.router);

@@ -1,4 +1,4 @@
-import { AfterViewChecked, Directive, ElementRef, Input, Renderer2 } from "@angular/core";
+import { AfterViewChecked, Directive, ElementRef, Input, Renderer2, inject } from "@angular/core";
 import { ScrollService } from "src/app/core/services/scroll.service";
 
 function htmlElementAttribute(value: unknown): HTMLElement {
@@ -13,6 +13,10 @@ function htmlElementAttribute(value: unknown): HTMLElement {
   standalone: true,
 })
 export class StickDirective implements AfterViewChecked {
+  private element = inject<ElementRef<HTMLElement>>(ElementRef);
+  private scrollService = inject(ScrollService);
+  private renderer = inject(Renderer2);
+
   @Input({ required: true, transform: htmlElementAttribute })
   appStick!: HTMLElement;
 
@@ -29,11 +33,7 @@ export class StickDirective implements AfterViewChecked {
     "top": "",
   };
 
-  constructor(
-    private element: ElementRef<HTMLElement>,
-    private scrollService: ScrollService,
-    private renderer: Renderer2
-  ) {
+  constructor() {
     // afterRender(() => {
     //   console.log("AFTER")
     // });

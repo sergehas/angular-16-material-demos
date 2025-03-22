@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { Component, Input, ViewEncapsulation } from "@angular/core";
+import { Component, Input, ViewEncapsulation, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
 import { MatIconModule } from "@angular/material/icon";
@@ -16,9 +16,9 @@ import { NotificationService } from "src/app/core/services/notification.service"
   encapsulation: ViewEncapsulation.None,
 })
 export class NotificationComponent {
-  @Input() notification!: Notification;
+  private readonly service = inject(NotificationService);
 
-  constructor(private readonly service: NotificationService) {}
+  @Input() notification!: Notification;
 
   //demo val
   _progressColor = "primary";

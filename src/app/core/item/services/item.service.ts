@@ -1,5 +1,5 @@
 import { HttpClient } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, of, throwError } from "rxjs";
 import { HttpService, Page } from "../../services/http-service";
@@ -14,7 +14,9 @@ export class ItemService extends HttpService<Item> {
 
   private attributeHeaders: string[];
 
-  constructor(http: HttpClient) {
+  constructor() {
+    const http = inject(HttpClient);
+
     super(http, "fake");
     this.attributeHeaders = this.generateHeaders();
   }

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { FormControl, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ProgressBarMode, MatProgressBar } from "@angular/material/progress-bar";
 import { BehaviorSubject } from "rxjs";
@@ -47,22 +47,17 @@ type LogItem = {
   ],
 })
 export class DemoExportComponent {
+  readonly exportService = inject(ExcelExportService);
+  readonly sheetService = inject(SheetExportService);
+  readonly dataService = inject(ItemService);
+  private readonly notifService = inject(NotificationService);
+
   exportEvents: LogItem[] = [];
   exportEvents$ = new BehaviorSubject<LogItem[]>(this.exportEvents);
   progressMode: ProgressBarMode = "determinate";
   progressColor = "primary";
   progressValue = 0;
   private _notif?: ProgressNotification;
-
-  constructor(
-    readonly exportService: ExcelExportService,
-    readonly sheetService: SheetExportService,
-    readonly dataService: ItemService,
-    private readonly notifService: NotificationService
-  ) {
-    //constructor(readonly exportService: SheetExportService, readonly dataService: ItemService) {
-    //console.debug(`initializing datasource`);
-  }
   cols = new FormControl(5, [Validators.required]);
   rows = new FormControl(37, [Validators.required]);
   pageSize = new FormControl(10, [Validators.required]);

@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { Router, RouterLink } from "@angular/router";
 import { Observable } from "rxjs";
 import { GroupsService } from "src/app/core/value-list/services/groups.service";
@@ -23,14 +23,14 @@ import { MatRipple } from "@angular/material/core";
   ],
 })
 export class ListOfValuesComponent {
+  private readonly groupsService = inject(GroupsService);
+  private readonly valuesService = inject(ValuesService);
+  router = inject(Router);
+
   countGroups$: Observable<number>;
   countValues$: Observable<number>;
   isDashboardActive = true;
-  constructor(
-    private readonly groupsService: GroupsService,
-    private readonly valuesService: ValuesService,
-    public router: Router
-  ) {
+  constructor() {
     this.countGroups$ = this.groupsService.count();
     this.countValues$ = this.valuesService.count();
   }

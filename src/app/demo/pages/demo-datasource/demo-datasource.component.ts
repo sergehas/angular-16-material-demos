@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild } from "@angular/core";
+import { AfterViewInit, Component, ViewChild, inject } from "@angular/core";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortHeader } from "@angular/material/sort";
@@ -62,6 +62,8 @@ import { AsyncPipe, DatePipe } from "@angular/common";
   ],
 })
 export class DemoDatasourceComponent implements AfterViewInit {
+  private readonly service = inject(GithubService);
+
   @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
   @ViewChild(MatSort) sort!: MatSort;
 
@@ -75,7 +77,7 @@ export class DemoDatasourceComponent implements AfterViewInit {
   filter = new FormControl("");
   private _sub?: Subscription;
 
-  constructor(private readonly service: GithubService) {
+  constructor() {
     this.dataSource = new PageableDataSource<Issue>(this.service, this.autoloadEnabled);
   }
 

@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from "@angular/core";
+import { APP_INITIALIZER, NgModule, inject } from "@angular/core";
 import { IconsService } from "./services/icons.service";
 
 /**
@@ -30,7 +30,9 @@ function initWithDependencyFactory(iconsService: IconsService) {
 })
 export class IconsModule {
   /** guard to avoid multiple import */
-  constructor(@Optional() @SkipSelf() core: IconsModule) {
+  constructor() {
+    const core = inject(IconsModule, { optional: true, skipSelf: true });
+
     if (core) {
       throw new Error("You should import IconsModule module only in the root module");
     }

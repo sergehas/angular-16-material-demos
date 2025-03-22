@@ -49,6 +49,9 @@ import { NotificationCenterComponent } from "./shared/components/notification-ce
   ],
 })
 export class AppComponent implements AfterViewInit {
+  private service = inject(NotificationService);
+  private scrollService = inject(ScrollService);
+
   @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
   @ViewChild(RouterOutlet) outlet!: RouterOutlet;
 
@@ -60,11 +63,9 @@ export class AppComponent implements AfterViewInit {
   );
   notifications$: Observable<Set<Notification>>;
   animation: string = "";
-  constructor(
-    private service: NotificationService,
-    translate: TranslateService,
-    private scrollService: ScrollService
-  ) {
+  constructor() {
+    const translate = inject(TranslateService);
+
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang("en-US");
 

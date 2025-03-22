@@ -1,5 +1,5 @@
 import { FlatTreeControl } from "@angular/cdk/tree";
-import { Component, ViewEncapsulation } from "@angular/core";
+import { Component, ViewEncapsulation, inject } from "@angular/core";
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule } from "@angular/material/tree";
 import { Router, RouterModule, RouterOutlet } from "@angular/router";
 
@@ -25,7 +25,9 @@ interface MenuFlatNode {
   encapsulation: ViewEncapsulation.None,
 })
 export class TreeNavComponent {
-  constructor(private readonly router: Router) {
+  private readonly router = inject(Router);
+
+  constructor() {
     //menu content
     this.dataSource.data = NavBuilder.buildTree("", this.router.config);
     console.info("[app-tree-nav] menu datasource", this.dataSource.data);

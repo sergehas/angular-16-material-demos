@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, inject } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { merge } from "rxjs";
@@ -44,6 +44,8 @@ type NotifLog = {
   ],
 })
 export class DemoNotifComponent {
+  private service = inject(NotificationService);
+
   readonly notifs: NotifLog[] = [];
   show = false;
   severity: NotificationSeverity = "info";
@@ -52,7 +54,7 @@ export class DemoNotifComponent {
   total = new FormControl<number>({ value: -1, disabled: true });
   value = new FormControl<number>({ value: -1, disabled: true });
 
-  constructor(private service: NotificationService) {
+  constructor() {
     this.service.notification$.subscribe((n) => this.logNotif(n));
 
     merge(this.total.valueChanges, this.value.valueChanges)

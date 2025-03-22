@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map } from "rxjs";
 import { FilterValue, HttpService, Page } from "../../services/http-service";
@@ -14,7 +14,9 @@ export class GithubService extends HttpService<Issue> {
   static readonly href = "https://api.github.com/search/issues";
   static readonly repo = "repo:angular/components";
 
-  constructor(http: HttpClient) {
+  constructor() {
+    const http = inject(HttpClient);
+
     super(http, GithubService.href);
     this.headers = this.headers.set("accept", "application/vnd.github+json");
   }

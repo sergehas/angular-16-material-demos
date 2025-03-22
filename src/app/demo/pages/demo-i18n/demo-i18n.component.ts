@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, inject } from "@angular/core";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
 import { LangChangeEvent, TranslateService, TranslateModule } from "@ngx-translate/core";
@@ -66,6 +66,8 @@ const WEEK_FORMATS = {
   ],
 })
 export class DemoI18nComponent implements OnDestroy {
+  private readonly translateService = inject(TranslateService);
+
   private _onLangChange: Subscription | undefined;
 
   today: Date | number = new Date();
@@ -79,7 +81,7 @@ export class DemoI18nComponent implements OnDestroy {
     this.translateService.get("format.weekYear").subscribe(onTranslation);
   }
 
-  constructor(private readonly translateService: TranslateService) {
+  constructor() {
     this._updateFormat();
 
     this._onLangChange = this.translateService.onLangChange.subscribe((_event: LangChangeEvent) => {

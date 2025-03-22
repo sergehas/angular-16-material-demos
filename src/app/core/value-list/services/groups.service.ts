@@ -1,5 +1,5 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map } from "rxjs";
 
@@ -14,7 +14,9 @@ export type GroupCrtieria = { name?: string };
 export class GroupsService extends HttpService<Group> {
   static readonly HREF = "assets/mockup/groups.json";
 
-  constructor(http: HttpClient) {
+  constructor() {
+    const http = inject(HttpClient);
+
     super(http, GroupsService.HREF);
   }
 

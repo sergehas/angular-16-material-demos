@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 
 import { MatPaginator } from "@angular/material/paginator";
 import { BehaviorSubject, Observable } from "rxjs";
@@ -11,7 +11,7 @@ import { NotificationService } from "./notification.service";
   providedIn: "root",
 })
 export class SheetExportService {
-  constructor(protected notifService: NotificationService) {}
+  protected notifService = inject(NotificationService);
 
   export<T, P extends MatPaginator | Paginator = MatPaginator>(
     source: PageableDataSource<T, P>,

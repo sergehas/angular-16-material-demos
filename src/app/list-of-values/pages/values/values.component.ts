@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   Component,
-  Inject,
   Input,
   OnDestroy,
   OnInit,
@@ -45,6 +44,9 @@ import { IconSelectComponent } from "../../../shared/components/icon-select/icon
   imports: [MatButton, MatIcon, MatLabel, MatMiniFabButton, MatPaginator, AsyncPipe],
 })
 export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
+  private readonly service = inject(ValuesService);
+  private readonly dialog = inject(MatDialog);
+
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @Input() group?: string;
 
@@ -55,10 +57,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
     return this._page;
   }
 
-  constructor(
-    private readonly service: ValuesService,
-    private readonly dialog: MatDialog
-  ) {
+  constructor() {
     this.dataSource = new PageableDataSource<Value>(this.service);
   }
 
@@ -145,14 +144,18 @@ export enum EditMode {
   ],
 })
 export class ValueEditDialog {
+  dialogRef = inject<MatDialogRef<ValueEditDialog>>(MatDialogRef);
+  data = inject<{
+    mode: EditMode;
+    entity: Value;
+  }>(MAT_DIALOG_DATA);
+
   private readonly _fb = inject(FormBuilder);
   valueForm: FormGroup;
 
-  constructor(
-    public dialogRef: MatDialogRef<ValueEditDialog>,
+  constructor() {
+    const data = this.data;
 
-    @Inject(MAT_DIALOG_DATA) public data: { mode: EditMode; entity: Value }
-  ) {
     console.log("ent", data.entity);
     this.valueForm = this._fb.group({
       name: [
