@@ -1,3 +1,4 @@
+import { FocusMonitor, FocusOrigin } from "@angular/cdk/a11y";
 import { BooleanInput, coerceBooleanProperty } from "@angular/cdk/coercion";
 import { Platform } from "@angular/cdk/platform";
 import { AutofillMonitor } from "@angular/cdk/text-field";
@@ -6,17 +7,14 @@ import {
   booleanAttribute,
   Directive,
   DoCheck,
-  effect,
   ElementRef,
   inject,
   InjectionToken,
   Input,
-  isSignal,
   NgZone,
   OnChanges,
   OnDestroy,
   Renderer2,
-  WritableSignal,
 } from "@angular/core";
 import {
   ControlValueAccessor,
@@ -36,15 +34,11 @@ export interface MatFieldConfig {
   disabledInteractive?: boolean;
 }
 
-export const APP_FIELD_VALUE_ACCESSOR = new InjectionToken<{ value: any | WritableSignal<any> }>(
-  "APP_FIELD_VALUE_ACCESSOR"
-);
-
 /** Injection token that can be used to provide the default options for the input. */
-export const APP_FIELD_CONFIG = new InjectionToken<MatFieldConfig>("MAT_FIELD_CONFIG");
+export const APP_FIELD_CONFIG = new InjectionToken<MatFieldConfig>("APP_FIELD_CONFIG");
 
 @Directive({
-  host: {
+  /*   host: {
     // Native input properties that are overwritten by Angular inputs need to be synced with
     // the native element. Otherwise property bindings for those don't work.
     "[id]": "id",
@@ -63,8 +57,7 @@ export const APP_FIELD_CONFIG = new InjectionToken<MatFieldConfig>("MAT_FIELD_CO
     "(focus)": "_focusChanged(true)",
     "(blur)": "_focusChanged(false)",
     "(input)": "_onInput()",
-  },
-  //providers: [{ provide: MatFormFieldControl, useExisting: MatInput }],
+  }, */
 })
 export abstract class AbstractMatFormField<T>
   implements
@@ -84,9 +77,8 @@ export abstract class AbstractMatFormField<T>
   private readonly _renderer = inject(Renderer2);
 
   protected _previousNativeValue: T | null;
-  private readonly _valueAccessor: { value: T | null } = { value: null };
-  private readonly _signalBasedValueAccessor?: { value: WritableSignal<any> };
   private _previousPlaceholder: string | null = null;
+  private readonly _focusMonitor = inject(FocusMonitor);
   private readonly _errorStateTracker: _ErrorStateTracker;
   private readonly _config = inject(APP_FIELD_CONFIG, { optional: true });
   private _cleanupIosKeyup: (() => void) | undefined;
@@ -197,32 +189,27 @@ export abstract class AbstractMatFormField<T>
    * Implemented as part of MatFormFieldControl.
    * @docs-private
    */
+  /* eslint-disable @angular-eslint/no-input-rename */
   @Input("aria-describedby") userAriaDescribedBy?: string;
+
+  private _value: T | null = null;
 
   /**
    * Implemented as part of MatFormFieldControl.
    * @docs-private
    */
   @Input()
-  get value(): T | null {
-    return this._signalBasedValueAccessor
-      ? this._signalBasedValueAccessor.value()
-      : this._valueAccessor.value;
+  public get value(): T | null {
+    return this._value;
   }
   set value(value: T | null) {
-    if (value !== this.value) {
-      if (this._signalBasedValueAccessor) {
-        this._signalBasedValueAccessor.value.set(value);
-      } else {
-        this._valueAccessor.value = value;
-      }
-      this._onChange(value);
-      this.stateChanges.next();
-    }
+    this._value = value;
+    this._onChange(value);
+    this.stateChanges.next();
   }
 
   /** `View -> model callback called when value changes` */
-  _onChange: (value: any) => void = () => {};
+  _onChange: (value: T | null) => void = () => {};
 
   /** `View -> model callback called when select has been touched` */
   _onTouched = () => {};
@@ -257,28 +244,19 @@ export abstract class AbstractMatFormField<T>
     const defaultErrorStateMatcher = inject(ErrorStateMatcher);
 
     const element = this._elementRef.nativeElement;
-
     if (this.ngControl) {
       this.ngControl.valueAccessor = this;
     }
-
-    const accessor = inject(APP_FIELD_VALUE_ACCESSOR, { optional: true, self: true });
-
-    if (accessor) {
-      if (isSignal(accessor.value)) {
-        this._signalBasedValueAccessor = accessor;
-      } else {
-        this._valueAccessor = accessor;
-      }
-    } else {
-      // If no input value accessor was explicitly specified, use the element as the input value
-      // accessor.
-      this._valueAccessor = element;
-    }
+    this._focusMonitor
+      .monitor(this._elementRef.nativeElement, true)
+      .subscribe((origin: FocusOrigin) => {
+        this.focused = !!origin;
+        this.stateChanges.next();
+      });
 
     this._previousNativeValue = this.value;
 
-    // Force setter to be called in case id was not specified.
+    /* eslint-disable  no-self-assign -- Force setter to be called in case id was not specified.. */
     this.id = this.id;
 
     // On some versions of iOS the caret gets stuck in the wrong place when holding down the delete
@@ -300,22 +278,16 @@ export abstract class AbstractMatFormField<T>
     this._isServer = !this._platform.isBrowser;
     this._isInFormField = !!this._formField;
     this.disabledInteractive = this._config?.disabledInteractive || false;
-
-    if (this._signalBasedValueAccessor) {
-      effect(() => {
-        // Read the value so the effect can register the dependency.
-        this._signalBasedValueAccessor!.value();
-        this.stateChanges.next();
-      });
-    }
   }
 
   ngAfterViewInit() {
     if (this._platform.isBrowser) {
-      this._autofillMonitor.monitor(this._elementRef.nativeElement).subscribe((event) => {
-        this.autofilled = event.isAutofilled;
-        this.stateChanges.next();
-      });
+      this._autofillMonitor
+        .monitor(this._elementRef.nativeElement)
+        .subscribe((event: { isAutofilled: boolean }) => {
+          this.autofilled = event.isAutofilled;
+          this.stateChanges.next();
+        });
     }
   }
 
@@ -325,6 +297,7 @@ export abstract class AbstractMatFormField<T>
 
   ngOnDestroy() {
     this.stateChanges.complete();
+    this._focusMonitor.stopMonitoring(this._elementRef.nativeElement);
 
     if (this._platform.isBrowser) {
       this._autofillMonitor.stopMonitoring(this._elementRef.nativeElement);
@@ -438,7 +411,7 @@ export abstract class AbstractMatFormField<T>
   /** Checks whether the input is invalid based on the native validation. */
   protected _isBadInput() {
     // The `validity` property won't be present on platform-server.
-    let validity = (this._elementRef.nativeElement as HTMLInputElement).validity;
+    const validity = (this._elementRef.nativeElement as HTMLInputElement).validity;
     return validity?.badInput;
   }
 
@@ -447,7 +420,7 @@ export abstract class AbstractMatFormField<T>
    * @docs-private
    */
   get empty(): boolean {
-    return !this._elementRef.nativeElement.value && !this._isBadInput() && !this.autofilled;
+    return !this.value && !this._isBadInput() && !this.autofilled;
   }
 
   /**

@@ -76,6 +76,7 @@ export class IconSelectComponent
   override get value(): string | null {
     return super.value;
   }
+
   @Input()
   public tooltip: string = "";
 
@@ -98,11 +99,12 @@ export class IconSelectComponent
     );
   }
 
-  public onSelectionChange(value: string | null) {
+  protected onSelectionChange(value: string | null) {
     this.value = value;
   }
 
   public override ngAfterViewInit(): void {
+    super.ngAfterViewInit();
     this.subscription = this.valueChange.subscribe((value) => {
       this.iconMenu?.closeMenu();
       super.value = value;
@@ -110,6 +112,7 @@ export class IconSelectComponent
   }
 
   public override ngOnDestroy(): void {
+    super.ngOnDestroy();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

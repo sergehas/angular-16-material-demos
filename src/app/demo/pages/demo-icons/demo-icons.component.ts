@@ -1,12 +1,12 @@
 import { Component, OnInit, ViewEncapsulation } from "@angular/core";
-import { FormControl, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { MatDivider } from "@angular/material/divider";
 
-import { MatLabel, MatFormField, MatError, MatHint } from "@angular/material/form-field";
-import { MatIcon } from "@angular/material/icon";
 import { MatButton } from "@angular/material/button";
-import { IconTreeComponent } from "../../../shared/components/icon-tree/icon-tree.component";
+import { MatError, MatFormField, MatHint, MatLabel } from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
 import { IconSelectComponent } from "../../../shared/components/icon-select/icon-select.component";
+import { IconTreeComponent } from "../../../shared/components/icon-tree/icon-tree.component";
 
 @Component({
   selector: "app-demo-icons",
