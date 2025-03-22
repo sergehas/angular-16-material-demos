@@ -65,11 +65,15 @@
               <code>slideBottom</code>view slides from bottom when entering. Reverse when leaving
             </li>
             <li><code>slideLeft</code>view slides from left when entering. Reverse when leaving</li>
-            <li><code>slideRight</code>view slides from right when entering. Reverse when leaving</li>
+            <li>
+              <code>slideRight</code>view slides from right when entering. Reverse when leaving
+            </li>
             <li>
               <code>slideTab</code>applicable only to routes display as tab-nav. Slide from lef or
               right depending on the previous active tab. See
-              <a href="https://github.com/angular/components/issues/18169">angular component issue</a>
+              <a href="https://github.com/angular/components/issues/18169"
+                >angular component issue</a
+              >
               for details
             </li>
           </ul>
@@ -85,8 +89,8 @@
         <dd>same as for <code>tab-nav</code></dd>
         <dt><code>&lt;Route&gt;.data.animation</code>(optional)</dt>
         <dd>
-          same as for <code>tab-nav</code>, but <code>slideTab</code> is of course not usable (no tabs
-          here).
+          same as for <code>tab-nav</code>, but <code>slideTab</code> is of course not usable (no
+          tabs here).
         </dd>
       </dl>
       <mat-divider></mat-divider>
@@ -111,17 +115,17 @@
       <h3>Sample</h3>
       <code
         >&lt;div [appAnyRoles]="['ADMIN', 'READER']" (granted)="myCompGranted=$event" &gt;...</code
-        >
-        <mat-divider></mat-divider>
-      </section>
-      <section class="demo-options">
-        <h2><code>anyRoleGuard</code> and <code>allRoleGuard</code> guards</h2>
-        <p>
-          route guard (<code>CanActivateFn</code>) using
-          <code>&lt;Route&gt;.data.roles</code>
-        </p>
-        <p>use them as <code>canActivate</code> function in your routing modules</p>
-        <mat-divider></mat-divider>
-      </section>
-    </div>
-  }
+      >
+      <mat-divider></mat-divider>
+    </section>
+    <section class="demo-options">
+      <h2><code>anyRoleGuard</code> and <code>allRoleGuard</code> guards</h2>
+      <p>
+        route guard (<code>CanActivateFn</code>) using
+        <code>&lt;Route&gt;.data.roles</code>
+      </p>
+      <p>use them as <code>canActivate</code> function in your routing modules</p>
+      <mat-divider></mat-divider>
+    </section>
+  </div>
+}

@@ -9,11 +9,11 @@ import { Notification, ProgressNotification } from "src/app/core/models/notifica
 import { NotificationService } from "src/app/core/services/notification.service";
 
 @Component({
-    selector: "app-notification",
-    imports: [CommonModule, MatIconModule, MatCardModule, MatButtonModule, MatProgressBarModule],
-    templateUrl: "./notification.component.html",
-    styleUrl: "./notification.component.scss",
-    encapsulation: ViewEncapsulation.None
+  selector: "app-notification",
+  imports: [CommonModule, MatIconModule, MatCardModule, MatButtonModule, MatProgressBarModule],
+  templateUrl: "./notification.component.html",
+  styleUrl: "./notification.component.scss",
+  encapsulation: ViewEncapsulation.None,
 })
 export class NotificationComponent {
   @Input() notification!: Notification;

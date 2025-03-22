@@ -9,10 +9,18 @@ import { MatCard, MatCardImage, MatCardContent } from "@angular/material/card";
 import { MatRipple } from "@angular/material/core";
 
 @Component({
-    selector: "app-list-of-values",
-    templateUrl: "./list-of-values.component.html",
-    styleUrls: ["./list-of-values.component.scss"],
-    imports: [TabsNavComponent, MatCard, MatRipple, RouterLink, MatCardImage, MatCardContent, AsyncPipe]
+  selector: "app-list-of-values",
+  templateUrl: "./list-of-values.component.html",
+  styleUrls: ["./list-of-values.component.scss"],
+  imports: [
+    TabsNavComponent,
+    MatCard,
+    MatRipple,
+    RouterLink,
+    MatCardImage,
+    MatCardContent,
+    AsyncPipe,
+  ],
 })
 export class ListOfValuesComponent {
   countGroups$: Observable<number>;

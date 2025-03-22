@@ -36,125 +36,125 @@
     [(ngModel)]="paginatorEnabled"
     (change)="dataSource.paginator = paginatorEnabled ? paginator : undefined"
     >Enable paginiator</mat-slide-toggle
+  >
+  <mat-slide-toggle
+    [(ngModel)]="sortEnabled"
+    (change)="dataSource.sort = sortEnabled ? sort : undefined"
+    >Enable sort</mat-slide-toggle
+  >
+  <div>
+    <mat-slide-toggle [(ngModel)]="autoloadEnabled" (change)="resetDatasource()"
+      >Initial autoloading</mat-slide-toggle
+    >&nbsp;
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="filter.setValue(null); dataSource.filter = {}"
+      [disabled]="autoloadEnabled"
     >
-    <mat-slide-toggle
-      [(ngModel)]="sortEnabled"
-      (change)="dataSource.sort = sortEnabled ? sort : undefined"
-      >Enable sort</mat-slide-toggle
+      <mat-icon>refresh</mat-icon>
+      Load
+    </button>
+  </div>
+</section>
+<mat-divider></mat-divider>
+
+<section class="demo-options mat-elevation-z8">
+  <div class="label-container">
+    <mat-form-field appearance="outline" class="filter">
+      <mat-label>Filter</mat-label>
+      <input matInput type="text" [formControl]="filter" placeholder="is:open" />
+      <mat-hint
+        class="active-hint"
+        (click)="filter.setValue('is:open matTable')"
+        (keydown.enter)="filter.setValue('is:open matTable')"
+        >e.g.: is:open matTable</mat-hint
       >
-      <div>
-        <mat-slide-toggle [(ngModel)]="autoloadEnabled" (change)="resetDatasource()"
-          >Initial autoloading</mat-slide-toggle
-          >&nbsp;
-          <button
-            mat-flat-button
-            color="primary"
-            (click)="filter.setValue(null); dataSource.filter = {}"
-            [disabled]="autoloadEnabled"
-            >
-            <mat-icon>refresh</mat-icon>
-            Load
-          </button>
-        </div>
-      </section>
-      <mat-divider></mat-divider>
+    </mat-form-field>
+    <button mat-flat-button color="primary" class="icon-only" (click)="setFilter()">
+      <mat-icon>filter_list</mat-icon>
+      Apply
+    </button>
+  </div>
 
-      <section class="demo-options mat-elevation-z8">
-        <div class="label-container">
-          <mat-form-field appearance="outline" class="filter">
-            <mat-label>Filter</mat-label>
-            <input matInput type="text" [formControl]="filter" placeholder="is:open" />
-            <mat-hint
-              class="active-hint"
-              (click)="filter.setValue('is:open matTable')"
-              (keydown.enter)="filter.setValue('is:open matTable')"
-              >e.g.: is:open matTable</mat-hint
-              >
-            </mat-form-field>
-            <button mat-flat-button color="primary" class="icon-only" (click)="setFilter()">
-              <mat-icon>filter_list</mat-icon>
-              Apply
-            </button>
-          </div>
+  <table
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    [matSortActive]="sortEnabled ? 'created' : ''"
+    matSortDisableClear
+    [matSortDirection]="sortEnabled ? 'desc' : ''"
+  >
+    <!-- Number Column -->
+    <ng-container matColumnDef="number">
+      <th mat-header-cell *matHeaderCellDef>#</th>
+      <td mat-cell *matCellDef="let row">{{ row.number }}</td>
+    </ng-container>
 
-          <table
-            mat-table
-            [dataSource]="dataSource"
-            matSort
-            [matSortActive]="sortEnabled ? 'created' : ''"
-            matSortDisableClear
-            [matSortDirection]="sortEnabled ? 'desc' : ''"
-            >
-            <!-- Number Column -->
-            <ng-container matColumnDef="number">
-              <th mat-header-cell *matHeaderCellDef>#</th>
-              <td mat-cell *matCellDef="let row">{{ row.number }}</td>
-            </ng-container>
+    <!-- Title Column -->
+    <ng-container matColumnDef="title">
+      <th mat-header-cell *matHeaderCellDef>Title</th>
+      <td mat-cell *matCellDef="let row">{{ row.title }}</td>
+    </ng-container>
 
-            <!-- Title Column -->
-            <ng-container matColumnDef="title">
-              <th mat-header-cell *matHeaderCellDef>Title</th>
-              <td mat-cell *matCellDef="let row">{{ row.title }}</td>
-            </ng-container>
+    <!-- State Column -->
+    <ng-container matColumnDef="state">
+      <th mat-header-cell *matHeaderCellDef>State</th>
+      <td mat-cell *matCellDef="let row">{{ row.state }}</td>
+    </ng-container>
 
-            <!-- State Column -->
-            <ng-container matColumnDef="state">
-              <th mat-header-cell *matHeaderCellDef>State</th>
-              <td mat-cell *matCellDef="let row">{{ row.state }}</td>
-            </ng-container>
+    <!-- Created Column -->
+    <ng-container matColumnDef="created">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!sortEnabled" disableClear>
+        Created
+      </th>
+      <td mat-cell *matCellDef="let row">{{ row.created | date }}</td>
+    </ng-container>
 
-            <!-- Created Column -->
-            <ng-container matColumnDef="created">
-              <th mat-header-cell *matHeaderCellDef mat-sort-header [disabled]="!sortEnabled" disableClear>
-                Created
-              </th>
-              <td mat-cell *matCellDef="let row">{{ row.created | date }}</td>
-            </ng-container>
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+  <mat-paginator
+    [hidden]="!paginatorEnabled"
+    [pageSizeOptions]="[5, 10, 20, 100]"
+    showFirstLastButtons
+    [length]="dataSource.length$ | async"
+    aria-label="Select page"
+  >
+  </mat-paginator>
+</section>
+<br />
+<mat-divider></mat-divider>
+<section class="demo-options">
+  <div class="demo-bar">
+    <h2>Datasource event log</h2>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-          </table>
-          <mat-paginator
-            [hidden]="!paginatorEnabled"
-            [pageSizeOptions]="[5, 10, 20, 100]"
-            showFirstLastButtons
-            [length]="dataSource.length$ | async"
-            aria-label="Select page"
-            >
-          </mat-paginator>
-        </section>
-        <br />
-        <mat-divider></mat-divider>
-        <section class="demo-options">
-          <div class="demo-bar">
-            <h2>Datasource event log</h2>
+    <button
+      mat-flat-button
+      class="icon-only"
+      color="accent"
+      matBadgePosition="below before"
+      [matBadgeHidden]="!(dataSourceEvents$ | async)?.length"
+      [matBadge]="(dataSourceEvents$ | async)?.length"
+      matBadgeColor="primary"
+      (click)="dataSourceEvents$.value.length = 0"
+    >
+      <mat-icon>playlist_remove</mat-icon>
+      clear
+    </button>
+  </div>
 
-            <button
-              mat-flat-button
-              class="icon-only"
-              color="accent"
-              matBadgePosition="below before"
-              [matBadgeHidden]="!(dataSourceEvents$ | async)?.length"
-              [matBadge]="(dataSourceEvents$ | async)?.length"
-              matBadgeColor="primary"
-              (click)="dataSourceEvents$.value.length = 0"
-              >
-              <mat-icon>playlist_remove</mat-icon>
-              clear
-            </button>
-          </div>
+  @if (!(dataSourceEvents$ | async)?.length) {
+    <div>Datasource events will be logged here</div>
+  }
 
-          @if (!(dataSourceEvents$ | async)?.length) {
-            <div>Datasource events will be logged here</div>
-          }
-
-          <section class="demo-log">
-            <ol>
-              @for (event of dataSourceEvents$ | async; track event) {
-                <li>
-                  {{ event }}
-                </li>
-              }
-            </ol>
-          </section>
-        </section>
+  <section class="demo-log">
+    <ol>
+      @for (event of dataSourceEvents$ | async; track event) {
+        <li>
+          {{ event }}
+        </li>
+      }
+    </ol>
+  </section>
+</section>

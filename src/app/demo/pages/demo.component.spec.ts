@@ -11,8 +11,8 @@ describe("DemoComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [TabsNavComponent, RouterModule.forRoot([]), NoopAnimationsModule, DemoComponent],
-});
+      imports: [TabsNavComponent, RouterModule.forRoot([]), NoopAnimationsModule, DemoComponent],
+    });
     fixture = TestBed.createComponent(DemoComponent);
     TestBed.inject(Router);
     component = fixture.componentInstance;

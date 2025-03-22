@@ -1,13 +1,13 @@
 <mat-card class="notification-card" [class]="'notification-' + notification.severity">
   <mat-card-header class="notification-header">
     @switch (notification.severity) {
-      @case ('sever') {
+      @case ("sever") {
         <mat-icon>error</mat-icon>
       }
-      @case ('warn') {
+      @case ("warn") {
         <mat-icon>warning</mat-icon>
       }
-      @case ('info') {
+      @case ("info") {
         <mat-icon>info</mat-icon>
       }
       @default {
@@ -17,11 +17,8 @@
     <div class="notification-title">
       {{ notification.date | date: "hh:mm:ss" }}
     </div>
-    @if (notification.ref !== undefined && notification.ref !== '') {
-      <a
-        mat-icon-button
-        [href]="notification.ref"
-        >
+    @if (notification.ref !== undefined && notification.ref !== "") {
+      <a mat-icon-button [href]="notification.ref">
         <mat-icon>link</mat-icon>
       </a>
     }
@@ -42,7 +39,7 @@
           [mode]="progressMode"
           [value]="progressValue"
           [color]="progressColor"
-          >
+        >
         </mat-progress-bar>
       }
       @if (hasProgress) {

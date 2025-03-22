@@ -27,14 +27,14 @@ describe("DemoIconsComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [DemoModule, NoopAnimationsModule, DemoIconsComponent],
-    providers: [
+      imports: [DemoModule, NoopAnimationsModule, DemoIconsComponent],
+      providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
         { provide: IconsService, useClass: MockIconsService },
         // { provide: MatIconRegistry, useClass: FakeMatIconRegistry }
-    ],
-}).compileComponents();
+      ],
+    }).compileComponents();
     fixture = TestBed.createComponent(DemoIconsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

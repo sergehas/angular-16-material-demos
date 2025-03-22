@@ -26,12 +26,10 @@
   <h2><code>mat-icon svgIcon</code></h2>
   <div class="mat-elevation-z4 demo-container">
     @for (
-      icon of ['brands-gcp', 'countries-Europe-European_Union-se', 'countries-Australia-au']
-      ; track
-      icon) {
-      <div
-        class="label-icon"
-        >
+      icon of ["brands-gcp", "countries-Europe-European_Union-se", "countries-Australia-au"];
+      track icon
+    ) {
+      <div class="label-icon">
         <mat-label
           >icon <code>parameter:{{ icon }}</code>
         </mat-label>
@@ -50,7 +48,7 @@
       color="accent"
       matBadgePosition="below before"
       (click)="selected = null"
-      >
+    >
       CLEAR
     </button>
   </div>

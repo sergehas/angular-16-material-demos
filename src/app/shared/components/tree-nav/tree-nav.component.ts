@@ -3,7 +3,6 @@ import { Component, ViewEncapsulation } from "@angular/core";
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule } from "@angular/material/tree";
 import { Router, RouterModule, RouterOutlet } from "@angular/router";
 
-
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
@@ -19,17 +18,11 @@ interface MenuFlatNode {
 }
 
 @Component({
-    selector: "app-tree-nav",
-    imports: [
-    MatIconModule,
-    MatTreeModule,
-    MatListModule,
-    MatButtonModule,
-    RouterModule
-],
-    templateUrl: "./tree-nav.component.html",
-    styleUrl: "./tree-nav.component.scss",
-    encapsulation: ViewEncapsulation.None
+  selector: "app-tree-nav",
+  imports: [MatIconModule, MatTreeModule, MatListModule, MatButtonModule, RouterModule],
+  templateUrl: "./tree-nav.component.html",
+  styleUrl: "./tree-nav.component.scss",
+  encapsulation: ViewEncapsulation.None,
 })
 export class TreeNavComponent {
   constructor(private readonly router: Router) {

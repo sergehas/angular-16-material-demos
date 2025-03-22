@@ -1,4 +1,3 @@
-
 import {
   AfterViewInit,
   Component,
@@ -20,10 +19,10 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 
 import { FocusMonitor } from "@angular/cdk/a11y";
 import { FormControl, FormGroupDirective, FormsModule, NgControl, NgForm } from "@angular/forms";
-import { MatFormFieldControl } from "@angular/material/form-field";
 import { Subscription } from "rxjs";
 
 import { MatButtonModule } from "@angular/material/button";
+import { MatFormFieldControl } from "@angular/material/form-field";
 import { AbstractMatFormField } from "../abstract-mat-form-field";
 import { IconTreeComponent } from "../icon-tree/icon-tree.component";
 /**
@@ -36,25 +35,25 @@ import { IconTreeComponent } from "../icon-tree/icon-tree.component";
  * @implements {OnDestroy} to destroy subscription
  */
 @Component({
-    selector: "app-icon-select",
-    templateUrl: "./icon-select.component.html",
-    styleUrls: ["./icon-select.component.scss"],
-    encapsulation: ViewEncapsulation.None,
-    imports: [
+  selector: "app-icon-select",
+  templateUrl: "./icon-select.component.html",
+  styleUrls: ["./icon-select.component.scss"],
+  encapsulation: ViewEncapsulation.None,
+  imports: [
     MatIconModule,
     MatTooltipModule,
     MatMenuModule,
     MatButtonModule,
     IconTreeComponent,
     MatRippleModule,
-    FormsModule
-],
-    providers: [
-        {
-            provide: MatFormFieldControl,
-            useExisting: forwardRef(() => IconSelectComponent),
-        },
-    ]
+    FormsModule,
+  ],
+  providers: [
+    {
+      provide: MatFormFieldControl,
+      useExisting: forwardRef(() => IconSelectComponent),
+    },
+  ],
 })
 export class IconSelectComponent
   extends AbstractMatFormField<string>
@@ -63,7 +62,7 @@ export class IconSelectComponent
   private subscription: Subscription | null = null;
   protected control = new FormControl();
   //visual element to  focus
-  @ViewChild("button", { static: false })
+  @ViewChild(".icon-btn", { static: false })
   private readonly ctrl: HTMLElement | undefined;
   @ViewChild(MatMenuTrigger) iconMenu: MatMenuTrigger | null = null;
 
@@ -103,7 +102,7 @@ export class IconSelectComponent
     this.value = value;
   }
 
-  public ngAfterViewInit(): void {
+  public override ngAfterViewInit(): void {
     this.subscription = this.valueChange.subscribe((value) => {
       this.iconMenu?.closeMenu();
       super.value = value;
@@ -117,7 +116,7 @@ export class IconSelectComponent
     super.ngOnDestroy();
   }
 
-  public focus(): void {
-    this.ctrl!.focus();
+  public override focus(): void {
+    this.ctrl?.focus();
   }
 }

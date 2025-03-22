@@ -8,8 +8,22 @@ import {
   ViewChild,
   inject,
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef, MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose } from "@angular/material/dialog";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from "@angular/forms";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+} from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
 import { BehaviorSubject, tap } from "rxjs";
@@ -25,10 +39,10 @@ import { MatInput } from "@angular/material/input";
 import { IconSelectComponent } from "../../../shared/components/icon-select/icon-select.component";
 
 @Component({
-    selector: "app-values",
-    templateUrl: "./values.component.html",
-    styleUrls: ["./values.component.scss"],
-    imports: [MatButton, MatIcon, MatLabel, MatMiniFabButton, MatPaginator, AsyncPipe]
+  selector: "app-values",
+  templateUrl: "./values.component.html",
+  styleUrls: ["./values.component.scss"],
+  imports: [MatButton, MatIcon, MatLabel, MatMiniFabButton, MatPaginator, AsyncPipe],
 })
 export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -112,10 +126,23 @@ export enum EditMode {
 }
 
 @Component({
-    selector: "app-value-edit-dialog",
-    templateUrl: "value-edit.dialog.html",
-    styleUrls: ["./value-edit.dialog.scss"],
-    imports: [MatDialogTitle, CdkScrollable, MatDialogContent, FormsModule, ReactiveFormsModule, MatFormField, MatInput, IconSelectComponent, MatHint, MatDialogActions, MatButton, MatDialogClose]
+  selector: "app-value-edit-dialog",
+  templateUrl: "value-edit.dialog.html",
+  styleUrls: ["./value-edit.dialog.scss"],
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormField,
+    MatInput,
+    IconSelectComponent,
+    MatHint,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+  ],
 })
 export class ValueEditDialog {
   private readonly _fb = inject(FormBuilder);

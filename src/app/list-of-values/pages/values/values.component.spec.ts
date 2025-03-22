@@ -13,9 +13,9 @@ describe("ValuesComponent", () => {
     const service = jasmine.createSpyObj("ValuesService", ["find", "count"]);
 
     TestBed.configureTestingModule({
-    imports: [ListOfValuesModule, NoopAnimationsModule, ValuesComponent],
-    providers: [{ provide: ValuesService, useValue: service }],
-});
+      imports: [ListOfValuesModule, NoopAnimationsModule, ValuesComponent],
+      providers: [{ provide: ValuesService, useValue: service }],
+    });
     fixture = TestBed.createComponent(ValuesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

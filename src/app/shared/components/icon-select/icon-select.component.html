@@ -6,7 +6,7 @@
     matTooltip="{{ tooltip }}"
     [disabled]="disabled"
     [mat-menu-trigger-for]="iconMenu"
-    >
+  >
     <div class="icon-value">
       <!-- <mat-icon class="placeholder" *ngIf="!value">more_horiz</mat-icon> -->
       @if (!value) {
@@ -33,7 +33,7 @@
       aria-label="clear icon"
       (click)="value = null"
       class="clear-button"
-      >
+    >
       <mat-icon>close</mat-icon>
     </button>
   }
@@ -41,9 +41,9 @@
   <!-- <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear" (click)="value=''">
   <mat-icon>close</mat-icon>
 </button> -->
-<app-icon-tree
-  [expanded]="true"
-  [value]="value"
-  (valueChange)="onSelectionChange($event)"
-></app-icon-tree>
+  <app-icon-tree
+    [expanded]="true"
+    [value]="value"
+    (valueChange)="onSelectionChange($event)"
+  ></app-icon-tree>
 </mat-menu>

@@ -17,7 +17,6 @@ import { MatInput } from "@angular/material/input";
 import { MatBadge } from "@angular/material/badge";
 import { MatIcon } from "@angular/material/icon";
 
-
 type NotifLog = {
   id: string;
   message: string;
@@ -26,10 +25,23 @@ type NotifLog = {
 };
 
 @Component({
-    selector: "app-demo-notif",
-    templateUrl: "./demo-notif.component.html",
-    styleUrl: "./demo-notif.component.scss",
-    imports: [MatDivider, MatRadioGroup, FormsModule, MatRadioButton, MatSlideToggle, MatButton, MatFormField, MatLabel, MatInput, ReactiveFormsModule, MatBadge, MatIcon]
+  selector: "app-demo-notif",
+  templateUrl: "./demo-notif.component.html",
+  styleUrl: "./demo-notif.component.scss",
+  imports: [
+    MatDivider,
+    MatRadioGroup,
+    FormsModule,
+    MatRadioButton,
+    MatSlideToggle,
+    MatButton,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    ReactiveFormsModule,
+    MatBadge,
+    MatIcon,
+  ],
 })
 export class DemoNotifComponent {
   readonly notifs: NotifLog[] = [];

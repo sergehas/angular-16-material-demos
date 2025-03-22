@@ -9,10 +9,10 @@ import { Category } from "src/app/core/icons/models/category";
 import { IconsService } from "src/app/core/icons/services/icons.service";
 
 @Component({
-    selector: "app-icon-tree",
-    templateUrl: "./icon-tree.component.html",
-    styleUrls: ["./icon-tree.component.scss"],
-    imports: [MatTreeModule, MatIconModule, MatButtonModule, MatRippleModule]
+  selector: "app-icon-tree",
+  templateUrl: "./icon-tree.component.html",
+  styleUrls: ["./icon-tree.component.scss"],
+  imports: [MatTreeModule, MatIconModule, MatButtonModule, MatRippleModule],
 })
 export class IconTreeComponent implements OnInit {
   @Input() value: string | null = null;

@@ -12,9 +12,9 @@ describe("DemoTableComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-    imports: [DemoModule, NoopAnimationsModule, DemoTableComponent],
-    providers: [provideHttpClient(), provideHttpClientTesting()],
-});
+      imports: [DemoModule, NoopAnimationsModule, DemoTableComponent],
+      providers: [provideHttpClient(), provideHttpClientTesting()],
+    });
     fixture = TestBed.createComponent(DemoTableComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();

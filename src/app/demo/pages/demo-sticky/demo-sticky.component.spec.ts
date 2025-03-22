@@ -10,8 +10,8 @@ describe("DemoStickyComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-    imports: [DemoModule, NoopAnimationsModule, DemoStickyComponent],
-}).compileComponents();
+      imports: [DemoModule, NoopAnimationsModule, DemoStickyComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DemoStickyComponent);
     component = fixture.componentInstance;

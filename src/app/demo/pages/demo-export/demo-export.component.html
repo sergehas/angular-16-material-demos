@@ -54,7 +54,7 @@
       [matBadge]="exportEvents.length"
       matBadgeColor="primary"
       (click)="resetProgress()"
-      >
+    >
       <mat-icon>delete</mat-icon>
       clear
     </button>
@@ -64,7 +64,7 @@
     [mode]="progressMode"
     [value]="progressValue"
     [color]="progressColor"
-    >
+  >
   </mat-progress-bar>
 
   @if (!exportEvents.length) {
@@ -73,9 +73,7 @@
 
   <ul class="logs">
     @for (event of exportEvents$ | async; track event) {
-      <li>
-        [{{ event.timestamp.toISOString() }}] {{ event.message }}
-      </li>
+      <li>[{{ event.timestamp.toISOString() }}] {{ event.message }}</li>
     }
   </ul>
 </section>

@@ -28,12 +28,9 @@
     [style.max-height]="
       options!.paginator ? 'calc(' + maxHeight + ' - var(--pagaginator-height))' : maxHeight
     "
-    >
+  >
     @for (column of options!.columns.columns; track column) {
-      <ng-container
-        [matColumnDef]="column.name"
-        [sticky]="column.sticky && !column.hidden"
-        >
+      <ng-container [matColumnDef]="column.name" [sticky]="column.sticky && !column.hidden">
         <!-- Checkbox Column (header)-->
         @if (column.selector) {
           <mat-header-cell *matHeaderCellDef class="selector-column" [hidden]="column.hidden">
@@ -41,7 +38,7 @@
               (change)="$event ? toggleAllRows() : null"
               [checked]="selection!.hasValue() && isAllSelected()"
               [indeterminate]="selection!.hasValue() && !isAllSelected()"
-              >
+            >
             </mat-checkbox>
           </mat-header-cell>
           <mat-cell *matCellDef="let row" class="selector-column" [hidden]="column.hidden">
@@ -49,7 +46,7 @@
               (click)="$event.stopPropagation()"
               (change)="$event ? selection!.toggle(row) : null"
               [checked]="selection!.isSelected(row)"
-              >
+            >
             </mat-checkbox>
           </mat-cell>
         }
@@ -60,7 +57,7 @@
             [disabled]="!column.sortable"
             [hidden]="column.hidden"
             *matHeaderCellDef
-            >
+          >
             {{ column.name }}
           </mat-header-cell>
           <mat-cell *matCellDef="let row" [hidden]="column.hidden">
@@ -96,6 +93,6 @@
     showFirstLastButtons
     [length]="dataSource.length$ | async"
     aria-label="Select page"
-    >
+  >
   </mat-paginator>
 }

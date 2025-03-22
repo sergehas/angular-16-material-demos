@@ -8,10 +8,10 @@ import { AnyRolesDirective } from "./any-roles.directive";
  * Test component to host the directive.
  */
 @Component({
-    template: `<span class="none" [appAnyRoles]="[]"></span>
+  template: `<span class="none" [appAnyRoles]="[]"></span>
     <span class="allowed" [appAnyRoles]="['ADMIN', 'AUTHOR']"></span>
     <span class="denied" [appAnyRoles]="['NOT_GRANTED_ROLE']"></span>`,
-    imports: [AnyRolesDirective]
+  imports: [AnyRolesDirective],
 })
 class TestComponent {}
 

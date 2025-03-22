@@ -21,10 +21,7 @@
 <section class="notif-list" [attr.data-sort]="sort">
   @for (notif of notifications$ | async; track trackItem($index, notif)) {
     @if (displayNotification(notif)) {
-      <app-notification
-        [class]="'notification-' + notif.severity"
-        [notification]="notif"
-        >
+      <app-notification [class]="'notification-' + notif.severity" [notification]="notif">
       </app-notification>
     }
   }

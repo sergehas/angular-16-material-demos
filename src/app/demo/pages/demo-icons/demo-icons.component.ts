@@ -9,11 +9,23 @@ import { IconTreeComponent } from "../../../shared/components/icon-tree/icon-tre
 import { IconSelectComponent } from "../../../shared/components/icon-select/icon-select.component";
 
 @Component({
-    selector: "app-demo-icons",
-    templateUrl: "./demo-icons.component.html",
-    styleUrls: ["./demo-icons.component.scss"],
-    encapsulation: ViewEncapsulation.None,
-    imports: [MatDivider, MatLabel, MatIcon, MatButton, IconTreeComponent, IconSelectComponent, MatFormField, FormsModule, ReactiveFormsModule, MatError, MatHint]
+  selector: "app-demo-icons",
+  templateUrl: "./demo-icons.component.html",
+  styleUrls: ["./demo-icons.component.scss"],
+  encapsulation: ViewEncapsulation.None,
+  imports: [
+    MatDivider,
+    MatLabel,
+    MatIcon,
+    MatButton,
+    IconTreeComponent,
+    IconSelectComponent,
+    MatFormField,
+    FormsModule,
+    ReactiveFormsModule,
+    MatError,
+    MatHint,
+  ],
 })
 export class DemoIconsComponent implements OnInit {
   selected: string | null = "parameter:brands-azure";

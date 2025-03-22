@@ -27,12 +27,26 @@ import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.componen
 import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
 
 @Component({
-    selector: "app-root",
-    templateUrl: "./app.component.html",
-    styleUrls: ["./app.component.scss"],
-    animations: [slideAnimations],
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatToolbar, MatIconButton, MatIcon, MatButton, RouterLink, MatBadge, MatSidenavContainer, MatSidenav, TreeNavComponent, MatSidenavContent, RouterOutlet, NotificationCenterComponent, AsyncPipe]
+  selector: "app-root",
+  templateUrl: "./app.component.html",
+  styleUrls: ["./app.component.scss"],
+  animations: [slideAnimations],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MatToolbar,
+    MatIconButton,
+    MatIcon,
+    MatButton,
+    RouterLink,
+    MatBadge,
+    MatSidenavContainer,
+    MatSidenav,
+    TreeNavComponent,
+    MatSidenavContent,
+    RouterOutlet,
+    NotificationCenterComponent,
+    AsyncPipe,
+  ],
 })
 export class AppComponent implements AfterViewInit {
   @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;

@@ -4,10 +4,10 @@ import { TabsNavComponent } from "../../shared/components/tabs-nav/tabs-nav.comp
 import { MatDivider } from "@angular/material/divider";
 
 @Component({
-    selector: "app-nav",
-    templateUrl: "./nav.component.html",
-    styleUrl: "./nav.component.scss",
-    imports: [TabsNavComponent, MatDivider]
+  selector: "app-nav",
+  templateUrl: "./nav.component.html",
+  styleUrl: "./nav.component.scss",
+  imports: [TabsNavComponent, MatDivider],
 })
 export class NavComponent {
   isactive = true;

@@ -7,7 +7,7 @@
   [class.sticky]="sticky"
   [class.mat-elevation-z1]="sticky"
   (indexFocused)="onFocus($event)"
-  >
+>
   <!-- add [appAnyRoles]="link.roles" (granted)="link.granted=$event" to the ng-container  to hide the tabs-->
   @for (link of navLinks; track link) {
     <!-- add  *ngIf="link.granted" to the mat-tab-link to hide the tabs-->
@@ -17,7 +17,7 @@
       routerLinkActive
       #rla="routerLinkActive"
       [active]="rla.isActive"
-      >
+    >
       @if (link.icon !== undefined) {
         <mat-icon class="tab-icon" [fontIcon]="link.icon"></mat-icon>
       }

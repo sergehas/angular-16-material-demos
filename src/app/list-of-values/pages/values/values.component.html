@@ -1,11 +1,7 @@
 <div>
   <div class="value-list">
     @for (v of page | async; track v) {
-      <button
-        mat-stroked-button
-        (click)="createOrEdit(v)"
-        class="value-button"
-        >
+      <button mat-stroked-button (click)="createOrEdit(v)" class="value-button">
         <div class="value-item">
           @if (v.icon) {
             <mat-icon [svgIcon]="v.icon"></mat-icon>
@@ -24,7 +20,7 @@
       aria-label="add"
       (click)="createOrEdit()"
       class="add-button"
-      >
+    >
       <mat-icon>add</mat-icon>
     </button>
   </div>
@@ -35,6 +31,6 @@
     showFirstLastButtons
     [length]="dataSource.length$ | async"
     aria-label="Select page"
-    >
+  >
   </mat-paginator>
 </div>

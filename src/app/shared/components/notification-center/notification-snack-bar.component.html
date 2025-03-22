@@ -1,31 +1,32 @@
 <span class="snack-label" matSnackBarLabel>
   @switch (data.severity) {
-    @case ('sever') {
+    @case ("sever") {
       <mat-icon>error</mat-icon>
     }
-    @case ('warn') {
+    @case ("warn") {
       <mat-icon>warning</mat-icon>
     }
-    @case ('info') {
+    @case ("info") {
       <mat-icon>info</mat-icon>
     }
     @default {
       <mat-icon>circle_notifications</mat-icon>
-      } }
-      {{ data.message }}
-    </span>
-    @if (data.persistent) {
-      <span matSnackBarActions>
-        <button mat-icon-button matSnackBarAction (click)="close()" arial-label="OK">
-          <mat-icon>check</mat-icon>
-        </button>
-        <button
-          mat-icon-button
-          matSnackBarAction
-          (click)="dismissNotification(data)"
-          aria-label="Dismiss"
-          >
-          <mat-icon>delete_forever</mat-icon>
-        </button>
-      </span>
     }
+  }
+  {{ data.message }}
+</span>
+@if (data.persistent) {
+  <span matSnackBarActions>
+    <button mat-icon-button matSnackBarAction (click)="close()" arial-label="OK">
+      <mat-icon>check</mat-icon>
+    </button>
+    <button
+      mat-icon-button
+      matSnackBarAction
+      (click)="dismissNotification(data)"
+      aria-label="Dismiss"
+    >
+      <mat-icon>delete_forever</mat-icon>
+    </button>
+  </span>
+}

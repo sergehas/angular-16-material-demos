@@ -1,4 +1,3 @@
-
 import {
   AfterViewInit,
   ChangeDetectionStrategy,
@@ -37,18 +36,12 @@ const TAB_SLIDE_ANIMATION = "tabSlide";
  */
 
 @Component({
-    selector: "app-tabs-nav",
-    templateUrl: "./tabs-nav.component.html",
-    styleUrls: ["./tabs-nav.component.scss"],
-    imports: [
-    RouterModule,
-    MatTabsModule,
-    MatIconModule,
-    RouterLink,
-    RouterOutlet
-],
-    animations: [slideAnimations],
-    changeDetection: ChangeDetectionStrategy.OnPush
+  selector: "app-tabs-nav",
+  templateUrl: "./tabs-nav.component.html",
+  styleUrls: ["./tabs-nav.component.scss"],
+  imports: [RouterModule, MatTabsModule, MatIconModule, RouterLink, RouterOutlet],
+  animations: [slideAnimations],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsNavComponent implements OnInit, AfterViewInit {
   @Input() path: string = "";

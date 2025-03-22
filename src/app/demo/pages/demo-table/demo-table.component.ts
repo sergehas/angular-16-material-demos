@@ -11,13 +11,20 @@ import { MatSlider, MatSliderThumb } from "@angular/material/slider";
 import { TableExpandableRowsComponent } from "../../../shared/components/table-expandable-rows/table-expandable-rows.component";
 
 @Component({
-    selector: "app-demo-table",
-    templateUrl: "./demo-table.component.html",
-    styleUrls: ["./demo-table.component.scss"],
-    encapsulation: ViewEncapsulation.None,
-    //required as nested component uses observable in html
-    changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [MatDivider, MatSlideToggle, FormsModule, MatSlider, MatSliderThumb, TableExpandableRowsComponent]
+  selector: "app-demo-table",
+  templateUrl: "./demo-table.component.html",
+  styleUrls: ["./demo-table.component.scss"],
+  encapsulation: ViewEncapsulation.None,
+  //required as nested component uses observable in html
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MatDivider,
+    MatSlideToggle,
+    FormsModule,
+    MatSlider,
+    MatSliderThumb,
+    TableExpandableRowsComponent,
+  ],
 })
 export class DemoTableComponent {
   dataSource!: PageableDataSource<Issue>;

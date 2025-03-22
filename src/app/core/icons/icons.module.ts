@@ -1,5 +1,5 @@
-import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { APP_INITIALIZER, NgModule, Optional, SkipSelf } from "@angular/core";
 import { IconsService } from "./services/icons.service";
 
 /**
@@ -18,7 +18,7 @@ function initWithDependencyFactory(iconsService: IconsService) {
   declarations: [],
   imports: [CommonModule],
   providers: [
-    // "easy" way to inforce service initialization
+    // "easy" way to enforce service initialization
     IconsService,
     {
       provide: APP_INITIALIZER,

@@ -22,9 +22,7 @@
 <div mat-dialog-actions>
   <button mat-button [mat-dialog-close]="" cdkFocusInitial>CANCEL</button>
   @if (data.mode===1) {
-    <button mat-button [mat-dialog-close]="" (click)="delete()" color="accent">
-      Delete
-    </button>
+  <button mat-button [mat-dialog-close]="" (click)="delete()" color="accent">Delete</button>
   }
   <button mat-button (click)="save()" color="primary">SAVE</button>
 </div>

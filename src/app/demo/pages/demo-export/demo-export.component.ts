@@ -26,10 +26,25 @@ type LogItem = {
 };
 
 @Component({
-    selector: "app-demo-export",
-    templateUrl: "./demo-export.component.html",
-    styleUrls: ["./demo-export.component.scss"],
-    imports: [MatDivider, MatFormField, MatLabel, MatInput, FormsModule, ReactiveFormsModule, MatHint, MatSelect, MatOption, MatButton, MatBadge, MatIcon, MatProgressBar, AsyncPipe]
+  selector: "app-demo-export",
+  templateUrl: "./demo-export.component.html",
+  styleUrls: ["./demo-export.component.scss"],
+  imports: [
+    MatDivider,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    FormsModule,
+    ReactiveFormsModule,
+    MatHint,
+    MatSelect,
+    MatOption,
+    MatButton,
+    MatBadge,
+    MatIcon,
+    MatProgressBar,
+    AsyncPipe,
+  ],
 })
 export class DemoExportComponent {
   exportEvents: LogItem[] = [];

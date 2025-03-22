@@ -14,18 +14,18 @@ import { FormsModule } from "@angular/forms";
 import { TableColumn, TableConfig } from "../table-expandable-rows/table-config";
 
 @Component({
-    selector: "app-table-config-editor",
-    templateUrl: "./table-config-editor.component.html",
-    styleUrls: ["./table-config-editor.component.scss"],
-    imports: [
+  selector: "app-table-config-editor",
+  templateUrl: "./table-config-editor.component.html",
+  styleUrls: ["./table-config-editor.component.scss"],
+  imports: [
     MatIconModule,
     MatButtonModule,
     MatSlideToggleModule,
     FormsModule,
     CdkDropList,
     CdkDrag,
-    CdkDragHandle
-]
+    CdkDragHandle,
+  ],
 })
 export class TableConfigEditorComponent {
   @Input() options!: TableConfig;
