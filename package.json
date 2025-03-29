@@ -74,8 +74,8 @@
     "typescript-eslint": "^8.26.0"
   },
   "lint-staged": {
-    "*.{js,ts,json}": [
-      "eslint --quiet --fix",
+    "*.{mjs,json,css,scss,md,ts,html}": [
+      "eslint --fix",
       "prettier --write --ignore-unknown"
     ]
   },

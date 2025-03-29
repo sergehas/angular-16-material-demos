@@ -19,12 +19,12 @@ export class IconsService {
   private readonly matIconRegistry = inject(MatIconRegistry);
   private readonly domSanitizer = inject(DomSanitizer);
 
-  private iconlib = new Category("root");
+  private iconLib = new Category("root");
 
   async loadConfiguration() {
-    const libData = await lastValueFrom(this.http.get("assets/iconlib.json"));
-    this.iconlib = this.load(libData as IconLibFormat);
-    console.info("[IconsService] iconlib build: ", this.iconlib);
+    const libData = await lastValueFrom(this.http.get("assets/iconLib.json"));
+    this.iconLib = this.load(libData as IconLibFormat);
+    console.info("[IconsService] iconLib build: ", this.iconLib);
   }
 
   private load(data: IconLibFormat) {
@@ -43,7 +43,7 @@ export class IconsService {
     });
     return cat;
   }
-  getIconslib(): Category {
-    return this.iconlib;
+  getIconsLib(): Category {
+    return this.iconLib;
   }
 }

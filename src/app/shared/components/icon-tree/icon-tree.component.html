@@ -3,17 +3,17 @@
   <!-- There is inline padding applied to this node using styles.
   This padding value depends on the mat-icon-button width. -->
   <mat-tree-node class="icon-tree-node" *matTreeNodeDef="let node" matTreeNodeToggle>
-    <div class="category-node" role="group">
+    <div class="category-node">
       {{ node.name }}
     </div>
-    <div class="icon-list" role="group">
+    <div class="icon-list">
       @for (icon of node.icons; track icon) {
         <div
           role="presentation"
           class="icon-list-item"
           (click)="select(icon.name)"
-          [attr.selected]="icon.name === value"
-          [class.mat-elevation-z4]="icon.name === value"
+          [attr.selected]="icon.name === value()"
+          [class.mat-elevation-z4]="icon.name === value()"
         >
           <mat-icon class="selectable-icon" [svgIcon]="icon.name"></mat-icon>
         </div>
@@ -40,14 +40,14 @@
     </div>
     <!-- There is inline padding applied to this div using styles.
     This padding value depends on the mat-icon-button width.  -->
-    <div [class.icon-tree-invisible]="!treeControl.isExpanded(node)" role="group">
+    <div [class.icon-tree-invisible]="!treeControl.isExpanded(node)">
       <div class="icon-list">
         @for (icon of node.icons; track icon) {
           <div
             class="icon-list-item"
             (click)="select(icon.name)"
-            [attr.selected]="icon.name === value"
-            [class.mat-elevation-z4]="icon.name === value"
+            [attr.selected]="icon.name === value()"
+            [class.mat-elevation-z4]="icon.name === value()"
             role="presentation"
           >
             <mat-icon class="selectable-icon" [svgIcon]="icon.name"></mat-icon>

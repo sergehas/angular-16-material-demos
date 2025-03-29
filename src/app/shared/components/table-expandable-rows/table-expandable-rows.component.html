@@ -1,4 +1,4 @@
-@if (dataSource.loading$ | async; as loading) {
+@if (dataSource().loading$ | async; as loading) {
   <div class="progress-container">
     <mat-progress-bar
       [mode]="isError(loading) ? 'determinate' : 'query'"
@@ -13,23 +13,23 @@
       <mat-icon>more_vert</mat-icon>
     </button>
     <mat-menu #columnMenu="matMenu" xPosition="before">
-      <app-table-config-editor [options]="options!"></app-table-config-editor>
+      <app-table-config-editor [options]="options()!"></app-table-config-editor>
     </mat-menu>
   </div>
   <mat-table
-    [dataSource]="dataSource"
+    [dataSource]="dataSource()"
     multiTemplateDataRows
     fixedLayout="true"
     matSort
     matSortDisableClear
     matSortDirection="asc"
     class="table"
-    [class.autohide]="options!.responsive"
+    [class.autohide]="options()!.responsive"
     [style.max-height]="
-      options!.paginator ? 'calc(' + maxHeight() + ' - var(--paginator-height))' : maxHeight()
+      options()!.paginator ? 'calc(' + maxHeight() + ' - var(--paginator-height))' : maxHeight()
     "
   >
-    @for (column of options!.columns.columns; track column) {
+    @for (column of options()!.columns.columns; track column) {
       <ng-container [matColumnDef]="column.name" [sticky]="column.sticky && !column.hidden">
         <!-- Checkbox Column (header)-->
         @if (column.selector) {
@@ -72,12 +72,12 @@
     }
 
     <mat-header-row
-      *matHeaderRowDef="options!.columns.names; sticky: options!.stickyHeader"
+      *matHeaderRowDef="options()!.columns.names; sticky: options()!.stickyHeader"
     ></mat-header-row>
-    <mat-row matRipple *matRowDef="let row; columns: options!.columns.names"></mat-row>
+    <mat-row matRipple *matRowDef="let row; columns: options()!.columns.names"></mat-row>
   </mat-table>
 </div>
-@if (dataSource.counting$ | async; as counting) {
+@if (dataSource().counting$ | async; as counting) {
   <div class="progress-container">
     <mat-progress-bar
       [mode]="isError(counting) ? 'determinate' : 'query'"
@@ -86,12 +86,12 @@
     ></mat-progress-bar>
   </div>
 }
-@if (options!.paginator) {
+@if (options()!.paginator) {
   <mat-paginator
     class="paginator"
     [pageSizeOptions]="[5, 10, 20, 100]"
     showFirstLastButtons
-    [length]="dataSource.length$ | async"
+    [length]="dataSource().length$ | async"
     aria-label="Select page"
   >
   </mat-paginator>

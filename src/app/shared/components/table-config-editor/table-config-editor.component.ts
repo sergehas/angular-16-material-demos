@@ -1,4 +1,4 @@
-import { Component, Input, input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import {
   CdkDrag,
   CdkDragDrop,
@@ -28,7 +28,7 @@ import { TableColumn, TableConfig } from "../table-expandable-rows/table-config"
   ],
 })
 export class TableConfigEditorComponent {
-  @Input() options!: TableConfig;
+  readonly options = input.required<TableConfig>();
   readonly maxHeight = input("100%");
 
   /**
@@ -42,7 +42,7 @@ export class TableConfigEditorComponent {
   }
 
   drop(event: CdkDragDrop<TableColumn[]>): void {
-    moveItemInArray(this.options.columns.columns, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.options().columns.columns, event.previousIndex, event.currentIndex);
   }
   prevent(e: Event) {
     e.stopPropagation();

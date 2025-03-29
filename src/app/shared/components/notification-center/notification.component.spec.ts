@@ -18,10 +18,13 @@ describe("NotificationComponent", () => {
 
     fixture = TestBed.createComponent(NotificationComponent);
     component = fixture.componentInstance;
-    component.notification = new Notification({
-      severity: "info",
-      message: "",
-    });
+    fixture.componentRef.setInput(
+      "notification",
+      new Notification({
+        severity: "info",
+        message: "",
+      })
+    );
     fixture.detectChanges();
   });
 

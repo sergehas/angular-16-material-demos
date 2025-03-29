@@ -14,7 +14,7 @@ import { DemoIconsComponent } from "./demo-icons.component";
  * Mock implementation of IconService for testing purposes.
  */
 class MockIconsService {
-  getIconslib(): Category {
+  getIconsLib(): Category {
     const r = new Category("root");
     r.addCategory("brands").addIcon("azure");
     return r;

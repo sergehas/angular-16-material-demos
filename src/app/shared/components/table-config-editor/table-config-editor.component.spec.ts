@@ -1,7 +1,7 @@
-import { waitForAsync, ComponentFixture, TestBed } from "@angular/core/testing";
 import { DragDropModule } from "@angular/cdk/drag-drop";
-import { TableConfigEditorComponent } from "./table-config-editor.component";
+import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
 import { TableConfig } from "../table-expandable-rows/table-config";
+import { TableConfigEditorComponent } from "./table-config-editor.component";
 
 describe("TableConfigEditorComponent", () => {
   let component: TableConfigEditorComponent;
@@ -16,7 +16,7 @@ describe("TableConfigEditorComponent", () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(TableConfigEditorComponent);
     component = fixture.componentInstance;
-    component.options = new TableConfig({ name: "" });
+    fixture.componentRef.setInput("options", new TableConfig({ name: "" }));
     fixture.detectChanges();
   });
 

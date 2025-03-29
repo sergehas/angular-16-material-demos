@@ -1,6 +1,6 @@
 import { NestedTreeControl } from "@angular/cdk/tree";
 
-import { Component, EventEmitter, Input, OnInit, Output, inject, input } from "@angular/core";
+import { Component, EventEmitter, OnInit, Output, inject, input, model } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -17,7 +17,7 @@ import { IconsService } from "src/app/core/icons/services/icons.service";
 export class IconTreeComponent implements OnInit {
   private readonly service = inject(IconsService);
 
-  @Input() value: string | null = null;
+  readonly value = model<string | null>(null);
   @Output() valueChange = new EventEmitter<string | null>();
   readonly expanded = input(false);
 
@@ -25,7 +25,7 @@ export class IconTreeComponent implements OnInit {
   dataSource = new MatTreeNestedDataSource<Category>();
 
   constructor() {
-    this.dataSource.data = this.service.getIconslib().categories;
+    this.dataSource.data = this.service.getIconsLib().categories;
     this.treeControl.dataNodes = this.dataSource.data;
   }
   ngOnInit() {
@@ -37,8 +37,8 @@ export class IconTreeComponent implements OnInit {
    * toggle selected item
    */
   select(item: string) {
-    this.value = item === this.value ? null : item;
-    this.valueChange.emit(this.value);
+    this.value.set(item === this.value() ? null : item);
+    this.valueChange.emit(this.value());
   }
 
   hasChild = (_: number, node: Category) => !!node.categories && node.categories.length > 0;

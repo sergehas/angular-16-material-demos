@@ -13,7 +13,7 @@ describe("IconTreeComponent", () => {
     //const iconsService = jasmine.createSpyObj('IconsService', ['getIconslib']);
 
     const iconsService: Partial<IconsService> = {
-      getIconslib: () => {
+      getIconsLib: () => {
         return category;
       },
     };

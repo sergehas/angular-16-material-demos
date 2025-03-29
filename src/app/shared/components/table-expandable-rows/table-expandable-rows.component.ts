@@ -4,11 +4,11 @@ import { CommonModule, DatePipe } from "@angular/common";
 import {
   AfterViewInit,
   Component,
-  Input,
   OnInit,
   ViewChild,
   ViewEncapsulation,
-  input
+  input,
+  model,
 } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
@@ -59,8 +59,8 @@ import { ColumnConfig, TableConfig } from "./table-config";
   ],
 })
 export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
-  @Input() dataSource!: PageableDataSource<T>;
-  @Input() options?: TableConfig;
+  readonly dataSource = input.required<PageableDataSource<T>>();
+  readonly options = model<TableConfig>();
   readonly columnOptions = input<ColumnConfig>();
   readonly maxHeight = input("100%");
   readonly selection = input<SelectionModel<T>>();
@@ -79,30 +79,32 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     const columnOptions = this.columnOptions();
-    if (!this.options?.columns && !columnOptions) {
+    let options = this.options();
+    if (!options?.columns && !columnOptions) {
       throw new Error("Table must have a config or a column definition");
     }
 
     //here, we at least have a column config if no options
-    this.options =
-      this.options ?? new TableConfig({ name: "", columns: columnOptions!.columns });
+    options = options ?? new TableConfig({ name: "", columns: columnOptions!.columns });
     //now we had column options, then ensure the columns config is also set
     if (columnOptions) {
-      this.options.columns = columnOptions;
+      options.columns = columnOptions;
     }
-    console.log("[table-expandable-rows] options:", this.options);
+    this.options.set(options);
+
+    console.log("[table-expandable-rows] options:", options);
 
     //just for debug
-    this.dataSource.loading$
-      .pipe(tap((b) => console.info(`[table-expandable-rows] loading: ${b}`)))
+    this.dataSource()
+      .loading$.pipe(tap((b) => console.info(`[table-expandable-rows] loading: ${b}`)))
       .subscribe();
-    this.dataSource.counting$
-      .pipe(tap((b) => console.info(`[table-expandable-rows] counting: ${b}`)))
+    this.dataSource()
+      .counting$.pipe(tap((b) => console.info(`[table-expandable-rows] counting: ${b}`)))
       .subscribe();
   }
 
   ngAfterViewInit() {
-    const ds = this.options!.columns.defaultSort;
+    const ds = this.options()!.columns.defaultSort;
     //manage default sort: must be done BEFORE managing events!
     if (this.sort && ds) {
       this.sort.sort({
@@ -110,11 +112,12 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
         start: ds.defaultSort!,
       } as MatSortable);
     }
-    this.dataSource.sort = this.sort;
+    const dataSource = this.dataSource();
+    dataSource.sort = this.sort;
     if (this.paginator) {
-      this.dataSource.paginator = this.paginator;
+      dataSource.paginator = this.paginator;
     }
-    this.dataSource.connect().subscribe((data) => {
+    dataSource.connect().subscribe((data) => {
       //as data is readonly, we must clone it to be able to set _page
       this._page = data.map((i) => i);
     });

@@ -1,13 +1,13 @@
-const { resolve, extname, posix } = require("node:path");
+const { extname, posix } = require("node:path");
 const { readdir, readFile, writeFile } = require("node:fs/promises");
 
 // root folder to build relative paths from
 const RELATIVE_PATH = "src";
 // base bas to walk
 const BASE_PATH = posix.join(RELATIVE_PATH, "assets");
-// icon exctension
+// icon extension
 const EXTENSION = ".svg";
-const ICON_LIB = posix.join(BASE_PATH, "iconlib.json");
+const ICON_LIB = posix.join(BASE_PATH, "iconLib.json");
 
 class Category {
   name = null;
@@ -19,10 +19,9 @@ class Category {
   }
 
   addCategory(name) {
-    console.debug(`[iconlib] adding cat ${name} to ${this.name}`);
+    console.debug(`[iconLib] adding cat ${name} to ${this.name}`);
     const existing = this.categories.find((i) => i.name === name);
-    existing instanceof Category;
-    if (existing) {
+    if (existing && existing instanceof Category) {
       return Category.from(existing);
     }
     const cat = new Category();
@@ -31,7 +30,7 @@ class Category {
     return cat;
   }
   addIcon(iconPath) {
-    console.debug(`[iconlib] adding icon ${iconPath} to ${this.name}`);
+    console.debug(`[iconLib] adding icon ${iconPath} to ${this.name}`);
     let p = iconPath.substring(RELATIVE_PATH.length + 1);
     const existing = this.icons.find((i) => i === p);
     if (!existing) {
@@ -42,31 +41,31 @@ class Category {
 }
 
 async function openIconLib() {
-  console.log("[iconlib] opening lib file");
+  console.log("[iconLib] opening lib file");
 
   return readFile(ICON_LIB, {
     encoding: "utf8",
     // flag: "a"
   })
     .then((file) => {
-      let iconlib;
+      let iconLib;
       try {
-        iconlib = JSON.parse(file);
-      } catch (error) {
-        console.log("[iconlib] unparsable lib");
-        iconlib = new Category();
-        iconlib.name = "root";
+        iconLib = JSON.parse(file);
+      } catch (_e) {
+        console.log("[iconLib] unparsable lib");
+        iconLib = new Category();
+        iconLib.name = "root";
       }
-      console.log("[iconlib] read: ", iconlib);
-      return Category.from(iconlib);
+      console.log("[iconLib] read: ", iconLib);
+      return Category.from(iconLib);
     })
     .catch((e) => {
-      console.log(`[iconlib] unreadable file ${ICON_LIB}, ${e}`);
+      console.log(`[iconLib] unreadable file ${ICON_LIB}, ${e}`);
       throw e;
     });
 }
-async function writeIconLib(iconlib) {
-  return writeFile(ICON_LIB, JSON.stringify(iconlib, null, 2), {
+async function writeIconLib(iconLib) {
+  return writeFile(ICON_LIB, JSON.stringify(iconLib, null, 2), {
     flag: "w",
   }).then(
     () => {
@@ -79,29 +78,22 @@ async function writeIconLib(iconlib) {
 }
 
 async function ls(path = BASE_PATH, cat = new Category()) {
-  //	yield path;
-  console.log(`[iconlib] populating ${cat.name}`);
+  console.log(`[iconLib] populating ${cat.name}`);
   for (const dirent of await readdir(path, { withFileTypes: true })) {
     if (dirent.isDirectory()) {
       let curCat = cat.addCategory(dirent.name);
-      //			yield* ls(join(path, dirent.name), curCat);
       await ls(posix.join(path, dirent.name), curCat);
-    } else {
-      if (dirent.isFile() && EXTENSION === extname(dirent.name)) {
-        cat.addIcon(posix.join(path, dirent.name));
-        //				yield join(path, dirent.name);
-        posix.join(path, dirent.name);
-      }
+    } else if (dirent.isFile() && EXTENSION === extname(dirent.name)) {
+      cat.addIcon(posix.join(path, dirent.name));
+      posix.join(path, dirent.name);
     }
   }
   return cat;
 }
 
 (async () => {
-  console.log("[iconlib] start building");
+  console.log("[iconLib] start building");
   let lib = await openIconLib();
-  // lib = await ls(join(BASE_PATH, "countries"), lib);
-  // lib = await ls(join(BASE_PATH, "brands"), lib);
   lib = await ls(posix.join(BASE_PATH, "/"), lib);
   writeIconLib(lib).then(console.log, console.error);
 })();

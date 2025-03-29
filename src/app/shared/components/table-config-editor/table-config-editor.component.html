@@ -1,24 +1,24 @@
 <div class="options-editor mat-body">
   <section class="toggle-options">
-    <mat-slide-toggle [(ngModel)]="options.responsive" (click)="prevent($event)"
+    <mat-slide-toggle [(ngModel)]="options().responsive" (click)="prevent($event)"
       >responsive</mat-slide-toggle
     >
-    <mat-slide-toggle [(ngModel)]="options.stickyHeader" (click)="prevent($event)"
+    <mat-slide-toggle [(ngModel)]="options().stickyHeader" (click)="prevent($event)"
       >sticky header</mat-slide-toggle
     >
   </section>
   <div>
     <div
       cdkDropList
-      [cdkDropListData]="options.columns.columns"
+      [cdkDropListData]="options().columns.columns"
       [cdkDropListSortPredicate]="sortPredicate"
       (cdkDropListDropped)="drop($event)"
     >
-      @for (group of options.columns.groups; track group) {
+      @for (group of options().columns.groups; track group) {
         <div class="column-group">
           <label class="column-group-label" [htmlFor]="group">{{ group }}</label>
           <div class="column-list" [id]="group">
-            @for (c of options.columns.columns; track c) {
+            @for (c of options().columns.columns; track c) {
               @if (c.group === group) {
                 <div class="column-item" [cdkDragData]="c" cdkDrag>
                   <div class cdkDragHandle class="drag-handler">

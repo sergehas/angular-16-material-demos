@@ -1,6 +1,6 @@
-<mat-card class="notification-card" [class]="'notification-' + notification.severity">
+<mat-card class="notification-card" [class]="'notification-' + notification().severity">
   <mat-card-header class="notification-header">
-    @switch (notification.severity) {
+    @switch (notification().severity) {
       @case ("sever") {
         <mat-icon>error</mat-icon>
       }
@@ -15,10 +15,10 @@
       }
     }
     <div class="notification-title">
-      {{ notification.date | date: "hh:mm:ss" }}
+      {{ notification().date | date: "hh:mm:ss" }}
     </div>
-    @if (notification.ref !== undefined && notification.ref !== "") {
-      <a mat-icon-button [href]="notification.ref">
+    @if (notification().ref !== undefined && notification().ref !== "") {
+      <a mat-icon-button [href]="notification().ref">
         <mat-icon>link</mat-icon>
       </a>
     }
@@ -29,7 +29,7 @@
     </button>
   </mat-card-header>
   <mat-card-content class="notification-content">
-    <div>{{ notification.message }}</div>
+    <div>{{ notification().message }}</div>
   </mat-card-content>
   <mat-card-footer class="notification-footer">
     <div class="notification-progress">
