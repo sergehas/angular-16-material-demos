@@ -8,6 +8,7 @@ import {
   OnInit,
   ViewChild,
   ViewEncapsulation,
+  input
 } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
@@ -60,9 +61,9 @@ import { ColumnConfig, TableConfig } from "./table-config";
 export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
   @Input() dataSource!: PageableDataSource<T>;
   @Input() options?: TableConfig;
-  @Input() columnOptions?: ColumnConfig;
-  @Input() maxHeight = "100%";
-  @Input() selection?: SelectionModel<T>;
+  readonly columnOptions = input<ColumnConfig>();
+  readonly maxHeight = input("100%");
+  readonly selection = input<SelectionModel<T>>();
 
   //for instanceof pipe
   readonly Date = Date;
@@ -77,16 +78,17 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort | undefined;
 
   ngOnInit(): void {
-    if (!this.options?.columns && !this.columnOptions) {
+    const columnOptions = this.columnOptions();
+    if (!this.options?.columns && !columnOptions) {
       throw new Error("Table must have a config or a column definition");
     }
 
     //here, we at least have a column config if no options
     this.options =
-      this.options ?? new TableConfig({ name: "", columns: this.columnOptions!.columns });
+      this.options ?? new TableConfig({ name: "", columns: columnOptions!.columns });
     //now we had column options, then ensure the columns config is also set
-    if (this.columnOptions) {
-      this.options.columns = this.columnOptions;
+    if (columnOptions) {
+      this.options.columns = columnOptions;
     }
     console.log("[table-expandable-rows] options:", this.options);
 
@@ -123,17 +125,17 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
   }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
-    const numSelected = this.selection!.selected.length;
+    const numSelected = this.selection()!.selected.length;
     const numRows = this._page.length;
     return numSelected === numRows;
   }
   /** Selects all rows if they are not all selected; otherwise clear selection. */
   toggleAllRows() {
     if (this.isAllSelected()) {
-      this.selection!.clear();
+      this.selection()!.clear();
       return;
     }
     //TODO
-    this.selection!.select(...this._page);
+    this.selection()!.select(...this._page);
   }
 }

@@ -4,8 +4,8 @@
   mat-stretch-tabs="false"
   mat-align-tabs="center"
   class="tabs-nav"
-  [class.sticky]="sticky"
-  [class.mat-elevation-z1]="sticky"
+  [class.sticky]="sticky()"
+  [class.mat-elevation-z1]="sticky()"
   (indexFocused)="onFocus($event)"
 >
   <!-- add [appAnyRoles]="link.roles" (granted)="link.granted=$event" to the ng-container  to hide the tabs-->

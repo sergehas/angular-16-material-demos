@@ -10,6 +10,7 @@ import {
   ViewChild,
   ViewEncapsulation,
   inject,
+  input
 } from "@angular/core";
 import { ErrorStateMatcher, MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -76,8 +77,7 @@ export class IconSelectComponent
     return super.value;
   }
 
-  @Input()
-  public tooltip = "";
+  public readonly tooltip = input("");
 
   constructor() {
     const ngControl = inject(NgControl, { optional: true, self: true });

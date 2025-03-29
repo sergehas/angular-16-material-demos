@@ -3,13 +3,13 @@ import {
   ChangeDetectionStrategy,
   Component,
   EventEmitter,
-  Input,
   OnInit,
   Output,
   Type,
   ViewChild,
   booleanAttribute,
   inject,
+  input,
 } from "@angular/core";
 import { MatTabsModule } from "@angular/material/tabs";
 
@@ -44,13 +44,13 @@ const TAB_SLIDE_ANIMATION = "tabSlide";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsNavComponent implements OnInit, AfterViewInit {
-  private route = inject(ActivatedRoute);
-  private router = inject(Router);
-  private contexts = inject(ChildrenOutletContexts);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly contexts = inject(ChildrenOutletContexts);
 
-  @Input() path = "";
-  @Input() default?: string;
-  @Input({ transform: booleanAttribute }) sticky = false;
+  readonly path = input("");
+  readonly defaultRoute = input<string>();
+  readonly sticky = input(false, { transform: booleanAttribute });
   @Output() activate = new EventEmitter<ActivatedRoute | null>();
   @Output() deactivate = new EventEmitter<Type<unknown>>();
   @Output() indexFocused = new EventEmitter<number>();
@@ -58,17 +58,17 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
   @ViewChild(RouterOutlet) outlet!: RouterOutlet;
 
   navLinks: MenuNode[] = [];
-  private _notifService = inject(NotificationService);
+  private readonly _notifyService = inject(NotificationService);
   animation: string | number = -1;
 
   ngOnInit(): void {
     console.info("[tab-nav] router config", this.router);
-    const root = this.router.config.find((p) => p.path === this.path);
+    const root = this.router.config.find((p) => p.path === this.path());
     if (!root?.children || root?.children.length <= 0) {
-      this._notifService.notify(
+      this._notifyService.notify(
         new Notification({
           severity: "warn",
-          message: `${this.path} has no menu entry`,
+          message: `${this.path()} has no menu entry`,
           show: true,
           persistent: false,
         })
@@ -77,24 +77,25 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
     }
 
     /** */
-    this.navLinks = root!.children.map((c, index) => {
-      //1st add an index for animation increment/decremet
+    this.navLinks = root.children.map((c, index) => {
+      //1st add an index for animation increment/decrement
       if (c.data === undefined) {
         c.data = {};
       }
-      root!.children![index].data![TAB_INDEX_PROP] = index;
-      // then build nodes for UI compoent
+      root.children![index].data![TAB_INDEX_PROP] = index;
+      // then build nodes for UI component
       return NavBuilder.nodeFromPath(".", c.path, c.data["icon"], c.data["roles"]);
     });
   }
   ngAfterViewInit(): void {
-    //if the current navgation is this path, then navigate to defautl child route
+    //if the current navigation is this path, then navigate to default child route
+    const defaultRoute = this.defaultRoute();
     if (
-      this.default &&
-      this.router.createUrlTree([this.path]).toString() === this.router.routerState.snapshot.url
+      defaultRoute &&
+      this.router.createUrlTree([this.path()]).toString() === this.router.routerState.snapshot.url
     ) {
-      console.log(`[tab-nav] navigate to default ${this.default} relative to ${this.route}`);
-      this.router.navigate([this.default], { relativeTo: this.route });
+      console.log(`[tab-nav] navigate to default ${defaultRoute} relative to ${this.route}`);
+      this.router.navigate([defaultRoute], { relativeTo: this.route });
     }
   }
 

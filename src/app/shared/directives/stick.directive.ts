@@ -1,4 +1,4 @@
-import { AfterViewChecked, Directive, ElementRef, Input, Renderer2, inject } from "@angular/core";
+import { AfterViewChecked, Directive, ElementRef, Renderer2, inject, input } from "@angular/core";
 import { ScrollService } from "src/app/core/services/scroll.service";
 
 function htmlElementAttribute(value: unknown): HTMLElement {
@@ -17,8 +17,7 @@ export class StickDirective implements AfterViewChecked {
   private scrollService = inject(ScrollService);
   private renderer = inject(Renderer2);
 
-  @Input({ required: true, transform: htmlElementAttribute })
-  appStick!: HTMLElement;
+  readonly appStick = input.required<HTMLElement, unknown>({ transform: htmlElementAttribute });
 
   private _native: HTMLElement;
   private _ref!: number;
@@ -40,8 +39,9 @@ export class StickDirective implements AfterViewChecked {
     this._native = this.element.nativeElement;
   }
   ngAfterViewChecked(): void {
-    this.renderer.setStyle(this.appStick, "position", "relative");
-    this._ref = this.appStick.getBoundingClientRect().top;
+    const appStick = this.appStick();
+    this.renderer.setStyle(appStick, "position", "relative");
+    this._ref = appStick.getBoundingClientRect().top;
     this._original = this.element.nativeElement.getBoundingClientRect().top;
     console.log(`el position:${this._original}, ref position: ${this._ref}`);
     this.renderer.addClass(this._native, "app-stickable");
@@ -54,7 +54,7 @@ export class StickDirective implements AfterViewChecked {
   // @HostListener('window:scroll', ['$event'])
   onViewportScroll() {
     //scroll is required as soon as "sticky" element top position is less than reference top position
-    const offsetRef = this.appStick.getBoundingClientRect().top;
+    const offsetRef = this.appStick().getBoundingClientRect().top;
     const targetPos = this._ref - offsetRef;
     const shouldScroll = targetPos > this._original - this._ref;
     if (shouldScroll) {

@@ -15,6 +15,7 @@ import {
   OnChanges,
   OnDestroy,
   Renderer2,
+  input
 } from "@angular/core";
 import {
   ControlValueAccessor,
@@ -140,7 +141,7 @@ export abstract class AbstractMatFormField<T>
    * Name of the input.
    * @docs-private
    */
-  @Input() name = "";
+  readonly name = input("");
 
   /**
    * Implemented as part of MatFormFieldControl.

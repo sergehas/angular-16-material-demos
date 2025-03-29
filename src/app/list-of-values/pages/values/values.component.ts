@@ -1,11 +1,11 @@
 import {
   AfterViewInit,
   Component,
-  Input,
   OnDestroy,
   OnInit,
   ViewChild,
   inject,
+  input
 } from "@angular/core";
 import {
   FormBuilder,
@@ -48,7 +48,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly dialog = inject(MatDialog);
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @Input() group?: string;
+  readonly group = input<string>();
 
   dataSource!: PageableDataSource<Value>;
   private readonly _page = new BehaviorSubject<Value[]>([]);
@@ -64,16 +64,16 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     //just for debug
     this.dataSource.loading$
-      .pipe(tap((b) => console.info(`loading ${this.group}: ${b}`)))
+      .pipe(tap((b) => console.info(`loading ${this.group()}: ${b}`)))
       .subscribe();
     this.dataSource.counting$
-      .pipe(tap((b) => console.info(`counting ${this.group}: ${b}`)))
+      .pipe(tap((b) => console.info(`counting ${this.group()}: ${b}`)))
       .subscribe();
   }
 
   ngAfterViewInit(): void {
     console.log("set pager");
-    this.dataSource.filter = { group: this.group! };
+    this.dataSource.filter = { group: this.group()! };
     this.dataSource.sort = new MatSort();
     this.dataSource.paginator = this.paginator;
     //sorting fires event, which is fireing page loading
@@ -101,7 +101,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
       dialogRef = this.dialog.open(ValueEditDialog, {
         data: {
           mode: EditMode.CREATE,
-          entity: { group: this.group, label: "" } as Value,
+          entity: { group: this.group(), label: "" } as Value,
         },
       });
     }

@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, input } from "@angular/core";
 import {
   CdkDrag,
   CdkDragDrop,
@@ -29,7 +29,7 @@ import { TableColumn, TableConfig } from "../table-expandable-rows/table-config"
 })
 export class TableConfigEditorComponent {
   @Input() options!: TableConfig;
-  @Input() maxHeight = "100%";
+  readonly maxHeight = input("100%");
 
   /**
    * Predicate function that only allows to sort sticky column XOR non sticky column. doesn't allow to interleave sticky/non sticky .

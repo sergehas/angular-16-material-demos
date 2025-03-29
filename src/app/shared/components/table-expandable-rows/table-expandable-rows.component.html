@@ -26,7 +26,7 @@
     class="table"
     [class.autohide]="options!.responsive"
     [style.max-height]="
-      options!.paginator ? 'calc(' + maxHeight + ' - var(--pagaginator-height))' : maxHeight
+      options!.paginator ? 'calc(' + maxHeight() + ' - var(--paginator-height))' : maxHeight()
     "
   >
     @for (column of options!.columns.columns; track column) {
@@ -36,16 +36,16 @@
           <mat-header-cell *matHeaderCellDef class="selector-column" [hidden]="column.hidden">
             <mat-checkbox
               (change)="$event ? toggleAllRows() : null"
-              [checked]="selection!.hasValue() && isAllSelected()"
-              [indeterminate]="selection!.hasValue() && !isAllSelected()"
+              [checked]="selection()!.hasValue() && isAllSelected()"
+              [indeterminate]="selection()!.hasValue() && !isAllSelected()"
             >
             </mat-checkbox>
           </mat-header-cell>
           <mat-cell *matCellDef="let row" class="selector-column" [hidden]="column.hidden">
             <mat-checkbox
               (click)="$event.stopPropagation()"
-              (change)="$event ? selection!.toggle(row) : null"
-              [checked]="selection!.isSelected(row)"
+              (change)="$event ? selection()!.toggle(row) : null"
+              [checked]="selection()!.isSelected(row)"
             >
             </mat-checkbox>
           </mat-cell>
