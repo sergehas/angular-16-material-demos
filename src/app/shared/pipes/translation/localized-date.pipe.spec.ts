@@ -7,6 +7,8 @@ import { LocalizedDatePipe } from "./localized-date.pipe";
 beforeEach(() => {
   TestBed.configureTestingModule({
     providers: [
+      LocalizedDatePipe,
+      DatePipe,
       {
         provide: TranslateService,
         useValue: {
@@ -22,9 +24,7 @@ beforeEach(() => {
 
 describe("LocalizedDatePipe", () => {
   it("create an instance", () => {
-    const changeDetectorRef = TestBed.inject(ChangeDetectorRef);
-    const service = TestBed.inject(TranslateService);
-    const pipe = new LocalizedDatePipe(service, new DatePipe("en"), changeDetectorRef);
+    const pipe = TestBed.inject(LocalizedDatePipe);
     expect(pipe).toBeTruthy();
   });
 });

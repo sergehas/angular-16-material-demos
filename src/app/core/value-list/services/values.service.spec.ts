@@ -1,4 +1,5 @@
 import { HttpClient } from "@angular/common/http";
+import { TestBed } from "@angular/core/testing";
 import { defer } from "rxjs";
 //json import configured in tsconfig.spec.json
 import mockData from "../../../../assets/mockup/values.json";
@@ -11,12 +12,17 @@ describe("ValuesService", () => {
   beforeEach(() => {
     httpClientSpy = jasmine.createSpyObj("HttpClient", ["get"]);
 
-    service = new ValuesService(httpClientSpy);
+    TestBed.configureTestingModule({
+      providers: [ValuesService, { provide: HttpClient, useValue: httpClientSpy }],
+    });
+
+    service = TestBed.inject(ValuesService);
   });
 
   it("should be created", () => {
     expect(service).toBeTruthy();
   });
+
   it("should count", (done: DoneFn) => {
     httpClientSpy.get.and.returnValue(defer(() => Promise.resolve(mockData)));
     service.count().subscribe((count) => {
@@ -25,8 +31,8 @@ describe("ValuesService", () => {
     });
     expect(httpClientSpy.get.calls.count()).withContext("one call").toBe(1);
   });
+
   it("should return 5 first records", (done: DoneFn) => {
-    httpClientSpy.get.and.returnValue(defer(() => Promise.resolve(mockData)));
     httpClientSpy.get.and.returnValue(defer(() => Promise.resolve(mockData)));
     service
       .find(undefined, undefined, {

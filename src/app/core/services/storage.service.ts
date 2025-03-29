@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
 interface Cache<T> extends Map<string, BehaviorSubject<T>> {}
@@ -18,7 +18,9 @@ export class StorageService {
    * The purpose of the "cache" is to avoid creating multiple BehaviorSubjects for the same key.
    * @param storage The userlying storage to use for storing items.
    */
-  constructor(storage: Storage = localStorage) {
+  constructor() {
+    const storage = inject(Storage) ?? localStorage;
+
     this._storage = storage; //could be SessionStorage or LocalStorage
     this._cache = new Map<string, BehaviorSubject<unknown>>();
   }
