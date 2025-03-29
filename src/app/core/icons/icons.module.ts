@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { APP_INITIALIZER, NgModule, inject } from "@angular/core";
+import { NgModule, inject, provideAppInitializer } from "@angular/core";
 import { IconsService } from "./services/icons.service";
 
 /**
@@ -20,12 +20,10 @@ function initWithDependencyFactory(iconsService: IconsService) {
   providers: [
     // "easy" way to enforce service initialization
     IconsService,
-    {
-      provide: APP_INITIALIZER,
-      useFactory: initWithDependencyFactory,
-      deps: [IconsService],
-      multi: true,
-    },
+    provideAppInitializer(() => {
+      const initializerFn = initWithDependencyFactory(inject(IconsService));
+      return initializerFn();
+    }),
   ],
 })
 export class IconsModule {
