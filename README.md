@@ -7,7 +7,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ### Angular 19 migration
 
 - [x] finalize <https://angular.dev/reference/migrations/inject-function> (impact on unit test)
-- [ ] apply <https://angular.dev/reference/migrations/route-lazy-loading>
+- [x] apply <https://angular.dev/reference/migrations/route-lazy-loading>
 - [ ] apply <https://angular.dev/reference/migrations/signal-inputs> &<https://angular.dev/reference/migrations/outputs)>
 - [ ] apply <https://angular.dev/reference/migrations/signal-queries> ?
 - cleanup

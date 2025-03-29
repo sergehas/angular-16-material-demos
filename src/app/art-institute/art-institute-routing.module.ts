@@ -1,11 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { ArtInstituteComponent } from "./pages/art-institute.component";
+
 
 const routes: Routes = [
   {
     path: "art-institute",
-    component: ArtInstituteComponent,
+    loadComponent: () => import('./pages/art-institute.component').then(m => m.ArtInstituteComponent),
     data: {
       icon: "art_track",
     },
