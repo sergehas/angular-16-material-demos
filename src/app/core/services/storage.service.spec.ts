@@ -8,10 +8,10 @@ describe("StorageService", () => {
   let service: StorageService;
 
   beforeEach(() => {
-    const store: Map<string, string> = new Map();
+    const store = new Map<string, string>();
     const mockSessionStorage = {
       getItem: (key: string): string | null => {
-        return store.has(key) ? store.get(key) ?? "" : null;
+        return store.has(key) ? (store.get(key) ?? "") : null;
       },
       setItem: (key: string, value: string) => {
         store.set(key, `${value}`);

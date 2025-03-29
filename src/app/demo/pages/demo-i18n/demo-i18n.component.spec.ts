@@ -22,7 +22,7 @@ const _datePipeMock = {
 // Mock TranslatePipe
 @Pipe({ name: "translate" })
 export class TranslateMockPipe implements PipeTransform {
-  public name: string = "translate";
+  public name = "translate";
 
   public transform(query: string, ..._args: unknown[]): string {
     return query;

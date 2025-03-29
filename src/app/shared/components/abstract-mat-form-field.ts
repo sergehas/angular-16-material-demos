@@ -75,7 +75,7 @@ export abstract class AbstractMatFormField<T>
    * Implemented as part of MatFormFieldControl.
    * @docs-private
    */
-  focused: boolean = false;
+  focused = false;
 
   /**
    * Implemented as part of MatFormFieldControl.
@@ -87,7 +87,7 @@ export abstract class AbstractMatFormField<T>
    * Implemented as part of MatFormFieldControl.
    * @docs-private
    */
-  controlType: string = "mat-abstract-field";
+  controlType = "mat-abstract-field";
 
   protected _uid = inject(IdGenerator).getId(this.controlType);
 
@@ -134,13 +134,13 @@ export abstract class AbstractMatFormField<T>
    * Implemented as part of MatFormFieldControl.
    * @docs-private
    */
-  @Input() placeholder: string = "";
+  @Input() placeholder = "";
 
   /**
    * Name of the input.
    * @docs-private
    */
-  @Input() name: string = "";
+  @Input() name = "";
 
   /**
    * Implemented as part of MatFormFieldControl.
@@ -188,10 +188,14 @@ export abstract class AbstractMatFormField<T>
   }
 
   /** `View -> model callback called when value changes` */
-  _onChange: (value: T | null) => void = () => {};
+  _onChange: (value: T | null) => void = () => {
+    /** default function, noop */
+  };
 
   /** `View -> model callback called when select has been touched` */
-  _onTouched = () => {};
+  _onTouched = () => {
+    /** default function, noop */
+  };
 
   /** Whether the element is readonly. */
   @Input()
@@ -376,9 +380,11 @@ export abstract class AbstractMatFormField<T>
     if (placeholder !== this._previousPlaceholder) {
       const element = this._elementRef.nativeElement;
       this._previousPlaceholder = placeholder;
-      placeholder
-        ? element.setAttribute("placeholder", placeholder)
-        : element.removeAttribute("placeholder");
+      if (placeholder) {
+        element.setAttribute("placeholder", placeholder);
+      } else {
+        element.removeAttribute("placeholder");
+      }
     }
   }
 

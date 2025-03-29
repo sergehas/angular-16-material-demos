@@ -3,10 +3,13 @@ import { Injectable, inject } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map } from "rxjs";
 
-import { HttpService, Page } from "../../services/http-service";
+import { Filter, HttpService, Page } from "../../services/http-service";
 import { Group } from "../models/group";
 
-export type GroupCrtieria = { name?: string };
+export interface GroupCriteria extends Filter {
+  group?: string;
+  name?: string;
+}
 
 @Injectable({
   providedIn: "root",
@@ -27,14 +30,14 @@ export class GroupsService extends HttpService<Group> {
     const start = page.pageNumber * page.pageSize;
     return groups.slice(start, start + page.pageSize);
   }
-  private _filter(groups: Group[], criteria?: GroupCrtieria): Group[] {
+  private _filter(groups: Group[], criteria?: GroupCriteria): Group[] {
     if (!criteria) {
       return groups;
     }
     return groups.filter((g) => (criteria?.name ? g.name.startsWith(criteria.name) : true));
   }
 
-  override count(criteria?: GroupCrtieria): Observable<number> {
+  override count(criteria?: GroupCriteria): Observable<number> {
     let params = new HttpParams();
     params = params.set("q", this.encodeFilter(criteria));
 
@@ -51,7 +54,7 @@ export class GroupsService extends HttpService<Group> {
   }
 
   override find(
-    criteria: GroupCrtieria | undefined,
+    criteria: GroupCriteria | undefined,
     sort: Sort | undefined,
     page: Page | undefined
   ): Observable<Group[]> {

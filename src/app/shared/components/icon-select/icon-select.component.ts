@@ -77,7 +77,7 @@ export class IconSelectComponent
   }
 
   @Input()
-  public tooltip: string = "";
+  public tooltip = "";
 
   constructor() {
     const ngControl = inject(NgControl, { optional: true, self: true });

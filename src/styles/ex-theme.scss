@@ -32,10 +32,10 @@
     $theme: mat.m2-define-light-theme(
       (
         color: (
-          primary: $primary,
-          accent: $accent,
-          warn: $warn,
-        ),
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+          ),
         typography: $typography,
       )
     );
@@ -43,10 +43,10 @@
     $theme: mat.m2-define-dark-theme(
       (
         color: (
-          primary: $primary,
-          accent: $accent,
-          warn: $warn,
-        ),
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+          ),
         typography: $typography,
       )
     );

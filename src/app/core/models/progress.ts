@@ -11,7 +11,7 @@ class Position {
   private _total;
   private _value;
 
-  constructor(total: number = -1, value: number = 0) {
+  constructor(total = -1, value = 0) {
     this._total = total;
     this._value = value;
   }

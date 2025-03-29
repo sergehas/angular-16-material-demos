@@ -20,10 +20,10 @@ import { MatBadge } from "@angular/material/badge";
 import { MatIcon } from "@angular/material/icon";
 import { AsyncPipe } from "@angular/common";
 
-type LogItem = {
+interface LogItem {
   timestamp: Date;
   message: string;
-};
+}
 
 @Component({
   selector: "app-demo-export",

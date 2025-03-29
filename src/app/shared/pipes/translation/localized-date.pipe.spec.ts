@@ -17,7 +17,14 @@ beforeEach(() => {
           },
         },
       },
-      { provide: ChangeDetectorRef, useValue: { detectChanges: () => {} } },
+      {
+        provide: ChangeDetectorRef,
+        useValue: {
+          detectChanges: () => {
+            /** noop */
+          },
+        },
+      },
     ],
   });
 });

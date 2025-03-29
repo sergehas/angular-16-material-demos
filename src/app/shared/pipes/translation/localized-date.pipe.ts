@@ -14,10 +14,10 @@ export class LocalizedDatePipe implements PipeTransform, OnDestroy {
   private readonly datePipe = inject(DatePipe);
   private readonly _ref = inject(ChangeDetectorRef);
 
-  value: string = "";
+  value = "";
   lastKey: string | null = null;
   lastData: string | Date | number | null = null;
-  lastFormattedDate: string = "";
+  lastFormattedDate = "";
   onLangChange: Subscription | undefined;
 
   updateValue(key: string, data: string | Date | number): void {

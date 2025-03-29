@@ -5,7 +5,10 @@ import { Observable, map } from "rxjs";
 import { FilterValue, HttpService, Page } from "../../services/http-service";
 import { Issue } from "../models/issue";
 
-type Result = { total_count: number; items: Record<string, FilterValue>[] };
+interface Result {
+  total_count: number;
+  items: Record<string, FilterValue>[];
+}
 
 @Injectable({
   providedIn: "root",

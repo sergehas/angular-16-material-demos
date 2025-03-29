@@ -17,12 +17,12 @@ import { MatInput } from "@angular/material/input";
 import { MatBadge } from "@angular/material/badge";
 import { MatIcon } from "@angular/material/icon";
 
-type NotifLog = {
+interface NotifLog {
   id: string;
   message: string;
   severity: NotificationSeverity;
   action: "add" | "update";
-};
+}
 
 @Component({
   selector: "app-demo-notif",

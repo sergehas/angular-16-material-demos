@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 import { BehaviorSubject } from "rxjs";
 
-interface Cache<T> extends Map<string, BehaviorSubject<T>> {}
+type Cache<T> = Map<string, BehaviorSubject<T>>;
 
 /**
  * Service for managing storage with caching capabilities.

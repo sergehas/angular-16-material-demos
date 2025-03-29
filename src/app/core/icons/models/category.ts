@@ -28,8 +28,8 @@ export class Icon {
 
 export class Category {
   name: string;
-  private readonly _icons: Array<Icon> = [];
-  categories: Array<Category> = [];
+  private readonly _icons: Icon[] = [];
+  categories: Category[] = [];
 
   constructor(name: string) {
     this.name = name;

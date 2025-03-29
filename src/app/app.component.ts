@@ -9,22 +9,22 @@ import {
   inject,
 } from "@angular/core";
 import { VERSION as MAT_VERSION } from "@angular/material/core";
-import { MatSidenavContainer, MatSidenav, MatSidenavContent } from "@angular/material/sidenav";
-import { RouterOutlet, RouterLink } from "@angular/router";
+import { MatSidenav, MatSidenavContainer, MatSidenavContent } from "@angular/material/sidenav";
+import { RouterLink, RouterOutlet } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable, map, shareReplay } from "rxjs";
 
+import { AsyncPipe } from "@angular/common";
+import { MatBadge } from "@angular/material/badge";
+import { MatButton, MatIconButton } from "@angular/material/button";
+import { MatIcon } from "@angular/material/icon";
+import { MatToolbar } from "@angular/material/toolbar";
 import { Notification } from "./core/models/notification";
 import { NotificationService } from "./core/services/notification.service";
 import { ScrollService } from "./core/services/scroll.service";
 import { slideAnimations } from "./shared/animations/route-animation";
-import { MatToolbar } from "@angular/material/toolbar";
-import { AsyncPipe } from "@angular/common";
-import { MatIconButton, MatButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
-import { MatBadge } from "@angular/material/badge";
-import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.component";
 import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
+import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.component";
 
 @Component({
   selector: "app-root",
@@ -49,20 +49,20 @@ import { NotificationCenterComponent } from "./shared/components/notification-ce
   ],
 })
 export class AppComponent implements AfterViewInit {
-  private service = inject(NotificationService);
-  private scrollService = inject(ScrollService);
+  private readonly service = inject(NotificationService);
+  private readonly scrollService = inject(ScrollService);
 
   @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
   @ViewChild(RouterOutlet) outlet!: RouterOutlet;
 
   title = `Angular ${CDK_VERSION.full} Material ${MAT_VERSION.full} demo`;
-  private breakpointObserver = inject(BreakpointObserver);
+  private readonly breakpointObserver = inject(BreakpointObserver);
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map((result) => result.matches),
     shareReplay()
   );
   notifications$: Observable<Set<Notification>>;
-  animation: string = "";
+  animation = "";
   constructor() {
     const translate = inject(TranslateService);
 

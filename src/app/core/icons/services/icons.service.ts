@@ -5,11 +5,11 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { lastValueFrom } from "rxjs";
 import { Category, NAMESPACE } from "../models/category";
 
-type incoLibFormat = {
+interface IconLibFormat {
   name: string;
   icons: string[];
-  categories: incoLibFormat[];
-};
+  categories: IconLibFormat[];
+}
 
 @Injectable({
   providedIn: "root",
@@ -23,11 +23,11 @@ export class IconsService {
 
   async loadConfiguration() {
     const libData = await lastValueFrom(this.http.get("assets/iconlib.json"));
-    this.iconlib = this.load(libData as incoLibFormat);
+    this.iconlib = this.load(libData as IconLibFormat);
     console.info("[IconsService] iconlib build: ", this.iconlib);
   }
 
-  private load(data: incoLibFormat) {
+  private load(data: IconLibFormat) {
     const cat = new Category(data.name);
     data.icons.forEach((i) => {
       const icon = cat.addIcon(i);

@@ -7,7 +7,6 @@ import { Subject } from "rxjs";
 export class ScrollService {
   private readonly scrollSubject = new Subject<void>();
   readonly scrolling$ = this.scrollSubject.asObservable();
-  constructor() {}
 
   scroll() {
     //console.debug("scroll detected");

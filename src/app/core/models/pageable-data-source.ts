@@ -24,7 +24,7 @@ export class Paginator {
   initialized = new Observable<void>();
   length = 0;
 
-  constructor(pageSize: number = 100) {
+  constructor(pageSize = 100) {
     this.pageSize = pageSize;
   }
   /** Emits an event notifying that a change of the paginator's properties has been triggered. */
@@ -115,7 +115,7 @@ export class PageableDataSource<
 
   constructor(
     protected service: HttpService<T>,
-    autoload: boolean = true
+    autoload = true
   ) {
     super();
     this.autoload = autoload;

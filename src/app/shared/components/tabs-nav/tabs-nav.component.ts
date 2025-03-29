@@ -48,7 +48,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
   private router = inject(Router);
   private contexts = inject(ChildrenOutletContexts);
 
-  @Input() path: string = "";
+  @Input() path = "";
   @Input() default?: string;
   @Input({ transform: booleanAttribute }) sticky = false;
   @Output() activate = new EventEmitter<ActivatedRoute | null>();

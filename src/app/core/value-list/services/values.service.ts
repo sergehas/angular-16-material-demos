@@ -3,10 +3,13 @@ import { Injectable, inject } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map, of, tap } from "rxjs";
 
-import { HttpService, Page } from "../../services/http-service";
+import { Filter, HttpService, Page } from "../../services/http-service";
 import { Value } from "../models/value";
 
-export type ValueCriteria = { name?: string; group?: string };
+export interface ValueCriteria extends Filter {
+  name?: string;
+  group?: string;
+}
 
 @Injectable({
   providedIn: "root",

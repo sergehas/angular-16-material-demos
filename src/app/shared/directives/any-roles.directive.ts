@@ -10,7 +10,7 @@ export class AnyRolesDirective implements OnInit {
   private readonly _loginService = inject(LoginService);
 
   @Input("appAnyRoles") roles: string[] | Role[] | undefined = [];
-  @Output() granted: EventEmitter<boolean> = new EventEmitter();
+  @Output() granted = new EventEmitter<boolean>();
   ngOnInit() {
     if (!this.roles || this.roles.length === 0) {
       console.log(`[appAnyRoles] no roles provided [${this.roles}]: grant access`);
