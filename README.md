@@ -15,6 +15,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
 - update this readme (scaffolding)
 - migrate CSS to material design 3 ?
+- [x] upgrade `eslint` to v9 + flat config
 
 ### Features
 
