@@ -2,19 +2,56 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.x.
 
+## TODO
+
+### Angular 19 migration
+
+* finalize <https://angular.dev/reference/migrations/inject-function> (impact on unit test)
+* apply <https://angular.dev/reference/migrations/route-lazy-loading>
+* apply <https://angular.dev/reference/migrations/signal-inputs> &<https://angular.dev/reference/migrations/outputs)>
+* apply <https://angular.dev/reference/migrations/signal-queries> ?
+* cleanup
+  * finalize module clean up
+  * apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
+* update this readme (scaffolding)
+* migrate CSS to material design 3 ?
+
+### Features
+
+* table
+  * [ ] add sticky column on right
+  * [ ] add expandable / custom row content
+  * [ ] add resizable column
+  * [ ] add data-table capabilities ?
+* add chat panel
+  * [ ] "teams" UX/UI
+  * [ ] markdown editor / rendering
+  * [ ] support (plugin) bot (`/my-bot` commands)
+* Icon selector
+  * [ ] a11y navigation
+* carousel
+  * [ ] import & finalize swiper integration
+  * [ ] import svg overlay annotation
+* [ ] import / rebuild Theme selector
+* [ ] backend microservice for notification
+* [ ] 'retrofit' like mock flipping
+* [ ] document OpenAPI generator (<https://github.com/orval-labs/orval> , <https://github.com/hey-api/openapi-ts>?)
+* [ ] generalize i18n
+* [ ] add resizable panels (<https://github.com/gridstack/gridstack.js> ?)
+
 ## Code scaffolding
 
 bookmarks:
 
-- <https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/>
-- <https://stackblitz.com/github/janders/angular-tab-router-with-children>
-- <https://m3.material.io/develop/web>
-- <https://blog.angular-university.io/angular-material-data-table/>
-- <https://www.vitamindev.com/angular/how-to-initialize-a-service-on-startup/>
-- <http://www.prideparrot.com/blog/archive/2019/3/how_to_create_custom_dropdown_cdk>
-- <https://stackblitz.com/edit/custom-mat-form-field-control?file=app%2Fcustom-input%2Fabstract-mat-form-field.ts>
-- [country codes ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
-- [Language codes ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
+* <https://www.tektutorialshub.com/angular/angular-folder-structure-best-practices/>
+* <https://stackblitz.com/github/janders/angular-tab-router-with-children>
+* <https://m3.material.io/develop/web>
+* <https://blog.angular-university.io/angular-material-data-table/>
+* <https://www.vitamindev.com/angular/how-to-initialize-a-service-on-startup/>
+* <http://www.prideparrot.com/blog/archive/2019/3/how_to_create_custom_dropdown_cdk>
+* <https://stackblitz.com/edit/custom-mat-form-field-control?file=app%2Fcustom-input%2Fabstract-mat-form-field.ts>
+* [country codes ISO 3166](https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes)
+* [Language codes ISO 639-1](https://en.wikipedia.org/wiki/List_of_ISO_639-1_codes)
 
 ### Basics
 
@@ -130,10 +167,10 @@ As services (& associated models) could be related to feature module ( i.e. `Ord
 
 #### initializing core
 
-- add a `github` module: `ng generate module core/github`
-- add a service to `github`: `ng generate service core/github/services/github`
+* add a `github` module: `ng generate module core/github`
+* add a service to `github`: `ng generate service core/github/services/github`
 
-  - then, add it to module:
+  * then, add it to module:
 
     ```typescript
     @NgModule({
@@ -147,8 +184,8 @@ As services (& associated models) could be related to feature module ( i.e. `Ord
     })
     ```
 
-- add a model to `github`: `ng generate interface core/github/models/issue`
-- add a datasource for issues to `github`: `ng generate class core/github/models/IssuesDataSource`
+* add a model to `github`: `ng generate interface core/github/models/issue`
+* add a datasource for issues to `github`: `ng generate class core/github/models/IssuesDataSource`
 
 ---
 
@@ -216,7 +253,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ## links
 
-- rail menu <https://stackblitz.com/edit/angular-side-nav-icon?file=src%2Fapp%2Fside-nav%2Fside-nav.component.html>
-- filterable column <https://www.freakyjolly.com/angular-material-table-custom-filter-using-select-box/>, <https://github.com/malbarmavi/mat-table-column-filter>
-- various demos <https://github.com/railsstudent/ng-rxjs-30/tree/main/projects>
-- material icons <https://fonts.google.com/icons?selected=Material+Symbols+Outlined:assistant_direction:FILL>
+* rail menu <https://stackblitz.com/edit/angular-side-nav-icon?file=src%2Fapp%2Fside-nav%2Fside-nav.component.html>
+* filterable column <https://www.freakyjolly.com/angular-material-table-custom-filter-using-select-box/>, <https://github.com/malbarmavi/mat-table-column-filter>
+* various demos <https://github.com/railsstudent/ng-rxjs-30/tree/main/projects>
+* material icons <https://fonts.google.com/icons?selected=Material+Symbols+Outlined:assistant_direction:FILL>
