@@ -15,7 +15,7 @@ import {
   OnChanges,
   OnDestroy,
   Renderer2,
-  input
+  input,
 } from "@angular/core";
 import {
   ControlValueAccessor,

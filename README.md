@@ -9,13 +9,14 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [x] finalize <https://angular.dev/reference/migrations/inject-function> (impact on unit test)
 - [x] apply <https://angular.dev/reference/migrations/route-lazy-loading>
 - [x] apply <https://angular.dev/reference/migrations/signal-inputs> (except on component extending material formField.. which is not migrated :/)
-- [x] <https://angular.dev/reference/migrations/outputs)>
+- [x] apply <https://angular.dev/reference/migrations/outputs)>
 - [x] apply <https://angular.dev/reference/migrations/signal-queries> ?
 - cleanup
   - [x] finalize module clean up (remaining module: service & routing)
+    - get rid of routing modules (just export an array of routes then register them in the `app.routing` ?)
   - [x] apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
 - [x] update this readme (scaffolding)
-- migrate CSS to material design 3 ?
+- [ ] migrate CSS to material design 3 ?
 - [x] upgrade `eslint` to v9 + flat config
 
 ### Features
