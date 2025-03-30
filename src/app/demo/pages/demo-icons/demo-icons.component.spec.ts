@@ -7,7 +7,6 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Category } from "src/app/core/icons/models/category";
 import { IconsService } from "src/app/core/icons/services/icons.service";
-import { DemoModule } from "../../demo.module";
 import { DemoIconsComponent } from "./demo-icons.component";
 
 /**
@@ -27,7 +26,7 @@ describe("DemoIconsComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [DemoModule, NoopAnimationsModule, DemoIconsComponent],
+      imports: [NoopAnimationsModule, DemoIconsComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),

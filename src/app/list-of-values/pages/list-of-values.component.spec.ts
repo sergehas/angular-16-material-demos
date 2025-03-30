@@ -7,7 +7,6 @@ import { Observable } from "rxjs";
 import { GroupsService } from "src/app/core/value-list/services/groups.service";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
 import { TabsNavComponent } from "src/app/shared/components/tabs-nav/tabs-nav.component";
-import { ListOfValuesModule } from "../list-of-values.module";
 import { ListOfValuesComponent } from "./list-of-values.component";
 
 /**
@@ -39,7 +38,6 @@ describe("ListOfValuesComponent", () => {
     TestBed.configureTestingModule({
       imports: [
         TabsNavComponent,
-        ListOfValuesModule,
         RouterModule.forRoot([]),
         NoopAnimationsModule,
         ListOfValuesComponent,

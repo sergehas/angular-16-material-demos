@@ -1,7 +1,6 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
-import { DemoModule } from "../../demo.module";
 import { DemoNotifComponent } from "./demo-notif.component";
 
 describe("DemoNotifComponent", () => {
@@ -10,7 +9,7 @@ describe("DemoNotifComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DemoModule, NoopAnimationsModule, DemoNotifComponent],
+      imports: [NoopAnimationsModule, DemoNotifComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DemoNotifComponent);
