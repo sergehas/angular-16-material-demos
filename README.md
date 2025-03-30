@@ -13,7 +13,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [x] apply <https://angular.dev/reference/migrations/signal-queries> ?
 - cleanup
   - [x] finalize module clean up (remaining module: service & routing)
-  - apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
+  - [x] apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
 - update this readme (scaffolding)
 - migrate CSS to material design 3 ?
 - [x] upgrade `eslint` to v9 + flat config

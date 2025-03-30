@@ -37,9 +37,5 @@
       <mat-icon>close</mat-icon>
     </button>
   }
-  <app-icon-tree
-    [expanded]="true"
-    [value]="value"
-    (valueChange)="onSelectionChange($event)"
-  ></app-icon-tree>
+  <app-icon-tree [expanded]="true" [value]="value" (valueChange)="onSelectionChange($event)" />
 </mat-menu>

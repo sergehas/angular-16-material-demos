@@ -3,10 +3,10 @@
   <h3>Overview</h3>
   <p>TODO</p>
 </section>
-<mat-divider></mat-divider>
+<mat-divider />
 
 <section class="demo-options">
-  <h2>Dynamic laguages</h2>
+  <h2>Dynamic languages</h2>
   <div class="label-container">
     <button mat-flat-button (click)="setLanguage('en-US')" color="accent">
       EN (default, fallback)
@@ -17,17 +17,17 @@
     <button mat-stroked-button (click)="updateDate()">Update date</button>
   </div>
 </section>
-<mat-divider></mat-divider>
+<mat-divider />
 <section class="demo-options">
-  <h2>Formated dates(language specific)</h2>
+  <h2>Formatted dates(language specific)</h2>
   <p>raw date: {{ today }}</p>
   <p>dateFormat.day: {{ "format.day" | translate }}</p>
   <p>formatted date: {{ today | localizedDate: "format.day" }}</p>
   <p>formatted date: {{ today | localizedDate: "format.datetime" }}</p>
 </section>
-<mat-divider></mat-divider>
+<mat-divider />
 <section class="demo-options">
-  <h2>Date range selector displayed as formated weeks</h2>
+  <h2>Date range selector displayed as formatted weeks</h2>
   <mat-form-field>
     <mat-label>Enter a date range</mat-label>
     <mat-date-range-input [rangePicker]="picker">
