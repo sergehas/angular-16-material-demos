@@ -1,6 +1,6 @@
 {
   "name": "angular-16-material-starter",
-  "version": "19.2.0",
+  "version": "19.2.1-SNAPSHOT",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
