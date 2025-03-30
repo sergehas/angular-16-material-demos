@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component, Inject, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 
@@ -21,7 +21,6 @@ import { NotificationComponent } from "./notification.component";
   templateUrl: "./notification-center.component.html",
   styleUrls: ["./notification-center.component.scss"],
   changeDetection: ChangeDetectionStrategy.Default,
-  standalone: true,
   imports: [
     CommonModule,
     MatSnackBarModule,
@@ -33,15 +32,15 @@ import { NotificationComponent } from "./notification.component";
   ],
 })
 export class NotificationCenterComponent {
+  private service = inject(NotificationService);
+  private snackBar = inject(MatSnackBar);
+
   //reexpose notif observable
   notifications$ = this.service.notifications$;
   severityFilter = new FormControl(["info", "warn", "sever"]);
   sort = "asc";
 
-  constructor(
-    private service: NotificationService,
-    private snackBar: MatSnackBar
-  ) {
+  constructor() {
     this.service.notification$.subscribe((n) => this.showNotification(n));
   }
 
@@ -85,16 +84,13 @@ export class NotificationCenterComponent {
   selector: "app-notification-snack-bar",
   templateUrl: "notification-snack-bar.component.html",
   styleUrls: ["./notification-snack-bar.component.scss"],
-  standalone: true,
   imports: [CommonModule, MatButtonModule, MatSnackBarModule, MatIconModule],
 })
 export class NotificationSnackBarComponent {
-  private snackBarRef = inject(MatSnackBarRef);
+  data = inject<Notification>(MAT_SNACK_BAR_DATA);
+  private service = inject(NotificationService);
 
-  constructor(
-    @Inject(MAT_SNACK_BAR_DATA) public data: Notification,
-    private service: NotificationService
-  ) {}
+  private snackBarRef = inject(MatSnackBarRef);
 
   close() {
     console.log("close");

@@ -3,8 +3,8 @@ import { TestBed } from "@angular/core/testing";
 import { MatIconRegistry } from "@angular/material/icon";
 import { NAMESPACE } from "../models/category";
 
-import { IconsService } from "./icons.service";
 import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { IconsService } from "./icons.service";
 
 describe("IconsService", () => {
   let service: IconsService;
@@ -27,11 +27,11 @@ describe("IconsService", () => {
 
   it("should load configuration", () => {
     service.loadConfiguration().then(() => {
-      expect(service.getIconslib().name).toEqual("numbers");
+      expect(service.getIconsLib().name).toEqual("numbers");
       expect(iconRegistry.getNamedSvgIcon(`${NAMESPACE}:1`)).toBeTruthy();
       expect(iconRegistry.getNamedSvgIcon(`${NAMESPACE}:2`)).toBeTruthy();
     });
-    const req = httpTestingController.expectOne("assets/iconlib.json");
+    const req = httpTestingController.expectOne("assets/iconLib.json");
     expect(req.request.method).toEqual("GET");
     req.flush({ name: "numbers", icons: ["1.svg", "2.svg"], categories: [] });
     httpTestingController.verify();

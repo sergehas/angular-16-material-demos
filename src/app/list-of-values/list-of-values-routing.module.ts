@@ -1,12 +1,11 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { GroupsComponent } from "./pages/groups/groups.component";
-import { ListOfValuesComponent } from "./pages/list-of-values.component";
 
 const routes: Routes = [
   {
     path: "list-of-values",
-    component: ListOfValuesComponent,
+    loadComponent: () =>
+      import("./pages/list-of-values.component").then((m) => m.ListOfValuesComponent),
     data: {
       icon: "engineering",
       animation: "slideTop",
@@ -15,7 +14,8 @@ const routes: Routes = [
       // list "sub" pages from this demo feature components
       {
         path: "groups",
-        component: GroupsComponent,
+        loadComponent: () =>
+          import("./pages/groups/groups.component").then((m) => m.GroupsComponent),
         data: {
           animation: "slideTab",
           icon: "settings",

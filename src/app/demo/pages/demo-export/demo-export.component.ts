@@ -1,6 +1,15 @@
-import { Component } from "@angular/core";
-import { FormControl, Validators } from "@angular/forms";
-import { ProgressBarMode } from "@angular/material/progress-bar";
+import { AsyncPipe } from "@angular/common";
+import { Component, inject } from "@angular/core";
+import { FormControl, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
+import { MatBadge } from "@angular/material/badge";
+import { MatButton } from "@angular/material/button";
+import { MatOption } from "@angular/material/core";
+import { MatDivider } from "@angular/material/divider";
+import { MatFormField, MatHint, MatLabel } from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
+import { MatInput } from "@angular/material/input";
+import { MatProgressBar, ProgressBarMode } from "@angular/material/progress-bar";
+import { MatSelect } from "@angular/material/select";
 import { BehaviorSubject } from "rxjs";
 import { Item } from "src/app/core/item/models/item";
 import { ItemService } from "src/app/core/item/services/item.service";
@@ -11,33 +20,44 @@ import { ExcelExportService } from "src/app/core/services/excel-export.service";
 import { NotificationService } from "src/app/core/services/notification.service";
 import { SheetExportService } from "src/app/core/services/sheet-export.service";
 
-type LogItem = {
+interface LogItem {
   timestamp: Date;
   message: string;
-};
+}
 
 @Component({
   selector: "app-demo-export",
   templateUrl: "./demo-export.component.html",
   styleUrls: ["./demo-export.component.scss"],
+  imports: [
+    MatDivider,
+    MatFormField,
+    MatLabel,
+    MatInput,
+    FormsModule,
+    ReactiveFormsModule,
+    MatHint,
+    MatSelect,
+    MatOption,
+    MatButton,
+    MatBadge,
+    MatIcon,
+    MatProgressBar,
+    AsyncPipe,
+  ],
 })
 export class DemoExportComponent {
+  readonly exportService = inject(ExcelExportService);
+  readonly sheetService = inject(SheetExportService);
+  readonly dataService = inject(ItemService);
+  private readonly notifyService = inject(NotificationService);
+
   exportEvents: LogItem[] = [];
   exportEvents$ = new BehaviorSubject<LogItem[]>(this.exportEvents);
   progressMode: ProgressBarMode = "determinate";
   progressColor = "primary";
   progressValue = 0;
   private _notif?: ProgressNotification;
-
-  constructor(
-    readonly exportService: ExcelExportService,
-    readonly sheetService: SheetExportService,
-    readonly dataService: ItemService,
-    private readonly notifService: NotificationService
-  ) {
-    //constructor(readonly exportService: SheetExportService, readonly dataService: ItemService) {
-    //console.debug(`initializing datasource`);
-  }
   cols = new FormControl(5, [Validators.required]);
   rows = new FormControl(37, [Validators.required]);
   pageSize = new FormControl(10, [Validators.required]);
@@ -54,7 +74,7 @@ export class DemoExportComponent {
   export(): void {
     this.resetProgress();
 
-    this._notif = this.notifService.notify(
+    this._notif = this.notifyService.notify(
       new ProgressNotification({
         severity: "info",
         message: `Export demo`,

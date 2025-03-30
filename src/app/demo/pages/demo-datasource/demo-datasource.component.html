@@ -2,24 +2,24 @@
   <h1>This demo illustrate http service compatible data source</h1>
   <h2>Overview</h2>
   <p>
-    This datasouce support (optinal) <b>natively sorting & paging.</b><br />
-    It implements native Angular native datasource, & so can be used in any datasource awre
+    This datasource support (optional) <b>natively sorting & paging.</b><br />
+    It implements native Angular native datasource, & so can be used in any datasource aware
     component (such as table)<br />
-    It is design to avoid extra underlyling (http) service call to preserve response time & API
-    cosumption plan.<br />
-    key benefit: it requrire a simple service injection... nothing else!
+    It is design to avoid extra underlying (http) service call to preserve response time & API
+    consumption plan.<br />
+    key benefit: it require a simple service injection... nothing else!
   </p>
   <h3>Events</h3>
   <p>
-    driving the datasource: it is supoer simple: the constructor takes 1 optional arg to control if
-    the DS should automaticaly load at startup. Then, everithing else is automated: set the pager,
+    driving the datasource: it is super simple: the constructor takes 1 optional arg to control if
+    the DS should automatically load at startup. Then, everything else is automated: set the pager,
     set the sort, set the filter they will fire the proper (datasource internal) event to load and
     count (if needed). To enforce datasource loading ; simply set a filter :
     <code>datasource.filter=(&#123;&#125;)</code>
   </p>
   <p>It emits events while starting/ending to load & count.<br /></p>
 </section>
-<mat-divider></mat-divider>
+<mat-divider />
 
 <section class="demo-options">
   <p>
@@ -27,24 +27,24 @@
     enabled. The datasource is loaded with a real service using http service call (GitHb API on
     <a href="https://github.com/angular/components/issues">material repository issues</a>).
     <br />
-    As dynamicaly Adding or removing pager is ... a bit tricky (because of agular template lifecycle
-    + the fact matTable are fireing "irelvant" events at initializaiton time), the behavior of te
-    datasource may be a bit "strange" when enabling/disabling the paginator.
+    As dynamically Adding or removing pager is ... a bit tricky (because of angular template
+    lifecycle + the fact matTable are firing "irrelevant" events at initialization time), the
+    behavior of te datasource may be a bit "strange" when enabling/disabling the paginator.
   </p>
 
   <mat-slide-toggle
     [(ngModel)]="paginatorEnabled"
-    (change)="dataSource.paginator = paginatorEnabled ? paginator : undefined"
-    >Enable paginiator</mat-slide-toggle
+    (change)="dataSource.paginator = paginatorEnabled ? paginator() : undefined"
+    >Enable paginator</mat-slide-toggle
   >
   <mat-slide-toggle
     [(ngModel)]="sortEnabled"
-    (change)="dataSource.sort = sortEnabled ? sort : undefined"
+    (change)="dataSource.sort = sortEnabled ? sort() : undefined"
     >Enable sort</mat-slide-toggle
   >
   <div>
     <mat-slide-toggle [(ngModel)]="autoloadEnabled" (change)="resetDatasource()"
-      >Initial autoloading</mat-slide-toggle
+      >Initial auto-loading</mat-slide-toggle
     >&nbsp;
     <button
       mat-flat-button
@@ -57,7 +57,7 @@
     </button>
   </div>
 </section>
-<mat-divider></mat-divider>
+<mat-divider />
 
 <section class="demo-options mat-elevation-z8">
   <div class="label-container">
@@ -124,7 +124,7 @@
   </mat-paginator>
 </section>
 <br />
-<mat-divider></mat-divider>
+<mat-divider />
 <section class="demo-options">
   <div class="demo-bar">
     <h2>Datasource event log</h2>
@@ -144,13 +144,17 @@
     </button>
   </div>
 
-  <div *ngIf="!(dataSourceEvents$ | async)?.length">Datasource events will be logged here</div>
+  @if (!(dataSourceEvents$ | async)?.length) {
+    <div>Datasource events will be logged here</div>
+  }
 
   <section class="demo-log">
     <ol>
-      <li *ngFor="let event of dataSourceEvents$ | async">
-        {{ event }}
-      </li>
+      @for (event of dataSourceEvents$ | async; track event) {
+        <li>
+          {{ event }}
+        </li>
+      }
     </ol>
   </section>
 </section>

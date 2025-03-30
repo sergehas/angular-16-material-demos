@@ -3,13 +3,13 @@ import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map } from "rxjs";
 
-export type Page = {
+export interface Page {
   pageNumber: number;
   pageSize: number;
-};
+}
 
 export type FilterValue = string | boolean | number | Date | (string | boolean | number | Date);
-export type Filter = Record<string, FilterValue>;
+export type Filter = Partial<Record<string, FilterValue>>;
 
 /**
  * Abstract service for making HTTP requests with filtering, sorting, and pagination.

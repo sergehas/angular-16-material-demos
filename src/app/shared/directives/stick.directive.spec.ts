@@ -16,7 +16,6 @@ import { StickDirective } from "./stick.directive";
     </section>
   </div>`,
   imports: [StickDirective],
-  standalone: true,
 })
 class TestComponent {}
 

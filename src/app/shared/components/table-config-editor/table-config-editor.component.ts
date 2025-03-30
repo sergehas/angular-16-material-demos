@@ -1,4 +1,4 @@
-import { Component, Input } from "@angular/core";
+import { Component, input } from "@angular/core";
 import {
   CdkDrag,
   CdkDragDrop,
@@ -6,7 +6,7 @@ import {
   CdkDragHandle,
   moveItemInArray,
 } from "@angular/cdk/drag-drop";
-import { CommonModule } from "@angular/common";
+
 import { MatIconModule } from "@angular/material/icon";
 import { MatButtonModule } from "@angular/material/button";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
@@ -17,9 +17,7 @@ import { TableColumn, TableConfig } from "../table-expandable-rows/table-config"
   selector: "app-table-config-editor",
   templateUrl: "./table-config-editor.component.html",
   styleUrls: ["./table-config-editor.component.scss"],
-  standalone: true,
   imports: [
-    CommonModule,
     MatIconModule,
     MatButtonModule,
     MatSlideToggleModule,
@@ -30,8 +28,8 @@ import { TableColumn, TableConfig } from "../table-expandable-rows/table-config"
   ],
 })
 export class TableConfigEditorComponent {
-  @Input() options!: TableConfig;
-  @Input() maxHeight = "100%";
+  readonly options = input.required<TableConfig>();
+  readonly maxHeight = input("100%");
 
   /**
    * Predicate function that only allows to sort sticky column XOR non sticky column. doesn't allow to interleave sticky/non sticky .
@@ -44,7 +42,7 @@ export class TableConfigEditorComponent {
   }
 
   drop(event: CdkDragDrop<TableColumn[]>): void {
-    moveItemInArray(this.options.columns.columns, event.previousIndex, event.currentIndex);
+    moveItemInArray(this.options().columns.columns, event.previousIndex, event.currentIndex);
   }
   prevent(e: Event) {
     e.stopPropagation();

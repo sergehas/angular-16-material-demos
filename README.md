@@ -1,6 +1,46 @@
-# Angular16MaterialStarter
+# Angular19MaterialStarter
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.x.
+
+## TODO
+
+### Angular 19 migration
+
+- [x] finalize <https://angular.dev/reference/migrations/inject-function> (impact on unit test)
+- [x] apply <https://angular.dev/reference/migrations/route-lazy-loading>
+- [x] apply <https://angular.dev/reference/migrations/signal-inputs> (except on component extending material formField.. which is not migrated :/)
+- [x] apply <https://angular.dev/reference/migrations/outputs)>
+- [x] apply <https://angular.dev/reference/migrations/signal-queries> ?
+- cleanup
+  - [x] finalize module clean up (remaining module: service & routing)
+    - get rid of routing modules (just export an array of routes then register them in the `app.routing` ?)
+  - [x] apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
+- [x] update this readme (scaffolding)
+- [ ] migrate CSS to material design 3 ?
+- [x] upgrade `eslint` to v9 + flat config
+
+### Features
+
+- table
+  - [ ] add sticky column on right
+  - [ ] add expandable / custom row content
+  - [ ] add resizable column
+  - [ ] add data-table capabilities ?
+- add chat panel
+  - [ ] "teams" UX/UI
+  - [ ] markdown editor / rendering
+  - [ ] support (plugin) bot (`/my-bot` commands)
+- Icon selector
+  - [ ] a11y navigation
+- carousel
+  - [ ] import & finalize swiper integration
+  - [ ] import svg overlay annotation
+- [ ] import / rebuild Theme selector
+- [ ] backend microservice for notification
+- [ ] 'retrofit' like mock flipping
+- [ ] document OpenAPI generator (<https://github.com/orval-labs/orval> , <https://github.com/hey-api/openapi-ts>?)
+- [ ] generalize i18n
+- [ ] add resizable panels (<https://github.com/gridstack/gridstack.js> ?)
 
 ## Code scaffolding
 
@@ -22,18 +62,20 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ---
 
-### Feature modules
+### Application features
 
-A Feature module contains a set of consistent business GUI (so NOT services). A feature module is assigned to a consistent business processes (i.e. 'order' (for order management), 'bill', 'catalog', .. even 'admin').
+A Feature contains a set of consistent business GUI (so NOT services). A feature module is assigned to a consistent business processes (i.e. 'order' (for order management), 'bill', 'catalog', .. even 'admin').
 
-The main/default page of a feature module could be a dashboard (i.e. : counter per order status) or redirecting to the main page of the business process (place an order). A feature module contain its own / feature wide routing module.
+The main/default page of a feature root component could be a dashboard (i.e. : counter per order status) or redirecting to the main page of the business process (place an order). A feature contain its own / feature wide routing module.
 
-A feature module should not depend on a another feature module.
+A feature should not depend on a another feature.
 
 #### initializing
 
 add a `demo` module with its routing: `ng generate module demo --routing`
-add a main feature page to `demo`: `ng generate component demo/pages/demo -m demo --flat --standalone false`
+then delete the module as we're using standalone component (only the rooting module is _still_ useful)
+
+add a main feature page to `demo`: `ng generate component demo/pages/demo --flat --standalone true`
 
 then add to `demo-routing.module.ts`
 
@@ -41,14 +83,14 @@ then add to `demo-routing.module.ts`
 const routes: Routes = [{ path: "demo", component: DemoComponent }];
 ```
 
-then import this module in `app.module.ts`:
+then import this routing module in `app.module.ts`:
 
 ```typescript
 @NgModule({
  declarations: [AppComponent],
  imports: [
     //...
-  DemoModule,
+  DemoRoutingModule,
  ],
  providers: [],
  bootstrap: [AppComponent],
@@ -57,7 +99,7 @@ then import this module in `app.module.ts`:
 
 #### add (sub) pages
 
-add a sub page to `demo` feature : `ng generate component demo/pages/demo-table --standalone false -m demo`
+add a sub page to `demo` feature : `ng generate component demo/pages/demo-table --standalone true`
 
 then add to `demo-routing.module.ts`
 
@@ -99,24 +141,16 @@ Alternatively, you could use a navigation by tabs in `demo.component.html`
 
 Share component are components & modules should **not** have any dependency on any of the other modules in the application.
 
-The shared module must declare the components, pipes, and directives using the declarations metadata and export it using the exports metadata
+Other features can import & use the shared components, directives & pipes
 
-Other Modules can import the shared modules and use the exported components, directives & pipes
+The Services must not be defined here. Since the shared components are imported everywhere, it may create a new instance of the service if it is imported in the lazy loaded components.
 
-The Services must not be defined here. Since the shared modules are imported everywhere, it may create a new instance of the service if it is imported in the lazy loaded modules.
-
-Tips: The commonly required angular modules like ( CommonModule, FormsModule, etc) or third party modules can be imported here and re-exported. The other module importing the shared module does not have to import those modules.
-
-### add new shared module (if not exist) [not recommended]
+### add new shared module (if not exist) [not recommended, deprecated]
 
 If you don't plan to use **recommended standalone components**,
 add a `shared` module : `ng generate module shared`
 
-### add new shared component
-
-add a component in `shared` folder/module : `ng generate component shared/components/table-expandable-rows -m shared`
-
-or (for standalone component **recommended**)
+### add new shared/standalone component
 
 add a component in `shared` folder : `ng generate component shared/components/table-expandable-rows --standalone --view-encapsulation None`
 

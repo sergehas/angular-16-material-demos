@@ -21,8 +21,8 @@ describe("TableExpandableRowsComponent", () => {
     });
     fixture = TestBed.createComponent(TableExpandableRowsComponent);
     component = fixture.componentInstance;
-    component.options = new TableConfig({ name: "" });
-    component.dataSource = new PageableDataSource(serviceSpy);
+    fixture.componentRef.setInput("options", new TableConfig({ name: "" }));
+    fixture.componentRef.setInput("dataSource", new PageableDataSource(serviceSpy));
     fixture.detectChanges();
   });
 

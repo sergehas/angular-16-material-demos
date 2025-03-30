@@ -1,25 +1,27 @@
 import { TestBed } from "@angular/core/testing";
 // Http testing module and mocking controller
-import { provideHttpClientTesting } from "@angular/common/http/testing";
+import { HttpTestingController, provideHttpClientTesting } from "@angular/common/http/testing";
 // Other imports
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 
 import { ItemService } from "./item.service";
 
 describe("ItemService", () => {
   let service: ItemService;
-  let httpClient: HttpClient;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [],
-      providers: [provideHttpClient(withInterceptorsFromDi()), provideHttpClientTesting()],
+      providers: [
+        ItemService,
+        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClientTesting(),
+      ],
     });
-    httpClient = TestBed.inject(HttpClient);
+    TestBed.inject(HttpTestingController);
   });
 
   it("should be created", () => {
-    service = new ItemService(httpClient);
+    service = TestBed.inject(ItemService);
     expect(service).toBeTruthy();
   });
 });

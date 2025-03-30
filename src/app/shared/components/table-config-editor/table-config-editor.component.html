@@ -1,41 +1,57 @@
 <div class="options-editor mat-body">
   <section class="toggle-options">
-    <mat-slide-toggle [(ngModel)]="options.responsive" (click)="prevent($event)"
+    <mat-slide-toggle [(ngModel)]="options().responsive" (click)="prevent($event)"
       >responsive</mat-slide-toggle
     >
-    <mat-slide-toggle [(ngModel)]="options.stickyHeader" (click)="prevent($event)"
+    <mat-slide-toggle [(ngModel)]="options().stickyHeader" (click)="prevent($event)"
       >sticky header</mat-slide-toggle
     >
   </section>
   <div>
     <div
       cdkDropList
-      [cdkDropListData]="options.columns.columns"
+      [cdkDropListData]="options().columns.columns"
       [cdkDropListSortPredicate]="sortPredicate"
       (cdkDropListDropped)="drop($event)"
     >
-      <div class="column-group" *ngFor="let group of options.columns.groups">
-        <label class="column-group-label" [htmlFor]="group">{{ group }}</label>
-        <div class="column-list" [id]="group">
-          <ng-container *ngFor="let c of options.columns.columns">
-            <div class="column-item" [cdkDragData]="c" cdkDrag *ngIf="c.group === group">
-              <div class cdkDragHandle class="drag-handler">
-                <mat-icon>drag_indicator</mat-icon><span> {{ c.name }}</span>
-              </div>
-              <div class="colunm-attributes">
-                <button mat-icon-button (click)="toggleSticky($event, c)">
-                  <mat-icon *ngIf="c.sticky">lock</mat-icon>
-                  <mat-icon *ngIf="!c.sticky">lock_open</mat-icon>
-                </button>
-                <button id="visible-{{ c }}" mat-icon-button (click)="toggleVisibility($event, c)">
-                  <mat-icon *ngIf="c.hidden">visibility_off</mat-icon>
-                  <mat-icon *ngIf="!c.hidden">visibility</mat-icon>
-                </button>
-              </div>
-            </div>
-          </ng-container>
+      @for (group of options().columns.groups; track group) {
+        <div class="column-group">
+          <label class="column-group-label" [htmlFor]="group">{{ group }}</label>
+          <div class="column-list" [id]="group">
+            @for (c of options().columns.columns; track c) {
+              @if (c.group === group) {
+                <div class="column-item" [cdkDragData]="c" cdkDrag>
+                  <div class cdkDragHandle class="drag-handler">
+                    <mat-icon>drag_indicator</mat-icon><span> {{ c.name }}</span>
+                  </div>
+                  <div class="colunm-attributes">
+                    <button mat-icon-button (click)="toggleSticky($event, c)">
+                      @if (c.sticky) {
+                        <mat-icon>lock</mat-icon>
+                      }
+                      @if (!c.sticky) {
+                        <mat-icon>lock_open</mat-icon>
+                      }
+                    </button>
+                    <button
+                      id="visible-{{ c }}"
+                      mat-icon-button
+                      (click)="toggleVisibility($event, c)"
+                    >
+                      @if (c.hidden) {
+                        <mat-icon>visibility_off</mat-icon>
+                      }
+                      @if (!c.hidden) {
+                        <mat-icon>visibility</mat-icon>
+                      }
+                    </button>
+                  </div>
+                </div>
+              }
+            }
+          </div>
         </div>
-      </div>
+      }
       <!-- groups-->
     </div>
   </div>

@@ -1,17 +1,16 @@
-import { CommonModule } from "@angular/common";
 import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   forwardRef,
+  inject,
   Input,
+  input,
   OnDestroy,
-  Optional,
-  Output,
-  Self,
-  ViewChild,
+  output,
+  OutputRefSubscription,
   ViewEncapsulation,
+  viewChild,
 } from "@angular/core";
 import { ErrorStateMatcher, MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -20,10 +19,9 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 
 import { FocusMonitor } from "@angular/cdk/a11y";
 import { FormControl, FormGroupDirective, FormsModule, NgControl, NgForm } from "@angular/forms";
-import { MatFormFieldControl } from "@angular/material/form-field";
-import { Subscription } from "rxjs";
 
 import { MatButtonModule } from "@angular/material/button";
+import { MatFormFieldControl } from "@angular/material/form-field";
 import { AbstractMatFormField } from "../abstract-mat-form-field";
 import { IconTreeComponent } from "../icon-tree/icon-tree.component";
 /**
@@ -39,16 +37,13 @@ import { IconTreeComponent } from "../icon-tree/icon-tree.component";
   selector: "app-icon-select",
   templateUrl: "./icon-select.component.html",
   styleUrls: ["./icon-select.component.scss"],
-  standalone: true,
   encapsulation: ViewEncapsulation.None,
   imports: [
-    CommonModule,
     MatIconModule,
     MatTooltipModule,
     MatMenuModule,
     MatButtonModule,
     IconTreeComponent,
-
     MatRippleModule,
     FormsModule,
   ],
@@ -63,15 +58,14 @@ export class IconSelectComponent
   extends AbstractMatFormField<string>
   implements AfterViewInit, OnDestroy
 {
-  private subscription: Subscription | null = null;
+  private subscription: OutputRefSubscription | null = null;
   protected control = new FormControl();
   //visual element to  focus
-  @ViewChild("button", { static: false })
-  private readonly ctrl: HTMLElement | undefined;
-  @ViewChild(MatMenuTrigger) iconMenu: MatMenuTrigger | null = null;
+  readonly ctrl = viewChild<HTMLElement>(".icon-btn");
+  readonly iconMenu = viewChild(MatMenuTrigger);
 
   /* input value & output valueChange work together */
-  @Output() valueChange = new EventEmitter<string | null>();
+  readonly valueChange = output<string | null>();
   @Input()
   override set value(v: string | null) {
     super.value = v;
@@ -80,17 +74,17 @@ export class IconSelectComponent
   override get value(): string | null {
     return super.value;
   }
-  @Input()
-  public tooltip: string = "";
 
-  constructor(
-    @Optional() @Self() ngControl: NgControl,
-    @Optional() _parentForm: NgForm,
-    @Optional() _parentFormGroup: FormGroupDirective,
-    _defaultErrorStateMatcher: ErrorStateMatcher,
-    _focusMonitor: FocusMonitor,
-    _elementRef: ElementRef
-  ) {
+  public readonly tooltip = input("");
+
+  constructor() {
+    const ngControl = inject(NgControl, { optional: true, self: true });
+    const _parentForm = inject(NgForm, { optional: true });
+    const _parentFormGroup = inject(FormGroupDirective, { optional: true });
+    const _defaultErrorStateMatcher = inject(ErrorStateMatcher);
+    const _focusMonitor = inject(FocusMonitor);
+    const _elementRef = inject(ElementRef);
+
     super(
       "app-icon-select",
       ngControl,
@@ -102,25 +96,27 @@ export class IconSelectComponent
     );
   }
 
-  public onSelectionChange(value: string | null) {
+  protected onSelectionChange(value: string | null) {
     this.value = value;
   }
 
-  public ngAfterViewInit(): void {
+  public override ngAfterViewInit(): void {
+    super.ngAfterViewInit();
     this.subscription = this.valueChange.subscribe((value) => {
-      this.iconMenu?.closeMenu();
+      this.iconMenu()?.closeMenu();
       super.value = value;
     });
   }
 
   public override ngOnDestroy(): void {
+    super.ngOnDestroy();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }
     super.ngOnDestroy();
   }
 
-  public focus(): void {
-    this.ctrl!.focus();
+  public override focus(): void {
+    this.ctrl()?.focus();
   }
 }

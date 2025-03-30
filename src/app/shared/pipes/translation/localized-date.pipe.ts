@@ -1,5 +1,5 @@
 import { DatePipe } from "@angular/common";
-import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform } from "@angular/core";
+import { ChangeDetectorRef, OnDestroy, Pipe, PipeTransform, inject } from "@angular/core";
 import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
 
@@ -10,23 +10,21 @@ import { Subscription } from "rxjs";
   standalone: true,
 })
 export class LocalizedDatePipe implements PipeTransform, OnDestroy {
-  constructor(
-    private translateService: TranslateService,
-    private datePipe: DatePipe,
-    private _ref: ChangeDetectorRef
-  ) {}
+  private readonly translateService = inject(TranslateService);
+  private readonly datePipe = inject(DatePipe);
+  private readonly _ref = inject(ChangeDetectorRef);
 
-  value: string = "";
+  value = "";
   lastKey: string | null = null;
   lastData: string | Date | number | null = null;
-  lastFormattedDate: string = "";
+  lastFormattedDate = "";
   onLangChange: Subscription | undefined;
 
   updateValue(key: string, data: string | Date | number): void {
-    console.log("formating ", data, "with key", key);
+    console.log("formatting ", data, "with key", key);
     const onTranslation = (res: string) => {
       console.log("format is ", res);
-      this.value = res !== undefined ? res : key;
+      this.value = res ?? key;
       this.lastKey = key;
       this.lastFormattedDate = this.datePipe.transform(data, this.value) ?? "";
       console.log("formatted is ", this.lastFormattedDate);

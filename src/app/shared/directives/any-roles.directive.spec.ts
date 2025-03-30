@@ -12,7 +12,6 @@ import { AnyRolesDirective } from "./any-roles.directive";
     <span class="allowed" [appAnyRoles]="['ADMIN', 'AUTHOR']"></span>
     <span class="denied" [appAnyRoles]="['NOT_GRANTED_ROLE']"></span>`,
   imports: [AnyRolesDirective],
-  standalone: true,
 })
 class TestComponent {}
 

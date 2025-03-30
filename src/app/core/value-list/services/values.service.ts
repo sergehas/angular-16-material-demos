@@ -1,12 +1,15 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map, of, tap } from "rxjs";
 
-import { HttpService, Page } from "../../services/http-service";
+import { Filter, HttpService, Page } from "../../services/http-service";
 import { Value } from "../models/value";
 
-export type ValueCrtieria = { name?: string; group?: string };
+export interface ValueCriteria extends Filter {
+  name?: string;
+  group?: string;
+}
 
 @Injectable({
   providedIn: "root",
@@ -15,7 +18,9 @@ export class ValuesService extends HttpService<Value> {
   static readonly HREF = "assets/mockup/values.json";
   private _updatedCache: Value[] = [];
 
-  constructor(http: HttpClient) {
+  constructor() {
+    const http = inject(HttpClient);
+
     super(http, ValuesService.HREF);
   }
 
@@ -25,7 +30,7 @@ export class ValuesService extends HttpService<Value> {
    * @param criteria Criteria to filter values.
    * @returns Filtered array of values.
    */
-  private _filter(values: Value[], criteria?: ValueCrtieria): Value[] {
+  private _filter(values: Value[], criteria?: ValueCriteria): Value[] {
     console.debug("filtering :", values);
     if (!criteria) {
       return values;
@@ -77,7 +82,7 @@ export class ValuesService extends HttpService<Value> {
    * @param criteria Criteria to filter values.
    * @returns Observable of the number of values.
    */
-  override count(criteria?: ValueCrtieria): Observable<number> {
+  override count(criteria?: ValueCriteria): Observable<number> {
     let params = new HttpParams();
     params = params.set("q", this.encodeFilter(criteria));
     return this.http
@@ -86,7 +91,7 @@ export class ValuesService extends HttpService<Value> {
         params: params,
       })
       .pipe(
-        // filtering & counting apply client side... must of couse be done by "real" API, not by GUI
+        // filtering & counting apply client side... must of course be done by "real" API, not by GUI
         map((res) => this._merge(res?.items, this._updatedCache)),
         map((values) => this._filter(values, criteria).length)
       );
@@ -100,14 +105,14 @@ export class ValuesService extends HttpService<Value> {
    * @returns Observable of the array of values.
    */
   override find(
-    criteria: ValueCrtieria | undefined,
+    criteria: ValueCriteria | undefined,
     sort: Sort | undefined,
     page: Page | undefined
   ): Observable<Value[]> {
     console.debug("call find with criteria: ", criteria, " sort: ", sort, " pager: ", page);
     return super.find(criteria, sort, page).pipe(
       map((values) => this._merge(values, this._updatedCache)),
-      // filtering/sorting apply client side... must of couse be done by "real" API, not by GUI
+      // filtering/sorting apply client side... must of course be done by "real" API, not by GUI
       map((values) => this._filter(values, criteria)),
       tap((values) => console.log("filtered: ", values)),
       map((values) => {

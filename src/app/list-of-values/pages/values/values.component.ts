@@ -1,30 +1,54 @@
 import {
   AfterViewInit,
   Component,
-  Inject,
-  Input,
   OnDestroy,
   OnInit,
-  ViewChild,
   inject,
+  input,
+  viewChild,
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from "@angular/material/dialog";
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormsModule,
+  ReactiveFormsModule,
+} from "@angular/forms";
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogRef,
+  MatDialogTitle,
+  MatDialogContent,
+  MatDialogActions,
+  MatDialogClose,
+} from "@angular/material/dialog";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
 import { BehaviorSubject, tap } from "rxjs";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { Value } from "src/app/core/value-list/models/value";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
+import { AsyncPipe } from "@angular/common";
+import { MatButton, MatMiniFabButton } from "@angular/material/button";
+import { MatIcon } from "@angular/material/icon";
+import { MatLabel, MatFormField, MatHint } from "@angular/material/form-field";
+import { CdkScrollable } from "@angular/cdk/scrolling";
+import { MatInput } from "@angular/material/input";
+import { IconSelectComponent } from "../../../shared/components/icon-select/icon-select.component";
 
 @Component({
   selector: "app-values",
   templateUrl: "./values.component.html",
   styleUrls: ["./values.component.scss"],
+  imports: [MatButton, MatIcon, MatLabel, MatMiniFabButton, MatPaginator, AsyncPipe],
 })
 export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @Input() group?: string;
+  private readonly service = inject(ValuesService);
+  private readonly dialog = inject(MatDialog);
+
+  readonly paginator = viewChild.required(MatPaginator);
+  readonly group = input<string>();
 
   dataSource!: PageableDataSource<Value>;
   private readonly _page = new BehaviorSubject<Value[]>([]);
@@ -33,28 +57,25 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
     return this._page;
   }
 
-  constructor(
-    private readonly service: ValuesService,
-    private readonly dialog: MatDialog
-  ) {
+  constructor() {
     this.dataSource = new PageableDataSource<Value>(this.service);
   }
 
   ngOnInit(): void {
     //just for debug
     this.dataSource.loading$
-      .pipe(tap((b) => console.info(`loading ${this.group}: ${b}`)))
+      .pipe(tap((b) => console.info(`loading ${this.group()}: ${b}`)))
       .subscribe();
     this.dataSource.counting$
-      .pipe(tap((b) => console.info(`counting ${this.group}: ${b}`)))
+      .pipe(tap((b) => console.info(`counting ${this.group()}: ${b}`)))
       .subscribe();
   }
 
   ngAfterViewInit(): void {
     console.log("set pager");
-    this.dataSource.filter = { group: this.group! };
+    this.dataSource.filter = { group: this.group()! };
     this.dataSource.sort = new MatSort();
-    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator();
     //sorting fires event, which is fireing page loading
     this.dataSource.sort?.sort({ id: "name", start: "asc" } as MatSortable);
     this.dataSource.connect().subscribe((data) => {
@@ -80,7 +101,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
       dialogRef = this.dialog.open(ValueEditDialog, {
         data: {
           mode: EditMode.CREATE,
-          entity: { group: this.group, label: "" } as Value,
+          entity: { group: this.group(), label: "" } as Value,
         },
       });
     }
@@ -107,16 +128,34 @@ export enum EditMode {
   selector: "app-value-edit-dialog",
   templateUrl: "value-edit.dialog.html",
   styleUrls: ["./value-edit.dialog.scss"],
+  imports: [
+    MatDialogTitle,
+    CdkScrollable,
+    MatDialogContent,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormField,
+    MatInput,
+    IconSelectComponent,
+    MatHint,
+    MatDialogActions,
+    MatButton,
+    MatDialogClose,
+  ],
 })
 export class ValueEditDialog {
+  dialogRef = inject<MatDialogRef<ValueEditDialog>>(MatDialogRef);
+  data = inject<{
+    mode: EditMode;
+    entity: Value;
+  }>(MAT_DIALOG_DATA);
+
   private readonly _fb = inject(FormBuilder);
   valueForm: FormGroup;
 
-  constructor(
-    public dialogRef: MatDialogRef<ValueEditDialog>,
+  constructor() {
+    const data = this.data;
 
-    @Inject(MAT_DIALOG_DATA) public data: { mode: EditMode; entity: Value }
-  ) {
     console.log("ent", data.entity);
     this.valueForm = this._fb.group({
       name: [

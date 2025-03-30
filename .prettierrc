@@ -3,9 +3,9 @@
   "tabWidth": 2,
   "useTabs": false,
   "embeddedLanguageFormatting": "off",
-  "singleQuote": true,
+  "singleQuote": false,
   "semi": true,
-  "quoteProps": "preserve",
+  "quoteProps": "consistent",
   "bracketSpacing": false,
-  "trailingComma": "all"
+  "trailingComma": "es5"
 }

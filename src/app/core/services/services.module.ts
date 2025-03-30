@@ -1,5 +1,5 @@
 import { CommonModule } from "@angular/common";
-import { NgModule, Optional, SkipSelf } from "@angular/core";
+import { NgModule, inject } from "@angular/core";
 import { ExcelExportService } from "./excel-export.service";
 import { NotificationService } from "./notification.service";
 import { ScrollService } from "./scroll.service";
@@ -19,7 +19,9 @@ import { StorageService } from "./storage.service";
 })
 export class ServicesModule {
   /** guarde to avoid multiple import */
-  constructor(@Optional() @SkipSelf() core: ServicesModule) {
+  constructor() {
+    const core = inject(ServicesModule, { optional: true, skipSelf: true });
+
     if (core) {
       throw new Error("You should import ServiceModule module only in the root module");
     }

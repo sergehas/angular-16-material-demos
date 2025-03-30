@@ -6,6 +6,7 @@
     flex-direction: row;
     flex-wrap: nowrap;
     align-items: center;
+    padding-top: 0;
     padding-right: calc(var(--app-gap) / 2);
     .mat-icon {
       margin-right: calc(var(--app-gap) / 2);
@@ -33,6 +34,7 @@
     // text-overflow: ellipsis;
   }
   .notification-footer {
+    padding-top: calc(var(--app-gap) / 2);
     padding-left: calc(var(--app-gap) / 2);
     padding-right: calc(var(--app-gap) / 2);
     .progress-hint {
@@ -46,7 +48,8 @@
         max(
             var(--mdc-linear-progress-track-height),
             var(--mdc-linear-progress-active-indicator-height)
-          ) * -2
+          ) *
+          -2
       );
     }
   }

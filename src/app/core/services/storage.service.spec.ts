@@ -1,3 +1,4 @@
+import { TestBed } from "@angular/core/testing";
 import { StorageService } from "./storage.service";
 
 const storageKey = "scopes";
@@ -7,12 +8,10 @@ describe("StorageService", () => {
   let service: StorageService;
 
   beforeEach(() => {
-    service = new StorageService(sessionStorage);
-
-    const store: Map<string, string> = new Map();
-    const mockLocalStorage = {
+    const store = new Map<string, string>();
+    const mockSessionStorage = {
       getItem: (key: string): string | null => {
-        return key in store.keys ? store.get(key) ?? "" : null;
+        return store.has(key) ? (store.get(key) ?? "") : null;
       },
       setItem: (key: string, value: string) => {
         store.set(key, `${value}`);
@@ -24,11 +23,16 @@ describe("StorageService", () => {
         store.clear();
       },
     };
+    TestBed.configureTestingModule({
+      providers: [StorageService, { provide: Storage, useValue: mockSessionStorage }],
+    });
 
-    spyOn(localStorage, "getItem").and.callFake(mockLocalStorage.getItem);
-    spyOn(localStorage, "setItem").and.callFake(mockLocalStorage.setItem);
-    spyOn(localStorage, "removeItem").and.callFake(mockLocalStorage.removeItem);
-    spyOn(localStorage, "clear").and.callFake(mockLocalStorage.clear);
+    service = TestBed.inject(StorageService);
+
+    spyOn(sessionStorage, "getItem").and.callFake(mockSessionStorage.getItem);
+    spyOn(sessionStorage, "setItem").and.callFake(mockSessionStorage.setItem);
+    spyOn(sessionStorage, "removeItem").and.callFake(mockSessionStorage.removeItem);
+    spyOn(sessionStorage, "clear").and.callFake(mockSessionStorage.clear);
   });
 
   it("should create the service", () => {
@@ -36,19 +40,19 @@ describe("StorageService", () => {
   });
 
   describe("setItem", () => {
-    it("should serialize and store the scopes in localStorage", () => {
+    it("should serialize and store the scopes in sessionStorage", () => {
       service.setItem(storageKey, scopes).subscribe((x) => expect(x).toEqual(scopes));
     });
   });
 
   describe("getItem", () => {
-    it("should retrieve, deserialize scopes in localStorage and returns subscription for any changes there on after", () => {
+    it("should retrieve, deserialize scopes in sessionStorage and returns subscription for any changes there on after", () => {
       service.setItem(storageKey, scopes).subscribe((_x) => {
-        verifyScopesInLocalStorage();
+        verifyScopesInSessionStorage();
       });
     });
 
-    function verifyScopesInLocalStorage() {
+    function verifyScopesInSessionStorage() {
       service.getItem(storageKey)?.subscribe((y) => {
         expect(y).toEqual(scopes);
       });
@@ -56,7 +60,7 @@ describe("StorageService", () => {
   });
 
   describe("removeItem", () => {
-    it("should remove scopes in localStorage and notify all subscribers, and subscription payload will be null for removal", () => {
+    it("should remove scopes in sessionStorage and notify all subscribers, and subscription payload will be null for removal", () => {
       service.removeItem(storageKey);
       service.getItem(storageKey)?.subscribe((x) => {
         expect(x).toEqual(undefined);

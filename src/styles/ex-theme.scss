@@ -1,3 +1,4 @@
+@use "sass:map";
 @use "@angular/material" as mat;
 
 /// Defines a light color theme with success and danger colors.
@@ -31,10 +32,10 @@
     $theme: mat.m2-define-light-theme(
       (
         color: (
-          primary: $primary,
-          accent: $accent,
-          warn: $warn,
-        ),
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+          ),
         typography: $typography,
       )
     );
@@ -42,10 +43,10 @@
     $theme: mat.m2-define-dark-theme(
       (
         color: (
-          primary: $primary,
-          accent: $accent,
-          warn: $warn,
-        ),
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+          ),
         typography: $typography,
       )
     );
@@ -55,5 +56,5 @@
     warning: $warning,
     error: $error,
   );
-  @return map-merge($theme, $swe);
+  @return map.merge($theme, $swe);
 }

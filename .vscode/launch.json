@@ -10,7 +10,7 @@
       "name": "Launch Chrome against localhost",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}",
-      "runtimeArgs": ["--incognito"]
+      "runtimeArgs": ["--incognito", "--disable-features=Translate"]
     },
     {
       "type": "chrome",
@@ -19,7 +19,7 @@
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}",
       "runtimeExecutable": "e:/tools/chrlauncher/64/bin/chrome.exe",
-      "runtimeArgs": ["--incognito"]
+      "runtimeArgs": ["--incognito", "--disable-features=Translate"]
     }
   ]
 }

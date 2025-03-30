@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
 import Excel, { Workbook } from "exceljs";
 
 import { MatPaginator } from "@angular/material/paginator";
@@ -12,7 +12,7 @@ import { NotificationService } from "./notification.service";
   providedIn: "root",
 })
 export class ExcelExportService {
-  constructor(protected notifService: NotificationService) {}
+  protected notifyService = inject(NotificationService);
 
   export<T, P extends MatPaginator | Paginator = MatPaginator>(
     source: PageableDataSource<T, P>,

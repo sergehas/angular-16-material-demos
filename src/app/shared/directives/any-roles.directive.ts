@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, Input, OnInit, Output } from "@angular/core";
+import { Directive, ElementRef, OnInit, inject, input, output } from "@angular/core";
 import { LoginService, Role } from "src/app/core/services/login.service";
 
 @Directive({
@@ -6,20 +6,20 @@ import { LoginService, Role } from "src/app/core/services/login.service";
   standalone: true,
 })
 export class AnyRolesDirective implements OnInit {
-  @Input("appAnyRoles") roles: string[] | Role[] | undefined = [];
-  @Output() granted: EventEmitter<boolean> = new EventEmitter();
-  constructor(
-    private readonly _elementRef: ElementRef,
-    private readonly _loginService: LoginService
-  ) {}
+  private readonly _elementRef = inject(ElementRef);
+  private readonly _loginService = inject(LoginService);
+
+  readonly roles = input<string[] | Role[] | undefined>([], { alias: "appAnyRoles" });
+  readonly granted = output<boolean>();
   ngOnInit() {
-    if (!this.roles || this.roles.length === 0) {
-      console.log(`[appAnyRoles] no roles provided [${this.roles}]: grant access`);
+    const roles = this.roles();
+    if (!roles || roles.length === 0) {
+      console.log(`[appAnyRoles] no roles provided [${roles}]: grant access`);
       this.granted.emit(true);
       return;
     }
-    const hasAccess = this._loginService.getLoggedUser().hasAnyRoles(this.roles as Role[]);
-    console.log(`[appAnyRoles] has access for roles [${this.roles}]: ${hasAccess}`);
+    const hasAccess = this._loginService.getLoggedUser().hasAnyRoles(roles as Role[]);
+    console.log(`[appAnyRoles] has access for roles [${roles}]: ${hasAccess}`);
     this.granted.emit(hasAccess);
     //still usefull ?
     //if (!hasAccess) this._elementRef.nativeElement.style.display = "none";

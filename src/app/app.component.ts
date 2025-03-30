@@ -5,19 +5,26 @@ import {
   ChangeDetectionStrategy,
   Component,
   Type,
-  ViewChild,
   inject,
+  viewChild,
 } from "@angular/core";
 import { VERSION as MAT_VERSION } from "@angular/material/core";
-import { MatSidenavContainer } from "@angular/material/sidenav";
-import { RouterOutlet } from "@angular/router";
+import { MatSidenav, MatSidenavContainer, MatSidenavContent } from "@angular/material/sidenav";
+import { RouterLink, RouterOutlet } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 import { Observable, map, shareReplay } from "rxjs";
 
+import { AsyncPipe } from "@angular/common";
+import { MatBadge } from "@angular/material/badge";
+import { MatButton, MatIconButton } from "@angular/material/button";
+import { MatIcon } from "@angular/material/icon";
+import { MatToolbar } from "@angular/material/toolbar";
 import { Notification } from "./core/models/notification";
 import { NotificationService } from "./core/services/notification.service";
 import { ScrollService } from "./core/services/scroll.service";
 import { slideAnimations } from "./shared/animations/route-animation";
+import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
+import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.component";
 
 @Component({
   selector: "app-root",
@@ -25,24 +32,40 @@ import { slideAnimations } from "./shared/animations/route-animation";
   styleUrls: ["./app.component.scss"],
   animations: [slideAnimations],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    MatToolbar,
+    MatIconButton,
+    MatIcon,
+    MatButton,
+    RouterLink,
+    MatBadge,
+    MatSidenavContainer,
+    MatSidenav,
+    TreeNavComponent,
+    MatSidenavContent,
+    RouterOutlet,
+    NotificationCenterComponent,
+    AsyncPipe,
+  ],
 })
 export class AppComponent implements AfterViewInit {
-  @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
-  @ViewChild(RouterOutlet) outlet!: RouterOutlet;
+  private readonly service = inject(NotificationService);
+  private readonly scrollService = inject(ScrollService);
+
+  readonly sidenavContainer = viewChild.required(MatSidenavContainer);
+  readonly outlet = viewChild.required(RouterOutlet);
 
   title = `Angular ${CDK_VERSION.full} Material ${MAT_VERSION.full} demo`;
-  private breakpointObserver = inject(BreakpointObserver);
+  private readonly breakpointObserver = inject(BreakpointObserver);
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset).pipe(
     map((result) => result.matches),
     shareReplay()
   );
   notifications$: Observable<Set<Notification>>;
-  animation: string = "";
-  constructor(
-    private service: NotificationService,
-    translate: TranslateService,
-    private scrollService: ScrollService
-  ) {
+  animation = "";
+  constructor() {
+    const translate = inject(TranslateService);
+
     // this language will be used as a fallback when a translation isn't found in the current language
     translate.setDefaultLang("en-US");
 
@@ -53,7 +76,9 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.sidenavContainer.scrollable.elementScrolled().subscribe(() => this.scrollService.scroll());
+    this.sidenavContainer()
+      .scrollable.elementScrolled()
+      .subscribe(() => this.scrollService.scroll());
   }
   prepareRoute(outlet: RouterOutlet) {
     console.info(
@@ -64,8 +89,9 @@ export class AppComponent implements AfterViewInit {
   }
 
   onActivate(_component: Type<unknown>) {
-    const ar = this.outlet.activatedRoute;
-    this.animation = this.outlet.activatedRouteData && this.outlet.activatedRouteData["animation"];
+    const ar = this.outlet().activatedRoute;
+    const outlet = this.outlet();
+    this.animation = outlet.activatedRouteData && outlet.activatedRouteData["animation"];
     console.info(
       `[app-root] activate animation ${ar?.snapshot.data["animation"]} on route ${ar?.snapshot.url}}`
     );

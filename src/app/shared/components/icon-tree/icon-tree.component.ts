@@ -1,6 +1,6 @@
 import { NestedTreeControl } from "@angular/cdk/tree";
-import { CommonModule } from "@angular/common";
-import { Component, EventEmitter, Input, OnInit, Output } from "@angular/core";
+
+import { Component, OnInit, inject, input, model, output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -12,23 +12,24 @@ import { IconsService } from "src/app/core/icons/services/icons.service";
   selector: "app-icon-tree",
   templateUrl: "./icon-tree.component.html",
   styleUrls: ["./icon-tree.component.scss"],
-  standalone: true,
-  imports: [CommonModule, MatTreeModule, MatIconModule, MatButtonModule, MatRippleModule],
+  imports: [MatTreeModule, MatIconModule, MatButtonModule, MatRippleModule],
 })
 export class IconTreeComponent implements OnInit {
-  @Input() value: string | null = null;
-  @Output() valueChange = new EventEmitter<string | null>();
-  @Input() expanded = false;
+  private readonly service = inject(IconsService);
+
+  readonly value = model<string | null>(null);
+  readonly valueChange = output<string | null>();
+  readonly expanded = input(false);
 
   treeControl = new NestedTreeControl<Category>((node) => node.categories);
   dataSource = new MatTreeNestedDataSource<Category>();
 
-  constructor(private readonly service: IconsService) {
-    this.dataSource.data = this.service.getIconslib().categories;
+  constructor() {
+    this.dataSource.data = this.service.getIconsLib().categories;
     this.treeControl.dataNodes = this.dataSource.data;
   }
   ngOnInit() {
-    if (this.expanded) {
+    if (this.expanded()) {
       this.treeControl.expandAll();
     }
   }
@@ -36,8 +37,8 @@ export class IconTreeComponent implements OnInit {
    * toggle selected item
    */
   select(item: string) {
-    this.value = item === this.value ? null : item;
-    this.valueChange.emit(this.value);
+    this.value.set(item === this.value() ? null : item);
+    this.valueChange.emit(this.value());
   }
 
   hasChild = (_: number, node: Category) => !!node.categories && node.categories.length > 0;

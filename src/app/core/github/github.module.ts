@@ -1,5 +1,5 @@
-import { NgModule, Optional, SkipSelf } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { NgModule, inject } from "@angular/core";
 import { GithubService } from "./services/github.service";
 
 @NgModule({
@@ -8,8 +8,10 @@ import { GithubService } from "./services/github.service";
   providers: [GithubService],
 })
 export class GithubModule {
-  /** guarde to avoid multiple import */
-  constructor(@Optional() @SkipSelf() core: GithubModule) {
+  /** guard to avoid multiple import */
+  constructor() {
+    const core = inject(GithubModule, { optional: true, skipSelf: true });
+
     if (core) {
       throw new Error("You should import GithubModule module only in the root module");
     }

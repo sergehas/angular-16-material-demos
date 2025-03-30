@@ -1,8 +1,19 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, inject } from "@angular/core";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
-import { LangChangeEvent, TranslateService } from "@ngx-translate/core";
+import { LangChangeEvent, TranslateService, TranslateModule } from "@ngx-translate/core";
 import { Subscription } from "rxjs";
+import { MatDivider } from "@angular/material/divider";
+import { MatButton } from "@angular/material/button";
+import { MatFormField, MatLabel, MatHint, MatSuffix } from "@angular/material/form-field";
+import {
+  MatDateRangeInput,
+  MatStartDate,
+  MatEndDate,
+  MatDatepickerToggle,
+  MatDateRangePicker,
+} from "@angular/material/datepicker";
+import { LocalizedDatePipe } from "../../../shared/pipes/translation/localized-date.pipe";
 
 // Depending on whether rollup is used, moment needs to be imported differently.
 // Since Moment.js doesn't have a default export, we normally need to import using the `* as`
@@ -38,8 +49,25 @@ const WEEK_FORMATS = {
     },
     { provide: MAT_DATE_FORMATS, useValue: WEEK_FORMATS },
   ],
+  imports: [
+    MatDivider,
+    MatButton,
+    MatFormField,
+    MatLabel,
+    MatDateRangeInput,
+    MatStartDate,
+    MatEndDate,
+    MatHint,
+    MatDatepickerToggle,
+    MatSuffix,
+    MatDateRangePicker,
+    TranslateModule,
+    LocalizedDatePipe,
+  ],
 })
 export class DemoI18nComponent implements OnDestroy {
+  private readonly translateService = inject(TranslateService);
+
   private _onLangChange: Subscription | undefined;
 
   today: Date | number = new Date();
@@ -53,7 +81,7 @@ export class DemoI18nComponent implements OnDestroy {
     this.translateService.get("format.weekYear").subscribe(onTranslation);
   }
 
-  constructor(private readonly translateService: TranslateService) {
+  constructor() {
     this._updateFormat();
 
     this._onLangChange = this.translateService.onLangChange.subscribe((_event: LangChangeEvent) => {

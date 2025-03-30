@@ -7,14 +7,13 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Category } from "src/app/core/icons/models/category";
 import { IconsService } from "src/app/core/icons/services/icons.service";
-import { DemoModule } from "../../demo.module";
 import { DemoIconsComponent } from "./demo-icons.component";
 
 /**
  * Mock implementation of IconService for testing purposes.
  */
 class MockIconsService {
-  getIconslib(): Category {
+  getIconsLib(): Category {
     const r = new Category("root");
     r.addCategory("brands").addIcon("azure");
     return r;
@@ -27,8 +26,7 @@ describe("DemoIconsComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [DemoModule, NoopAnimationsModule],
-      declarations: [DemoIconsComponent],
+      imports: [NoopAnimationsModule, DemoIconsComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),
