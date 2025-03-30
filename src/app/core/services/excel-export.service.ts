@@ -12,7 +12,7 @@ import { NotificationService } from "./notification.service";
   providedIn: "root",
 })
 export class ExcelExportService {
-  protected notifService = inject(NotificationService);
+  protected notifyService = inject(NotificationService);
 
   export<T, P extends MatPaginator | Paginator = MatPaginator>(
     source: PageableDataSource<T, P>,

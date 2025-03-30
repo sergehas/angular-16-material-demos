@@ -2,14 +2,13 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
-  EventEmitter,
   OnInit,
-  Output,
   Type,
   ViewChild,
   booleanAttribute,
   inject,
   input,
+  output,
 } from "@angular/core";
 import { MatTabsModule } from "@angular/material/tabs";
 
@@ -51,9 +50,9 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
   readonly path = input("");
   readonly defaultRoute = input<string>();
   readonly sticky = input(false, { transform: booleanAttribute });
-  @Output() activate = new EventEmitter<ActivatedRoute | null>();
-  @Output() deactivate = new EventEmitter<Type<unknown>>();
-  @Output() indexFocused = new EventEmitter<number>();
+  readonly activate = output<ActivatedRoute | null>();
+  readonly deactivate = output<Type<unknown>>();
+  readonly indexFocused = output<number>();
 
   @ViewChild(RouterOutlet) outlet!: RouterOutlet;
 

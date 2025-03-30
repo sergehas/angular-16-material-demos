@@ -1,6 +1,6 @@
 import { NestedTreeControl } from "@angular/cdk/tree";
 
-import { Component, EventEmitter, OnInit, Output, inject, input, model } from "@angular/core";
+import { Component, OnInit, inject, input, model, output } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -18,7 +18,7 @@ export class IconTreeComponent implements OnInit {
   private readonly service = inject(IconsService);
 
   readonly value = model<string | null>(null);
-  @Output() valueChange = new EventEmitter<string | null>();
+  readonly valueChange = output<string | null>();
   readonly expanded = input(false);
 
   treeControl = new NestedTreeControl<Category>((node) => node.categories);

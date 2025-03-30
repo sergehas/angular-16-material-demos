@@ -1,6 +1,6 @@
 import { NgModule } from "@angular/core";
 import { RouterModule, Routes } from "@angular/router";
-import { anyRoleGuard } from "../core/guards/roles.guard";
+import { allRoleGuard, anyRoleGuard } from "../core/guards/roles.guard";
 
 const routes: Routes = [
   {
@@ -26,7 +26,7 @@ const routes: Routes = [
         path: "nav-forbidden",
         loadComponent: () =>
           import("./pages/void-nav/void-nav.component").then((m) => m.VoidNavComponent),
-        canActivate: [anyRoleGuard],
+        canActivate: [allRoleGuard],
         data: {
           animation: "slideLeft",
           icon: "gpp_bad",

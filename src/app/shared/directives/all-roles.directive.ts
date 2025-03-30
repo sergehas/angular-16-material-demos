@@ -1,4 +1,4 @@
-import { Directive, ElementRef, EventEmitter, OnInit, Output, inject, input } from "@angular/core";
+import { Directive, ElementRef, OnInit, inject, input, output } from "@angular/core";
 import { LoginService, Role } from "src/app/core/services/login.service";
 
 @Directive({
@@ -11,7 +11,7 @@ export class AnyRolesDirective implements OnInit {
 
   readonly roles = input<string[] | Role[] | undefined>([], { alias: "appAllRoles" });
 
-  @Output() granted = new EventEmitter<boolean>();
+  readonly granted = output<boolean>();
 
   ngOnInit() {
     if (!this.roles || this.roles.length === 0) {

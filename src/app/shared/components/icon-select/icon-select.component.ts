@@ -2,15 +2,15 @@ import {
   AfterViewInit,
   Component,
   ElementRef,
-  EventEmitter,
   forwardRef,
+  inject,
   Input,
+  input,
   OnDestroy,
-  Output,
+  output,
+  OutputRefSubscription,
   ViewChild,
   ViewEncapsulation,
-  inject,
-  input
 } from "@angular/core";
 import { ErrorStateMatcher, MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -19,7 +19,6 @@ import { MatTooltipModule } from "@angular/material/tooltip";
 
 import { FocusMonitor } from "@angular/cdk/a11y";
 import { FormControl, FormGroupDirective, FormsModule, NgControl, NgForm } from "@angular/forms";
-import { Subscription } from "rxjs";
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldControl } from "@angular/material/form-field";
@@ -59,7 +58,7 @@ export class IconSelectComponent
   extends AbstractMatFormField<string>
   implements AfterViewInit, OnDestroy
 {
-  private subscription: Subscription | null = null;
+  private subscription: OutputRefSubscription | null = null;
   protected control = new FormControl();
   //visual element to  focus
   @ViewChild(".icon-btn", { static: false })
@@ -67,7 +66,7 @@ export class IconSelectComponent
   @ViewChild(MatMenuTrigger) iconMenu: MatMenuTrigger | null = null;
 
   /* input value & output valueChange work together */
-  @Output() valueChange = new EventEmitter<string | null>();
+  readonly valueChange = output<string | null>();
   @Input()
   override set value(v: string | null) {
     super.value = v;

@@ -8,8 +8,9 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - [x] finalize <https://angular.dev/reference/migrations/inject-function> (impact on unit test)
 - [x] apply <https://angular.dev/reference/migrations/route-lazy-loading>
-- [ ] apply <https://angular.dev/reference/migrations/signal-inputs> &<https://angular.dev/reference/migrations/outputs)>
-- [ ] apply <https://angular.dev/reference/migrations/signal-queries> ?
+- [x] apply <https://angular.dev/reference/migrations/signal-inputs> (except on component extending material formField.. which is not migrated :/)
+- [x] <https://angular.dev/reference/migrations/outputs)>
+- [x] apply <https://angular.dev/reference/migrations/signal-queries> ?
 - cleanup
   - finalize module clean up
   - apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
