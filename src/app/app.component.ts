@@ -5,8 +5,8 @@ import {
   ChangeDetectionStrategy,
   Component,
   Type,
-  ViewChild,
   inject,
+  viewChild,
 } from "@angular/core";
 import { VERSION as MAT_VERSION } from "@angular/material/core";
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from "@angular/material/sidenav";
@@ -52,8 +52,8 @@ export class AppComponent implements AfterViewInit {
   private readonly service = inject(NotificationService);
   private readonly scrollService = inject(ScrollService);
 
-  @ViewChild(MatSidenavContainer) sidenavContainer!: MatSidenavContainer;
-  @ViewChild(RouterOutlet) outlet!: RouterOutlet;
+  readonly sidenavContainer = viewChild.required(MatSidenavContainer);
+  readonly outlet = viewChild.required(RouterOutlet);
 
   title = `Angular ${CDK_VERSION.full} Material ${MAT_VERSION.full} demo`;
   private readonly breakpointObserver = inject(BreakpointObserver);
@@ -76,7 +76,9 @@ export class AppComponent implements AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.sidenavContainer.scrollable.elementScrolled().subscribe(() => this.scrollService.scroll());
+    this.sidenavContainer()
+      .scrollable.elementScrolled()
+      .subscribe(() => this.scrollService.scroll());
   }
   prepareRoute(outlet: RouterOutlet) {
     console.info(
@@ -87,8 +89,9 @@ export class AppComponent implements AfterViewInit {
   }
 
   onActivate(_component: Type<unknown>) {
-    const ar = this.outlet.activatedRoute;
-    this.animation = this.outlet.activatedRouteData && this.outlet.activatedRouteData["animation"];
+    const ar = this.outlet().activatedRoute;
+    const outlet = this.outlet();
+    this.animation = outlet.activatedRouteData && outlet.activatedRouteData["animation"];
     console.info(
       `[app-root] activate animation ${ar?.snapshot.data["animation"]} on route ${ar?.snapshot.url}}`
     );

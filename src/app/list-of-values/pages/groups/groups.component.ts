@@ -1,4 +1,4 @@
-import { Component, ViewChild, inject } from "@angular/core";
+import { Component, inject, viewChild } from "@angular/core";
 import {
   MatAccordion,
   MatExpansionPanel,
@@ -29,7 +29,7 @@ import { ValuesComponent } from "../values/values.component";
 export class GroupsComponent {
   private readonly groupsService = inject(GroupsService);
 
-  @ViewChild(MatAccordion) accordion: MatAccordion | undefined;
+  readonly accordion = viewChild(MatAccordion);
 
   groups$: Observable<Group[]>;
 

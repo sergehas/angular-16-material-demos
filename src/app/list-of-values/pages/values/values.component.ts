@@ -3,9 +3,9 @@ import {
   Component,
   OnDestroy,
   OnInit,
-  ViewChild,
   inject,
-  input
+  input,
+  viewChild,
 } from "@angular/core";
 import {
   FormBuilder,
@@ -47,7 +47,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly service = inject(ValuesService);
   private readonly dialog = inject(MatDialog);
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  readonly paginator = viewChild.required(MatPaginator);
   readonly group = input<string>();
 
   dataSource!: PageableDataSource<Value>;
@@ -75,7 +75,7 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
     console.log("set pager");
     this.dataSource.filter = { group: this.group()! };
     this.dataSource.sort = new MatSort();
-    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator();
     //sorting fires event, which is fireing page loading
     this.dataSource.sort?.sort({ id: "name", start: "asc" } as MatSortable);
     this.dataSource.connect().subscribe((data) => {

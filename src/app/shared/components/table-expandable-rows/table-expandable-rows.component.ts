@@ -5,10 +5,10 @@ import {
   AfterViewInit,
   Component,
   OnInit,
-  ViewChild,
   ViewEncapsulation,
   input,
   model,
+  viewChild,
 } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCheckboxModule } from "@angular/material/checkbox";
@@ -73,9 +73,9 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
     return this._page;
   }
 
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
+  readonly paginator = viewChild(MatPaginator);
   // @ViewChild(MatTable) table: MatTable<T> | undefined;
-  @ViewChild(MatSort) sort: MatSort | undefined;
+  readonly sort = viewChild(MatSort);
 
   ngOnInit(): void {
     const columnOptions = this.columnOptions();
@@ -106,16 +106,18 @@ export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     const ds = this.options()!.columns.defaultSort;
     //manage default sort: must be done BEFORE managing events!
-    if (this.sort && ds) {
-      this.sort.sort({
+    const sort = this.sort();
+    if (sort && ds) {
+      sort.sort({
         id: ds.name,
         start: ds.defaultSort!,
       } as MatSortable);
     }
     const dataSource = this.dataSource();
-    dataSource.sort = this.sort;
-    if (this.paginator) {
-      dataSource.paginator = this.paginator;
+    dataSource.sort = sort;
+    const paginator = this.paginator();
+    if (paginator) {
+      dataSource.paginator = paginator;
     }
     dataSource.connect().subscribe((data) => {
       //as data is readonly, we must clone it to be able to set _page

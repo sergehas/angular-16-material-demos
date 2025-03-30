@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ViewChild, inject } from "@angular/core";
+import { AfterViewInit, Component, inject, viewChild } from "@angular/core";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortHeader } from "@angular/material/sort";
@@ -64,8 +64,8 @@ import { AsyncPipe, DatePipe } from "@angular/common";
 export class DemoDatasourceComponent implements AfterViewInit {
   private readonly service = inject(GithubService);
 
-  @ViewChild(MatPaginator) paginator: MatPaginator | undefined;
-  @ViewChild(MatSort) sort!: MatSort;
+  readonly paginator = viewChild(MatPaginator);
+  readonly sort = viewChild.required(MatSort);
 
   dataSource!: PageableDataSource<Issue>;
   displayedColumns: string[] = ["created", "state", "number", "title"];
@@ -118,10 +118,10 @@ export class DemoDatasourceComponent implements AfterViewInit {
     });
     //manage default sort: must be done BEFORE managing events!
     if (this.sortEnabled) {
-      this.dataSource.sort = this.sort;
+      this.dataSource.sort = this.sort();
     }
     if (this.paginatorEnabled) {
-      this.dataSource.paginator = this.paginator;
+      this.dataSource.paginator = this.paginator();
     }
   }
 

@@ -1,6 +1,14 @@
 import { Component, inject } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { MatBadge } from "@angular/material/badge";
+import { MatButton } from "@angular/material/button";
+import { MatDivider } from "@angular/material/divider";
+import { MatFormField, MatLabel } from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
+import { MatInput } from "@angular/material/input";
+import { MatRadioButton, MatRadioGroup } from "@angular/material/radio";
+import { MatSlideToggle } from "@angular/material/slide-toggle";
 import { merge } from "rxjs";
 import {
   Notification,
@@ -8,14 +16,6 @@ import {
   ProgressNotification,
 } from "src/app/core/models/notification";
 import { NotificationService } from "src/app/core/services/notification.service";
-import { MatDivider } from "@angular/material/divider";
-import { MatRadioGroup, MatRadioButton } from "@angular/material/radio";
-import { MatSlideToggle } from "@angular/material/slide-toggle";
-import { MatButton } from "@angular/material/button";
-import { MatFormField, MatLabel } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import { MatBadge } from "@angular/material/badge";
-import { MatIcon } from "@angular/material/icon";
 
 interface NotifLog {
   id: string;
@@ -44,7 +44,7 @@ interface NotifLog {
   ],
 })
 export class DemoNotifComponent {
-  private service = inject(NotificationService);
+  private readonly service = inject(NotificationService);
 
   readonly notifs: NotifLog[] = [];
   show = false;
@@ -72,17 +72,17 @@ export class DemoNotifComponent {
     if (this.lastProgressNotif === undefined) {
       return;
     }
-    this.lastProgressNotif!.progress.position.total = this.total.value!;
-    this.lastProgressNotif!.progress.position.value = this.value.value!;
+    this.lastProgressNotif.progress.position.total = this.total.value!;
+    this.lastProgressNotif.progress.position.value = this.value.value!;
     console.info(
-      `update progress to ${this.lastProgressNotif!.progress.position.value} / ${this.lastProgressNotif!.progress.position.total}`
+      `update progress to ${this.lastProgressNotif.progress.position.value} / ${this.lastProgressNotif.progress.position.total}`
     );
-    this.lastProgressNotif!.message = `Progress update at updated ${new Date().toISOString()}`;
+    this.lastProgressNotif.message = `Progress update at updated ${new Date().toISOString()}`;
 
-    this.total.setValue(this.lastProgressNotif!.progress.position.total, {
+    this.total.setValue(this.lastProgressNotif.progress.position.total, {
       emitEvent: false,
     });
-    this.value.setValue(this.lastProgressNotif!.progress.position.value, {
+    this.value.setValue(this.lastProgressNotif.progress.position.value, {
       emitEvent: false,
     });
   }
@@ -93,13 +93,14 @@ export class DemoNotifComponent {
 
   addNotif(): void {
     const cnt = Math.floor(Math.random() * 101);
+    const randomRepeat = Math.floor(Math.random() * 30) + 1; // Random number between 1 and 5
+    const longMessage = Array(randomRepeat)
+      .fill("notification message body, very long description.")
+      .join(" ");
     this.service.notify(
       new Notification({
         severity: this.severity,
-        message:
-          cnt % 3 === 0
-            ? `message #${cnt}: notif message body, notif message body, notif message body, notif message body, notif message body, notif message body `
-            : `short message # ${cnt}`,
+        message: cnt % 3 === 0 ? `message #${cnt}: ${longMessage}` : `short message # ${cnt}`,
         show: this.show,
         persistent: this.persistent,
       })
@@ -119,7 +120,7 @@ export class DemoNotifComponent {
             cnt % 5 === 0
               ? `message #${cnt}: Progress random message body, random message body, random message body, random message body, random message body, random message body `
               : `Progress short random message # ${cnt}`,
-          show: !(cnt % 4 === 0),
+          show: cnt % 4 !== 0,
           ref: cnt % 2 === 0 ? "https://material.angular.io/" : undefined,
         })
       ) as ProgressNotification;
@@ -133,7 +134,7 @@ export class DemoNotifComponent {
             cnt % 3 === 0
               ? `message #${cnt}: random message body, random message body, random message body, random message body, random message body, random message body `
               : `short random message # ${cnt}`,
-          show: !(cnt % 4 === 0),
+          show: cnt % 4 !== 0,
           ref: cnt % 2 === 0 ? "https://material.angular.io/" : undefined,
         })
       );

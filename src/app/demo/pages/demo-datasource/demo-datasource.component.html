@@ -34,12 +34,12 @@
 
   <mat-slide-toggle
     [(ngModel)]="paginatorEnabled"
-    (change)="dataSource.paginator = paginatorEnabled ? paginator : undefined"
+    (change)="dataSource.paginator = paginatorEnabled ? paginator() : undefined"
     >Enable paginator</mat-slide-toggle
   >
   <mat-slide-toggle
     [(ngModel)]="sortEnabled"
-    (change)="dataSource.sort = sortEnabled ? sort : undefined"
+    (change)="dataSource.sort = sortEnabled ? sort() : undefined"
     >Enable sort</mat-slide-toggle
   >
   <div>

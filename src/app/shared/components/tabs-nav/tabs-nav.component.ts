@@ -4,11 +4,11 @@ import {
   Component,
   OnInit,
   Type,
-  ViewChild,
   booleanAttribute,
   inject,
   input,
   output,
+  viewChild,
 } from "@angular/core";
 import { MatTabsModule } from "@angular/material/tabs";
 
@@ -54,7 +54,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
   readonly deactivate = output<Type<unknown>>();
   readonly indexFocused = output<number>();
 
-  @ViewChild(RouterOutlet) outlet!: RouterOutlet;
+  readonly outlet = viewChild.required(RouterOutlet);
 
   navLinks: MenuNode[] = [];
   private readonly _notifyService = inject(NotificationService);
@@ -125,7 +125,7 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
   onDeactivate(component: Type<unknown>) {
     this.deactivate.emit(component);
 
-    console.info(`[tab-nav] deactivate route. outlet is active:  ${this.outlet?.isActivated}`);
+    console.info(`[tab-nav] deactivate route. outlet is active:  ${this.outlet()?.isActivated}`);
   }
 
   onFocus(index: number) {

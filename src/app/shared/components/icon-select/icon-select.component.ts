@@ -9,8 +9,8 @@ import {
   OnDestroy,
   output,
   OutputRefSubscription,
-  ViewChild,
   ViewEncapsulation,
+  viewChild,
 } from "@angular/core";
 import { ErrorStateMatcher, MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -61,9 +61,8 @@ export class IconSelectComponent
   private subscription: OutputRefSubscription | null = null;
   protected control = new FormControl();
   //visual element to  focus
-  @ViewChild(".icon-btn", { static: false })
-  private readonly ctrl: HTMLElement | undefined;
-  @ViewChild(MatMenuTrigger) iconMenu: MatMenuTrigger | null = null;
+  readonly ctrl = viewChild<HTMLElement>(".icon-btn");
+  readonly iconMenu = viewChild(MatMenuTrigger);
 
   /* input value & output valueChange work together */
   readonly valueChange = output<string | null>();
@@ -104,7 +103,7 @@ export class IconSelectComponent
   public override ngAfterViewInit(): void {
     super.ngAfterViewInit();
     this.subscription = this.valueChange.subscribe((value) => {
-      this.iconMenu?.closeMenu();
+      this.iconMenu()?.closeMenu();
       super.value = value;
     });
   }
@@ -118,6 +117,6 @@ export class IconSelectComponent
   }
 
   public override focus(): void {
-    this.ctrl?.focus();
+    this.ctrl()?.focus();
   }
 }

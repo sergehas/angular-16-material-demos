@@ -6,6 +6,9 @@
   justify-content: flex-end;
   grid-gap: calc(var(--app-gap) / 2);
   padding: calc(var(--app-gap) / 2) var(--app-gap);
+  .spacer {
+    flex: 1 1 auto;
+  }
   .icon-only {
     min-width: 36px;
     padding: 16px 0;
