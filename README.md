@@ -1,4 +1,4 @@
-# Angular16MaterialStarter
+# Angular19MaterialStarter
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.x.
 
@@ -14,7 +14,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - cleanup
   - [x] finalize module clean up (remaining module: service & routing)
   - [x] apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
-- update this readme (scaffolding)
+- [x] update this readme (scaffolding)
 - migrate CSS to material design 3 ?
 - [x] upgrade `eslint` to v9 + flat config
 
@@ -61,18 +61,20 @@ Run `ng generate component component-name` to generate a new component. You can 
 
 ---
 
-### Feature modules
+### Application features
 
-A Feature module contains a set of consistent business GUI (so NOT services). A feature module is assigned to a consistent business processes (i.e. 'order' (for order management), 'bill', 'catalog', .. even 'admin').
+A Feature contains a set of consistent business GUI (so NOT services). A feature module is assigned to a consistent business processes (i.e. 'order' (for order management), 'bill', 'catalog', .. even 'admin').
 
-The main/default page of a feature module could be a dashboard (i.e. : counter per order status) or redirecting to the main page of the business process (place an order). A feature module contain its own / feature wide routing module.
+The main/default page of a feature root component could be a dashboard (i.e. : counter per order status) or redirecting to the main page of the business process (place an order). A feature contain its own / feature wide routing module.
 
-A feature module should not depend on a another feature module.
+A feature should not depend on a another feature.
 
 #### initializing
 
 add a `demo` module with its routing: `ng generate module demo --routing`
-add a main feature page to `demo`: `ng generate component demo/pages/demo -m demo --flat --standalone false`
+then delete the module as we're using standalone component (only the rooting module is _still_ useful)
+
+add a main feature page to `demo`: `ng generate component demo/pages/demo --flat --standalone true`
 
 then add to `demo-routing.module.ts`
 
@@ -80,14 +82,14 @@ then add to `demo-routing.module.ts`
 const routes: Routes = [{ path: "demo", component: DemoComponent }];
 ```
 
-then import this module in `app.module.ts`:
+then import this routing module in `app.module.ts`:
 
 ```typescript
 @NgModule({
  declarations: [AppComponent],
  imports: [
     //...
-  DemoModule,
+  DemoRoutingModule,
  ],
  providers: [],
  bootstrap: [AppComponent],
@@ -96,7 +98,7 @@ then import this module in `app.module.ts`:
 
 #### add (sub) pages
 
-add a sub page to `demo` feature : `ng generate component demo/pages/demo-table --standalone false -m demo`
+add a sub page to `demo` feature : `ng generate component demo/pages/demo-table --standalone true`
 
 then add to `demo-routing.module.ts`
 
@@ -138,24 +140,16 @@ Alternatively, you could use a navigation by tabs in `demo.component.html`
 
 Share component are components & modules should **not** have any dependency on any of the other modules in the application.
 
-The shared module must declare the components, pipes, and directives using the declarations metadata and export it using the exports metadata
+Other features can import & use the shared components, directives & pipes
 
-Other Modules can import the shared modules and use the exported components, directives & pipes
+The Services must not be defined here. Since the shared components are imported everywhere, it may create a new instance of the service if it is imported in the lazy loaded components.
 
-The Services must not be defined here. Since the shared modules are imported everywhere, it may create a new instance of the service if it is imported in the lazy loaded modules.
-
-Tips: The commonly required angular modules like ( CommonModule, FormsModule, etc) or third party modules can be imported here and re-exported. The other module importing the shared module does not have to import those modules.
-
-### add new shared module (if not exist) [not recommended]
+### add new shared module (if not exist) [not recommended, deprecated]
 
 If you don't plan to use **recommended standalone components**,
 add a `shared` module : `ng generate module shared`
 
-### add new shared component
-
-add a component in `shared` folder/module : `ng generate component shared/components/table-expandable-rows -m shared`
-
-or (for standalone component **recommended**)
+### add new shared/standalone component
 
 add a component in `shared` folder : `ng generate component shared/components/table-expandable-rows --standalone --view-encapsulation None`
 
