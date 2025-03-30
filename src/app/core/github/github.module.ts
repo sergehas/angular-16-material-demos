@@ -1,5 +1,5 @@
-import { NgModule, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { NgModule, inject } from "@angular/core";
 import { GithubService } from "./services/github.service";
 
 @NgModule({
@@ -8,7 +8,7 @@ import { GithubService } from "./services/github.service";
   providers: [GithubService],
 })
 export class GithubModule {
-  /** guarde to avoid multiple import */
+  /** guard to avoid multiple import */
   constructor() {
     const core = inject(GithubModule, { optional: true, skipSelf: true });
 

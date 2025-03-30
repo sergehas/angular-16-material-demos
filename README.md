@@ -12,7 +12,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - [x] <https://angular.dev/reference/migrations/outputs)>
 - [x] apply <https://angular.dev/reference/migrations/signal-queries> ?
 - cleanup
-  - finalize module clean up
+  - [x] finalize module clean up (remaining module: service & routing)
   - apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
 - update this readme (scaffolding)
 - migrate CSS to material design 3 ?
