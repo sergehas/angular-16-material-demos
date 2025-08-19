@@ -47,7 +47,7 @@
     }
 
     .mat-sort-header-container {
-      //elipsis on text
+      //ellipsis on text
       max-width: inherit;
 
       .mat-sort-header-content {
@@ -55,7 +55,7 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        margin-right: 5px; //force elipsis to display
+        margin-right: 5px; //force ellipsis to display
       }
     }
 
@@ -105,7 +105,7 @@
         //border: 1px solid blue;
         flex-grow: 1;
         flex-shrink: 0;
-        //flex-basis: xxpx; //trigger "hidding" item + define width: ;
+        //flex-basis: XXpx; //trigger "hiding" item + define width: ;
         box-sizing: border-box;
         height: inherit;
         min-height: inherit;

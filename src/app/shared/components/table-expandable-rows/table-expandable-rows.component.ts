@@ -57,7 +57,7 @@ import { ColumnConfig, TableConfig } from "./table-config";
     InstanceofPipe,
     DatePipe,
   ],
-})
+}) /* extends MatTable<T> */
 export class TableExpandableRowsComponent<T> implements OnInit, AfterViewInit {
   readonly dataSource = input.required<PageableDataSource<T>>();
   readonly options = model<TableConfig>();
