@@ -44,6 +44,7 @@
           <mat-cell *matCellDef="let row" class="selector-column" [hidden]="column.hidden">
             <mat-checkbox
               (click)="$event.stopPropagation()"
+              (keyDown)="$event.stopPropagation()"
               (change)="$event ? selection()!.toggle(row) : null"
               [checked]="selection()!.isSelected(row)"
             >
@@ -70,11 +71,10 @@
         }
       </ng-container>
     }
+    <mat-header-row *matHeaderRowDef="options()!.columns.names; sticky: options()!.stickyHeader">
+    </mat-header-row>
 
-    <mat-header-row
-      *matHeaderRowDef="options()!.columns.names; sticky: options()!.stickyHeader"
-    ></mat-header-row>
-    <mat-row matRipple *matRowDef="let row; columns: options()!.columns.names"></mat-row>
+    <mat-row *matRowDef="let row; columns: options()!.columns.names"></mat-row>
   </mat-table>
 </div>
 @if (dataSource().counting$ | async; as counting) {

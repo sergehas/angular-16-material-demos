@@ -26,6 +26,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
   - [ ] add expandable / custom row content
   - [ ] add resizable column
   - [ ] add data-table capabilities ?
+  - [ ] fix (again...) `mat-ripple overflow`
 - add chat panel
   - [ ] "teams" UX/UI
   - [ ] markdown editor / rendering
