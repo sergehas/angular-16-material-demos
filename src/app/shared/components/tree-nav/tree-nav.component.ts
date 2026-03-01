@@ -19,6 +19,7 @@ interface MenuFlatNode {
 
 @Component({
   selector: "app-tree-nav",
+  standalone: true,
   imports: [MatIconModule, MatTreeModule, MatListModule, MatButtonModule, RouterModule],
   templateUrl: "./tree-nav.component.html",
   styleUrl: "./tree-nav.component.scss",
