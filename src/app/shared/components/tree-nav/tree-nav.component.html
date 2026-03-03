@@ -1,5 +1,5 @@
 <mat-nav-list>
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="rail">
     <!-- This is the tree node template for leaf nodes. dive default padding by 2 -->
     <mat-tree-node
       class="menu-node"
@@ -11,9 +11,9 @@
     >
       <!-- use a disabled button to provide padding for tree leaf -->
       <button mat-icon-button disabled class="tree-button" title="menu button">&nbsp;</button>
-      <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive" class="tree-label">
+      <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive" class="menu-item">
         <mat-icon matListItemIcon class="menu-icon" [fontIcon]="node.icon" />
-        <div matListItemTitle>{{ node.name }}</div>
+        <div matListItemTitle class="menu-label">{{ node.name }}</div>
       </a>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
@@ -34,9 +34,9 @@
           {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
         </mat-icon>
       </button>
-      <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive" class="tree-label">
+      <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive" class="menu-item">
         <mat-icon matListItemIcon class="menu-icon" [fontIcon]="node.icon" />
-        <div matListItemTitle>{{ node.name }}</div>
+        <div matListItemTitle class="menu-label">{{ node.name }}</div>
       </a>
     </mat-tree-node>
   </mat-tree>
