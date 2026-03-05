@@ -1,3 +1,13 @@
+.rail-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.rail-toggle {
+  // margin-inline-start: calc(var(--mdc-list-list-item-leading-icon-size) / 2);
+  // left: calc(var(--mat-list-list-item-leading-icon-start-space) / 2);
+}
+
 .menu-node {
   position: relative;
 
@@ -38,7 +48,8 @@
     padding: 0 !important;
 
     .tree-button {
-      //to hide tree control : display: none;
+      //to hide tree control :
+      display: none;
     }
     .menu-item {
       padding: 0;
