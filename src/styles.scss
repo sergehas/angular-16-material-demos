@@ -1,40 +1,91 @@
+// Include theming for Angular Material with `mat.theme()`.
+// This Sass mixin will define CSS variables that are used for styling Angular Material
+// components according to the Material 3 design spec.
+// Learn more about theming and how to use it for your application's
+// custom components at https://material.angular.dev/guide/theming
 @use "sass:map";
 /* You can add global styles to this file, and also import other style files */
 @use "@angular/material" as mat;
-@use "./styles/ex-theme" as ex;
-@use "./app-theme";
 
-// Include material core styles.
-@include mat.core();
+// define theme palettes for your application using the Material 3 color system.
+$primary: mat.$azure-palette;
+$success: mat.$green-palette;
+$warning: mat.$yellow-palette;
+$error: mat.$red-palette;
 
-// Define the light theme.
-$primary: mat.$m2-indigo-palette;
-$accent: mat.$m2-pink-palette;
-// The warn palette is optional (defaults to red).
-$warn: mat.$m2-red-palette;
+@mixin swe($palette, $severity) {
+  .notif-swe-#{$severity} {
+    @include mat.theme(
+      (
+        color: $palette,
+      )
+    );
+    @include mat.snack-bar-overrides(
+      (
+        container-color: var(--mat-sys-secondary-container),
+        supporting-text-color: var(--mat-sys-on-secondary-container),
+        button-color: var(--mat-sys-on-secondary-container),
+      )
+    );
+    @include mat.icon-overrides(
+      (
+        color: var(--mat-sys-on-secondary-container),
+      )
+    );
+    @include mat.card-overrides(
+      (
+        elevated-container-color: var(--mat-sys-secondary-container),
+      )
+    );
+  }
+}
 
-$success: mat.$m2-green-palette;
-$warning: mat.$m2-orange-palette;
-$error: mat.$m2-red-palette;
+//apply the theme to the application. This will generate the CSS variables for the theme colors, typography, and density.
+html {
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font: var(--mat-sys-body-medium);
 
-$theme: ex.extend-theme($primary, $accent, $warn, $success, $warning, $error);
+  --mat-tree-node-min-height: 40px;
 
-// $theme: mat.define-light-theme(
-//   (
-//     color: (
-//       primary: $primary,
-//       accent: $accent,
-//       warn: $warn
-//     ),
-//     typography: mat.define-typography-config()
-//   )
-// );
+  --app-gap: 16px;
+
+  color-scheme: light dark;
+  @include mat.theme(
+    (
+      color: (
+        primary: $primary,
+      ),
+
+      typography: Roboto,
+      density: -2,
+    )
+  );
+  @include swe($success, "info");
+  @include swe($warning, "warn");
+  @include swe($error, "severe");
+}
+
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+
+  &.dark {
+    color-scheme: dark;
+  }
+}
 
 //define few utility classes
 .mdc-button {
   & > .mdc-button__label {
     text-transform: uppercase;
-    //force button to shrink & display elipsis on text
+    //force button to shrink & display ellipsis on text
     flex-shrink: 1;
     white-space: nowrap;
     overflow: hidden;
@@ -51,12 +102,9 @@ $theme: ex.extend-theme($primary, $accent, $warn, $success, $warning, $error);
 
     & > mat-icon {
       margin: 0;
-      width: 24px;
-      height: 24px;
-      font-size: 24px;
+      // width: 24px;
+      // height: 24px;
+      // font-size: 24px;
     }
   }
 }
-
-@include mat.all-component-themes($theme);
-@include app-theme.theme($theme);

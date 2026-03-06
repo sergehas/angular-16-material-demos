@@ -32,12 +32,12 @@ import { NotificationComponent } from "./notification.component";
   ],
 })
 export class NotificationCenterComponent {
-  private service = inject(NotificationService);
-  private snackBar = inject(MatSnackBar);
+  private readonly service = inject(NotificationService);
+  private readonly snackBar = inject(MatSnackBar);
 
   //reexpose notif observable
   notifications$ = this.service.notifications$;
-  severityFilter = new FormControl(["info", "warn", "sever"]);
+  severityFilter = new FormControl(["info", "warn", "severe"]);
   sort = "asc";
 
   constructor() {
@@ -66,9 +66,9 @@ export class NotificationCenterComponent {
     this.snackBar.openFromComponent(NotificationSnackBarComponent, {
       horizontalPosition: "center",
       verticalPosition: "top",
-      duration: 3000,
+      //duration: 3000,
       data: n,
-      panelClass: `notif-snack-${n.severity}`,
+      panelClass: [`notif-swe-${n.severity}`],
     });
   }
 
@@ -88,9 +88,9 @@ export class NotificationCenterComponent {
 })
 export class NotificationSnackBarComponent {
   data = inject<Notification>(MAT_SNACK_BAR_DATA);
-  private service = inject(NotificationService);
+  private readonly service = inject(NotificationService);
 
-  private snackBarRef = inject(MatSnackBarRef);
+  private readonly snackBarRef = inject(MatSnackBarRef);
 
   close() {
     console.log("close");

@@ -1,3 +1,13 @@
+@use "@angular/material" as mat;
+
+:root {
+  //force stupide value to disable fixed withd
+  @include mat.sidenav-overrides(
+    (
+      container-width: -1px,
+    )
+  );
+}
 .rail-header {
   display: flex;
   align-items: center;
@@ -17,6 +27,7 @@
     height: 100%;
     width: 100%;
     opacity: calc(var(--mdc-list-list-item-focus-state-layer-opacity));
+    //    background-color: var(--mat-list-active-indicator-color, var(--mat-sys-secondary-container));
   }
 
   .tree-button.mat-mdc-icon-button {
@@ -43,7 +54,7 @@
 }
 
 .rail {
-  max-width: 96px;
+  width: 96px;
   .menu-node {
     padding: 0 !important;
 
