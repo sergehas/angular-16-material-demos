@@ -199,6 +199,13 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+> Custom chrome install
+> For chrome(/chromium) custom install, define an env var pointing to the chrome binary
+>
+> ```powershell
+> $env:CHROME_BIN="E:\tools\scoop\apps\chromium\current\chrome.exe"
+> ```
+
 ## end-to-end tests
 
 ### Recording e2e test
@@ -212,6 +219,14 @@ npm start
 ```
 
 by default, the app is accessible at <http://localhost:4200>
+
+#### Prerequisites
+
+This project uses playwright for e2e test. Ensure local browser are installed
+
+```shell
+npx playwright install
+```
 
 #### Recording a test
 
