@@ -2,7 +2,9 @@
   <mat-toolbar color="primary" class="root-toolbar">
     @if (isHandset$ | async) {
       <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="snav.toggle()">
-        <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        <mat-icon aria-label="Side nav toggle icon" fontSet="material-symbols-outlined"
+          >side_navigation</mat-icon
+        >
       </button>
     }
     <button routerLink="/" mat-flat-button color="primary">
@@ -31,7 +33,6 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false"
       [fixedInViewport]="(isHandset$ | async) === true"
-      fixedTopGap="56"
     >
       <app-tree-nav></app-tree-nav>
     </mat-sidenav>

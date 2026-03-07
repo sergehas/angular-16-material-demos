@@ -6,13 +6,13 @@
   <span class="spacer"></span>
 
   <mat-button-toggle-group [formControl]="severityFilter" class="severity-filter" multiple>
-    <mat-button-toggle value="sever">
+    <mat-button-toggle value="severe" class="notif-swe-severe">
       <mat-icon>error</mat-icon>
     </mat-button-toggle>
-    <mat-button-toggle value="warn">
+    <mat-button-toggle value="warn" class="notif-swe-warn">
       <mat-icon>warning</mat-icon>
     </mat-button-toggle>
-    <mat-button-toggle value="info">
+    <mat-button-toggle value="info" class="notif-swe-info">
       <mat-icon>info</mat-icon>
     </mat-button-toggle>
   </mat-button-toggle-group>

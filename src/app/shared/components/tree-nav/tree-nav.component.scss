@@ -1,3 +1,23 @@
+@use "@angular/material" as mat;
+
+:root {
+  //force stupid value to disable fixed with
+  @include mat.sidenav-overrides(
+    (
+      container-width: -1px,
+    )
+  );
+}
+.rail-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.rail-toggle {
+  // margin-inline-start: calc(var(--mdc-list-list-item-leading-icon-size) / 2);
+  // left: calc(var(--mat-list-list-item-leading-icon-start-space) / 2);
+}
+
 .menu-node {
   position: relative;
 
@@ -11,16 +31,70 @@
 
   .tree-button.mat-mdc-icon-button {
     width: calc(var(--mdc-icon-button-state-layer-size) / 2);
-    border-radius: 0;
     padding-right: 0;
     padding-left: 0;
+    border-radius: 0;
+    > .mat-mdc-button-persistent-ripple,
+    .mat-mdc-button-persistent-ripple::before {
+      border-radius: 0;
+    }
   }
-
-  .menu-icon {
-    flex: 1 0 auto;
+  .menu-item {
+    .menu-icon {
+      margin-right: calc(var(--mat-list-list-item-leading-icon-end-space, 32px) / 2);
+    }
+    .menu-label {
+      display: block;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      padding: 0 var(--mat-sys-corner-small);
+    }
   }
+}
 
-  .mdc-list-item {
-    padding-left: calc(var(--app-gap) / 2);
+.rail {
+  width: 96px;
+  .menu-node {
+    padding: 0 !important;
+
+    .tree-button {
+      //to hide tree control :
+      display: none;
+    }
+    .menu-item {
+      padding: 0;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      .menu-icon {
+        align-self: center;
+      }
+      .mdc-list-item__content {
+        max-width: 100%;
+      }
+      .menu-label {
+        text-align: center;
+        margin-top: 0;
+        color: var(--mdc-list-list-item-supporting-text-color, var(--mat-sys-on-surface-variant));
+        font-family: var(
+          --mdc-list-list-item-supporting-text-font,
+          var(--mat-sys-body-medium-font)
+        );
+        line-height: var(
+          --mdc-list-list-item-supporting-text-line-height,
+          var(--mat-sys-body-medium-line-height)
+        );
+        font-size: var(--mdc-list-list-item-supporting-text-size, var(--mat-sys-body-medium-size));
+        font-weight: var(
+          --mdc-list-list-item-supporting-text-weight,
+          var(--mat-sys-body-medium-weight)
+        );
+        letter-spacing: var(
+          --mdc-list-list-item-supporting-text-tracking,
+          var(--mat-sys-body-medium-tracking)
+        );
+      }
+    }
   }
 }

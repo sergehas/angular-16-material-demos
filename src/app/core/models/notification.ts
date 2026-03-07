@@ -1,7 +1,7 @@
 import { v4 as uuid } from "uuid";
 import { Progress, STAGE } from "./progress";
 
-export type NotificationSeverity = "info" | "warn" | "sever";
+export type NotificationSeverity = "info" | "warn" | "severe";
 export interface NotificationDef {
   severity: NotificationSeverity;
   message: string;
@@ -13,7 +13,7 @@ export interface NotificationDef {
 
 export class Notification implements NotificationDef {
   readonly id: string;
-  protected _severity: NotificationSeverity;
+  severity: NotificationSeverity;
   message: string;
   readonly date: Date;
   readonly ref?: string;
@@ -22,16 +22,12 @@ export class Notification implements NotificationDef {
 
   constructor(def: NotificationDef) {
     this.id = uuid();
-    this._severity = def.severity;
+    this.severity = def.severity;
     this.message = def.message;
     this.date = def.date ?? new Date();
     this.ref = def.ref;
     this.persistent = def.persistent ?? true;
     this.show = def.show ?? true;
-  }
-
-  get severity(): NotificationSeverity {
-    return this._severity;
   }
 }
 
@@ -43,12 +39,12 @@ export class ProgressNotification extends Notification {
     this.progress = new Progress();
   }
 
-  override set severity(s: NotificationSeverity) {
-    this._severity = s;
-  }
-  override get severity(): NotificationSeverity {
-    return this._severity;
-  }
+  // override set severity(s: NotificationSeverity) {
+  //   this.severity = s;
+  // }
+  // override get severity(): NotificationSeverity {
+  //   return this.severity;
+  // }
   setProgress(value: number, total?: number, stage?: STAGE): void {
     this.progress.position.value = value;
     if (total !== undefined) {

@@ -1,7 +1,7 @@
-<mat-card class="notification-card" [class]="'notification-' + notification().severity">
+<mat-card class="notification-card" [class]="'notif-swe-' + notification().severity">
   <mat-card-header class="notification-header">
     @switch (notification().severity) {
-      @case ("sever") {
+      @case ("severe") {
         <mat-icon>error</mat-icon>
       }
       @case ("warn") {

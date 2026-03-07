@@ -13,7 +13,7 @@ export const anyRoleGuard: CanActivateFn = (route, state) => {
   if (!loginService.getLoggedUser().hasAnyRoles(roles)) {
     notifyService.notify(
       new Notification({
-        severity: "sever",
+        severity: "severe",
         message: `access forbidden: you need on of ${roles} roles to access to ${state.url}`,
         show: true,
         persistent: true,
@@ -33,7 +33,7 @@ export const allRoleGuard: CanActivateFn = (route, state) => {
   if (!loginService.getLoggedUser().hasAllRoles(roles)) {
     notifyService.notify(
       new Notification({
-        severity: "sever",
+        severity: "severe",
         message: `acces forbidden: you need all of ${roles} roles to access to ${state.url}`,
         show: true,
         persistent: true,

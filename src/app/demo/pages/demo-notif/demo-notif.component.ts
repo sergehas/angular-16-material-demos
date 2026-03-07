@@ -3,6 +3,7 @@ import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatBadge } from "@angular/material/badge";
 import { MatButton } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
 import { MatDivider } from "@angular/material/divider";
 import { MatFormField, MatLabel } from "@angular/material/form-field";
 import { MatIcon } from "@angular/material/icon";
@@ -41,6 +42,7 @@ interface NotifLog {
     ReactiveFormsModule,
     MatBadge,
     MatIcon,
+    MatCardModule,
   ],
 })
 export class DemoNotifComponent {
@@ -50,6 +52,7 @@ export class DemoNotifComponent {
   show = false;
   severity: NotificationSeverity = "info";
   persistent = true;
+  progress = false;
   lastProgressNotif?: ProgressNotification;
   total = new FormControl<number>({ value: -1, disabled: true });
   value = new FormControl<number>({ value: -1, disabled: true });
@@ -62,7 +65,7 @@ export class DemoNotifComponent {
       .subscribe(() => this.updateProgress());
 
     this.service.notifications$.subscribe((cache) => {
-      if (cache.size == 0) {
+      if (cache.size === 0) {
         this.total.disable();
         this.value.disable();
       }
@@ -94,22 +97,29 @@ export class DemoNotifComponent {
   addNotif(): void {
     const cnt = Math.floor(Math.random() * 101);
     const randomRepeat = Math.floor(Math.random() * 30) + 1; // Random number between 1 and 5
-    const longMessage = Array(randomRepeat)
+    const longMessage = new Array(randomRepeat)
       .fill("notification message body, very long description.")
       .join(" ");
-    this.service.notify(
-      new Notification({
-        severity: this.severity,
-        message: cnt % 3 === 0 ? `message #${cnt}: ${longMessage}` : `short message # ${cnt}`,
-        show: this.show,
-        persistent: this.persistent,
-      })
-    );
+    const n = this.progress
+      ? new ProgressNotification({
+          severity: this.severity,
+          message: cnt % 3 === 0 ? `message #${cnt}: ${longMessage}` : `short message # ${cnt}`,
+          show: this.show,
+          persistent: this.persistent,
+        })
+      : new Notification({
+          severity: this.severity,
+          message: cnt % 3 === 0 ? `message #${cnt}: ${longMessage}` : `short message # ${cnt}`,
+          show: this.show,
+          persistent: this.persistent,
+        });
+
+    this.service.notify(n);
   }
 
   addRandom(): void {
     const cnt = this.notifs.length;
-    const severity = ["info", "warn", "sever"][
+    const severity = ["info", "warn", "severe"][
       Math.floor(Math.random() * 3)
     ] as NotificationSeverity;
     if (cnt % 3 === 0) {

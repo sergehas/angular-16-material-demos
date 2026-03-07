@@ -92,7 +92,7 @@ export class DemoExportComponent {
       p.length = l;
     });
     dataSource.error$.subscribe((e) => {
-      this._notif!.severity = "sever";
+      this._notif!.severity = "severe";
       console.error(`[demo-export] datasource error: ${e}`);
     });
     const service = this.library.value === "xslx" ? this.sheetService : this.exportService;
@@ -107,7 +107,7 @@ export class DemoExportComponent {
           this.progressColor = "primary";
           break;
         case STAGE.ERROR:
-          this._notif!.severity = "sever";
+          this._notif!.severity = "severe";
           break;
         case STAGE.PARTIAL:
           this.progressColor = "warn";
