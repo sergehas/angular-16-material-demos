@@ -33,7 +33,6 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false"
       [fixedInViewport]="(isHandset$ | async) === true"
-      fixedTopGap="48"
     >
       <app-tree-nav></app-tree-nav>
     </mat-sidenav>

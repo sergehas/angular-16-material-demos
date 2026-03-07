@@ -66,7 +66,7 @@ export class NotificationCenterComponent {
     this.snackBar.openFromComponent(NotificationSnackBarComponent, {
       horizontalPosition: "center",
       verticalPosition: "top",
-      //duration: 3000,
+      duration: 3000,
       data: n,
       panelClass: [`notif-swe-${n.severity}`],
     });

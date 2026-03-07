@@ -26,6 +26,10 @@
     }
   }
 
+  .mat-sidenav-fixed {
+    margin-top: var(--mat-toolbar-standard-height, 64px);
+  }
+
   .root-sidenav-container {
     .notif-sidenav {
       min-width: 366px;
@@ -33,6 +37,7 @@
     }
 
     .root-content {
+      background-color: var(--mat-sys-surface-container-lowest);
       margin: 0 var(--app-gap);
     }
 

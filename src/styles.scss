@@ -12,6 +12,7 @@ $primary: mat.$azure-palette;
 $success: mat.$green-palette;
 $warning: mat.$yellow-palette;
 $error: mat.$red-palette;
+$font: Roboto;
 
 @mixin swe($palette, $severity) {
   .notif-swe-#{$severity} {
@@ -44,7 +45,9 @@ $error: mat.$red-palette;
 html {
   background-color: var(--mat-sys-surface);
   color: var(--mat-sys-on-surface);
-  font: var(--mat-sys-body-medium);
+  font-family:
+    $font, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  text-align: left;
 
   --mat-tree-node-min-height: 40px;
 
@@ -57,7 +60,7 @@ html {
         primary: $primary,
       ),
 
-      typography: Roboto,
+      typography: $font,
       density: -2,
     )
   );

@@ -52,6 +52,7 @@ export class DemoNotifComponent {
   show = false;
   severity: NotificationSeverity = "info";
   persistent = true;
+  progress = false;
   lastProgressNotif?: ProgressNotification;
   total = new FormControl<number>({ value: -1, disabled: true });
   value = new FormControl<number>({ value: -1, disabled: true });
@@ -99,14 +100,21 @@ export class DemoNotifComponent {
     const longMessage = new Array(randomRepeat)
       .fill("notification message body, very long description.")
       .join(" ");
-    this.service.notify(
-      new Notification({
-        severity: this.severity,
-        message: cnt % 3 === 0 ? `message #${cnt}: ${longMessage}` : `short message # ${cnt}`,
-        show: this.show,
-        persistent: this.persistent,
-      })
-    );
+    const n = this.progress
+      ? new ProgressNotification({
+          severity: this.severity,
+          message: cnt % 3 === 0 ? `message #${cnt}: ${longMessage}` : `short message # ${cnt}`,
+          show: this.show,
+          persistent: this.persistent,
+        })
+      : new Notification({
+          severity: this.severity,
+          message: cnt % 3 === 0 ? `message #${cnt}: ${longMessage}` : `short message # ${cnt}`,
+          show: this.show,
+          persistent: this.persistent,
+        });
+
+    this.service.notify(n);
   }
 
   addRandom(): void {

@@ -1,17 +1,18 @@
 <mat-nav-list>
   <div class="rail-header">
-    <mat-button-toggle
+    <button
+      mat-icon-button
       class="rail-toggle"
-      [value]="isRail()"
-      (change)="isRail.set(!$event.value)"
-      [aria-label]="isRail() ? 'Rail menu' : 'full menu'"
+      (click)="isRail.set(!isRail())"
+      [attr.aria-label]="isRail() ? 'Rail menu' : 'full menu'"
+      class="rail-toggle"
     >
       @if (isRail()) {
         <mat-icon>menu</mat-icon>
       } @else {
         <mat-icon>menu_open</mat-icon>
       }
-    </mat-button-toggle>
+    </button>
   </div>
   <mat-tree [dataSource]="dataSource" [treeControl]="treeControl" [class.rail]="isRail()">
     <!-- This is the tree node template for leaf nodes. dive default padding by 2 -->
