@@ -1,5 +1,5 @@
 import { DatePipe } from "@angular/common";
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { importProvidersFrom } from "@angular/core";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatButtonModule } from "@angular/material/button";
@@ -8,8 +8,8 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
 import { provideAnimations } from "@angular/platform-browser/animations";
-import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateModule } from "@ngx-translate/core";
+import { provideTranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AppRoutingModule } from "./app/app-routing.module";
 import { AppComponent } from "./app/app.component";
 import { ArtInstituteRoutingModule } from "./app/art-institute/art-institute-routing.module";
@@ -22,21 +22,13 @@ import { DemoRoutingModule } from "./app/demo/demo-routing.module";
 import { ListOfValuesRoutingModule } from "./app/list-of-values/list-of-values-routing.module";
 import { NavRoutingModule } from "./app/nav/nav-routing.module";
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, "/assets/i18n/", ".json");
-}
-
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(
       BrowserModule,
       TranslateModule.forRoot({
-        defaultLanguage: "en-US",
-        loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient],
-        },
+        fallbackLang: "en-US",
+        loader: provideTranslateHttpLoader({ prefix: "/assets/i18n/", suffix: ".json" }),
       }),
       MatToolbarModule,
       MatSidenavModule,
