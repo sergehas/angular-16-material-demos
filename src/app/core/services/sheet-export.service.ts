@@ -1,7 +1,7 @@
 import { Injectable, inject } from "@angular/core";
 
 import { MatPaginator } from "@angular/material/paginator";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { Progress, STAGE } from "src/app/core/models/progress";
 import { utils, writeFile } from "xlsx";
 import { PageableDataSource, Paginator } from "../models/pageable-data-source";
@@ -19,6 +19,7 @@ export class SheetExportService {
   ): Observable<Progress> {
     const status = new Progress();
     const statusSubject = new BehaviorSubject<Progress>(status);
+    const subscriptions = new Subscription();
     console.log(`[sheet-export] starting export`);
 
     /**
@@ -40,6 +41,7 @@ export class SheetExportService {
       status.stage = stage;
       statusSubject.next(status);
       source.disconnect();
+      subscriptions.unsubscribe();
       statusSubject.complete();
       return Promise.resolve();
     };
@@ -54,39 +56,47 @@ export class SheetExportService {
     /**
      * use the pager observable to get the datasource size
      */
-    source.length$.subscribe((len) => {
-      console.info(`[sheet-export] row count to export: ${len}`);
-      status.position.total = len;
-      statusSubject.next(status);
-    });
-
-    source.error$.subscribe((e) => {
-      status.stage = STAGE.ERROR;
-      console.error(`[sheet-export] error: ${e}`);
-      statusSubject.next(status);
-    });
-
-    source.connect().subscribe((data) => {
-      //whenever data are available, add them to export
-      console.info(
-        `[sheet-export] exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`
-      );
-      if (source.paginator !== undefined) {
-        status.position.value += data.length;
-        status.stage = STAGE.PROGRESS;
+    subscriptions.add(
+      source.length$.subscribe((len) => {
+        console.info(`[sheet-export] row count to export: ${len}`);
+        status.position.total = len;
         statusSubject.next(status);
-      }
-      console.info(`[sheet-export] new rows to export: ${data.length}`);
-      fullData.push(...data);
+      })
+    );
 
-      if (source.paginator?.hasNextPage()) {
-        console.info(`[sheet-export] export next page`);
-        source.paginator.nextPage();
-      } else {
-        console.info(`[sheet-export] no more page. Last page was ${source.paginator?.pageIndex}`);
-        finalizeWorkbook(fullData);
-      }
-    });
+    subscriptions.add(
+      source.error$.subscribe((e) => {
+        status.stage = STAGE.ERROR;
+        console.error(`[sheet-export] error: ${e}`);
+        subscriptions.unsubscribe();
+        statusSubject.next(status);
+        statusSubject.complete();
+      })
+    );
+
+    subscriptions.add(
+      source.connect().subscribe((data) => {
+        //whenever data are available, add them to export
+        console.info(
+          `[sheet-export] exporting page: ${source.paginator?.pageIndex} from ${source.paginator?.getNumberOfPages()}`
+        );
+        if (source.paginator !== undefined) {
+          status.position.value += data.length;
+          status.stage = STAGE.PROGRESS;
+          statusSubject.next(status);
+        }
+        console.info(`[sheet-export] new rows to export: ${data.length}`);
+        fullData.push(...data);
+
+        if (source.paginator?.hasNextPage()) {
+          console.info(`[sheet-export] export next page`);
+          source.paginator.nextPage();
+        } else {
+          console.info(`[sheet-export] no more page. Last page was ${source.paginator?.pageIndex}`);
+          finalizeWorkbook(fullData);
+        }
+      })
+    );
 
     return statusSubject.asObservable();
   }

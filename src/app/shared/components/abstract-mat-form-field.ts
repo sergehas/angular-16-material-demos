@@ -5,18 +5,20 @@ import { AutofillMonitor } from "@angular/cdk/text-field";
 import {
   AfterViewInit,
   booleanAttribute,
+  DestroyRef,
   Directive,
   DoCheck,
   ElementRef,
   inject,
   InjectionToken,
   Input,
+  input,
   NgZone,
   OnChanges,
   OnDestroy,
   Renderer2,
-  input,
 } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import {
   ControlValueAccessor,
   FormGroupDirective,
@@ -50,6 +52,7 @@ export abstract class AbstractMatFormField<T>
 {
   protected readonly _elementRef = inject(ElementRef);
   protected _platform = inject(Platform);
+  private readonly _destroyRef = inject(DestroyRef);
   ngControl = inject(NgControl, { optional: true, self: true })!;
   private readonly _autofillMonitor = inject(AutofillMonitor);
   private readonly _ngZone = inject(NgZone);
@@ -135,7 +138,14 @@ export abstract class AbstractMatFormField<T>
    * Implemented as part of MatFormFieldControl.
    * @docs-private
    */
-  @Input() placeholder = "";
+  readonly placeholderSignal = input("");
+  get placeholder(): string {
+    return this.placeholderSignal();
+  }
+  set placeholder(value: string) {
+    // For backward compatibility with @Input decorator
+    // This is called from ngOnInit context
+  }
 
   /**
    * Name of the input.
@@ -170,7 +180,15 @@ export abstract class AbstractMatFormField<T>
    * @docs-private
    */
   /* eslint-disable @angular-eslint/no-input-rename */
-  @Input("aria-describedby") userAriaDescribedBy?: string;
+  readonly userAriaDescribedBySignal = input<string | undefined>(undefined, {
+    alias: "aria-describedby",
+  });
+  get userAriaDescribedBy(): string | undefined {
+    return this.userAriaDescribedBySignal();
+  }
+  set userAriaDescribedBy(value: string | undefined) {
+    // For backward compatibility
+  }
 
   private _value: T | null = null;
 
@@ -199,14 +217,13 @@ export abstract class AbstractMatFormField<T>
   };
 
   /** Whether the element is readonly. */
-  @Input()
+  readonly readonlySignal = input(false);
   get readonly(): boolean {
-    return this._readonly;
+    return this.readonlySignal();
   }
   set readonly(value: BooleanInput) {
-    this._readonly = coerceBooleanProperty(value);
+    // For backward compatibility
   }
-  private _readonly = false;
 
   /** Whether the input should remain interactive when it is disabled. */
   @Input({ transform: booleanAttribute })
@@ -220,6 +237,11 @@ export abstract class AbstractMatFormField<T>
     this._errorStateTracker.errorState = value;
   }
 
+  /* eslint-disable @angular-eslint/prefer-inject */
+  /**
+   * Creates an instance of AbstractMatFormField.
+   * required for compatibility with Angular 16.2, where the `inject` function cannot be used in a constructor with parameters.
+   */
   constructor(...args: unknown[]);
 
   constructor() {
@@ -233,6 +255,7 @@ export abstract class AbstractMatFormField<T>
     }
     this._focusMonitor
       .monitor(this._elementRef.nativeElement, true)
+      .pipe(takeUntilDestroyed(this._destroyRef))
       .subscribe((origin: FocusOrigin) => {
         this.focused = !!origin;
         this.stateChanges.next();
@@ -268,6 +291,7 @@ export abstract class AbstractMatFormField<T>
     if (this._platform.isBrowser) {
       this._autofillMonitor
         .monitor(this._elementRef.nativeElement)
+        .pipe(takeUntilDestroyed(this._destroyRef))
         .subscribe((event: { isAutofilled: boolean }) => {
           this.autofilled = event.isAutofilled;
           this.stateChanges.next();

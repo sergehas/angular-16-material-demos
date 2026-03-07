@@ -1,6 +1,7 @@
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   ElementRef,
   forwardRef,
   inject,
@@ -9,8 +10,8 @@ import {
   OnDestroy,
   output,
   OutputRefSubscription,
-  ViewEncapsulation,
   viewChild,
+  ViewEncapsulation,
 } from "@angular/core";
 import { ErrorStateMatcher, MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
@@ -58,6 +59,7 @@ export class IconSelectComponent
   extends AbstractMatFormField<string>
   implements AfterViewInit, OnDestroy
 {
+  private readonly destroyRef = inject(DestroyRef);
   private subscription: OutputRefSubscription | null = null;
   protected control = new FormControl();
   //visual element to  focus
@@ -102,14 +104,13 @@ export class IconSelectComponent
 
   public override ngAfterViewInit(): void {
     super.ngAfterViewInit();
-    this.subscription = this.valueChange.subscribe((value) => {
+    this.subscription = this.valueChange.subscribe((value: string | null) => {
       this.iconMenu()?.closeMenu();
       super.value = value;
     });
   }
 
   public override ngOnDestroy(): void {
-    super.ngOnDestroy();
     if (this.subscription) {
       this.subscription.unsubscribe();
     }

@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders, HttpParams } from "@angular/common/http";
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
-import { Observable, map } from "rxjs";
+import { map, Observable } from "rxjs";
 
 export interface Page {
   pageNumber: number;
@@ -24,7 +24,6 @@ export abstract class HttpService<T> {
 
   /**
    * Initializes the HTTP service with the provided HttpClient and base URL.
-   * @param http The HttpClient to use for making requests.
    * @param baseUrl The base URL for the API.
    *
    * the default verbs & URLs are:
@@ -41,10 +40,11 @@ export abstract class HttpService<T> {
    * * `update`: `PUT` ${baseUrl}/${id}`
    *
    */
-  constructor(
-    readonly http: HttpClient,
-    protected baseUrl: string
-  ) {}
+  protected http: HttpClient;
+  protected baseUrl!: string;
+  constructor() {
+    this.http = inject(HttpClient);
+  }
 
   /**
    * Encodes a filter object into a query string.

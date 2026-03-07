@@ -19,6 +19,7 @@ export class NotificationService {
     }
     if (notif.persistent) {
       this.cache.add(notif);
+      this.notificationCacheSubject.next(this.cache);
     }
     return notif;
   }
@@ -27,6 +28,7 @@ export class NotificationService {
     console.log("[NotificationService] Dismiss: ", notif);
     console.log("[NotificationService] notif found:", this.cache.has(notif));
     this.cache.delete(notif);
+    this.notificationCacheSubject.next(this.cache);
   }
   update(notif: Notification): void {
     console.log("[NotificationService] Update: ", notif);
@@ -37,6 +39,7 @@ export class NotificationService {
       console.log("[NotificationService] notif was persistent,  delete it");
       this.cache.delete(notif);
     }
+    this.notificationCacheSubject.next(this.cache);
   }
 
   clear(): void {

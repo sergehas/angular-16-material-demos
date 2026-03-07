@@ -4,10 +4,12 @@ import {
   AfterViewInit,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
   Type,
   inject,
   viewChild,
 } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { VERSION as MAT_VERSION } from "@angular/material/core";
 import { MatSidenav, MatSidenavContainer, MatSidenavContent } from "@angular/material/sidenav";
 import { RouterLink, RouterOutlet } from "@angular/router";
@@ -51,6 +53,7 @@ import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.componen
 export class AppComponent implements AfterViewInit {
   private readonly service = inject(NotificationService);
   private readonly scrollService = inject(ScrollService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly sidenavContainer = viewChild.required(MatSidenavContainer);
   readonly outlet = viewChild.required(RouterOutlet);
@@ -78,8 +81,10 @@ export class AppComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     this.sidenavContainer()
       .scrollable.elementScrolled()
+      .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => this.scrollService.scroll());
   }
+
   prepareRoute(outlet: RouterOutlet) {
     console.info(
       `[app-root] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData["animation"]}`

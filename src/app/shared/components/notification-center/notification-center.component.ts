@@ -1,5 +1,6 @@
 import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component, inject } from "@angular/core";
+import { ChangeDetectionStrategy, Component, DestroyRef, inject } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 
@@ -34,6 +35,7 @@ import { NotificationComponent } from "./notification.component";
 export class NotificationCenterComponent {
   private readonly service = inject(NotificationService);
   private readonly snackBar = inject(MatSnackBar);
+  private readonly destroyRef = inject(DestroyRef);
 
   //reexpose notif observable
   notifications$ = this.service.notifications$;
@@ -41,7 +43,9 @@ export class NotificationCenterComponent {
   sort = "asc";
 
   constructor() {
-    this.service.notification$.subscribe((n) => this.showNotification(n));
+    this.service.notification$
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((n) => this.showNotification(n));
   }
 
   toggleSort() {

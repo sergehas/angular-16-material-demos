@@ -1,5 +1,5 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable, inject } from "@angular/core";
+import { HttpParams } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map, of, tap } from "rxjs";
 
@@ -19,9 +19,8 @@ export class ValuesService extends HttpService<Value> {
   private _updatedCache: Value[] = [];
 
   constructor() {
-    const http = inject(HttpClient);
-
-    super(http, ValuesService.HREF);
+    super();
+    this.baseUrl = ValuesService.HREF;
   }
 
   /**
