@@ -21,7 +21,7 @@ import { NotificationComponent } from "./notification.component";
   selector: "app-notification-center",
   templateUrl: "./notification-center.component.html",
   styleUrls: ["./notification-center.component.scss"],
-  changeDetection: ChangeDetectionStrategy.Default,
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     CommonModule,
     MatSnackBarModule,
