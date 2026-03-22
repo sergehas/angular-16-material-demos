@@ -24,13 +24,13 @@ import { LocalizedDatePipe } from "../../../shared/pipes/translation/localized-d
 // https://momentjs.com/docs/#/displaying/format/
 const WEEK_FORMATS = {
   parse: {
-    dateInput: "YYYY/W",
+    dateInput: "yyyy/W",
   },
   display: {
-    dateInput: "YYYY/W",
-    monthYearLabel: "YYYY",
+    dateInput: "yyyy/W",
+    monthYearLabel: "yyyy",
     dateA11yLabel: "LL",
-    monthYearA11yLabel: "YYYY",
+    monthYearA11yLabel: "yyyy",
   },
 };
 

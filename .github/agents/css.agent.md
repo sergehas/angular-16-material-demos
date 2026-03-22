@@ -41,5 +41,6 @@ You are a **CSS/SCSS expert** specialized in:
 
 ## Resources
 
+- [Theming Angular Material](https://material.angular.dev/guide/theming)
 - [Angular Component Styles](https://angular.dev/guide/components/styling)
 - [WCAG 2.1 Guidelines](https://www.w3.org/WAI/WCAG21/quickref/)
