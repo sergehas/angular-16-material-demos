@@ -4,7 +4,6 @@ import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { Category } from "src/app/core/icons/models/category";
 import { IconsService } from "src/app/core/icons/services/icons.service";
 import { DemoIconsComponent } from "./demo-icons.component";
@@ -26,7 +25,7 @@ describe("DemoIconsComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, DemoIconsComponent],
+      imports: [DemoIconsComponent],
       providers: [
         provideHttpClient(),
         provideHttpClientTesting(),

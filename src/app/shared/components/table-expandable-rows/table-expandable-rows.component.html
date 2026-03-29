@@ -63,7 +63,7 @@
           </mat-header-cell>
           <mat-cell *matCellDef="let row" [hidden]="column.hidden">
             @if (row[column.name] | instanceof: Date) {
-              {{ row[column.name] | date: "YYYY-MM-dd" }}
+              {{ row[column.name] | date: "yyyy-MM-dd" }}
             } @else {
               {{ row[column.name] }}
             }

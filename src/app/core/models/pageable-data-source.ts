@@ -112,6 +112,8 @@ export class PageableDataSource<
   autoload: boolean;
 
   private _filteredEventStream: Subscription | null = null;
+  private _updateSubscriptions = new Subscription();
+  private _activeOperations = new Subscription();
 
   constructor(
     protected service: HttpService<T>,
@@ -153,7 +155,11 @@ export class PageableDataSource<
   private updateChangeSubscription() {
     //an "init" oneshot event to force load if no pager/sort exist
     //const initalChange = from(["init"]);
-    this.countSubject.subscribe(() => (this._shouldCount = false));
+    this._updateSubscriptions.unsubscribe();
+    this._updateSubscriptions = new Subscription();
+
+    this._updateSubscriptions.add(this.countSubject.subscribe(() => (this._shouldCount = false)));
+
     const filterChange = this._filterChange;
     const sortChange: Observable<Sort | null | void> = this.sort
       ? merge(this.sort.sortChange, this.sort.initialized)
@@ -164,26 +170,35 @@ export class PageableDataSource<
       : observableOf(null);
 
     // reset the paginator after sorting
-    sortChange.subscribe((e) => {
-      console.debug("[datasource] sort event", e);
-      if (this.paginator) {
-        this.paginator.pageIndex = 0;
-      }
-    });
-    pageChange.subscribe((e) => {
-      console.debug("[datasource] page event", e);
-    });
-    filterChange.subscribe((e) => {
-      console.debug("[datasource] filter event", e);
-      // });
-      // filterChange.subscribe((e) => {
-      // 	console.debug("[datasource] init event", e);
+    this._updateSubscriptions.add(
+      sortChange.subscribe((e) => {
+        console.debug("[datasource] sort event", e);
+        if (this.paginator) {
+          this.paginator.pageIndex = 0;
+        }
+      })
+    );
 
-      if (this.paginator && e !== undefined) {
-        this.paginator.pageIndex = 0;
-        this._shouldCount = true;
-      }
-    });
+    this._updateSubscriptions.add(
+      pageChange.subscribe((e) => {
+        console.debug("[datasource] page event", e);
+      })
+    );
+
+    this._updateSubscriptions.add(
+      filterChange.subscribe((e) => {
+        console.debug("[datasource] filter event", e);
+        // });
+        // filterChange.subscribe((e) => {
+        // 	console.debug("[datasource] init event", e);
+
+        if (this.paginator && e !== undefined) {
+          this.paginator.pageIndex = 0;
+          this._shouldCount = true;
+        }
+      })
+    );
+
     //reload page on any event
     const changes: Observable<[Filter | undefined, void | Sort | null, void | PageEvent | null]> =
       combineLatest([filterChange, sortChange, pageChange]);
@@ -209,6 +224,7 @@ export class PageableDataSource<
         })
       )
       .subscribe();
+    this._updateSubscriptions.add(this._filteredEventStream);
   }
 
   /**
@@ -220,6 +236,9 @@ export class PageableDataSource<
   }
 
   disconnect(): void {
+    this._updateSubscriptions.unsubscribe();
+    this._activeOperations.unsubscribe();
+    this._filteredEventStream?.unsubscribe();
     this.modelsSubject.complete();
     this.loadingSubject.complete();
     this.countSubject.complete();
@@ -240,7 +259,7 @@ export class PageableDataSource<
   }
   private load(filter: Filter | undefined, sort: Sort | undefined, page: Page | undefined) {
     this.loadingSubject.next(true);
-    this.service
+    const subscription = this.service
       .find(filter, sort, page)
       .pipe(
         tap({
@@ -255,12 +274,13 @@ export class PageableDataSource<
         })
       )
       .subscribe((models) => this.modelsSubject.next(models));
+    this._activeOperations.add(subscription);
   }
 
   public count() {
     console.info("[datasource] count");
     this.countingSubject.next(true);
-    this.service
+    const subscription = this.service
       .count(this._filter)
       .pipe(
         tap({
@@ -278,5 +298,6 @@ export class PageableDataSource<
         this._length = count;
         this.countSubject.next(count);
       });
+    this._activeOperations.add(subscription);
   }
 }

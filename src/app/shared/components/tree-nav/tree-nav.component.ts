@@ -5,7 +5,7 @@ import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule } from "@angular/material/tree";
-import { Router, RouterModule, RouterOutlet } from "@angular/router";
+import { Router, RouterModule } from "@angular/router";
 import { MenuNode, NavBuilder } from "../tabs-nav/models/nav-builder";
 
 /** Flat node with expandable and level information */
@@ -41,10 +41,7 @@ export class TreeNavComponent {
     this.dataSource.data = NavBuilder.buildTree("", this.router.config);
     console.info("[app-tree-nav] menu datasource", this.dataSource.data);
   }
-  prepareRoute(outlet: RouterOutlet) {
-    console.info(`[app-tree-nav] prepareRoute ${outlet?.activatedRouteData?.["animation"]}`);
-    return outlet?.activatedRouteData?.["animation"];
-  }
+
   //menu
   private readonly _transformer = (node: MenuNode, level: number): MenuFlatNode => {
     return {

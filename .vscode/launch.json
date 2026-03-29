@@ -18,7 +18,7 @@
       "name": "Launch Chromium against localhost",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}",
-      "runtimeExecutable": "e:/tools/chrlauncher/64/bin/chrome.exe",
+      "runtimeExecutable": "${env:CHROME_BIN}",
       "runtimeArgs": ["--incognito", "--disable-features=Translate"]
     }
   ]

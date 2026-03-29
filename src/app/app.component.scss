@@ -39,6 +39,7 @@
     .root-content {
       background-color: var(--mat-sys-surface-container-lowest);
       margin: 0 var(--app-gap);
+      view-transition-name: zmain-navigation;
     }
 
     /* When the sidenav is not fixed, stretch the sidenav container to fill the available space. This

@@ -3,7 +3,7 @@ import Excel, { Workbook } from "exceljs";
 
 import { MatPaginator } from "@angular/material/paginator";
 import { saveAs } from "file-saver";
-import { BehaviorSubject, Observable } from "rxjs";
+import { BehaviorSubject, Observable, Subscription } from "rxjs";
 import { Progress, STAGE } from "src/app/core/models/progress";
 import { PageableDataSource, Paginator } from "../models/pageable-data-source";
 import { NotificationService } from "./notification.service";
@@ -20,6 +20,7 @@ export class ExcelExportService {
   ): Observable<Progress> {
     const status = new Progress();
     const statusSubject = new BehaviorSubject<Progress>(status);
+    const subscriptions = new Subscription();
     console.log(`[excel-export] starting export`);
 
     /**
@@ -48,6 +49,7 @@ export class ExcelExportService {
           status.stage = localStage;
           statusSubject.next(status);
           source.disconnect();
+          subscriptions.unsubscribe();
           statusSubject.complete();
           return Promise.resolve();
         });
@@ -67,18 +69,24 @@ export class ExcelExportService {
     /**
      * use the pager observable to get the datasource size
      */
-    source.length$.subscribe((len) => {
-      console.info(`[excel-export] row count to export: ${len}`);
-      status.position.total = len;
-      statusSubject.next(status);
-    });
+    subscriptions.add(
+      source.length$.subscribe((len) => {
+        console.info(`[excel-export] row count to export: ${len}`);
+        status.position.total = len;
+        statusSubject.next(status);
+      })
+    );
 
-    source.error$.subscribe((e) => {
-      status.stage = STAGE.ERROR;
-      console.error(`[excel-export] error: ${e}`);
-      dataSub?.unsubscribe();
-      statusSubject.next(status);
-    });
+    subscriptions.add(
+      source.error$.subscribe((e) => {
+        status.stage = STAGE.ERROR;
+        console.error(`[excel-export] error: ${e}`);
+        dataSub?.unsubscribe();
+        subscriptions.unsubscribe();
+        statusSubject.next(status);
+        statusSubject.complete();
+      })
+    );
 
     const dataSub = source.connect().subscribe((data) => {
       //whenever data are available, add them to export
@@ -103,6 +111,7 @@ export class ExcelExportService {
         finalizeWorkbook(workbook);
       }
     });
+    subscriptions.add(dataSub);
 
     return statusSubject.asObservable();
   }

@@ -1,4 +1,13 @@
-import { AfterViewChecked, Directive, ElementRef, Renderer2, inject, input } from "@angular/core";
+import {
+  AfterViewChecked,
+  DestroyRef,
+  Directive,
+  ElementRef,
+  Renderer2,
+  inject,
+  input,
+} from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { ScrollService } from "src/app/core/services/scroll.service";
 
 function htmlElementAttribute(value: unknown): HTMLElement {
@@ -16,6 +25,7 @@ export class StickDirective implements AfterViewChecked {
   private element = inject<ElementRef<HTMLElement>>(ElementRef);
   private scrollService = inject(ScrollService);
   private renderer = inject(Renderer2);
+  private destroyRef = inject(DestroyRef);
 
   readonly appStick = input.required<HTMLElement, unknown>({ transform: htmlElementAttribute });
 
@@ -46,7 +56,7 @@ export class StickDirective implements AfterViewChecked {
     console.log(`el position:${this._original}, ref position: ${this._ref}`);
     this.renderer.addClass(this._native, "app-stickable");
 
-    this.scrollService.scrolling$.subscribe(() => {
+    this.scrollService.scrolling$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe(() => {
       this.onViewportScroll();
     });
   }

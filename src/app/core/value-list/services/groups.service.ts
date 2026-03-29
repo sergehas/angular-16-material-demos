@@ -1,5 +1,5 @@
-import { HttpClient, HttpParams } from "@angular/common/http";
-import { Injectable, inject } from "@angular/core";
+import { HttpParams } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map } from "rxjs";
 
@@ -18,9 +18,8 @@ export class GroupsService extends HttpService<Group> {
   static readonly HREF = "assets/mockup/groups.json";
 
   constructor() {
-    const http = inject(HttpClient);
-
-    super(http, GroupsService.HREF);
+    super();
+    this.baseUrl = GroupsService.HREF;
   }
 
   private _page(groups: Group[], page?: Page): Group[] {

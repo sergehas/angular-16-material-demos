@@ -1,7 +1,6 @@
 import { DatePipe } from "@angular/common";
 import { Pipe, PipeTransform } from "@angular/core";
 import { ComponentFixture, TestBed, waitForAsync } from "@angular/core/testing";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { TranslatePipe, TranslateService } from "@ngx-translate/core";
 import { Observable, of, Subject } from "rxjs";
 import { DemoI18nComponent } from "./demo-i18n.component";
@@ -34,7 +33,7 @@ describe("DemoI18nComponent", () => {
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, DemoI18nComponent, TranslateMockPipe],
+      imports: [DemoI18nComponent, TranslateMockPipe],
       providers: [
         DatePipe,
         { provide: TranslateService, useValue: translateServiceMock },

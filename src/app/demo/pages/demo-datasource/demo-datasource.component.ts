@@ -1,32 +1,33 @@
-import { AfterViewInit, Component, inject, viewChild } from "@angular/core";
+import { AfterViewInit, Component, DestroyRef, OnDestroy, inject, viewChild } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { FormControl, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortHeader } from "@angular/material/sort";
 import { BehaviorSubject, Subscription, map, merge } from "rxjs";
 import { Issue } from "src/app/core/github/models/issue";
 
+import { AsyncPipe, DatePipe } from "@angular/common";
+import { MatBadge } from "@angular/material/badge";
+import { MatButton } from "@angular/material/button";
+import { MatDivider } from "@angular/material/divider";
+import { MatFormField, MatHint, MatLabel } from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
+import { MatInput } from "@angular/material/input";
+import { MatSlideToggle } from "@angular/material/slide-toggle";
+import {
+  MatCell,
+  MatCellDef,
+  MatColumnDef,
+  MatHeaderCell,
+  MatHeaderCellDef,
+  MatHeaderRow,
+  MatHeaderRowDef,
+  MatRow,
+  MatRowDef,
+  MatTable,
+} from "@angular/material/table";
 import { GithubService } from "src/app/core/github/services/github.service";
 import { DatasourceError, PageableDataSource } from "src/app/core/models/pageable-data-source";
-import { MatDivider } from "@angular/material/divider";
-import { MatSlideToggle } from "@angular/material/slide-toggle";
-import { MatButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
-import { MatFormField, MatLabel, MatHint } from "@angular/material/form-field";
-import { MatInput } from "@angular/material/input";
-import {
-  MatTable,
-  MatColumnDef,
-  MatHeaderCellDef,
-  MatHeaderCell,
-  MatCellDef,
-  MatCell,
-  MatHeaderRowDef,
-  MatHeaderRow,
-  MatRowDef,
-  MatRow,
-} from "@angular/material/table";
-import { MatBadge } from "@angular/material/badge";
-import { AsyncPipe, DatePipe } from "@angular/common";
 
 @Component({
   selector: "app-demo-datasource",
@@ -61,8 +62,9 @@ import { AsyncPipe, DatePipe } from "@angular/common";
     DatePipe,
   ],
 })
-export class DemoDatasourceComponent implements AfterViewInit {
+export class DemoDatasourceComponent implements AfterViewInit, OnDestroy {
   private readonly service = inject(GithubService);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly paginator = viewChild(MatPaginator);
   readonly sort = viewChild.required(MatSort);
@@ -112,10 +114,12 @@ export class DemoDatasourceComponent implements AfterViewInit {
           return `datasource error: ${b}`;
         })
       )
-    ).subscribe((e) => {
-      console.info("[demo datasource] event received", e);
-      this.dataSourceEvents$.value.push(`[${new Date().toISOString()}]: ${e}`);
-    });
+    )
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((e) => {
+        console.info("[demo datasource] event received", e);
+        this.dataSourceEvents$.value.push(`[${new Date().toISOString()}]: ${e}`);
+      });
     //manage default sort: must be done BEFORE managing events!
     if (this.sortEnabled) {
       this.dataSource.sort = this.sort();
@@ -127,6 +131,7 @@ export class DemoDatasourceComponent implements AfterViewInit {
 
   resetDatasource() {
     console.info("resetting datasource");
+    // takeUntilDestroyed will handle cleanup automatically
     this._sub?.unsubscribe();
     this.filter.setValue(null);
     this.dataSource = new PageableDataSource<Issue>(this.service, this.autoloadEnabled);
@@ -135,5 +140,10 @@ export class DemoDatasourceComponent implements AfterViewInit {
 
   ngAfterViewInit(): void {
     this._setDatasource();
+  }
+
+  ngOnDestroy(): void {
+    this._sub?.unsubscribe();
+    // takeUntilDestroyed automatically cleans up subscriptions
   }
 }

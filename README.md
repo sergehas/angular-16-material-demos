@@ -16,8 +16,18 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
     - get rid of routing modules (just export an array of routes then register them in the `app.routing` ?)
   - [x] apply <https://angular.dev/reference/migrations/cleanup-unused-imports> & <https://angular.dev/reference/migrations/self-closing-tags>
 - [x] update this readme (scaffolding)
-- [ ] migrate CSS to material design 3 ?
+- [x] migrate CSS to material design 3 ?
 - [x] upgrade `eslint` to v9 + flat config
+
+### Angular 21 migration
+
+- [x] remove angular animation (see <https://angular.dev/guide/animations/migration>)
+- [ ] use new `TableDatasource`
+- [ ] upgrade `TreeControl`
+- [x] fix subscription leaks
+- [x] convert RxJS services to Signals
+- [x] fix components with untyped FormControls
+- [x] fix components with mixed input/output patterns
 
 ### Features
 
@@ -167,7 +177,6 @@ As services (& associated models) could be related to feature module ( i.e. `Ord
 
 - add a `github` module: `ng generate module core/github`
 - add a service to `github`: `ng generate service core/github/services/github`
-
   - then, add it to module:
 
     ```typescript
@@ -199,6 +208,13 @@ Run `ng build` to build the project. The build artifacts will be stored in the `
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
+> Custom chrome install
+> For chrome(/chromium) custom install, define an env var pointing to the chrome binary
+>
+> ```powershell
+> $env:CHROME_BIN="E:\tools\scoop\apps\chromium\current\chrome.exe"
+> ```
+
 ## end-to-end tests
 
 ### Recording e2e test
@@ -212,6 +228,14 @@ npm start
 ```
 
 by default, the app is accessible at <http://localhost:4200>
+
+#### Prerequisites
+
+This project uses playwright for e2e test. Ensure local browser are installed
+
+```shell
+npx playwright install
+```
 
 #### Recording a test
 

@@ -1,18 +1,18 @@
-import { Component, OnDestroy, inject } from "@angular/core";
+import { Component, DestroyRef, inject } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import { MomentDateAdapter } from "@angular/material-moment-adapter";
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
-import { LangChangeEvent, TranslateService, TranslateModule } from "@ngx-translate/core";
-import { Subscription } from "rxjs";
-import { MatDivider } from "@angular/material/divider";
 import { MatButton } from "@angular/material/button";
-import { MatFormField, MatLabel, MatHint, MatSuffix } from "@angular/material/form-field";
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from "@angular/material/core";
 import {
-  MatDateRangeInput,
-  MatStartDate,
-  MatEndDate,
   MatDatepickerToggle,
+  MatDateRangeInput,
   MatDateRangePicker,
+  MatEndDate,
+  MatStartDate,
 } from "@angular/material/datepicker";
+import { MatDivider } from "@angular/material/divider";
+import { MatFormField, MatHint, MatLabel, MatSuffix } from "@angular/material/form-field";
+import { LangChangeEvent, TranslateModule, TranslateService } from "@ngx-translate/core";
 import { LocalizedDatePipe } from "../../../shared/pipes/translation/localized-date.pipe";
 
 // Depending on whether rollup is used, moment needs to be imported differently.
@@ -24,13 +24,13 @@ import { LocalizedDatePipe } from "../../../shared/pipes/translation/localized-d
 // https://momentjs.com/docs/#/displaying/format/
 const WEEK_FORMATS = {
   parse: {
-    dateInput: "YYYY/W",
+    dateInput: "yyyy/W",
   },
   display: {
-    dateInput: "YYYY/W",
-    monthYearLabel: "YYYY",
+    dateInput: "yyyy/W",
+    monthYearLabel: "yyyy",
     dateA11yLabel: "LL",
-    monthYearA11yLabel: "YYYY",
+    monthYearA11yLabel: "yyyy",
   },
 };
 
@@ -65,10 +65,9 @@ const WEEK_FORMATS = {
     LocalizedDatePipe,
   ],
 })
-export class DemoI18nComponent implements OnDestroy {
+export class DemoI18nComponent {
   private readonly translateService = inject(TranslateService);
-
-  private _onLangChange: Subscription | undefined;
+  private readonly destroyRef = inject(DestroyRef);
 
   today: Date | number = new Date();
 
@@ -78,23 +77,21 @@ export class DemoI18nComponent implements OnDestroy {
       WEEK_FORMATS.display.dateInput = res;
       WEEK_FORMATS.parse.dateInput = res;
     };
-    this.translateService.get("format.weekYear").subscribe(onTranslation);
+    this.translateService
+      .get("format.weekYear")
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe(onTranslation);
   }
 
   constructor() {
     this._updateFormat();
 
-    this._onLangChange = this.translateService.onLangChange.subscribe((_event: LangChangeEvent) => {
-      // we want to make sure it doesn't return the same value until it's been updated
-      this._updateFormat();
-    });
-  }
-
-  ngOnDestroy(): void {
-    if (this._onLangChange) {
-      this._onLangChange.unsubscribe();
-      this._onLangChange = undefined;
-    }
+    this.translateService.onLangChange
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((_event: LangChangeEvent) => {
+        // we want to make sure it doesn't return the same value until it's been updated
+        this._updateFormat();
+      });
   }
 
   updateDate() {

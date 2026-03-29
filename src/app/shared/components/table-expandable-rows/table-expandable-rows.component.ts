@@ -1,4 +1,3 @@
-import { animate, state, style, transition, trigger } from "@angular/animations";
 import { SelectionModel } from "@angular/cdk/collections";
 import { CommonModule, DatePipe } from "@angular/common";
 import {
@@ -35,13 +34,6 @@ import { ColumnConfig, TableConfig } from "./table-config";
   styleUrls: ["table-expandable-rows.component.scss"],
   templateUrl: "table-expandable-rows.component.html",
   encapsulation: ViewEncapsulation.None,
-  animations: [
-    trigger("detailExpand", [
-      state("collapsed", style({ height: "0px", minHeight: "0" })),
-      state("expanded", style({ height: "*" })),
-      transition("expanded <=> collapsed", animate("225ms cubic-bezier(0.4, 0.0, 0.2, 1)")),
-    ]),
-  ],
   imports: [
     CommonModule,
     MatTableModule,

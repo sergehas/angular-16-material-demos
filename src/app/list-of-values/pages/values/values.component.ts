@@ -1,40 +1,42 @@
+import { CdkScrollable } from "@angular/cdk/scrolling";
+import { AsyncPipe } from "@angular/common";
 import {
   AfterViewInit,
   Component,
+  DestroyRef,
   OnDestroy,
   OnInit,
   inject,
   input,
   viewChild,
 } from "@angular/core";
+import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
 import {
   FormBuilder,
   FormGroup,
-  Validators,
   FormsModule,
   ReactiveFormsModule,
+  Validators,
 } from "@angular/forms";
+import { MatButton, MatMiniFabButton } from "@angular/material/button";
 import {
   MAT_DIALOG_DATA,
   MatDialog,
-  MatDialogRef,
-  MatDialogTitle,
-  MatDialogContent,
   MatDialogActions,
   MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
 } from "@angular/material/dialog";
+import { MatFormField, MatHint, MatLabel } from "@angular/material/form-field";
+import { MatIcon } from "@angular/material/icon";
+import { MatInput } from "@angular/material/input";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort, MatSortable } from "@angular/material/sort";
 import { BehaviorSubject, tap } from "rxjs";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { Value } from "src/app/core/value-list/models/value";
 import { ValuesService } from "src/app/core/value-list/services/values.service";
-import { AsyncPipe } from "@angular/common";
-import { MatButton, MatMiniFabButton } from "@angular/material/button";
-import { MatIcon } from "@angular/material/icon";
-import { MatLabel, MatFormField, MatHint } from "@angular/material/form-field";
-import { CdkScrollable } from "@angular/cdk/scrolling";
-import { MatInput } from "@angular/material/input";
 import { IconSelectComponent } from "../../../shared/components/icon-select/icon-select.component";
 
 @Component({
@@ -46,6 +48,7 @@ import { IconSelectComponent } from "../../../shared/components/icon-select/icon
 export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly service = inject(ValuesService);
   private readonly dialog = inject(MatDialog);
+  private readonly destroyRef = inject(DestroyRef);
 
   readonly paginator = viewChild.required(MatPaginator);
   readonly group = input<string>();
@@ -64,10 +67,16 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit(): void {
     //just for debug
     this.dataSource.loading$
-      .pipe(tap((b) => console.info(`loading ${this.group()}: ${b}`)))
+      .pipe(
+        tap((b) => console.info(`loading ${this.group()}: ${b}`)),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe();
     this.dataSource.counting$
-      .pipe(tap((b) => console.info(`counting ${this.group()}: ${b}`)))
+      .pipe(
+        tap((b) => console.info(`counting ${this.group()}: ${b}`)),
+        takeUntilDestroyed(this.destroyRef)
+      )
       .subscribe();
   }
 
@@ -78,14 +87,18 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
     this.dataSource.paginator = this.paginator();
     //sorting fires event, which is fireing page loading
     this.dataSource.sort?.sort({ id: "name", start: "asc" } as MatSortable);
-    this.dataSource.connect().subscribe((data) => {
-      //as data is readonly, we must clone it to be able to set _page
-      this._page.next(data.map((i) => i));
-    });
+    this.dataSource
+      .connect()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((data) => {
+        //as data is readonly, we must clone it to be able to set _page
+        this._page.next(data.map((i) => i));
+      });
   }
 
   ngOnDestroy(): void {
     this.dataSource.disconnect();
+    // takeUntilDestroyed automatically cleans up subscriptions
   }
 
   createOrEdit(entity?: Value) {
@@ -105,17 +118,23 @@ export class ValuesComponent implements OnInit, AfterViewInit, OnDestroy {
         },
       });
     }
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log("The dialog was closed with:", result);
-      if (result !== undefined) {
-        this.service.save(result).subscribe((v) => {
-          console.info(`after save: ${JSON.stringify(v, null, 2)}`);
-          console.log("refreshing");
-          this.dataSource.count();
-          this.dataSource.loadPage();
-        });
-      }
-    });
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe((result) => {
+        console.log("The dialog was closed with:", result);
+        if (result !== undefined) {
+          this.service
+            .save(result)
+            .pipe(takeUntilDestroyed(this.destroyRef))
+            .subscribe((v) => {
+              console.info(`after save: ${JSON.stringify(v, null, 2)}`);
+              console.log("refreshing");
+              this.dataSource.count();
+              this.dataSource.loadPage();
+            });
+        }
+      });
   }
 }
 

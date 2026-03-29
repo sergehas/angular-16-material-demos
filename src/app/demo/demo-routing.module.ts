@@ -7,6 +7,7 @@ const routes: Routes = [
     loadComponent: () => import("./pages/demo.component").then((m) => m.DemoComponent),
     data: {
       icon: "preview",
+      animation: "v-slide",
     },
     children: [
       // list "sub" pages from this demo feature components
@@ -15,7 +16,7 @@ const routes: Routes = [
         loadComponent: () =>
           import("./pages/demo-table/demo-table.component").then((m) => m.DemoTableComponent),
         data: {
-          animation: "tabSlide",
+          animation: "h-slide",
           icon: "table",
         },
       },
@@ -26,7 +27,7 @@ const routes: Routes = [
             (m) => m.DemoDatasourceComponent
           ),
         data: {
-          animation: "tabSlide",
+          animation: "h-slide",
           icon: "dataset",
         },
       },
@@ -35,7 +36,7 @@ const routes: Routes = [
         loadComponent: () =>
           import("./pages/demo-export/demo-export.component").then((m) => m.DemoExportComponent),
         data: {
-          animation: "tabSlide",
+          animation: "h-slide",
           icon: "download",
         },
       },
@@ -44,7 +45,7 @@ const routes: Routes = [
         loadComponent: () =>
           import("./pages/demo-icons/demo-icons.component").then((m) => m.DemoIconsComponent),
         data: {
-          animation: "tabSlide",
+          animation: "h-slide",
           icon: "imagemode",
         },
       },
@@ -53,7 +54,7 @@ const routes: Routes = [
         loadComponent: () =>
           import("./pages/demo-i18n/demo-i18n.component").then((m) => m.DemoI18nComponent),
         data: {
-          animation: "tabSlide",
+          animation: "h-slide",
           icon: "translate",
         },
       },
@@ -62,7 +63,7 @@ const routes: Routes = [
         loadComponent: () =>
           import("./pages/demo-notif/demo-notif.component").then((m) => m.DemoNotifComponent),
         data: {
-          animation: "tabSlide",
+          animation: "h-slide",
           icon: "notifications",
         },
       },
@@ -71,7 +72,7 @@ const routes: Routes = [
         loadComponent: () =>
           import("./pages/demo-sticky/demo-sticky.component").then((m) => m.DemoStickyComponent),
         data: {
-          animation: "tabSlide",
+          animation: "h-slide",
           icon: "title",
         },
       },

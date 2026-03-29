@@ -2,7 +2,6 @@ import { ComponentFixture, TestBed } from "@angular/core/testing";
 
 import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 
 import { DemoDatasourceComponent } from "./demo-datasource.component";
 
@@ -12,7 +11,7 @@ describe("DemoDatasourceComponent", () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, DemoDatasourceComponent],
+      imports: [DemoDatasourceComponent],
       providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     fixture = TestBed.createComponent(DemoDatasourceComponent);

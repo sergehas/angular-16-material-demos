@@ -1,5 +1,5 @@
 import { DatePipe } from "@angular/common";
-import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { importProvidersFrom } from "@angular/core";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatButtonModule } from "@angular/material/button";
@@ -7,11 +7,11 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
-import { provideAnimations } from "@angular/platform-browser/animations";
-import { TranslateLoader, TranslateModule } from "@ngx-translate/core";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { AppRoutingModule } from "./app/app-routing.module";
+import { provideRouter, withViewTransitions } from "@angular/router";
+import { TranslateModule } from "@ngx-translate/core";
+import { provideTranslateHttpLoader } from "@ngx-translate/http-loader";
 import { AppComponent } from "./app/app.component";
+import { appRoutes } from "./app/app.routes";
 import { ArtInstituteRoutingModule } from "./app/art-institute/art-institute-routing.module";
 import { IconsModule } from "./app/core/icons/icons.module";
 import { ExcelExportService } from "./app/core/services/excel-export.service";
@@ -21,22 +21,15 @@ import { StorageService } from "./app/core/services/storage.service";
 import { DemoRoutingModule } from "./app/demo/demo-routing.module";
 import { ListOfValuesRoutingModule } from "./app/list-of-values/list-of-values-routing.module";
 import { NavRoutingModule } from "./app/nav/nav-routing.module";
-
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, "/assets/i18n/", ".json");
-}
+import { onViewTransitionCreated } from "./app/shared/animations/route-animation";
 
 bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(
       BrowserModule,
       TranslateModule.forRoot({
-        defaultLanguage: "en-US",
-        loader: {
-          provide: TranslateLoader,
-          useFactory: HttpLoaderFactory,
-          deps: [HttpClient],
-        },
+        fallbackLang: "en-US",
+        loader: provideTranslateHttpLoader({ prefix: "/assets/i18n/", suffix: ".json" }),
       }),
       MatToolbarModule,
       MatSidenavModule,
@@ -45,7 +38,7 @@ bootstrapApplication(AppComponent, {
       MatButtonModule,
       ServicesModule,
       IconsModule,
-      AppRoutingModule,
+
       DemoRoutingModule,
       NavRoutingModule,
       ArtInstituteRoutingModule,
@@ -56,6 +49,6 @@ bootstrapApplication(AppComponent, {
     ExcelExportService,
     DatePipe,
     provideHttpClient(withInterceptorsFromDi()),
-    provideAnimations(),
+    provideRouter(appRoutes, withViewTransitions({ onViewTransitionCreated })),
   ],
 }).catch((err) => console.error(err));

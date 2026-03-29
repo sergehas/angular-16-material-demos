@@ -7,6 +7,8 @@
 /* You can add global styles to this file, and also import other style files */
 @use "@angular/material" as mat;
 
+@use "animations";
+
 // define theme palettes for your application using the Material 3 color system.
 $primary: mat.$azure-palette;
 $success: mat.$green-palette;
