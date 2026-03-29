@@ -21,7 +21,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 ### Angular 21 migration
 
-- [ ] remove angular animation (see <https://angular.dev/guide/animations/migration>)
+- [x] remove angular animation (see <https://angular.dev/guide/animations/migration>)
 - [ ] use new `TableDatasource`
 - [ ] upgrade `TreeControl`
 - [x] fix subscription leaks

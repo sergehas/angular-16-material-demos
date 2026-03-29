@@ -25,10 +25,8 @@ import { MenuNode, NavBuilder } from "./models/nav-builder";
 import { MatIconModule } from "@angular/material/icon";
 import { Notification } from "src/app/core/models/notification";
 import { NotificationService } from "src/app/core/services/notification.service";
-import { slideAnimations } from "../../animations/route-animation";
 
 const TAB_INDEX_PROP = "tabIndex";
-const TAB_SLIDE_ANIMATION = "tabSlide";
 
 /*
  * to hide tabs depending on roles, remove the comment in the html template & uncomment below AnyRolesDirective
@@ -39,7 +37,6 @@ const TAB_SLIDE_ANIMATION = "tabSlide";
   templateUrl: "./tabs-nav.component.html",
   styleUrls: ["./tabs-nav.component.scss"],
   imports: [RouterModule, MatTabsModule, MatIconModule, RouterLink, RouterOutlet],
-  animations: [slideAnimations],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class TabsNavComponent implements OnInit, AfterViewInit {
@@ -58,10 +55,8 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
 
   navLinks: MenuNode[] = [];
   private readonly _notifyService = inject(NotificationService);
-  animation: string | number = -1;
 
   ngOnInit(): void {
-    console.info("[tab-nav] router config", this.router);
     const root = this.router.config.find((p) => p.path === this.path());
     if (!root?.children || root?.children.length <= 0) {
       this._notifyService.notify(
@@ -99,32 +94,17 @@ export class TabsNavComponent implements OnInit, AfterViewInit {
   }
 
   /**
-   *use "onActivate" instead of directy fetch animation from the trigger  -calling a function, eg "[@Trigger]="myAnim()]" - to reduce number of calls.
    *Warning: at this step, outlet may be not yet initialized
-   * @param {Type<any>} component the activated component (not realy useful...)
+   * @param {Type<any>} component the activated component (not really useful...)
    * @memberof TabsNavComponent
    */
   onActivate(_component: Type<unknown>) {
     const route = this.contexts.getContext("primary")!.route;
     this.activate.emit(route);
-    const data = route?.snapshot?.data ?? {};
-    this.animation =
-      data["animation"] === TAB_SLIDE_ANIMATION ? data[TAB_INDEX_PROP] : data["animation"];
-    console.info(`[tab-nav] activate animation ${this.animation} on route ${route?.snapshot.url}}`);
   }
-
-  // prepareRoute(outlet: RouterOutlet) {
-  // 	console.info(`[tab-nav] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData['animation']}`);
-  // 	//return this.contexts.getContext("primary")?.route?.snapshot?.data?.["animation"];
-  // 	return (
-  // 		outlet?.activatedRouteData &&
-  // 		outlet.activatedRouteData['animation']
-  // 	);
-  // }
 
   onDeactivate(component: Type<unknown>) {
     this.deactivate.emit(component);
-
     console.info(`[tab-nav] deactivate route. outlet is active:  ${this.outlet()?.isActivated}`);
   }
 

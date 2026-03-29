@@ -1,7 +1,6 @@
 import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { PageableDataSource } from "src/app/core/models/pageable-data-source";
 import { HttpService } from "src/app/core/services/http-service";
 import { TableConfig } from "./table-config";
@@ -16,7 +15,7 @@ describe("TableExpandableRowsComponent", () => {
     serviceSpy = jasmine.createSpyObj("HttpService", ["get", "count", "find"]);
     TestBed.configureTestingModule({
       declarations: [],
-      imports: [TableExpandableRowsComponent, NoopAnimationsModule],
+      imports: [TableExpandableRowsComponent],
       providers: [provideHttpClient(), provideHttpClientTesting()],
     });
     fixture = TestBed.createComponent(TableExpandableRowsComponent);

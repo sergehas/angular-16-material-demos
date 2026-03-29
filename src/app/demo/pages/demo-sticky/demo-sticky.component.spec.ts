@@ -1,6 +1,5 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { NoopAnimationsModule } from "@angular/platform-browser/animations";
 import { DemoStickyComponent } from "./demo-sticky.component";
 
 describe("DemoStickyComponent", () => {
@@ -9,7 +8,7 @@ describe("DemoStickyComponent", () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [NoopAnimationsModule, DemoStickyComponent],
+      imports: [DemoStickyComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(DemoStickyComponent);

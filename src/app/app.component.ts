@@ -24,7 +24,6 @@ import { MatToolbar } from "@angular/material/toolbar";
 import { Notification } from "./core/models/notification";
 import { NotificationService } from "./core/services/notification.service";
 import { ScrollService } from "./core/services/scroll.service";
-import { slideAnimations } from "./shared/animations/route-animation";
 import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
 import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.component";
 
@@ -32,7 +31,6 @@ import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.componen
   selector: "app-root",
   templateUrl: "./app.component.html",
   styleUrls: ["./app.component.scss"],
-  animations: [slideAnimations],
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     MatToolbar,
@@ -85,20 +83,12 @@ export class AppComponent implements AfterViewInit {
       .subscribe(() => this.scrollService.scroll());
   }
 
-  prepareRoute(outlet: RouterOutlet) {
-    console.info(
-      `[app-root] prepareRoute ${outlet?.activatedRouteData && outlet.activatedRouteData["animation"]}`
-    );
-    //return this.contexts.getContext("primary")?.route?.snapshot?.data?.["animation"];
-    return outlet?.activatedRouteData && outlet.activatedRouteData["animation"];
-  }
-
   onActivate(_component: Type<unknown>) {
     const ar = this.outlet().activatedRoute;
     const outlet = this.outlet();
     this.animation = outlet.activatedRouteData && outlet.activatedRouteData["animation"];
     console.info(
-      `[app-root] activate animation ${ar?.snapshot.data["animation"]} on route ${ar?.snapshot.url}}`
+      `[app-root] activate animation ${ar?.snapshot.data["animation"]} on route ${ar?.snapshot.url}`
     );
   }
 }

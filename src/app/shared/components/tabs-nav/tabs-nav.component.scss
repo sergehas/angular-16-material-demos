@@ -1,3 +1,11 @@
+.tab-nav {
+  //disable transition for the first load, otherwise it will animate from the default route to the first route
+  view-transition-name: tab-nav;
+}
+.tab-nav-panel {
+  view-transition-name: main-navigation;
+}
+
 .sticky {
   position: sticky;
   top: 0;

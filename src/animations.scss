@@ -1,0 +1,114 @@
+:root {
+  --h-anim-offset: 20vw;
+  --v-anim-offset: 30vh;
+}
+
+@keyframes slide-in-from-left {
+  from {
+    transform: translateX(calc(-1 * var(--h-anim-offset)));
+  }
+}
+@keyframes slide-in-from-right {
+  from {
+    transform: translateX(var(--h-anim-offset));
+  }
+}
+@keyframes slide-out-to-left {
+  to {
+    transform: translateX(calc(-1 * var(--h-anim-offset)));
+  }
+}
+@keyframes slide-out-to-right {
+  to {
+    transform: translateX(var(--h-anim-offset));
+  }
+}
+@keyframes slide-in-from-top {
+  from {
+    transform: translateY(calc(-1 * var(--v-anim-offset)));
+  }
+}
+@keyframes slide-in-from-bottom {
+  from {
+    transform: translateY(var(--v-anim-offset));
+  }
+}
+@keyframes slide-out-to-top {
+  to {
+    transform: translateY(calc(-1 * var(--v-anim-offset)));
+  }
+}
+@keyframes slide-out-to-bottom {
+  to {
+    transform: translateY(var(--v-anim-offset));
+  }
+}
+
+@keyframes scale-up {
+  from {
+    scale: 0;
+  }
+}
+@keyframes scale-down {
+  to {
+    scale: 0;
+  }
+}
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes fade-out {
+  to {
+    opacity: 0;
+  }
+}
+
+::view-transition-group(*) {
+  animation-duration: 0.5s;
+}
+// horizontal slide animation
+html:active-view-transition-type(h-slide) {
+  &::view-transition-old(main-navigation) {
+    animation:
+      90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+      300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-out-to-left;
+  }
+  &::view-transition-new(main-navigation) {
+    animation:
+      210ms cubic-bezier(0, 0, 0.2, 1) 190ms both fade-in,
+      300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-in-from-right;
+  }
+}
+
+html:active-view-transition-type(h-slide-reverse) {
+  &::view-transition-old(main-navigation) {
+    animation:
+      90ms cubic-bezier(0.4, 0, 1, 1) both fade-out,
+      300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-out-to-right;
+  }
+  &::view-transition-new(main-navigation) {
+    animation:
+      210ms cubic-bezier(0, 0, 0.2, 1) 190ms both fade-in,
+      300ms cubic-bezier(0.4, 0, 0.2, 1) both slide-in-from-left;
+  }
+}
+
+// vertical slide animation
+html:active-view-transition-type(v-slide) {
+  &::view-transition-old(main-navigation) {
+    animation-name: slide-out-to-top;
+  }
+  &::view-transition-new(main-navigation) {
+    animation-name: slide-in-from-bottom;
+  }
+}
+html:active-view-transition-type(v-slide-reverse) {
+  &::view-transition-old(main-navigation) {
+    animation-name: slide-out-to-bottom;
+  }
+  &::view-transition-new(main-navigation) {
+    animation-name: slide-in-from-top;
+  }
+}
