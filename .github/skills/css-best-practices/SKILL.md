@@ -9,11 +9,11 @@ description: "On css creation or to automatically review and validate all CSS co
 
 **This skill MUST be used automatically for any task involving CSS:**
 
-- ✅ Creation of new CSS files
-- ✅ Modification of existing CSS files
-- ✅ CSS audit of a component or file
+- ✅ Creation of new CSS or SCSS files
+- ✅ Modification of existing CSS or SCSS files
+- ✅ CSS or SCSS audit of a component or file
 - ✅ Accessibility review RGAA / WCAG AA
-- ✅ CSS refactoring
+- ✅ CSS or SCSS refactoring
 - ✅ Pre-merge/PR verification
 - ✅ BEM compliance analysis
 
@@ -27,7 +27,7 @@ description: "On css creation or to automatically review and validate all CSS co
 ### Expected output format
 
 ````markdown
-## 📋 CSS & Accessibility Report
+## 📋 CSS or SCSS & Accessibility Report
 
 ### ❌ Non-compliances
 

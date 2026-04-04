@@ -27,11 +27,11 @@ Build beautiful, accessible Angular applications using Angular Material componen
 
 ### Theming
 
-- Custom theme creation
-- Color palettes and typography
+- [Custom theme creation](https://material.angular.dev/guide/theming)
+- [ Typography](https://material.angular.dev/guide/theming#typography)
 - Dark mode implementation
-- Component customization
-- CSS variables integration
+- [Component customization](https://v21.material.angular.dev/guide/theming-your-components)
+- [CSS variables integration](https://material.angular.dev/guide/theming#component-tokens)
 
 ### CDK (Component Dev Kit)
 

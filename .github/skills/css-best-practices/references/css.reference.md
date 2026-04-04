@@ -109,7 +109,7 @@ One component = one BEM block. The block name matches the component selector.
 ```css
 /* ✅ CORRECT */
 .block__element .nested-item {
-  color: var(--dsa-color-primitive-colors-identity-purple-500);
+  color: var(--mat-sys-on-surface-variant);
 }
 
 /* ❌ AVOID (too deep) */
@@ -125,8 +125,8 @@ One component = one BEM block. The block name matches the component selector.
 
 ```css
 /* ✅ CORRECT */
-  outline: 2px solid var(--dsa-color-focus, #005fcc);
-  outline-offset: 2px;
+  outline: 2px solid var(--mat-sys-primary);
+  box-shadow: var(--mat-sys-level4);
 }
 
 /* ❌ FORBIDDEN */
@@ -152,6 +152,8 @@ One component = one BEM block. The block name matches the component selector.
 ### 4.4 Accessibility media queries
 
 ```css
+:root {
+  {
 /* Respect user preferences */
     transition: none !important;
   }
@@ -159,7 +161,8 @@ One component = one BEM block. The block name matches the component selector.
 
 @media (prefers-contrast: more) {
   .subtle-text {
-    color: var(--dsa-color-text-primary);
+    color: var(color: var(--mat-sys-on-primary));
+
   }
 }
 ```
@@ -172,28 +175,29 @@ Every interactive element MUST define:
 
 ```css
 .interactive-element {
-  background: var(--dsa-color-bg-default);
+  background: var(--mat-sys-surface-container);
 
   /* Hover */
 }
 .interactive-element:hover {
-  background: var(--dsa-color-bg-hover);
+  background: var(--mat-sys-background);
 }
 
 /* Keyboard focus */
 .interactive-element:focus-visible {
-  outline: 2px solid var(--dsa-color-focus);
+  outline: 2px solid var(--mat-sys-primary);
 }
 
 /* Active (click) */
 .interactive-element:active {
-  background: var(--dsa-color-bg-active);
+  background: var(--mat-sys-primary);
 }
 
 /* Disabled */
 .interactive-element:disabled,
 .interactive-element[aria-disabled="true"] {
-  opacity: 0.5;
+  background: color-mix(in srgb, var(--mat-sys-on-surface) 4%, transparent)
+  color: color-mix(in srgb, var(--mat-sys-on-surface) 38%, transparent)
   cursor: not-allowed;
 }
 ```
@@ -202,22 +206,20 @@ Every interactive element MUST define:
 
 ```css
 /* ✅ CORRECT - Customization via CSS custom properties */
-dsa-tab-group {
-  --tab-group-padding-inline: var(--dsa-spacing-80);
+.my-tab-group {
+  --tab-group-padding-inline: calc(var(--app-gap)/2);
 }
 
-dsa-icon-button::part(base) {
-  font: var(--dsa-wc-button-font);
-  height: var(--dsa-wc-form-input-height);
-  width: var(--dsa-wc-form-input-width);
-  gap: var(--dsa-spacing-8);
+.my-icon-button::part(base) {
+  font: var(--mat-tab-label-text-size, var(--mat-sys-title-small-size));
+  height: var(--mat-tab-container-height;
 }
 ```
 
 ### CNSA Design System
 
 - Use `::part()` to target internal parts of web components
-- Prefer CSS custom properties (`--dsa-*`) over hardcoded values
+- Prefer CSS custom properties (`--mat-*`) over hardcoded values
 - Never use `::ng-deep` (FORBIDDEN)
 
 ---
@@ -227,7 +229,7 @@ dsa-icon-button::part(base) {
 | `#id-selector` | `.class-selector` |
 | `::ng-deep` | **FORBIDDEN** - Use `::part()` or CSS custom properties |
 | `outline: none` | `:focus-visible` with outline |
-| Hardcoded colors/sizes | DSA tokens `--dsa-*` |
+| Hardcoded colors/sizes | DSA tokens `--mat-*` |
 | Selectors > 3 levels | Restructure BEM |
 | `* { }` global | Target specifically |
 | SCSS in apps | Pure CSS only |
@@ -247,17 +249,17 @@ dsa-icon-button::part(base) {
 
 /* ✅ AFTER */
 .btn {
-  background: var(--dsa-color-bg-primary);
-  color: var(--dsa-color-text-on-primary);
-  font: var(--dsa-wc-button-font);
+  background: var(--mat-sys-primary-container);
+  color: var(--mat-sys-on-primary-container);
+  font: var(--mat-sys-label-large-font);
 }
 
 .btn:hover {
-  background: var(--dsa-color-bg-primary-hover);
+  box-shadow: var(--mat-sys-level4);
 }
 
 .btn:focus-visible {
-  outline: 2px solid var(--dsa-color-focus);
+  outline: 2px solid var(--mat-sys-primary);
   outline-offset: 2px;
 }
 
@@ -282,10 +284,10 @@ dsa-icon-button::part(base) {
 .card__header {
 }
 .card__title {
-  font: var(--dsa-font-heading-small);
+  font: var(--mat-sys-title-medium-font);
 }
 .card__content {
-  padding: var(--dsa-spacing-16);
+  padding: calc(var(--app-gap) / 4);
 }
 .card--featured {
 }
