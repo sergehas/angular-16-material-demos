@@ -2,8 +2,8 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable, inject } from "@angular/core";
 import { MatIconRegistry } from "@angular/material/icon";
 import { DomSanitizer } from "@angular/platform-browser";
+import { Category, NAMESPACE } from "@app/core/icons/models/category";
 import { lastValueFrom } from "rxjs";
-import { Category, NAMESPACE } from "../models/category";
 
 interface IconLibFormat {
   name: string;

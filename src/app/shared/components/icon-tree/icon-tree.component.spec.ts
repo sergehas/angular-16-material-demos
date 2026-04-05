@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 
-import { Category } from "src/app/core/icons/models/category";
-import { IconsService } from "src/app/core/icons/services/icons.service";
+import { Category } from "@app/core/icons/models/category";
+import { IconsService } from "@app/core/icons/services/icons.service";
 import { IconTreeComponent } from "./icon-tree.component";
 
 describe("IconTreeComponent", () => {

@@ -1,8 +1,8 @@
 import { provideHttpClient } from "@angular/common/http";
 import { provideHttpClientTesting } from "@angular/common/http/testing";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { PageableDataSource } from "src/app/core/models/pageable-data-source";
-import { HttpService } from "src/app/core/services/http-service";
+import { HttpService } from "@app/core/commons/services/http-service";
+import { PageableDataSource } from "@app/core/datasources/models/pageable-data-source";
 import { TableConfig } from "./table-config";
 import { TableExpandableRowsComponent } from "./table-expandable-rows.component";
 

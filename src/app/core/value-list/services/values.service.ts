@@ -3,8 +3,8 @@ import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map, of, tap } from "rxjs";
 
-import { Filter, HttpService, Page } from "../../services/http-service";
-import { Value } from "../models/value";
+import { Filter, HttpService, Page } from "@app/core/commons/services/http-service";
+import { Value } from "@app/core/value-list/models/value";
 
 export interface ValueCriteria extends Filter {
   name?: string;

@@ -1,9 +1,9 @@
 import { HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
+import { FilterValue, HttpService, Page } from "@app/core/commons/services/http-service";
+import { Issue } from "@app/core/github/models/issue";
 import { Observable, map } from "rxjs";
-import { FilterValue, HttpService, Page } from "../../services/http-service";
-import { Issue } from "../models/issue";
 
 interface Result {
   total_count: number;

@@ -28,8 +28,8 @@ import {
 } from "@angular/forms";
 import { _ErrorStateTracker, ErrorStateMatcher } from "@angular/material/core";
 import { MAT_FORM_FIELD, MatFormField, MatFormFieldControl } from "@angular/material/form-field";
+import { IdGenerator } from "@app/shared/components/id-generator";
 import { Subject } from "rxjs";
-import { IdGenerator } from "./id-generator";
 
 /** Object that can be used to configure the default options for the input. */
 export interface MatFieldConfig {

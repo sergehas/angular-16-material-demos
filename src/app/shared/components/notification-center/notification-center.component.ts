@@ -13,9 +13,9 @@ import {
 
 import { FormControl, ReactiveFormsModule } from "@angular/forms";
 import { MatIconModule } from "@angular/material/icon";
-import { Notification } from "src/app/core/models/notification";
-import { NotificationService } from "src/app/core/services/notification.service";
-import { NotificationComponent } from "./notification.component";
+import { Notification } from "@app/core/notifications/models/notification";
+import { NotificationService } from "@app/core/notifications/services/notification.service";
+import { NotificationComponent } from "@app/shared/components/notification-center/notification.component";
 
 @Component({
   selector: "app-notification-center",

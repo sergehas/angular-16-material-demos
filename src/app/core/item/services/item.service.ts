@@ -1,8 +1,8 @@
 import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
+import { HttpService, Page } from "@app/core/commons/services/http-service";
+import { Item } from "@app/core/item/models/item";
 import { Observable, of, throwError } from "rxjs";
-import { HttpService, Page } from "../../services/http-service";
-import { Item } from "../models/item";
 
 @Injectable({
   providedIn: "root",

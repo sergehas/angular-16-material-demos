@@ -21,11 +21,11 @@ import { MatBadge } from "@angular/material/badge";
 import { MatButton, MatIconButton } from "@angular/material/button";
 import { MatIcon } from "@angular/material/icon";
 import { MatToolbar } from "@angular/material/toolbar";
-import { Notification } from "./core/models/notification";
-import { NotificationService } from "./core/services/notification.service";
-import { ScrollService } from "./core/services/scroll.service";
-import { NotificationCenterComponent } from "./shared/components/notification-center/notification-center.component";
-import { TreeNavComponent } from "./shared/components/tree-nav/tree-nav.component";
+import { ScrollService } from "@app/core/commons/services/scroll.service";
+import { Notification } from "@app/core/notifications/models/notification";
+import { NotificationService } from "@app/core/notifications/services/notification.service";
+import { NotificationCenterComponent } from "@app/shared/components/notification-center/notification-center.component";
+import { TreeNavComponent } from "@app/shared/components/tree-nav/tree-nav.component";
 
 @Component({
   selector: "app-root",

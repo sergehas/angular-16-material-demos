@@ -20,11 +20,17 @@ import { MatTableModule } from "@angular/material/table";
 import { MatProgressBarModule } from "@angular/material/progress-bar";
 import { MatSort, MatSortModule, MatSortable } from "@angular/material/sort";
 
+import {
+  DatasourceError,
+  PageableDataSource,
+} from "@app/core/datasources/models/pageable-data-source";
+import { TableConfigEditorComponent } from "@app/shared/components/table-config-editor/table-config-editor.component";
+import {
+  ColumnConfig,
+  TableConfig,
+} from "@app/shared/components/table-expandable-rows/table-config";
+import { InstanceofPipe } from "@app/shared/pipes/instanceof.pipe";
 import { tap } from "rxjs";
-import { DatasourceError, PageableDataSource } from "src/app/core/models/pageable-data-source";
-import { InstanceofPipe } from "../../pipes/instanceof.pipe";
-import { TableConfigEditorComponent } from "../table-config-editor/table-config-editor.component";
-import { ColumnConfig, TableConfig } from "./table-config";
 
 /**
  * @title Table with expandable rows

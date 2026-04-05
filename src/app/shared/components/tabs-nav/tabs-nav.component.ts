@@ -20,11 +20,11 @@ import {
   RouterModule,
   RouterOutlet,
 } from "@angular/router";
-import { MenuNode, NavBuilder } from "./models/nav-builder";
+import { MenuNode, NavBuilder } from "@app/shared/components/tabs-nav/models/nav-builder";
 
 import { MatIconModule } from "@angular/material/icon";
-import { Notification } from "src/app/core/models/notification";
-import { NotificationService } from "src/app/core/services/notification.service";
+import { Notification } from "@app/core/notifications/models/notification";
+import { NotificationService } from "@app/core/notifications/services/notification.service";
 
 const TAB_INDEX_PROP = "tabIndex";
 

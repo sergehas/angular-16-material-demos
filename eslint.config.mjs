@@ -121,10 +121,19 @@ export default defineConfig([
     rules: {},
   },
   {
+    files: ["./tsconfig*.json", ".vscode/*.json"],
+    language: "json/jsonc",
+    extends: [prettierConfig],
+    ...json.configs.recommended,
+    rules: {
+      "no-irregular-whitespace": "off", //bugged
+    },
+  },
+  {
     files: ["**/*.json"],
     language: "json/json",
     extends: [prettierConfig],
-    ignores: ["**/package-lock.json"],
+    ignores: ["**/package-lock.json", "**/tsconfig*.json"],
     ...json.configs.recommended,
     rules: {
       "no-irregular-whitespace": "off", //bugged

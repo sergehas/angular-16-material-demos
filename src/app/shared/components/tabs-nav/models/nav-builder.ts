@@ -1,5 +1,5 @@
 import { Route } from "@angular/router";
-import { Role } from "src/app/core/services/login.service";
+import { Role } from "@app/core/login/services/login.service";
 
 // tree menu mangement
 export interface MenuNode {

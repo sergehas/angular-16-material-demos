@@ -5,8 +5,8 @@ import { MatButtonModule } from "@angular/material/button";
 import { MatRippleModule } from "@angular/material/core";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTreeModule, MatTreeNestedDataSource } from "@angular/material/tree";
-import { Category } from "src/app/core/icons/models/category";
-import { IconsService } from "src/app/core/icons/services/icons.service";
+import { Category } from "@app/core/icons/models/category";
+import { IconsService } from "@app/core/icons/services/icons.service";
 
 @Component({
   selector: "app-icon-tree",

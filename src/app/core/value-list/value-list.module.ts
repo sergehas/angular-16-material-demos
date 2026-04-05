@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { GroupsService } from "./services/groups.service";
-import { ValuesService } from "./services/values.service";
+import { NgModule } from "@angular/core";
+import { GroupsService } from "@app/core/value-list/services/groups.service";
+import { ValuesService } from "@app/core/value-list/services/values.service";
 
 @NgModule({
   declarations: [],

@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule, inject, provideAppInitializer } from "@angular/core";
-import { IconsService } from "./services/icons.service";
+import { IconsService } from "@app/core/icons/services/icons.service";
 
 /**
  * this factory is required to ensure the incolib is fully loaded on IconService import

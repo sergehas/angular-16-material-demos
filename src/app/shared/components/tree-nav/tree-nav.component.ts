@@ -6,7 +6,7 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
 import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule } from "@angular/material/tree";
 import { Router, RouterModule } from "@angular/router";
-import { MenuNode, NavBuilder } from "../tabs-nav/models/nav-builder";
+import { MenuNode, NavBuilder } from "@app/shared/components/tabs-nav/models/nav-builder";
 
 /** Flat node with expandable and level information */
 interface MenuFlatNode {
