@@ -1,6 +1,6 @@
 import { DOCUMENT } from "@angular/common";
 import { TestBed } from "@angular/core/testing";
-import { ThemeScheme } from "./theme.model";
+import { Theme, ThemeScheme } from "./theme.model";
 import { ThemeService } from "./theme.service";
 
 describe("ThemeService", () => {
@@ -93,7 +93,7 @@ describe("ThemeService", () => {
     });
     service = TestBed.inject(ThemeService);
 
-    service.setTheme("blue-theme");
+    service.setTheme(new Theme("blue-theme", "Blue"));
 
     expect(mockClassList.contains("blue-theme")).toBeTrue();
     expect(mockClassList.contains("first-theme")).toBeFalse();

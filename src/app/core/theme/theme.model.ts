@@ -1,10 +1,13 @@
 export class Theme {
-  className: string;
-  name: string;
+  readonly className: string;
+  readonly name: string;
 
   constructor(className: string, name: string) {
     this.className = className;
     this.name = name;
+  }
+  equals(other: Theme | undefined): boolean {
+    return !!other && this.className === other.className;
   }
 }
 

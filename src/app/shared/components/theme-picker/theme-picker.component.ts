@@ -1,18 +1,14 @@
 import { CommonModule } from "@angular/common";
-import {
-  ChangeDetectionStrategy,
-  Component,
-  DestroyRef,
-  ViewEncapsulation,
-  effect,
-  inject,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, effect, inject } from "@angular/core";
+import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
+import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatTooltipModule } from "@angular/material/tooltip";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Theme } from "@app/core/theme/theme.model";
+import { Theme, ThemeScheme } from "@app/core/theme/theme.model";
 import { ThemeService } from "@app/core/theme/theme.service";
 import { TranslatePipe } from "@ngx-translate/core";
 
@@ -21,7 +17,6 @@ import { TranslatePipe } from "@ngx-translate/core";
   templateUrl: "theme-picker.component.html",
   styleUrls: ["theme-picker.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     CommonModule,
@@ -30,16 +25,19 @@ import { TranslatePipe } from "@ngx-translate/core";
     MatTooltipModule,
     MatButtonModule,
     TranslatePipe,
+    MatButtonToggleModule,
+    MatListModule,
+    FormsModule,
   ],
 })
 export class ThemePickerComponent {
   private readonly themeService = inject(ThemeService);
-  private readonly destroyRef = inject(DestroyRef);
   private readonly iconRegistry = inject(MatIconRegistry);
   private readonly sanitizer = inject(DomSanitizer);
 
   protected readonly themes = this.themeService.getThemeList();
   protected currentTheme?: Theme;
+  protected currentScheme?: ThemeScheme;
 
   constructor() {
     // Register the theme color icon
@@ -50,17 +48,21 @@ export class ThemePickerComponent {
 
     // Subscribe to theme changes
     effect(async () => {
-      const themeKey = this.themeService.selectedTheme();
-      this.currentTheme = this.themes.find((theme) => theme.className === themeKey);
+      this.currentTheme = this.themeService.selectedTheme();
+      this.currentScheme = this.themeService.themeScheme();
     });
   }
 
-  selectTheme(themeKey: string): void {
-    const theme = this.themes.find((t) => t.className === themeKey);
-    if (!theme) {
+  selectTheme(theme: Theme): void {
+    const selectedTheme = this.themes.find((t) => t.className === theme.className);
+    if (!selectedTheme) {
       return;
     }
-    this.themeService.setTheme(themeKey);
+    this.themeService.setTheme(selectedTheme);
+  }
+
+  selectScheme(scheme: ThemeScheme | undefined): void {
+    this.themeService.setThemeScheme(scheme ? scheme : ThemeScheme.AUTO);
   }
 
   trackByThemeKey(_index: number, theme: Theme): string {

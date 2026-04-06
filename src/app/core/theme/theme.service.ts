@@ -16,7 +16,7 @@ export class ThemeService {
 
   private readonly _body = inject(DOCUMENT).body;
   private readonly _themes: Theme[] = [];
-  selectedTheme = signal<string>("");
+  selectedTheme = signal<Theme>(new Theme("default-theme", "default"));
   themeScheme = signal<ThemeScheme>(ThemeScheme.AUTO);
 
   constructor() {
@@ -66,7 +66,7 @@ export class ThemeService {
    *
    * This method scans all loaded stylesheets for CSS rules that match the theme class pattern
    * (e.g., `.className-theme`). It extracts unique theme class names and returns them as an
-   * array of Theme objects, sorted alphabetically with a default theme prepended.
+   * array of Theme objects, sorted alphabetically.
    *
    * Cross-origin stylesheets are silently skipped to prevent CORS errors.
    *
@@ -76,9 +76,8 @@ export class ThemeService {
    * @example
    * const themes = themeService.getThemeList();
    * // Returns: [
-   * //   Theme { key: '', label: 'default' },
-   * //   Theme { key: 'blue', label: 'Blue' },
-   * //   Theme { key: 'red', label: 'Red' }
+   * //   Theme { className: 'blue-theme', label: 'Blue' },
+   * //   Theme { className: 'red-theme', label: 'Red' }
    * // ]
    */
   getThemeList(): Theme[] {
@@ -107,15 +106,12 @@ export class ThemeService {
         }
       }
     }
-    return [
-      new Theme("default-theme", "default"),
-      ...themes
-        .sort((a, b) => a.localeCompare(b))
-        .map((className) => new Theme(className, this._formatThemeLabel(className))),
-    ];
+    return themes
+      .sort((a, b) => a.localeCompare(b))
+      .map((className) => new Theme(className, this._formatThemeLabel(className)));
   }
 
-  setTheme(theme: string): void {
+  setTheme(theme: Theme): void {
     // Remove existing theme classes safely (use 2 distinct loops to avoid modifying the classList while iterating)
     const toRemove: string[] = [];
     this._body.classList.forEach((className) => {
@@ -127,17 +123,17 @@ export class ThemeService {
     });
     toRemove.forEach((className) => this._body.classList.remove(className));
     // Add the new theme class
-    this._body.classList.add(theme);
+    this._body.classList.add(theme.className);
     this.selectedTheme.set(theme);
   }
-  private _getInitialTheme(): string {
+  private _getInitialTheme(): Theme {
     // Get the currently applied theme from the body classes
     for (const theme of this._themes) {
       if (this._body.classList.contains(theme.className)) {
-        return theme.className;
+        return theme;
       }
-    } //default theme is the first in the list (empty string)
-    return this._themes[0].className;
+    } //default theme is the first in the list
+    return this._themes[0];
   }
 
   /**

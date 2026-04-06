@@ -1,26 +1,6 @@
-.app-theme-picker-menu {
-  .theme-menu-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-
-    .mat-icon {
-      &.theme-example-icon {
-        margin-left: auto;
-
-        svg {
-          vertical-align: middle;
-        }
-      }
-    }
-  }
-}
-
-.theme-btn {
+.app-theme-picker-controls {
   display: flex;
-  align-items: center;
-
-  .mat-icon {
-    align-self: center;
-  }
+  flex-direction: row;
+  width: 100%;
+  justify-content: center;
 }

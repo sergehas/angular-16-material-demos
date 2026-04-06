@@ -10,15 +10,6 @@
 @use "styles/violet-theme" as violet-theme;
 @use "animations";
 
-// define theme palettes for your application using the Material 3 color system.
-
-html {
-  //apply the theme to the application. This will generate the CSS variables for the theme colors, typography, and density.
-  color-scheme: light dark;
-  //this is the default theme
-  @include azure-theme.theme;
-}
-
 /* You can add global styles to this file, and also import other style files */
 
 html,
@@ -28,8 +19,16 @@ body {
 
 body {
   margin: 0;
+  // define theme palettes for your application using the Material 3 color system.
+  &.default-theme {
+    //apply the theme to the application. This will generate the CSS variables for the theme colors, typography, and density.
+    color-scheme: light dark;
+    //this is the default theme
+    @include azure-theme.theme;
+  }
   // custom themes go here
   &.violet-theme {
+    color-scheme: light dark;
     @include violet-theme.theme;
   }
 
