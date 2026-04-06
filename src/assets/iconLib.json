@@ -1,6 +1,6 @@
 {
   "name": "root",
-  "icons": [],
+  "icons": ["assets/theme-color-icon.svg"],
   "categories": [
     {
       "name": "brands",
@@ -112,6 +112,16 @@
           ]
         }
       ]
+    },
+    {
+      "name": "i18n",
+      "icons": [],
+      "categories": []
+    },
+    {
+      "name": "mockup",
+      "icons": [],
+      "categories": []
     }
   ]
 }

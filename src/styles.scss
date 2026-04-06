@@ -6,69 +6,17 @@
 @use "sass:map";
 /* You can add global styles to this file, and also import other style files */
 @use "@angular/material" as mat;
-
+@use "styles/azure-theme" as azure-theme;
+@use "styles/violet-theme" as violet-theme;
 @use "animations";
 
 // define theme palettes for your application using the Material 3 color system.
-$primary: mat.$azure-palette;
-$success: mat.$green-palette;
-$warning: mat.$yellow-palette;
-$error: mat.$red-palette;
-$font: Roboto;
 
-@mixin swe($palette, $severity) {
-  .notif-swe-#{$severity} {
-    @include mat.theme(
-      (
-        color: $palette,
-      )
-    );
-    @include mat.snack-bar-overrides(
-      (
-        container-color: var(--mat-sys-secondary-container),
-        supporting-text-color: var(--mat-sys-on-secondary-container),
-        button-color: var(--mat-sys-on-secondary-container),
-      )
-    );
-    @include mat.icon-overrides(
-      (
-        color: var(--mat-sys-on-secondary-container),
-      )
-    );
-    @include mat.card-overrides(
-      (
-        elevated-container-color: var(--mat-sys-secondary-container),
-      )
-    );
-  }
-}
-
-//apply the theme to the application. This will generate the CSS variables for the theme colors, typography, and density.
 html {
-  background-color: var(--mat-sys-surface);
-  color: var(--mat-sys-on-surface);
-  font-family:
-    $font, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
-  text-align: left;
-
-  --mat-tree-node-min-height: 40px;
-
-  --app-gap: 16px;
-
+  //apply the theme to the application. This will generate the CSS variables for the theme colors, typography, and density.
   color-scheme: light dark;
-  @include mat.theme(
-    (
-      color: (
-        primary: $primary,
-      ),
-
-      typography: $font,
-      density: -2,
-    )
-  );
-  @include swe($success, "info");
-  @include swe($warning, "warn");
-  @include swe($error, "severe");
+  //this is the default theme
+  @include azure-theme.theme;
 }
 
 /* You can add global styles to this file, and also import other style files */
@@ -80,9 +28,16 @@ body {
 
 body {
   margin: 0;
+  // custom themes go here
+  &.violet-theme {
+    @include violet-theme.theme;
+  }
 
   &.dark {
     color-scheme: dark;
+  }
+  &.light {
+    color-scheme: light;
   }
 }
 

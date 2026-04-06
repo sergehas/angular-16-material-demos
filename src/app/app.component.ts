@@ -25,6 +25,7 @@ import { ScrollService } from "@app/core/commons/services/scroll.service";
 import { Notification } from "@app/core/notifications/models/notification";
 import { NotificationService } from "@app/core/notifications/services/notification.service";
 import { NotificationCenterComponent } from "@app/shared/components/notification-center/notification-center.component";
+import { ThemePickerComponent } from "@app/shared/components/theme-picker/theme-picker.component";
 import { TreeNavComponent } from "@app/shared/components/tree-nav/tree-nav.component";
 
 @Component({
@@ -46,6 +47,7 @@ import { TreeNavComponent } from "@app/shared/components/tree-nav/tree-nav.compo
     RouterOutlet,
     NotificationCenterComponent,
     AsyncPipe,
+    ThemePickerComponent,
   ],
 })
 export class AppComponent implements AfterViewInit {

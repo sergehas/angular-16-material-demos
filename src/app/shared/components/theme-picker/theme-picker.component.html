@@ -1,0 +1,36 @@
+<button
+  class="theme-btn"
+  mat-icon-button
+  [matMenuTriggerFor]="themeMenu"
+  [matTooltip]="'THEME-PICKER.TOOLTIP' | translate"
+  aria-label="Select a theme"
+  type="button"
+>
+  <mat-icon>format_color_fill</mat-icon>
+</button>
+
+<mat-menu #themeMenu="matMenu" xPosition="before" class="app-theme-picker-menu">
+  @for (theme of themes; track $index) {
+    <button
+      mat-menu-item
+      (click)="selectTheme(theme.className)"
+      type="button"
+      class="theme-menu-item"
+    >
+      <mat-icon
+        [class]="{ 'app-theme-selected-icon': currentTheme === theme }"
+        [color]="currentTheme === theme ? 'accent' : undefined"
+      >
+        {{ currentTheme === theme ? "radio_button_checked" : "radio_button_unchecked" }}
+      </mat-icon>
+      <span [class]="theme.className" [attr.local-theme]="theme.className">{{ theme.name }}</span>
+      <mat-icon
+        [attr.local-theme]="theme.className"
+        class="theme-example-icon"
+        [class]="theme.className"
+        svgIcon="theme-color"
+      >
+      </mat-icon>
+    </button>
+  }
+</mat-menu>

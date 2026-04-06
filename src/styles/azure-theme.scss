@@ -1,0 +1,16 @@
+@use "@angular/material" as mat;
+
+@use "./theme";
+
+@mixin theme {
+  // define theme palettes for your application using the Material 3 color system.
+
+  @include theme.create-theme(
+    $primary: mat.$azure-palette,
+    $success: mat.$green-palette,
+    $warning: mat.$yellow-palette,
+    $error: mat.$red-palette,
+    $density: -2,
+    $font: "Roboto"
+  );
+}
