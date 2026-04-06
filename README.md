@@ -46,7 +46,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 - carousel
   - [ ] import & finalize swiper integration
   - [ ] import svg overlay annotation
-- [ ] import / rebuild Theme selector
+- [x] import / rebuild Theme selector
 - [ ] backend microservice for notification
 - [ ] 'retrofit' like mock flipping
 - [ ] document OpenAPI generator (<https://github.com/orval-labs/orval> , <https://github.com/hey-api/openapi-ts>?)

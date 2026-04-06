@@ -10,7 +10,7 @@
       "name": "Launch Chrome against localhost",
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}",
-      "runtimeArgs": ["--incognito", "--disable-features=Translate"]
+      "runtimeArgs": ["--incognito", "--disable-glsl-translator", "--lang=en"]
     },
     {
       "type": "chrome",
@@ -19,7 +19,8 @@
       "url": "http://localhost:4200",
       "webRoot": "${workspaceFolder}",
       "runtimeExecutable": "${env:CHROME_BIN}",
-      "runtimeArgs": ["--incognito", "--disable-features=Translate"]
+      //see https://peter.sh/experiments/chromium-command-line-switches/
+      "runtimeArgs": ["--incognito", "--disable-glsl-translator", "--lang=en"]
     }
   ]
 }

@@ -1,17 +1,20 @@
-import { Component, input } from "@angular/core";
 import {
   CdkDrag,
   CdkDragDrop,
-  CdkDropList,
   CdkDragHandle,
+  CdkDropList,
   moveItemInArray,
 } from "@angular/cdk/drag-drop";
+import { Component, input } from "@angular/core";
 
-import { MatIconModule } from "@angular/material/icon";
-import { MatButtonModule } from "@angular/material/button";
-import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { FormsModule } from "@angular/forms";
-import { TableColumn, TableConfig } from "../table-expandable-rows/table-config";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import {
+  TableColumn,
+  TableConfig,
+} from "@app/shared/components/table-expandable-rows/table-config";
 
 @Component({
   selector: "app-table-config-editor",

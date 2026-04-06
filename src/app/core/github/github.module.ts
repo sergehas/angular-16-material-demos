@@ -1,6 +1,6 @@
 import { CommonModule } from "@angular/common";
 import { NgModule, inject } from "@angular/core";
-import { GithubService } from "./services/github.service";
+import { GithubService } from "@app/core/github/services/github.service";
 
 @NgModule({
   declarations: [],

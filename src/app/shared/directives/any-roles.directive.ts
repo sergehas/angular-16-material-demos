@@ -1,5 +1,5 @@
 import { Directive, ElementRef, OnInit, inject, input, output } from "@angular/core";
-import { LoginService, Role } from "src/app/core/services/login.service";
+import { LoginService, Role } from "@app/core/login/services/login.service";
 
 @Directive({
   selector: "[appAnyRoles]",

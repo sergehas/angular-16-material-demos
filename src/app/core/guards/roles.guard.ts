@@ -1,8 +1,8 @@
 import { inject } from "@angular/core";
 import { CanActivateFn } from "@angular/router";
-import { Notification } from "src/app/core/models/notification";
-import { LoginService, Role } from "src/app/core/services/login.service";
-import { NotificationService } from "src/app/core/services/notification.service";
+import { LoginService, Role } from "@app/core/login/services/login.service";
+import { Notification } from "@app/core/notifications/models/notification";
+import { NotificationService } from "@app/core/notifications/services/notification.service";
 
 export const anyRoleGuard: CanActivateFn = (route, state) => {
   const notifyService = inject(NotificationService);

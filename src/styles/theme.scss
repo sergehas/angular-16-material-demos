@@ -1,0 +1,85 @@
+@use "@angular/material" as mat;
+@use "sass:map";
+
+@mixin swe($palette, $severity) {
+  .notif-swe-#{$severity} {
+    @include mat.theme(
+      (
+        color: $palette,
+      )
+    );
+    @include mat.snack-bar-overrides(
+      (
+        container-color: var(--mat-sys-secondary-container),
+        supporting-text-color: var(--mat-sys-on-secondary-container),
+        button-color: var(--mat-sys-on-secondary-container),
+      )
+    );
+    @include mat.icon-overrides(
+      (
+        color: var(--mat-sys-on-secondary-container),
+      )
+    );
+    @include mat.card-overrides(
+      (
+        elevated-container-color: var(--mat-sys-secondary-container),
+      )
+    );
+  }
+}
+
+@mixin create-theme(
+  $primary,
+  $secondary: null,
+  $tertiary: null,
+  $success: mat.$green-palette,
+  $warning: mat.$yellow-palette,
+  $error: mat.$red-palette,
+  $density: 0,
+  $font: "Roboto"
+) {
+  $color-map: (
+    primary: $primary,
+  );
+
+  @if $secondary != null {
+    $color-map: map.merge(
+      $color-map,
+      (
+        secondary: $secondary,
+      )
+    );
+  }
+
+  @if $tertiary != null {
+    $color-map: map.merge(
+      $color-map,
+      (
+        tertiary: $tertiary,
+      )
+    );
+  }
+
+  // glob var
+
+  background-color: var(--mat-sys-surface);
+  color: var(--mat-sys-on-surface);
+  font-family:
+    $font, "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif;
+  text-align: left;
+
+  @include mat.theme(
+    (
+      color: $color-map,
+      typography: $font,
+      density: $density,
+    )
+  );
+
+  @include swe($success, "info");
+  @include swe($warning, "warn");
+  @include swe($error, "severe");
+
+  --mat-tree-node-min-height: 40px;
+  --app-gap: calc(16px + #{$density} * 1px);
+}

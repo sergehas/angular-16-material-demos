@@ -8,7 +8,7 @@ import {
   input,
 } from "@angular/core";
 import { takeUntilDestroyed } from "@angular/core/rxjs-interop";
-import { ScrollService } from "src/app/core/services/scroll.service";
+import { ScrollService } from "@app/core/commons/services/scroll.service";
 
 function htmlElementAttribute(value: unknown): HTMLElement {
   if (value instanceof HTMLElement) {

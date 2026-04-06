@@ -1,7 +1,7 @@
 import { Component } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
-import { LoginService, SignedUser } from "src/app/core/services/login.service";
+import { LoginService, SignedUser } from "@app/core/login/services/login.service";
 import { AnyRolesDirective } from "./any-roles.directive";
 
 /**

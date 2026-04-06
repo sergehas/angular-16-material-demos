@@ -1,4 +1,4 @@
-import { TrackedEntity } from "../../models/tracked-entity";
+import { TrackedEntity } from "@app/core/commons/services/models/tracked-entity";
 
 export interface Value extends TrackedEntity {
   group: string;

@@ -3,8 +3,8 @@ import { Injectable } from "@angular/core";
 import { Sort } from "@angular/material/sort";
 import { Observable, map } from "rxjs";
 
-import { Filter, HttpService, Page } from "../../services/http-service";
-import { Group } from "../models/group";
+import { Filter, HttpService, Page } from "@app/core/commons/services/http-service";
+import { Group } from "@app/core/value-list/models/group";
 
 export interface GroupCriteria extends Filter {
   group?: string;

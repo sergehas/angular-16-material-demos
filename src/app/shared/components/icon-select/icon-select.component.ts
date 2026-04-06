@@ -23,8 +23,8 @@ import { FormControl, FormGroupDirective, FormsModule, NgControl, NgForm } from 
 
 import { MatButtonModule } from "@angular/material/button";
 import { MatFormFieldControl } from "@angular/material/form-field";
-import { AbstractMatFormField } from "../abstract-mat-form-field";
-import { IconTreeComponent } from "../icon-tree/icon-tree.component";
+import { AbstractMatFormField } from "@app/shared/components/abstract-mat-form-field";
+import { IconTreeComponent } from "@app/shared/components/icon-tree/icon-tree.component";
 /**
  *
  *

@@ -21,9 +21,11 @@ class Category {
   addCategory(name) {
     console.debug(`[iconLib] adding cat ${name} to ${this.name}`);
     const existing = this.categories.find((i) => i.name === name);
-    if (existing && existing instanceof Category) {
+    if (existing /*&& existing instanceof Category*/) {
+      console.debug(`[iconLib] category ${name} already exists in ${this.name}`);
       return Category.from(existing);
     }
+    console.debug(`[iconLib] cat ${name} does not exist in ${this.name}, creating...`);
     const cat = new Category();
     cat.name = name;
     this.categories.push(cat);
@@ -42,10 +44,9 @@ class Category {
 
 async function openIconLib() {
   console.log("[iconLib] opening lib file");
-
   return readFile(ICON_LIB, {
     encoding: "utf8",
-    // flag: "a"
+    //flag: "wx+", // create file if not exists, fail if exists
   })
     .then((file) => {
       let iconLib;
@@ -56,12 +57,21 @@ async function openIconLib() {
         iconLib = new Category();
         iconLib.name = "root";
       }
-      console.log("[iconLib] read: ", iconLib);
       return Category.from(iconLib);
     })
     .catch((e) => {
-      console.log(`[iconLib] unreadable file ${ICON_LIB}, ${e}`);
-      throw e;
+      if (e.code === "ENOENT") {
+        console.log(`[iconLib] file ${ICON_LIB} does not exist, creating...`);
+        const defaultLib = new Category();
+        defaultLib.name = "root";
+        return writeFile(ICON_LIB, JSON.stringify(defaultLib, null, 2)).then(() => {
+          console.log(`[${ICON_LIB}] created`);
+          return defaultLib;
+        });
+      } else {
+        console.log(`[iconLib] error reading file ${ICON_LIB}, ${e}`);
+        throw e;
+      }
     });
 }
 async function writeIconLib(iconLib) {
@@ -95,5 +105,6 @@ async function ls(path = BASE_PATH, cat = new Category()) {
   console.log("[iconLib] start building");
   let lib = await openIconLib();
   lib = await ls(posix.join(BASE_PATH, "/"), lib);
+  console.log("[iconLib] finished building, writing...");
   writeIconLib(lib).then(console.log, console.error);
 })();

@@ -1,8 +1,8 @@
 import { Component, ElementRef } from "@angular/core";
 import { ComponentFixture, TestBed } from "@angular/core/testing";
 import { By } from "@angular/platform-browser";
+import { ScrollService } from "@app/core/commons/services/scroll.service";
 import { Subject } from "rxjs";
-import { ScrollService } from "src/app/core/services/scroll.service";
 import { StickDirective } from "./stick.directive";
 
 /**

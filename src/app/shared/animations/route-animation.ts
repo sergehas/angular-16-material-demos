@@ -7,7 +7,7 @@ import {
   Router,
   ViewTransitionInfo,
 } from "@angular/router";
-import { RouteData } from "src/app/core/models/route-data";
+import { RouteData } from "@app/core/commons/services/models/route-data";
 
 export function onViewTransitionCreated({ from, to, transition }: ViewTransitionInfo) {
   const toConf = getRouteConfig(to);

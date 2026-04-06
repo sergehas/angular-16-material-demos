@@ -8,20 +8,20 @@ import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { BrowserModule, bootstrapApplication } from "@angular/platform-browser";
 import { provideRouter, withViewTransitions } from "@angular/router";
+import { AppComponent } from "@app/app.component";
+import { appRoutes } from "@app/app.routes";
+import { ExcelExportService } from "@app/core/excel/services/excel-export.service";
+import { IconsModule } from "@app/core/icons/icons.module";
+import { NotificationService } from "@app/core/notifications/services/notification.service";
+import { ServicesModule } from "@app/core/services/services.module";
+import { StorageService } from "@app/core/storages/services/storage.service";
+import { ArtInstituteRoutingModule } from "@app/features/art-institute/art-institute-routing.module";
+import { DemoRoutingModule } from "@app/features/demo/demo-routing.module";
+import { ListOfValuesRoutingModule } from "@app/features/list-of-values/list-of-values-routing.module";
+import { NavRoutingModule } from "@app/features/nav/nav-routing.module";
+import { onViewTransitionCreated } from "@app/shared/animations/route-animation";
 import { TranslateModule } from "@ngx-translate/core";
 import { provideTranslateHttpLoader } from "@ngx-translate/http-loader";
-import { AppComponent } from "./app/app.component";
-import { appRoutes } from "./app/app.routes";
-import { ArtInstituteRoutingModule } from "./app/art-institute/art-institute-routing.module";
-import { IconsModule } from "./app/core/icons/icons.module";
-import { ExcelExportService } from "./app/core/services/excel-export.service";
-import { NotificationService } from "./app/core/services/notification.service";
-import { ServicesModule } from "./app/core/services/services.module";
-import { StorageService } from "./app/core/services/storage.service";
-import { DemoRoutingModule } from "./app/demo/demo-routing.module";
-import { ListOfValuesRoutingModule } from "./app/list-of-values/list-of-values-routing.module";
-import { NavRoutingModule } from "./app/nav/nav-routing.module";
-import { onViewTransitionCreated } from "./app/shared/animations/route-animation";
 
 bootstrapApplication(AppComponent, {
   providers: [
