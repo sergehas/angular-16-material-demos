@@ -4,7 +4,7 @@
 
 @mixin theme {
   // define theme palettes for your application using the Material 3 color system.
-
+  --theme-title: "Azure";
   @include theme.create-theme(
     $primary: mat.$azure-palette,
     $success: mat.$green-palette,

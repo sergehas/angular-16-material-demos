@@ -29,8 +29,7 @@ class MockThemeService {
 }
 
 class MockTranslateLoader implements TranslateLoader {
-  getTranslation(lang: string): Observable<TranslationObject> {
-    void lang;
+  getTranslation(_lang: string): Observable<TranslationObject> {
     return of({ TEST: "This is a test" });
   }
 }
@@ -43,7 +42,7 @@ describe("ThemePickerComponent", () => {
   beforeEach(async () => {
     mockThemeService = new MockThemeService();
 
-    await TestBed.configureTestingModule({
+    TestBed.configureTestingModule({
       imports: [
         ThemePickerComponent,
         MatMenuModule,

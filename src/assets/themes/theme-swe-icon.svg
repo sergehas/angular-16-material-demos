@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="80"
+    height="80"
+    viewBox="0 0 80 80">
+    <defs>
+        <rect id="ic-swe" width="64" height="22" ry="8" />
+    </defs>
+    <use id="ic-swe-s" class="app-theme-icon-s" x="8" fill="#0f0" xlink:href="#ic-swe" />
+    <use id="ic-swe-w" class="app-theme-icon-w" x="8" y="29" fill="#ffff00" xlink:href="#ic-swe" />
+    <use id="ic-swe-e" class="app-theme-icon-e" x="8" y="58" fill="#ff0000" xlink:href="#ic-swe" />
+</svg>

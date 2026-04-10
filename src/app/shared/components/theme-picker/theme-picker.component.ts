@@ -1,5 +1,11 @@
 import { CommonModule } from "@angular/common";
-import { ChangeDetectionStrategy, Component, effect, inject } from "@angular/core";
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  ViewEncapsulation,
+} from "@angular/core";
 import { FormsModule } from "@angular/forms";
 import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
@@ -17,6 +23,7 @@ import { TranslatePipe } from "@ngx-translate/core";
   templateUrl: "theme-picker.component.html",
   styleUrls: ["theme-picker.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  encapsulation: ViewEncapsulation.None,
   standalone: true,
   imports: [
     CommonModule,
@@ -45,6 +52,10 @@ export class ThemePickerComponent {
       "theme-color",
       this.sanitizer.bypassSecurityTrustResourceUrl("assets/themes/theme-color-icon.svg")
     );
+    this.iconRegistry.addSvgIcon(
+      "theme-color-swe",
+      this.sanitizer.bypassSecurityTrustResourceUrl("assets/themes/theme-swe-icon.svg")
+    );
 
     // Subscribe to theme changes
     effect(async () => {
@@ -62,7 +73,7 @@ export class ThemePickerComponent {
   }
 
   selectScheme(scheme: ThemeScheme | undefined): void {
-    this.themeService.setThemeScheme(scheme ? scheme : ThemeScheme.AUTO);
+    this.themeService.setThemeScheme(scheme ?? ThemeScheme.AUTO);
   }
 
   trackByThemeKey(_index: number, theme: Theme): string {

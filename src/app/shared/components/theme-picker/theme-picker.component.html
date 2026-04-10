@@ -1,5 +1,5 @@
 <button
-  class="theme-btn"
+  class="app-theme-picker-button"
   mat-icon-button
   [matMenuTriggerFor]="themeMenu"
   [matTooltip]="'THEME-PICKER.TOOLTIP' | translate"
@@ -30,21 +30,19 @@
         [activated]="theme.equals(currentTheme)"
         (click)="$event.preventDefault(); selectTheme(theme)"
         (keydown)="$event.preventDefault(); selectTheme(theme)"
-        role="button"
-        tabindex="0"
+        tabindex="$index"
       >
         <mat-icon
           matListItemIcon
           [attr.local-theme]="theme.className"
-          class="theme-example-icon"
-          [class]="theme.className + 'z'"
+          class="app-theme-icon"
+          [class]="theme.className"
+          [class.dark]="currentScheme === 'dark'"
+          [class.light]="currentScheme === 'light'"
           svgIcon="theme-color"
         >
         </mat-icon>
         <span matListItemTitle>{{ theme.name }}</span>
-        <div matListItemMeta>
-          <mat-icon>folder</mat-icon>
-        </div>
       </a>
     }
   </mat-nav-list>

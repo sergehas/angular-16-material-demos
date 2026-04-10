@@ -17,7 +17,9 @@ body {
   height: 100%;
 }
 
-body {
+body,
+.app-theme-icon {
+  // app-theme-icon is used in theme-picker.component.html
   margin: 0;
   // define theme palettes for your application using the Material 3 color system.
   &.default-theme {
@@ -61,9 +63,6 @@ body {
 
     & > mat-icon {
       margin: 0;
-      // width: 24px;
-      // height: 24px;
-      // font-size: 24px;
     }
   }
 }

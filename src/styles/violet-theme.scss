@@ -4,7 +4,7 @@
 
 @mixin theme {
   // define theme palettes for your application using the Material 3 color system.
-
+  --theme-title: "Violet";
   @include theme.create-theme(
     $primary: mat.$violet-palette,
     $success: mat.$green-palette,

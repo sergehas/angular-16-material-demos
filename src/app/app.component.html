@@ -14,8 +14,8 @@
     </button>
 
     <span class="spacer"></span>
-    <app-theme-picker></app-theme-picker>
-    <button mat-icon-button (click)="snotif.toggle()">
+    <app-theme-picker class="app-nav-button"></app-theme-picker>
+    <button mat-icon-button (click)="snotif.toggle()" class="app-nav-button">
       <mat-icon
         aria-hidden="false"
         [matBadge]="(notifications$ | async)!.size"

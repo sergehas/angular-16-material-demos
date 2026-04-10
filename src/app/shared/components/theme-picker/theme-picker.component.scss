@@ -1,6 +1,30 @@
+.mat-toolbar {
+  button.app-theme-picker-button {
+    color: var(--mat-sys-primary);
+  }
+}
+
 .app-theme-picker-controls {
   display: flex;
   flex-direction: row;
   width: 100%;
   justify-content: center;
+}
+
+.app-theme-picker-menu,
+.app-theme-picker-menu .mdc-list-item__start.app-theme-icon {
+  margin-left: 16px; //force margin whatever the theme density is
+  margin-right: 8px;
+  .app-theme-icon-background {
+    fill: var(--mat-sys-surface);
+  }
+
+  .app-theme-icon-button {
+    fill: var(--mat-button-filled-container-color, var(--mat-sys-primary));
+  }
+
+  .app-theme-icon-toolbar {
+    color: var(--mat-sys-primary);
+    fill: var(--mat-sys-primary-container);
+  }
 }
