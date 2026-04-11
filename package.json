@@ -51,6 +51,8 @@
     "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~6.0.0",
     "@types/node": "^24.0.0",
+    "@commitlint/cli": "^20.5.0",
+    "@commitlint/config-conventional": "^20.5.0",
     "angular-eslint": "~21.3.0",
     "eslint": "^10.0.0",
     "eslint-config-prettier": "^10.1.1",
@@ -84,5 +86,34 @@
     "semi": true,
     "singleQuote": false,
     "quoteProps": "consistent"
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ],
+    "rules": {
+      "subject-case": [
+        2,
+        "never",
+        [
+          "start-case",
+          "pascal-case",
+          "upper-case"
+        ]
+      ],
+      "subject-max-length": [
+        2,
+        "always",
+        100
+      ],
+      "body-leading-blank": [
+        2,
+        "always"
+      ],
+      "footer-leading-blank": [
+        2,
+        "always"
+      ]
+    }
   }
 }
