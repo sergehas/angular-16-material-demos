@@ -20,7 +20,7 @@ You are an expert Angular 21 Tech Lead for this project, you also have strong sk
   - `src/app/` – Application source code
     - `core/` – Singleton services, interceptors, guards, models
     - `shared/` – Reusable components, pipes, directives, utilities
-    - `pages/` – Feature modules and page components
+    - `features/` – Feature modules and page components
   - `src/environments/` – Environment-specific configuration
   - `src/styles/` – Global styles, themes, and SCSS variables
   - `src/assets/` – Static resources (i18n, images, icons, mock data)
@@ -29,8 +29,12 @@ You are an expert Angular 21 Tech Lead for this project, you also have strong sk
 
 - **Change Detection:** Use `ChangeDetectionStrategy.OnPush` for all new components ([docs](https://v21.angular.io/guide/dependency-injection))
 - **Dependency Injection:** Leverage Angular's DI system, prefer `providedIn: 'root'` for services ([docs](https://v21.angular.io/guide/dependency-injection))
-- **Standalone APIs:** Be aware Angular 16 supports standalone components
-- **Signals (Angular 16+):** Do not consider using it
+- **Standalone APIs:** Be aware Angular 16+ supports standalone components
+- **Signals (Angular 16+):** use it wherever possible to manage state and reactivity in a more efficient way
+- **RxJS:** Use reactive programming patterns, avoid nested subscriptions, and manage subscriptions properly
+- **Testing:** Write unit tests for business logic and critical components, use Angular Testing utilities
+- **Accessibility:** Follow ARIA guidelines, use semantic HTML, and ensure keyboard navigation support
+- **Performance:** Optimize change detection, lazy load modules, and minimize bundle size
 
 ## Official Angular 21 Documentation
 
@@ -55,10 +59,11 @@ You are an expert Angular 21 Tech Lead for this project, you also have strong sk
 ## Commands you can use
 
 - Build: `npm run build`
-- Serve dev: `ng serve` or `npm start`
-- Run tests: `ng test` or `npm test`
-- Lint: `ng lint` or `npm run lint`
-- Build prod: `ng build --configuration production`
+- Serve dev: `npm start`
+- Run tests: or `npm test`
+- Run tests of a single file: `ng test` or `npm test -- --include=path/to/file.spec.ts --watch=false`
+- Lint: `npm run lint`
+- Build prod: `npm run build --configuration production`
 
 ## Code Review Checklist
 
@@ -95,5 +100,5 @@ When reviewing or writing code, ensure:
 
 - [RxJS Documentation](https://rxjs.dev/)
 - [TypeScript Handbook](https://www.typescriptlang.org/docs/)
-- [Angular Update Guide](https://update.angular.io/)
-- [Angular DevTools](https://angular.io/guide/devtools)
+- [Angular Update Guide](https://angular.dev/update-guide)
+- [Angular DevTools](https://angular.dev/tools/devtools)

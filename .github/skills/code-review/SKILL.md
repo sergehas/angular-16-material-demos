@@ -253,46 +253,6 @@ Please use parameterized queries."
 
 ## Language-Specific Patterns
 
-### Python Code Review
-
-```python
-# Check for Python-specific issues
-
-# ❌ Mutable default arguments
-def add_item(item, items=[]):  # Bug! Shared across calls
-    items.append(item)
-    return items
-
-# ✅ Use None as default
-def add_item(item, items=None):
-    if items is None:
-        items = []
-    items.append(item)
-    return items
-
-# ❌ Catching too broad
-try:
-    result = risky_operation()
-except:  # Catches everything, even KeyboardInterrupt!
-    pass
-
-# ✅ Catch specific exceptions
-try:
-    result = risky_operation()
-except ValueError as e:
-    logger.error(f"Invalid value: {e}")
-    raise
-
-# ❌ Using mutable class attributes
-class User:
-    permissions = []  # Shared across all instances!
-
-# ✅ Initialize in __init__
-class User:
-    def __init__(self):
-        self.permissions = []
-```
-
 ### TypeScript/JavaScript Code Review
 
 ```typescript
@@ -334,7 +294,7 @@ async function fetchUser(id: string): Promise<User> {
 // ❌ Mutation of props
 function UserProfile({ user }: Props) {
     user.lastViewed = new Date();  // Mutating prop!
-    return <div>{user.name}</div>;
+    return <user.name;
 }
 
 // ✅ Don't mutate props
@@ -342,7 +302,7 @@ function UserProfile({ user, onView }: Props) {
     useEffect(() => {
         onView(user.id);  // Notify parent to update
     }, [user.id]);
-    return <div>{user.name}</div>;
+    return user.name;
 }
 ```
 
