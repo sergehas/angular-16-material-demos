@@ -1,44 +1,47 @@
-button.icon-btn {
-  border: none;
-  background: none;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: nowrap;
-  padding: 0;
-  width: 100%;
-  &:focus,
-  &:focus-visible,
-  &:focus-within {
-    outline: none;
-  }
-  .icon-value {
-    width: 100%;
-
+.app-icon-select {
+  button.icon-btn {
+    border: none;
+    background: none;
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
-    align-content: center;
-    justify-content: space-between;
-  }
-  .mat-icon,
-  .placeholder {
-    height: 24px;
-    width: 24px;
-  }
-  .placeholder {
-    display: block;
-    margin-left: 0px;
-    margin-right: 8px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    position: relative;
-  }
+    padding: 0;
+    width: 100%;
+    &:focus,
+    &:focus-visible,
+    &:focus-within {
+      outline: none;
+    }
+    .icon-value {
+      width: 100%;
 
-  .mat-mdc-select-arrow {
-    display: flex;
-    align-items: center;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: nowrap;
+      align-content: center;
+      justify-content: space-between;
+    }
+    .mat-icon,
+    .placeholder {
+      height: 24px;
+      width: 24px;
+    }
+    .placeholder {
+      display: block;
+      margin-left: 0px;
+      margin-right: 8px;
+      overflow-x: hidden;
+      overflow-y: hidden;
+      position: relative;
+    }
+
+    .mat-mdc-select-arrow {
+      display: flex;
+      align-items: center;
+      fill: currentColor;
+    }
   }
-}
-.clear-button {
-  float: inline-end;
+  .clear-button {
+    float: inline-end;
+  }
 }
