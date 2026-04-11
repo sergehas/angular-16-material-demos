@@ -76,7 +76,7 @@ Instructions for generating high-quality Angular applications with TypeScript, u
 
 ### Performance
 
-- Enable production builds with `ng build --prod` for optimization
+- Enable production builds with `npm run build --prod` for optimization
 - Use lazy loading for routes to reduce initial bundle size
 - Optimize change detection with `OnPush` strategy and signals for fine-grained reactivity
 - Use trackBy in `ngFor` loops to improve rendering performance
@@ -107,7 +107,7 @@ Instructions for generating high-quality Angular applications with TypeScript, u
 
 ## Additional Guidelines
 
-- Follow the Angular Style Guide for file naming conventions (see https://angular.dev/style-guide), e.g., use `feature.ts` for components and `feature-service.ts` for services. For legacy codebases, maintain consistency with existing pattern.
+- Follow the Angular Style Guide for file naming conventions (see https://angular.dev/style-guide), e.g., use `feature.component.ts` for components and `feature.service.ts` for services. For legacy codebases, maintain consistency with existing pattern.
 - Use Angular CLI commands for generating boilerplate code
 - Document components and services with clear JSDoc comments
 - Ensure accessibility compliance (WCAG 2.1) where applicable

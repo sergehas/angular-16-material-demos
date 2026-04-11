@@ -13,6 +13,7 @@
     z-index: 2;
     color: var(--mat-sys-primary);
     background: var(--mat-sys-primary-container);
+    min-height: var(--mat-toolbar-mobile-height, 56px); //fix as var/minheight not defined in a21
 
     .app-title {
       margin-left: 8px;
@@ -30,7 +31,7 @@
   }
 
   .mat-sidenav-fixed {
-    margin-top: var(--mat-toolbar-standard-height, 64px);
+    margin-top: var(--mat-toolbar-mobile-height, 56px);
   }
 
   .root-sidenav-container {

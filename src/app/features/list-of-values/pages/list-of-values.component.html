@@ -6,13 +6,13 @@
 
 @if (isDashboardActive) {
   <div class="list-of-values-dashboard">
-    <mat-card matRipple class="kpi-card" routerLink="./groups">
+    <mat-card matRipple class="kpi-card" routerLink="./groups" appearance="filled">
       <div class="kpi" mat-card-image>
         {{ countGroups$ | async }}
       </div>
       <mat-card-content>Group of values</mat-card-content>
     </mat-card>
-    <mat-card class="kpi-card">
+    <mat-card class="kpi-card" appearance="filled">
       <div class="kpi" mat-card-image>
         {{ countValues$ | async }}
       </div>
