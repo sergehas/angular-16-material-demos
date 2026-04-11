@@ -2,7 +2,7 @@
 applyTo: "**/*.ts"
 ---
 
-# TypeScript/Angular Rules (GCM GUI)
+# TypeScript/Angular Rules (GUI)
 
 - Default new components to `ChangeDetectionStrategy.OnPush`.
 - RxJS: never leave subscriptions unmanaged; use `takeUntilDestroyed()` (or an existing utility).
