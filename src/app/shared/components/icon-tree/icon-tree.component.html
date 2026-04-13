@@ -1,60 +1,65 @@
-<mat-tree [dataSource]="dataSource" [treeControl]="treeControl" class="icon-tree">
+<mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor" class="icon-tree">
   <!-- This is the tree node template for leaf nodes -->
   <!-- There is inline padding applied to this node using styles.
   This padding value depends on the mat-icon-button width. -->
-  <mat-tree-node class="icon-tree-node" *matTreeNodeDef="let node" matTreeNodeToggle>
+  <mat-nested-tree-node class="icon-tree-node" *matTreeNodeDef="let node">
     <div class="category-node">
       {{ node.name }}
     </div>
     <div class="icon-list">
       @for (icon of node.icons; track icon) {
         <div
-          role="presentation"
+          role="button"
+          tabindex="0"
           class="icon-list-item"
           (click)="select(icon.name)"
+          (keydown.enter)="select(icon.name)"
+          (keydown.space)="select(icon.name)"
           [attr.selected]="icon.name === value()"
-          [class.mat-elevation-z4]="icon.name === value()"
         >
           <mat-icon class="selectable-icon" [svgIcon]="icon.name"></mat-icon>
         </div>
       }
     </div>
-  </mat-tree-node>
+  </mat-nested-tree-node>
   <!-- This is the tree node template for expandable nodes -->
-  <mat-nested-tree-node *matTreeNodeDef="let node; when: hasChild">
+  <mat-nested-tree-node
+    *matTreeNodeDef="let node; when: hasChild"
+    [cdkTreeNodeTypeaheadLabel]="node.name"
+  >
     <div class="mat-tree-node icon-tree-node">
       <div class="category-node">
         <button
-          class="tree-button"
+          matIconButton
           matTreeNodeToggle
-          matRipple
           [attr.aria-label]="'Toggle ' + node.name"
+          class="tree-toggle-button"
         >
           <mat-icon class="mat-icon-rtl-mirror">
-            {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+            {{ tree.isExpanded(node) ? "expand_more" : "chevron_right" }}
           </mat-icon>
         </button>
-
         {{ node.name }}
       </div>
     </div>
     <!-- There is inline padding applied to this div using styles.
     This padding value depends on the mat-icon-button width.  -->
-    <div [class.icon-tree-invisible]="!treeControl.isExpanded(node)">
+    <div [class.icon-tree-invisible]="!tree.isExpanded(node)" role="group" class="icon-tree-node">
       <div class="icon-list">
         @for (icon of node.icons; track icon) {
           <div
+            role="button"
+            tabindex="0"
             class="icon-list-item"
             (click)="select(icon.name)"
+            (keydown.enter)="select(icon.name)"
+            (keydown.space)="select(icon.name)"
             [attr.selected]="icon.name === value()"
-            [class.mat-elevation-z4]="icon.name === value()"
-            role="presentation"
           >
             <mat-icon class="selectable-icon" [svgIcon]="icon.name"></mat-icon>
           </div>
         }
       </div>
-
       <ng-container matTreeNodeOutlet></ng-container>
     </div>
   </mat-nested-tree-node>
