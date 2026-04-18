@@ -1,21 +1,11 @@
-import { FlatTreeControl } from "@angular/cdk/tree";
-import { Component, ViewEncapsulation, inject, signal } from "@angular/core";
+import { Component, inject, signal, viewChild } from "@angular/core";
 import { MatButtonModule } from "@angular/material/button";
 import { MatButtonToggleModule } from "@angular/material/button-toggle";
 import { MatIconModule } from "@angular/material/icon";
 import { MatListModule } from "@angular/material/list";
-import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeModule } from "@angular/material/tree";
+import { MatTree, MatTreeModule, MatTreeNestedDataSource } from "@angular/material/tree";
 import { Router, RouterModule } from "@angular/router";
 import { MenuNode, NavBuilder } from "@app/shared/components/tabs-nav/models/nav-builder";
-
-/** Flat node with expandable and level information */
-interface MenuFlatNode {
-  expandable: boolean;
-  name: string;
-  path: string;
-  icon?: string;
-  level: number;
-}
 
 @Component({
   selector: "app-tree-nav",
@@ -30,11 +20,12 @@ interface MenuFlatNode {
   ],
   templateUrl: "./tree-nav.component.html",
   styleUrl: "./tree-nav.component.scss",
-  encapsulation: ViewEncapsulation.None,
 })
 export class TreeNavComponent {
   private readonly router = inject(Router);
+  readonly tree = viewChild.required(MatTree);
   isRail = signal(false);
+  dataSource = new MatTreeNestedDataSource<MenuNode>();
 
   constructor() {
     //menu content
@@ -42,30 +33,7 @@ export class TreeNavComponent {
     console.info("[app-tree-nav] menu datasource", this.dataSource.data);
   }
 
-  //menu
-  private readonly _transformer = (node: MenuNode, level: number): MenuFlatNode => {
-    return {
-      expandable: !!node.children && node.children.length > 0,
-      name: node.name,
-      path: node.path,
-      icon: node.icon,
-      level: level,
-    };
-  };
+  childrenAccessor = (node: MenuNode) => node.children ?? [];
 
-  treeControl = new FlatTreeControl<MenuFlatNode>(
-    (node) => node.level,
-    (node) => node.expandable
-  );
-
-  treeFlattener = new MatTreeFlattener(
-    this._transformer,
-    (node) => node.level,
-    (node) => node.expandable,
-    (node) => node.children
-  );
-
-  dataSource = new MatTreeFlatDataSource(this.treeControl, this.treeFlattener);
-
-  hasChild = (_: number, node: MenuFlatNode) => node.expandable;
+  hasChild = (_: number, node: MenuNode) => !!node.children && node.children.length > 0;
 }

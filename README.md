@@ -23,7 +23,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 - [x] remove angular animation (see <https://angular.dev/guide/animations/migration>)
 - [ ] use new `TableDatasource`
-- [ ] upgrade `TreeControl`
+- [x] upgrade `TreeControl`
 - [x] fix subscription leaks
 - [x] convert RxJS services to Signals
 - [x] fix components with untyped FormControls

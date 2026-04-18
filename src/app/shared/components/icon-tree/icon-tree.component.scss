@@ -1,73 +1,78 @@
-.icon-tree-invisible {
-  display: none;
+:host {
+  --app-icon-tree-indent: 24px;
+  --mat-tree-node-min-height: max(var(--app-icon-tree-indent), 1.25rem);
 }
+
 .icon-tree {
   max-width: 200px;
-  --node-padding: 30px;
-  .icon-tree-node,
-  .mat-nested-tree-node {
-    .icon-list {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: wrap;
-    }
-    .icon-list-item {
-      display: flex;
-      padding: 4px;
-      border-radius: 4px;
-      // make icon bigger
-      &[selected="true"] {
-        background-color: var(--mat-option-selected-state-layer-color);
-      }
-      &:hover,
-      &[selected="true"] {
-        padding: 0;
-        .selectable-icon {
-          width: 32px;
-          height: 32px;
-        }
-      }
-    }
-  }
+  /*
+ * This padding sets alignment of the nested nodes.
+ */
   .mat-nested-tree-node div[role="group"] {
-    padding-left: var(--node-padding);
+    padding-left: var(--app-icon-tree-indent);
   }
-}
-
-.icon-tree-node {
-  flex-direction: column;
-  display: flex;
-  align-content: flex-start;
-  align-items: flex-start;
-}
-
-.category-node {
-  display: flex;
-  align-items: center;
-  flex: 1;
-  word-wrap: break-word;
-}
-/*
+  /*
  * Padding for leaf nodes.
  * Leaf nodes need to have padding so as to align with other non-leaf nodes
  * under the same parent.
  */
-.category-node,
-.icon-tree-node {
-  & [role="group"] {
-    padding-left: var(--node-padding);
+  div[role="group"] > .mat-nested-tree-node {
+    padding-left: var(--app-icon-tree-indent);
+  }
+  /**
+  * This class is used to hide collapsed tree.
+   */
+  .icon-tree-node.icon-tree-invisible {
+    display: none;
+  }
+
+  .icon-tree-node {
+    display: block;
+  }
+
+  .category-node {
+    display: flex;
+    align-items: center;
+    flex: 1;
+    word-wrap: break-word;
+
+    .tree-toggle-button {
+      width: var(--app-icon-tree-indent);
+      height: var(--app-icon-tree-indent);
+      border: none;
+      background-color: inherit;
+      border-radius: 4px;
+      padding: 0;
+    }
   }
 }
 
-.tree-button {
-  width: var(--node-padding);
-  height: var(--mdc-icon-button-state-layer-size);
-  border: none;
-  background-color: inherit;
+.icon-list {
   display: flex;
-  align-content: center;
-  justify-content: center;
-  align-items: center;
-  border-radius: 4px;
-  padding: 0;
+  flex-direction: row;
+  flex-wrap: wrap;
+  --icon-padding: calc(var(--app-gap) / 4);
+  .icon-list-item {
+    display: flex;
+    padding: var(--icon-padding);
+    border-radius: 4px;
+    border-color: transparent;
+    border-width: 1px;
+    border-style: solid;
+    box-sizing: border-box;
+    cursor: pointer;
+    &[selected="true"] {
+      background-color: var(--mat-sys-secondary-container);
+      border-color: var(--mat-sys-primary);
+    }
+    // make icon bigger
+    &:hover,
+    &[selected="true"] {
+      padding: 0 0.5px; //fix padding increase on hover/selected state
+      .selectable-icon {
+        width: calc(24px - 1px + (var(--icon-padding) * 2));
+        height: calc(24px - 1px + (var(--icon-padding) * 2));
+      }
+    }
+  }
 }

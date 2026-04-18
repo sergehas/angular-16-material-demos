@@ -14,41 +14,39 @@
       }
     </button>
   </div>
-  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+  <mat-tree #tree [dataSource]="dataSource" [childrenAccessor]="childrenAccessor">
     <!-- This is the tree node template for leaf nodes. dive default padding by 2 -->
     <mat-tree-node
-      class="menu-node"
       *matTreeNodeDef="let node"
-      matTreeNodePadding
-      matTreeNodePaddingIndent="24"
       routerLinkActive="active-menu-node"
       [routerLinkActiveOptions]="{ exact: true }"
       #rla="routerLinkActive"
+      class="menu-tree-node"
     >
       <!-- use a disabled button to provide padding for tree leaf -->
-      <button mat-icon-button disabled class="tree-button" aria-hidden="true"></button>
+      <div class="tree-toggle-button"></div>
       <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive" class="menu-item">
         <mat-icon matListItemIcon class="menu-icon" [fontIcon]="node.icon" />
-        <div matListItemTitle class="menu-label">{{ node.name }}</div>
+        <span matListItemTitle class="menu-label">{{ node.name }}</span>
       </a>
     </mat-tree-node>
     <!-- This is the tree node template for expandable nodes -->
     <mat-tree-node
-      class="menu-node"
       *matTreeNodeDef="let node; when: hasChild"
       matTreeNodePadding
       routerLinkActive="active-menu-node"
       [routerLinkActiveOptions]="{ exact: true }"
       #rla="routerLinkActive"
+      class="menu-tree-node"
     >
       <button
-        mat-icon-button
+        matIconButton
         matTreeNodeToggle
         [attr.aria-label]="'Toggle ' + node.name"
-        class="tree-button"
+        class="tree-toggle-button"
       >
         <mat-icon class="mat-icon-rtl-mirror">
-          {{ treeControl.isExpanded(node) ? "expand_more" : "chevron_right" }}
+          {{ tree.isExpanded(node) ? "expand_more" : "chevron_right" }}
         </mat-icon>
       </button>
       <a mat-list-item [routerLink]="node.path" [activated]="rla.isActive" class="menu-item">

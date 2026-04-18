@@ -21,6 +21,11 @@ export class IconsService {
 
   private iconLib = new Category("root");
 
+  /**
+   * load configuration from json file and build iconLib structure
+   * and register icons in matIconRegistry
+   * should be called during app initialization (see IconsModule)
+   */
   async loadConfiguration() {
     const libData = await lastValueFrom(this.http.get("assets/iconLib.json"));
     this.iconLib = this.load(libData as IconLibFormat);
