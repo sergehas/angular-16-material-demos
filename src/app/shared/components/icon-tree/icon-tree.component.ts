@@ -32,8 +32,6 @@ export class IconTreeComponent implements AfterViewInit {
   readonly tree = viewChild.required(MatTree);
   dataSource = new MatTreeNestedDataSource<Category>();
 
-  childrenAccessor = (node: Category) => node.categories ?? [];
-
   constructor() {
     const lib = this.service.getIconsLib();
     if (lib?.categories) {
@@ -63,6 +61,8 @@ export class IconTreeComponent implements AfterViewInit {
     this.value.set(item === this.value() ? null : item);
     this.valueChange.emit(this.value());
   }
+
+  childrenAccessor = (node: Category) => node.categories ?? [];
 
   hasChild = (_: number, node: Category) => !!node.categories && node.categories.length > 0;
 }

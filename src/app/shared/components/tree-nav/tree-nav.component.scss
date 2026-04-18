@@ -1,15 +1,13 @@
-@use "@angular/material" as mat;
-
-:root {
-  //force stupid value to disable fixed with
-  @include mat.sidenav-overrides(
-    (
-      container-width: -1px,
-    )
-  );
+:host {
+  --app-menu-tree-indent: 24px;
+  --mat-tree-node-min-height: max(var(--app-menu-tree-indent), 1.25rem);
+  .mdc-list-item__content {
+    display: block;
+    max-width: 100%; //for ellipsis to work when in rail mode
+  }
 }
 .app-tree-nav {
-  transition: width 180ms cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 240ms cubic-bezier(0.4, 0, 0.2, 1);
   width: 100%;
   .rail-header {
     display: flex;
@@ -17,30 +15,24 @@
     justify-content: start;
 
     .rail-toggle {
-      // margin-inline-start: calc(var(--mdc-list-list-item-leading-icon-size) / 2);
-      // left: calc(var(--mat-list-list-item-leading-icon-start-space) / 2);
-      margin-left: calc(
-        24px + var(--mat-list-list-item-leading-icon-start-space, calc(var(--app-gap) / 2))
-      );
+      margin-left: var(--app-menu-tree-indent);
     }
   }
 
-  .menu-node {
-    position: relative;
-
-    .tree-button.mat-mdc-icon-button {
-      width: calc(var(--mdc-icon-button-state-layer-size) / 2);
-      padding-right: 0;
-      padding-left: 0;
-      border-radius: 0;
-      > .mat-mdc-button-persistent-ripple,
-      .mat-mdc-button-persistent-ripple::before {
-        border-radius: 0;
-      }
+  .menu-tree-node {
+    .tree-toggle-button {
+      width: var(--app-menu-tree-indent);
+      height: var(--app-menu-tree-indent);
+      border: none;
+      background-color: inherit;
+      border-radius: 4px;
+      padding: 0;
+      flex-shrink: 0;
     }
     .menu-item {
       .menu-icon {
-        margin-right: calc(var(--mat-list-list-item-leading-icon-end-space, 32px) / 2);
+        margin-left: calc(var(--mat-list-list-item-leading-icon-start-space, var(--app-gap)) / 2);
+        margin-right: calc(var(--mat-list-list-item-leading-icon-end-space, var(--app-gap)) / 2);
       }
       .menu-label {
         display: block;
@@ -56,35 +48,25 @@
 
 .app-tree-nav.rail {
   width: 96px;
-  .rail-header {
-    justify-content: center;
 
-    .rail-toggle {
-      // margin-inline-start: calc(var(--mdc-list-list-item-leading-icon-size) / 2);
-      // left: calc(var(--mat-list-list-item-leading-icon-start-space) / 2);
-      margin-left: 0;
-    }
-  }
-
-  .menu-node {
+  .menu-tree-node {
     padding: 0 !important;
 
-    .tree-button {
+    .tree-toggle-button {
       //to hide tree control :
       display: none;
     }
     .menu-item {
       padding: 0;
-      flex-direction: column;
+      display: grid;
+      justify-content: stretch;
       align-items: center;
-      justify-content: center;
+
       .menu-icon {
-        align-self: center;
-      }
-      .mdc-list-item__content {
-        max-width: 100%; //for ellipsis to work when in rail mode
+        justify-self: anchor-center;
       }
       .menu-label {
+        max-width: 100%;
         text-align: center;
         margin-top: 0;
         color: var(--mdc-list-list-item-supporting-text-color, var(--mat-sys-on-surface-variant));

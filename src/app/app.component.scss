@@ -35,6 +35,10 @@
   }
 
   .root-sidenav-container {
+    .root-sidenav {
+      width: unset;
+      max-width: 300px;
+    }
     .notif-sidenav {
       min-width: 366px;
       max-width: 383px;
