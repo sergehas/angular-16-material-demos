@@ -31,10 +31,11 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode",
     "editor.formatOnSave": true
   },
-  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "js/ts.tsdk.path": "node_modules\\typescript\\lib",
   "editor.rulers": [100],
   "git.inputValidation": true,
   "git.inputValidationSubjectLength": 100,
   "git.inputValidationLength": 100,
-  "json.schemas": []
+  "json.schemas": [],
+  "cSpell.words": ["codegen", "notif"]
 }
