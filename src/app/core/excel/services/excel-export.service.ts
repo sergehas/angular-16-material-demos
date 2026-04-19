@@ -11,9 +11,21 @@ import { BehaviorSubject, Observable, Subscription } from "rxjs";
 @Injectable({
   providedIn: "root",
 })
+/**
+ * Service for exporting data from a PageableDataSource to an Excel file.
+ * Handles pagination, progress tracking, and error handling during export.
+ */
 export class ExcelExportService {
   protected notifyService = inject(NotificationService);
 
+  /**
+   * Exports data from a pageable data source to an Excel file.
+   * The export process handles multiple pages, tracks progress, and saves the file automatically.
+   *
+   * @param source The pageable data source to export from
+   * @param headers Array of column headers for the Excel worksheet
+   * @returns Observable that emits progress updates during the export
+   */
   export<T, P extends MatPaginator | Paginator = MatPaginator>(
     source: PageableDataSource<T, P>,
     headers: string[]

@@ -13,6 +13,10 @@ interface Result {
 @Injectable({
   providedIn: "root",
 })
+/**
+ * Service for querying GitHub issues via the GitHub Search API.
+ * Extends HttpService with Issue-specific search and pagination logic.
+ */
 export class GithubService extends HttpService<Issue> {
   static readonly href = "https://api.github.com/search/issues";
   static readonly repo = "repo:angular/components";
@@ -22,6 +26,10 @@ export class GithubService extends HttpService<Issue> {
     this.baseUrl = GithubService.href;
     this.headers = this.headers.set("accept", "application/vnd.github+json");
   }
+
+  /**
+   * Builds the search query params including optional free-text filter.
+   */
   private _BuildQuery(params: HttpParams, filter?: { query: string }): HttpParams {
     if (filter?.query) {
       params = params.set("q", `${GithubService.repo} ${filter.query.replaceAll(/\s+/g, " ")}`);
@@ -48,8 +56,8 @@ export class GithubService extends HttpService<Issue> {
       .pipe(map((res) => res.total_count));
   }
   /**
-   *  github searcg API supports lack of page & sort, so those params are optional.
-   * With some other services, where page & sort are mandatory, then an execption should be thrown if params are missing
+   *  github search API supports lack of page & sort, so those params are optional.
+   * With some other services, where page & sort are mandatory, then an exception should be thrown if params are missing
    *
    */
   override find(
