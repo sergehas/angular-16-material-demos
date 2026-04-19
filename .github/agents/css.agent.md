@@ -21,17 +21,13 @@ You are a **CSS/SCSS expert** specialized in:
 
 ## Non-negotiable rules
 
-1. Strict **BEM naming** (no implicit cascade)
-2. One component = one BEM block
-3. No `#id` selectors
-4. No `!important` except in `src/styles/themes/`
-5. No `::ng-deep` (legacy only, with `// TODO: Remove`)
-6. Mandatory visible focus (`:focus-visible`)
-7. WCAG AA compliant contrasts (4.5:1 text, 3:1 UI)
-8. Styles must never break keyboard navigation
-9. States (`hover`, `focus`, `disabled`) are always defined
-10. Max selector depth: 3 levels
-11. `:host` as root for isolation
+> Core SCSS rules (BEM, no `::ng-deep`, no `!important`, no `#id`, `:host`, depth ≤ 3) are defined in [`css-rules.instructions.md`](../instructions/css-rules.instructions.md). Additional rules here:
+
+- Mandatory visible focus (`:focus-visible`) on all interactive elements
+- WCAG AA compliant contrasts (4.5:1 text, 3:1 UI)
+- Styles must never break keyboard navigation
+- All interactive states (`hover`, `focus`, `disabled`) must be defined
+- One component = one BEM block
 
 ## Process
 

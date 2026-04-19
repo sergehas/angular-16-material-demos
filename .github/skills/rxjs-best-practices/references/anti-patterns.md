@@ -1,23 +1,23 @@
-# Anti-Patterns RxJS - À Éviter Absolument
+# RxJS Anti-Patterns - Avoid at All Costs
 
-## 🚫 Subscription Sans Cleanup
+## 🚫 Subscription Without Cleanup
 
-### ❌ INTERDIT : Pas de takeUntilDestroyed
+### ❌ FORBIDDEN: No takeUntilDestroyed
 
 ```ts
 @Component({...})
 export class LeakyComponent {
   ngOnInit() {
-    // ❌ Fuite mémoire garantie
+    // ❌ Guaranteed memory leak
     this.service.getData().subscribe(data => this.data = data);
 
-    // ❌ Chaque navigation vers ce component crée une nouvelle subscription
+    // ❌ Each navigation creates a new subscription
     this.userService.currentUser$.subscribe(user => this.user = user);
   }
 }
 ```
 
-### ✅ CORRECT : Toujours nettoyer
+### ✅ CORRECT: Always Clean Up
 
 ```ts
 @Component({...})
@@ -32,15 +32,15 @@ export class CleanComponent {
 }
 ```
 
-## 🚫 Constructor Subscription Sans Cleanup
+## 🚫 Constructor Subscription Without Cleanup
 
-### ❌ INTERDIT
+### ❌ FORBIDDEN
 
 ```ts
 @Component({...})
 export class BadConstructorComponent {
   constructor(private service: DataService) {
-    // ❌ Subscription jamais nettoyée
+    // ❌ Subscription never cleaned up
     this.service.getData().subscribe(data => this.data = data);
   }
 }
@@ -54,7 +54,7 @@ export class GoodConstructorComponent {
   private destroyRef = inject(DestroyRef);
 
   constructor(private service: DataService) {
-    // ✅ Cleanup automatique
+    // ✅ Automatic cleanup
     this.service.getData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(data => this.data = data);
@@ -62,15 +62,15 @@ export class GoodConstructorComponent {
 }
 ```
 
-## 🚫 Subscribe dans une Boucle
+## 🚫 Subscribe Inside a Loop
 
-### ❌ INTERDIT : Crée N subscriptions non trackées
+### ❌ FORBIDDEN: Creates N untracked subscriptions
 
 ```ts
 @Component({...})
 export class LoopSubscribeComponent {
   loadItems(items: Item[]): void {
-    // ❌ Crée une subscription pour chaque item, aucune n'est nettoyée
+    // ❌ Creates a subscription per item, none cleaned up
     items.forEach(item => {
       this.service.getDetail(item.id).subscribe(detail => {
         item.detail = detail;
@@ -80,7 +80,7 @@ export class LoopSubscribeComponent {
 }
 ```
 
-### ✅ CORRECT : forkJoin ou mergeMap
+### ✅ CORRECT: Use forkJoin or mergeMap
 
 ```ts
 @Component({...})
@@ -88,7 +88,7 @@ export class CorrectBatchComponent {
   private destroyRef = inject(DestroyRef);
 
   loadItems(items: Item[]): void {
-    // ✅ Une seule subscription, cleanup automatique
+    // ✅ Single subscription, automatic cleanup
     forkJoin(items.map(item => this.service.getDetail(item.id)))
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(details => {
@@ -100,12 +100,12 @@ export class CorrectBatchComponent {
 
 ## 🚫 Double Subscription (async pipe + subscribe)
 
-### ❌ INTERDIT : Subscription doublée
+### ❌ FORBIDDEN: Double subscription
 
 ```ts
 @Component({
   template: `
-    <!-- ❌ Première subscription via async pipe -->
+    <!-- ❌ First subscription via async pipe -->
     <div *ngIf="data$ | async as data">{{ data.length }} items</div>
   `,
 })
@@ -113,25 +113,25 @@ export class DoubleSubscriptionComponent {
   data$ = this.service.getData();
 
   ngOnInit() {
-    // ❌ Deuxième subscription sur le même stream !
+    // ❌ Second subscription on the same stream!
     this.data$.subscribe((data) => console.log("Data loaded:", data));
   }
 }
 ```
 
-### ✅ CORRECT : Une seule méthode
+### ✅ CORRECT: Single method
 
 ```ts
 @Component({
   template: `
-    <!-- ✅ Une seule subscription via async pipe -->
+    <!-- ✅ Only one subscription via async pipe -->
     <div *ngIf="data$ | async as data">{{ data.length }} items</div>
   `,
 })
 export class SingleSubscriptionComponent {
   private destroyRef = inject(DestroyRef);
 
-  // ✅ shareReplay pour partager la subscription si nécessaire
+  // ✅ shareReplay to share the subscription if needed
   data$ = this.service.getData().pipe(
     tap((data) => console.log("Data loaded:", data)),
     shareReplay({ bufferSize: 1, refCount: true })
@@ -139,9 +139,9 @@ export class SingleSubscriptionComponent {
 }
 ```
 
-## 🚫 Subject Sans complete()
+## 🚫 Subject Without complete()
 
-### ❌ INTERDIT : Subject jamais complété
+### ❌ FORBIDDEN: Subject never completed
 
 ```ts
 @Injectable({ providedIn: "root" })
@@ -149,14 +149,14 @@ export class LeakySubjectService {
   private mySubject = new Subject<string>();
   data$ = this.mySubject.asObservable();
 
-  // ❌ Pas de ngOnDestroy, le subject n'est jamais complété
+  // ❌ No ngOnDestroy, subject is never completed
   emit(value: string): void {
     this.mySubject.next(value);
   }
 }
 ```
 
-### ✅ CORRECT : Toujours compléter
+### ✅ CORRECT: Always Complete
 
 ```ts
 @Injectable({ providedIn: "root" })
@@ -169,7 +169,7 @@ export class CleanSubjectService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // ✅ OBLIGATOIRE
+    // ✅ REQUIRED
     this.mySubject.complete();
   }
 }
@@ -177,17 +177,17 @@ export class CleanSubjectService implements OnDestroy {
 
 ## 🚫 Nested Subscriptions (Callback Hell)
 
-### ❌ INTERDIT : Subscriptions imbriquées
+### ❌ FORBIDDEN: Nested subscriptions
 
 ```ts
 @Component({...})
 export class CallbackHellComponent {
   loadData(): void {
-    // ❌ 3 niveaux de subscriptions imbriquées
+    // ❌ 3 levels of nested subscriptions
     this.route.params.subscribe(params => {
       this.service1.getData(params['id']).subscribe(data1 => {
         this.service2.getRelated(data1.code).subscribe(data2 => {
-          this.data = data2; // 😱 Cauchemar de maintenance
+          this.data = data2; // 😱 Maintenance nightmare
         });
       });
     });
@@ -195,7 +195,7 @@ export class CallbackHellComponent {
 }
 ```
 
-### ✅ CORRECT : Pipeline avec operators
+### ✅ CORRECT: Pipeline with operators
 
 ```ts
 @Component({...})
@@ -203,7 +203,7 @@ export class CleanPipelineComponent {
   private destroyRef = inject(DestroyRef);
 
   loadData(): void {
-    // ✅ Pipeline propre et lisible
+    // ✅ Clean and readable pipeline
     this.route.params
       .pipe(
         switchMap(params => this.service1.getData(params['id'])),
@@ -215,15 +215,15 @@ export class CleanPipelineComponent {
 }
 ```
 
-## 🚫 Subscribe dans Subscribe
+## 🚫 Subscribe Inside Subscribe
 
-### ❌ INTERDIT
+### ❌ FORBIDDEN: Nested subscription
 
 ```ts
 @Component({...})
 export class NestedComponent {
   saveData(): void {
-    // ❌ Subscribe imbriqué
+    // ❌ Nested subscribe
     this.userService.getCurrentUser().subscribe(user => {
       this.dataService.save(this.data, user.id).subscribe(result => {
         this.handleResult(result);
@@ -233,7 +233,7 @@ export class NestedComponent {
 }
 ```
 
-### ✅ CORRECT : switchMap
+### ✅ CORRECT: switchMap
 
 ```ts
 @Component({...})
@@ -241,7 +241,7 @@ export class FlattenedComponent {
   private destroyRef = inject(DestroyRef);
 
   saveData(): void {
-    // ✅ Pipeline aplati
+    // ✅ Flattened pipeline
     this.userService.getCurrentUser()
       .pipe(
         switchMap(user => this.dataService.save(this.data, user.id)),
@@ -252,9 +252,9 @@ export class FlattenedComponent {
 }
 ```
 
-## 🚫 Mutation de Données dans subscribe
+## 🚫 Data Mutation Inside subscribe
 
-### ❌ INTERDIT : Mutation directe
+### ❌ FORBIDDEN: Direct mutation
 
 ```ts
 @Component({...})
@@ -265,7 +265,7 @@ export class MutatingComponent {
     this.service.getItems()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(newItems => {
-        // ❌ Mutation des données existantes
+        // ❌ Mutation of existing data
         newItems.forEach(item => {
           item.loaded = true;
           this.items.push(item);
@@ -275,7 +275,7 @@ export class MutatingComponent {
 }
 ```
 
-### ✅ CORRECT : Immutabilité
+### ✅ CORRECT: Immutability
 
 ```ts
 @Component({...})
@@ -290,37 +290,37 @@ export class ImmutableComponent {
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(newItems => {
-        // ✅ Création d'un nouveau tableau
+        // ✅ Creates a new array
         this.items = [...this.items, ...newItems];
       });
   }
 }
 ```
 
-## 🚫 BehaviorSubject Public
+## 🚫 Public BehaviorSubject
 
-### ❌ INTERDIT : Subject exposé directement
+### ❌ FORBIDDEN: Subject exposed directly
 
 ```ts
 @Injectable({ providedIn: "root" })
 export class BadStateService {
-  // ❌ N'importe qui peut appeler .next() de l'extérieur
+  // ❌ Anyone can call .next() from outside
   data$ = new BehaviorSubject<Data[]>([]);
 }
 
-// Usage :
-// service.data$.next([]) // 💀 N'importe où dans l'app !
+// Usage:
+// service.data$.next([]) // 💀 Anywhere in the app!
 ```
 
-### ✅ CORRECT : Subject privé, Observable public
+### ✅ CORRECT: Private subject, public observable
 
 ```ts
 @Injectable({ providedIn: "root" })
 export class GoodStateService implements OnDestroy {
-  // ✅ Privé
+  // ✅ Private
   private readonly _data$ = new BehaviorSubject<Data[]>([]);
 
-  // ✅ Public en lecture seule
+  // ✅ Read-only public
   readonly data$ = this._data$.asObservable();
 
   setData(data: Data[]): void {
@@ -333,9 +333,9 @@ export class GoodStateService implements OnDestroy {
 }
 ```
 
-## 🚫 subscribe() sans Gestion d'Erreur
+## 🚫 subscribe() Without Error Handling
 
-### ❌ INTERDIT : Pas de catchError
+### ❌ FORBIDDEN: No catchError
 
 ```ts
 @Component({...})
@@ -343,7 +343,7 @@ export class NoErrorHandlingComponent {
   private destroyRef = inject(DestroyRef);
 
   loadData(): void {
-    // ❌ Si erreur HTTP, le stream meurt et le loading reste à true
+    // ❌ On HTTP error, stream dies and loading stays true
     this.loading = true;
     this.service.getData()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -355,7 +355,7 @@ export class NoErrorHandlingComponent {
 }
 ```
 
-### ✅ CORRECT : Toujours gérer les erreurs
+### ✅ CORRECT: Always handle errors
 
 ```ts
 @Component({...})
@@ -379,9 +379,9 @@ export class ErrorHandlingComponent {
 }
 ```
 
-## 🚫 Ordre Incorrect des Operators
+## 🚫 Incorrect Operator Order
 
-### ❌ INTERDIT : takeUntilDestroyed après finalize
+### ❌ FORBIDDEN: takeUntilDestroyed after finalize
 
 ```ts
 @Component({...})
@@ -394,14 +394,14 @@ export class WrongOrderComponent {
     this.service.getData()
       .pipe(
         finalize(() => this.loading = false),
-        takeUntilDestroyed(this.destroyRef) // ❌ Trop tard !
+        takeUntilDestroyed(this.destroyRef) // ❌ Too late!
       )
       .subscribe(data => this.data = data);
   }
 }
 ```
 
-### ✅ CORRECT : Ordre logique
+### ✅ CORRECT: Logical order
 
 ```ts
 @Component({...})
@@ -413,7 +413,7 @@ export class CorrectOrderComponent {
 
     this.service.getData()
       .pipe(
-        catchError(err => of([])),      // 1. Gestion d'erreur
+        catchError(err => of([])),      // 1. Error handling
         finalize(() => this.loading = false), // 2. Cleanup
         takeUntilDestroyed(this.destroyRef)  // 3. Unsubscribe
       )
@@ -422,9 +422,9 @@ export class CorrectOrderComponent {
 }
 ```
 
-## 🚫 Logique Métier dans subscribe
+## 🚫 Business Logic Inside subscribe
 
-### ❌ INTERDIT : Traitement dans subscribe
+### ❌ FORBIDDEN: Processing inside subscribe
 
 ```ts
 @Component({...})
@@ -433,7 +433,7 @@ export class LogicInSubscribeComponent {
     this.service.getData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(data => {
-        // ❌ Logique métier complexe dans subscribe
+        // ❌ Complex business logic inside subscribe
         const filtered = data.filter(item => item.active);
         const sorted = filtered.sort((a, b) => a.name.localeCompare(b.name));
         const grouped = this.groupByCategory(sorted);
@@ -443,7 +443,7 @@ export class LogicInSubscribeComponent {
 }
 ```
 
-### ✅ CORRECT : Logique dans le pipeline
+### ✅ CORRECT: Logic in the pipeline
 
 ```ts
 @Component({...})
@@ -453,7 +453,7 @@ export class LogicInPipelineComponent {
   loadData(): void {
     this.service.getData()
       .pipe(
-        // ✅ Toute la logique dans le pipeline
+        // ✅ Keep all logic in the pipeline
         map(data => data.filter(item => item.active)),
         map(data => data.sort((a, b) => a.name.localeCompare(b.name))),
         map(data => this.groupByCategory(data)),
@@ -464,16 +464,16 @@ export class LogicInPipelineComponent {
 }
 ```
 
-## 🚫 subscribe() avec Side Effects
+## 🚫 subscribe() with Side Effects
 
-### ❌ INTERDIT : Side effects dans map
+### ❌ FORBIDDEN: Side effects in map
 
 ```ts
 this.service
   .getData()
   .pipe(
     map((data) => {
-      // ❌ Side effect dans map
+      // ❌ Side effect in map
       console.log("Data loaded:", data);
       this.showNotification("Success");
       return data;
@@ -483,30 +483,30 @@ this.service
   .subscribe((data) => (this.data = data));
 ```
 
-### ✅ CORRECT : Utiliser tap pour les side effects
+### ✅ CORRECT: Use tap for side effects
 
 ```ts
 this.service
   .getData()
   .pipe(
-    // ✅ tap pour les side effects
+    // ✅ tap for side effects
     tap((data) => console.log("Data loaded:", data)),
     tap(() => this.showNotification("Success")),
-    map((data) => data), // map uniquement pour les transformations
+    map((data) => data), // map only for transformations
     takeUntilDestroyed(this.destroyRef)
   )
   .subscribe((data) => (this.data = data));
 ```
 
-## Récapitulatif des Anti-Patterns
+## Anti-Patterns Summary
 
-| Anti-Pattern              | Pourquoi c'est mal           | Solution                              |
-| ------------------------- | ---------------------------- | ------------------------------------- |
-| Subscription sans cleanup | Fuite mémoire                | `takeUntilDestroyed()`                |
-| Subscribe dans boucle     | N subscriptions non trackées | `forkJoin` ou `mergeMap`              |
-| Nested subscriptions      | Code illisible, fuites       | `switchMap`, `mergeMap`               |
-| Subject public            | Pas d'encapsulation          | Subject privé + asObservable()        |
-| Pas de catchError         | Stream meurt sur erreur      | Toujours `catchError`                 |
-| Double subscription       | Requêtes dupliquées          | `shareReplay` ou async pipe seulement |
-| Logic dans subscribe      | Difficile à tester           | Logic dans le pipe avec `map`         |
-| Subject sans complete()   | Fuite mémoire                | `complete()` dans ngOnDestroy         |
+| Anti-Pattern                 | Why it is bad             | Solution                         |
+| ---------------------------- | ------------------------- | -------------------------------- |
+| Subscription without cleanup | Memory leak               | `takeUntilDestroyed()`           |
+| Subscribe inside loop        | N untracked subscriptions | `forkJoin` or `mergeMap`         |
+| Nested subscriptions         | Unreadable code, leaks    | `switchMap`, `mergeMap`          |
+| Public subject               | No encapsulation          | Private subject + asObservable() |
+| No catchError                | Stream dies on error      | Always use `catchError`          |
+| Double subscription          | Duplicate requests        | `shareReplay` or async pipe only |
+| Logic inside subscribe       | Hard to test              | Move logic into pipe with `map`  |
+| Subject without complete()   | Memory leak               | `complete()` in ngOnDestroy      |

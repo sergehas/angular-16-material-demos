@@ -5,24 +5,15 @@ description: "On css creation or to automatically review and validate all CSS co
 
 # Skill — CSS Creation & Accessibility Review
 
-## ⚠️ MANDATORY
+## When to Use
 
-**This skill MUST be used automatically for any task involving CSS:**
-
-- ✅ Creation of new CSS or SCSS files
-- ✅ Modification of existing CSS or SCSS files
-- ✅ CSS or SCSS audit of a component or file
-- ✅ Accessibility review RGAA / WCAG AA
-- ✅ CSS or SCSS refactoring
-- ✅ Pre-merge/PR verification
-- ✅ BEM compliance analysis
+Use this skill for any task involving CSS/SCSS: creation, modification, audit, refactoring, BEM compliance, WCAG AA review, or pre-PR verification.
 
 ## Instructions
 
-1. **MANDATORY**: Adopt the role of CSS agent [AGENT CSS EXPERT](../../agents/css.agent.md)
-2. **MANDATORY**: Consult the detailed reference [CSS REFERENCE](./references/css.reference.md)
-3. Analyze the provided or to-be-created CSS code
-4. Produce a structured report and **explicitly note in the chat that the CSS skill was used**:
+1. Adopt the role of [CSS Agent](../../agents/css.agent.md)
+2. Consult the detailed reference [CSS reference](./references/css.reference.md)
+3. Produce a structured report:
 
 ### Expected output format
 

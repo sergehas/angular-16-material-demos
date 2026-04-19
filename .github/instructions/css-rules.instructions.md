@@ -2,7 +2,7 @@
 applyTo: "**/*.scss"
 ---
 
-# SCSS Rules (GCM GUI)
+# SCSS Rules
 
 > 📌 Minimal rules. For details: `.github/docs/css.reference.md`
 
@@ -19,8 +19,8 @@ applyTo: "**/*.scss"
 
 ## Complete reference
 
-👉 `.github/docs/css.reference.md`
+👉 `.github/skills/css-best-practices/references/css.reference.md`
 
 ## CSS / Accessibility Audit
 
-👉 Use the `css-accessibility-review` skill
+👉 Use the `css-best-practices` skill

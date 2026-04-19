@@ -1,8 +1,8 @@
-# Subscription Management - Exemples Détaillés
+# Subscription Management - Detailed Examples
 
-## Gestion du cycle de vie des subscriptions
+## Subscription Lifecycle Management
 
-### Pattern Principal : takeUntilDestroyed
+### Main Pattern: takeUntilDestroyed
 
 ```ts
 import { DestroyRef, inject } from "@angular/core";
@@ -12,7 +12,7 @@ export class MyComponent {
   private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    // ✅ Pour les streams infinis (events, subjects, intervals)
+    // ✅ For infinite streams (events, subjects, intervals)
     this.longLivingObservable$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((value) => this.handle(value));
   }
 }
@@ -25,7 +25,7 @@ export class MyComponent {
 ```ts
 import { take, first } from "rxjs";
 
-// ✅ Utilisez take(1) quand la valeur est OPTIONNELLE
+// ✅ Use take(1) when the value is OPTIONAL
 dialogRef
   .afterClosed()
   .pipe(take(1))
@@ -33,14 +33,14 @@ dialogRef
     if (result) this.handleConfirmation();
   });
 
-// ✅ Utilisez first() quand vous ATTENDEZ une valeur (erreur si pas d'émission)
+// ✅ Use first() when you EXPECT a value (throws if no emission)
 this.store
   .select(selectUser)
   .pipe(first())
   .subscribe((user) => (this.user = user));
 ```
 
-### Exemple Complet : Dialog avec Confirmation
+### Full Example: Dialog with Confirmation
 
 ```ts
 @Component({...})
@@ -50,11 +50,11 @@ export class ConfirmationComponent {
 
   openDeleteDialog(itemId: string): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      data: { message: 'Êtes-vous sûr de vouloir supprimer cet élément ?' }
+      data: { message: 'Are you sure you want to delete this item?' }
     });
 
     dialogRef.afterClosed()
-      .pipe(take(1)) // Dialog se ferme une seule fois
+      .pipe(take(1)) // Dialog closes only once
       .subscribe(confirmed => {
         if (confirmed) {
           this.deleteItem(itemId);
@@ -66,13 +66,13 @@ export class ConfirmationComponent {
     this.service.delete(id)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(() => {
-        this.notificationService.showSuccess('Élément supprimé');
+        this.notificationService.showSuccess('Item deleted');
       });
   }
 }
 ```
 
-## Subscription Manuelle avec Cleanup
+## Manual Subscription with Cleanup
 
 ```ts
 @Component({...})
@@ -80,7 +80,7 @@ export class ManualSubscriptionComponent implements OnDestroy {
   private subscription = new Subscription();
 
   ngOnInit(): void {
-    // ✅ Ajoutez toutes les subscriptions à l'objet Subscription
+    // ✅ Add all subscriptions to the Subscription container
     this.subscription.add(
       this.dataService.getData().subscribe(data => this.data = data)
     );
@@ -91,13 +91,13 @@ export class ManualSubscriptionComponent implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // ✅ Unsubscribe de toutes les subscriptions en une fois
+    // ✅ Unsubscribe all subscriptions at once
     this.subscription.unsubscribe();
   }
 }
 ```
 
-## Pattern avec Subject pour Cleanup
+## Pattern with Subject for Cleanup
 
 ```ts
 @Component({...})
@@ -121,29 +121,29 @@ export class SubjectCleanupComponent implements OnDestroy {
 }
 ```
 
-## Éviter les Memory Leaks
+## Avoiding Memory Leaks
 
-### ❌ Anti-Pattern : Subscription sans Cleanup
+### ❌ Anti-Pattern: Subscription without Cleanup
 
 ```ts
-// ❌ INTERDIT - Fuite mémoire garantie
+// ❌ FORBIDDEN - Guaranteed memory leak
 @Component({...})
 export class LeakyComponent {
   ngOnInit() {
-    // Cette subscription ne sera JAMAIS nettoyée
+    // This subscription will NEVER be cleaned up
     this.service.getData().subscribe(data => this.data = data);
 
-    // Plusieurs subscriptions = plusieurs fuites
+    // Multiple subscriptions = multiple leaks
     this.eventService.events$.subscribe(event => this.handleEvent(event));
     this.userService.currentUser$.subscribe(user => this.user = user);
   }
 }
 ```
 
-### ✅ Solution : Toujours utiliser takeUntilDestroyed
+### ✅ Solution: Always use takeUntilDestroyed
 
 ```ts
-// ✅ CORRECT - Cleanup automatique
+// ✅ CORRECT - Automatic cleanup
 @Component({...})
 export class CleanComponent {
   private destroyRef = inject(DestroyRef);
@@ -164,7 +164,7 @@ export class CleanComponent {
 }
 ```
 
-## Cas Particulier : Subscription dans le Constructor
+## Special Case: Subscription in Constructor
 
 ```ts
 @Component({...})
@@ -172,7 +172,7 @@ export class ConstructorSubscriptionComponent {
   private destroyRef = inject(DestroyRef);
 
   constructor() {
-    // ✅ takeUntilDestroyed fonctionne aussi dans le constructor
+    // ✅ takeUntilDestroyed also works in the constructor
     this.service.getData()
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(data => this.data = data);
@@ -180,37 +180,37 @@ export class ConstructorSubscriptionComponent {
 }
 ```
 
-## Subjects : Toujours Complete
+## Subjects: Always Complete
 
-### ❌ Anti-Pattern : Subject jamais complété
+### ❌ Anti-Pattern: Subject never completed
 
 ```ts
-// ❌ INTERDIT - Le Subject n'est jamais complété
+// ❌ FORBIDDEN - Subject is never completed
 @Injectable({ providedIn: "root" })
 export class LeakyService {
   private mySubject = new Subject<string>();
   readonly data$ = this.mySubject.asObservable();
 
-  // Pas de ngOnDestroy pour compléter le subject !
+  // No ngOnDestroy to complete the subject!
 }
 ```
 
-### ✅ Solution : Toujours compléter les Subjects
+### ✅ Solution: Always complete Subjects
 
 ```ts
-// ✅ CORRECT - Subject complété dans ngOnDestroy
+// ✅ CORRECT - Subject completed in ngOnDestroy
 @Injectable({ providedIn: "root" })
 export class CleanService implements OnDestroy {
   private mySubject = new Subject<string>();
   readonly data$ = this.mySubject.asObservable();
 
   ngOnDestroy(): void {
-    this.mySubject.complete(); // ⚠️ OBLIGATOIRE
+    this.mySubject.complete(); // ⚠️ REQUIRED
   }
 }
 ```
 
-## Combinaison de Plusieurs Sources
+## Combining Multiple Sources
 
 ```ts
 @Component({...})
@@ -218,7 +218,7 @@ export class CombinedSourcesComponent {
   private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    // ✅ combineLatest avec takeUntilDestroyed
+    // ✅ combineLatest with takeUntilDestroyed
     combineLatest([
       this.userService.currentUser$,
       this.settingsService.settings$,

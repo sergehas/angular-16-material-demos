@@ -1,13 +1,13 @@
-# Guide des Opérateurs RxJS
+# RxJS Operators Guide
 
 ## switchMap vs mergeMap vs exhaustMap
 
-### switchMap : Annuler le précédent, utiliser le dernier
+### switchMap: Cancel previous, use latest
 
-**Cas d'usage :** Recherche, navigation, autocomplete
+**Use case:** Search, navigation, autocomplete
 
 ```ts
-// ✅ switchMap annule la requête précédente si une nouvelle valeur arrive
+// ✅ switchMap cancels the previous request when a new value arrives
 @Component({...})
 export class SearchComponent {
   private destroyRef = inject(DestroyRef);
@@ -26,7 +26,7 @@ export class SearchComponent {
 }
 ```
 
-**Exemple avec Navigation :**
+**Navigation example:**
 
 ```ts
 @Component({...})
@@ -35,7 +35,7 @@ export class ProductDetailComponent {
   private route = inject(ActivatedRoute);
 
   ngOnInit(): void {
-    // switchMap annule le chargement précédent si l'utilisateur navigue rapidement
+    // switchMap cancels previous loading if the user navigates quickly
     this.route.params
       .pipe(
         switchMap(params => this.productService.getById(params['id'])),
@@ -46,12 +46,12 @@ export class ProductDetailComponent {
 }
 ```
 
-### mergeMap : Exécuter tout en parallèle
+### mergeMap: Run everything in parallel
 
-**Cas d'usage :** Chargement de données multiples, traitement parallèle
+**Use case:** Multiple data loading, parallel processing
 
 ```ts
-// ✅ mergeMap exécute toutes les requêtes en parallèle
+// ✅ mergeMap runs all requests in parallel
 @Component({...})
 export class ItemListComponent {
   private destroyRef = inject(DestroyRef);
@@ -59,7 +59,7 @@ export class ItemListComponent {
   loadItemsWithDetails(itemIds: string[]): void {
     from(itemIds)
       .pipe(
-        mergeMap(id => this.service.getById(id), 3), // Concurrence max : 3
+        mergeMap(id => this.service.getById(id), 3), // Max concurrency: 3
         toArray(),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -68,7 +68,7 @@ export class ItemListComponent {
 }
 ```
 
-**Exemple avec Enrichissement de Données :**
+**Data enrichment example:**
 
 ```ts
 @Component({...})
@@ -83,7 +83,7 @@ export class EnrichedDataComponent {
             this.detailService.getDetail(item.id).pipe(
               map(detail => ({ ...item, detail }))
             ),
-            5 // Max 5 requêtes simultanées
+            5 // Max 5 simultaneous requests
           ),
           toArray()
         )),
@@ -94,12 +94,12 @@ export class EnrichedDataComponent {
 }
 ```
 
-### exhaustMap : Ignorer les nouvelles pendant l'exécution
+### exhaustMap: Ignore new emissions while running
 
-**Cas d'usage :** Soumission de formulaires, actions utilisateur non répétables
+**Use case:** Form submission, non-repeatable user actions
 
 ```ts
-// ✅ exhaustMap ignore les clics pendant la sauvegarde
+// ✅ exhaustMap ignores clicks while saving
 @Component({...})
 export class FormComponent {
   private destroyRef = inject(DestroyRef);
@@ -125,18 +125,18 @@ export class FormComponent {
 }
 ```
 
-**Exemple avec Bouton de Rafraîchissement :**
+**Refresh button example:**
 
 ```ts
 @Component({
-  template: `<button (click)="refresh()">Rafraîchir</button>`,
+  template: `<button (click)="refresh()">Refresh</button>`,
 })
 export class RefreshComponent {
   private destroyRef = inject(DestroyRef);
   private refreshAction$ = new Subject<void>();
 
   constructor() {
-    // Ignore les clics multiples pendant le chargement
+    // Ignore multiple clicks while loading
     this.refreshAction$
       .pipe(
         exhaustMap(() => this.dataService.loadData()),
@@ -151,9 +151,9 @@ export class RefreshComponent {
 }
 ```
 
-## concatMap : Exécuter séquentiellement
+## concatMap: Run sequentially
 
-**Cas d'usage :** Opérations devant être effectuées dans l'ordre
+**Use case:** Operations that must run in order
 
 ```ts
 @Component({...})
@@ -163,7 +163,7 @@ export class SequentialOperationsComponent {
   processItemsInOrder(items: Item[]): void {
     from(items)
       .pipe(
-        concatMap(item => this.service.process(item)), // Une à la fois, dans l'ordre
+        concatMap(item => this.service.process(item)), // One at a time, in order
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(
@@ -175,12 +175,12 @@ export class SequentialOperationsComponent {
 }
 ```
 
-## Éviter le Callback Hell
+## Avoid Callback Hell
 
-### ❌ Anti-Pattern : Subscriptions imbriquées
+### ❌ Anti-Pattern: Nested subscriptions
 
 ```ts
-// ❌ INTERDIT - 3 niveaux = 3 fuites mémoire potentielles
+// ❌ FORBIDDEN - 3 levels = 3 potential memory leaks
 @Component({...})
 export class CallbackHellComponent {
   loadData(): void {
@@ -195,10 +195,10 @@ export class CallbackHellComponent {
 }
 ```
 
-### ✅ Solution : Pipeline avec switchMap
+### ✅ Solution: Pipeline with switchMap
 
 ```ts
-// ✅ CORRECT - Pipeline propre et maintenable
+// ✅ CORRECT - Clean and maintainable pipeline
 @Component({...})
 export class CleanPipelineComponent {
   private destroyRef = inject(DestroyRef);
@@ -215,7 +215,7 @@ export class CleanPipelineComponent {
 }
 ```
 
-### Exemple Complexe : Chargement en Cascade avec Contexte
+### Complex Example: Cascading Load with Context
 
 ```ts
 @Component({...})
@@ -226,20 +226,20 @@ export class CascadeLoadingComponent {
     this.route.params
       .pipe(
         switchMap(params =>
-          // Charge l'utilisateur
+          // Load user
           this.userService.getById(params['userId']).pipe(
-            // Garde l'utilisateur en contexte
+            // Keep user in context
             map(user => ({ user, params }))
           )
         ),
         switchMap(({ user, params }) =>
-          // Charge les préférences de l'utilisateur
+          // Load user preferences
           this.preferencesService.get(user.id).pipe(
             map(preferences => ({ user, preferences, params }))
           )
         ),
         switchMap(({ user, preferences, params }) =>
-          // Charge le contenu spécifique
+          // Load specific content
           this.contentService.get(params['contentId'], preferences).pipe(
             map(content => ({ user, preferences, content }))
           )
@@ -253,12 +253,12 @@ export class CascadeLoadingComponent {
 }
 ```
 
-## Opérations Parallèles
+## Parallel Operations
 
-### forkJoin : Attendre la complétion de toutes les requêtes
+### forkJoin: Wait for all requests to complete
 
 ```ts
-// ✅ Attendre que toutes les requêtes soient terminées
+// ✅ Wait until all requests are completed
 @Component({...})
 export class ParallelLoadingComponent {
   private destroyRef = inject(DestroyRef);
@@ -266,19 +266,19 @@ export class ParallelLoadingComponent {
   loadAllData(id: string): void {
     forkJoin({
       productLine: this.productLineService.getById(id),
-      responsabilities: this.responsabilityService.get(id),
+      responsibilities: this.responsibilityService.get(id),
       events: this.eventService.getAll(id),
       metadata: this.metadataService.get(id)
     })
       .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe(({ productLine, responsabilities, events, metadata }) => {
-        this.initialize(productLine, responsabilities, events, metadata);
+      .subscribe(({ productLine, responsibilities, events, metadata }) => {
+        this.initialize(productLine, responsibilities, events, metadata);
       });
   }
 }
 ```
 
-**Exemple avec Tableau :**
+**Array example:**
 
 ```ts
 @Component({...})
@@ -286,7 +286,7 @@ export class BatchLoadingComponent {
   private destroyRef = inject(DestroyRef);
 
   enrichItems(items: Item[]): void {
-    // Charge les détails pour chaque item en parallèle
+    // Load details for each item in parallel
     forkJoin(items.map(item => this.service.getDetail(item.id)))
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(details => {
@@ -299,7 +299,7 @@ export class BatchLoadingComponent {
 }
 ```
 
-### combineLatest : Valeurs les plus récentes de plusieurs streams
+### combineLatest: Latest values from multiple streams
 
 ```ts
 @Component({...})
@@ -307,7 +307,7 @@ export class CombinedStreamsComponent {
   private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    // Se met à jour à chaque changement de l'une des sources
+    // Updates whenever one source changes
     combineLatest([
       this.userService.currentUser$,
       this.settingsService.settings$,
@@ -321,7 +321,7 @@ export class CombinedStreamsComponent {
 }
 ```
 
-**Exemple avec objet :**
+**Object example:**
 
 ```ts
 @Component({...})
@@ -347,13 +347,13 @@ export class CombinedObjectComponent {
 }
 ```
 
-## Comparaison Visuelle
+## Visual Comparison
 
-| Opérateur       | Comportement                | Cas d'usage                |
-| --------------- | --------------------------- | -------------------------- |
-| `switchMap`     | Annule le précédent         | Recherche, navigation      |
-| `mergeMap`      | Exécute tout en parallèle   | Chargement multiple        |
-| `exhaustMap`    | Ignore pendant exécution    | Soumission formulaire      |
-| `concatMap`     | File d'attente séquentielle | Opérations ordonnées       |
-| `forkJoin`      | Attend la fin de tous       | Batch de requêtes HTTP     |
-| `combineLatest` | Dernière valeur de chaque   | Streams multiples reactifs |
+| Operator        | Behavior                | Use case                  |
+| --------------- | ----------------------- | ------------------------- |
+| `switchMap`     | Cancels previous        | Search, navigation        |
+| `mergeMap`      | Runs all in parallel    | Multiple loading          |
+| `exhaustMap`    | Ignores while running   | Form submission           |
+| `concatMap`     | Sequential queue        | Ordered operations        |
+| `forkJoin`      | Waits for all to finish | Batch HTTP requests       |
+| `combineLatest` | Latest value from each  | Multiple reactive streams |

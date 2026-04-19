@@ -1,0 +1,30 @@
+---
+applyTo: "**"
+---
+
+# Project general coding standards
+
+## Naming Conventions
+
+- Use PascalCase for component names, interfaces, and type aliases
+- Use camelCase for variables, functions, and methods
+- Prefix private class members with underscore (\_)
+- Use ALL_CAPS for constants
+
+## Error Handling
+
+- Use try/catch blocks for async operations
+- Handle Angular component errors with `ErrorHandler` or `catchError` in RxJS pipelines
+- Always log errors with contextual information
+
+## Code Complexity
+
+- Avoid deeply nested code and long functions
+- Break down complex logic into smaller, reusable functions
+- Ensure cognitive complexity is less than 15 for any function or method
+
+## Code Quality
+
+- Document all public methods and classes
+- Write unit tests for all components and utility functions
+- Ensure the code is syntactically correct, bug-free, optimized, not span multiple lines unnecessarily, and prefer to use standard libraries.

@@ -1,6 +1,6 @@
 ---
-description: "Playwright test generation instructions"
-applyTo: "**"
+description: "Playwright E2E test generation instructions"
+applyTo: "e2e/**/*.spec.ts"
 ---
 
 ## Test Writing Guidelines
@@ -21,7 +21,7 @@ applyTo: "**"
 
 ### File Organization
 
-- **Location**: Store all test files in the `tests/` directory.
+- **Location**: Store all E2E test files in the `e2e/` directory.
 - **Naming**: Use the convention `<feature-or-page>.spec.ts` (e.g., `login.spec.ts`, `search.spec.ts`).
 - **Scope**: Aim for one test file per major application feature or page.
 
@@ -37,45 +37,25 @@ applyTo: "**"
 ```typescript
 import { test, expect } from "@playwright/test";
 
-test.describe("Movie Search Feature", () => {
+test.describe("Demo - Icon Feature", () => {
   test.beforeEach(async ({ page }) => {
-    // Navigate to the application before each test
-    await page.goto("https://debs-obrien.github.io/playwright-movies-app");
+    await page.goto("http://localhost:4200/demo/icons");
   });
 
-  test("Search for a movie by title", async ({ page }) => {
-    await test.step("Activate and perform search", async () => {
-      await page.getByRole("search").click();
-      const searchInput = page.getByRole("textbox", { name: "Search Input" });
-      await searchInput.fill("Garfield");
-      await searchInput.press("Enter");
+  test("should display icon list", async ({ page }) => {
+    await test.step("Verify icon grid is visible", async () => {
+      await expect(page.getByRole("main")).toContainText("Icons");
     });
 
-    await test.step("Verify search results", async () => {
-      // Verify the accessibility tree of the search results
+    await test.step("Verify aria structure", async () => {
       await expect(page.getByRole("main")).toMatchAriaSnapshot(`
         - main:
-          - heading "Garfield" [level=1]
-          - heading "search results" [level=2]
-          - list "movies":
-            - listitem "movie":
-              - link "poster of The Garfield Movie The Garfield Movie rating":
-                - /url: /playwright-movies-app/movie?id=tt5779228&page=1
-                - img "poster of The Garfield Movie"
-                - heading "The Garfield Movie" [level=2]
+          - heading "Icons" [level=1]
       `);
     });
   });
 });
 ```
-
-## Test Execution Strategy
-
-1. **Initial Run**: Execute tests with `npx playwright test --project=chromium`
-2. **Debug Failures**: Analyze test failures and identify root causes
-3. **Iterate**: Refine locators, assertions, or test logic as needed
-4. **Validate**: Ensure tests pass consistently and cover the intended functionality
-5. **Report**: Provide feedback on test results and any issues discovered
 
 ## Quality Checklist
 

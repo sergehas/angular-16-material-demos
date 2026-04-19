@@ -2,7 +2,7 @@
 applyTo: "**/*.html"
 ---
 
-# HTML Template Rules (GCM GUI)
+# HTML Template Rules
 
 - Do not use inline styles (`style="..."`). Use CSS classes.
 - Keep templates simple; move logic to component code and reusable helpers.

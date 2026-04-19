@@ -1,29 +1,29 @@
-# Performance et Optimisation RxJS
+# RxJS Performance & Optimization
 
-## HTTP Response Caching avec shareReplay
+## HTTP Response Caching with shareReplay
 
-### Pattern de Base
+### Basic Pattern
 
 ```ts
 @Injectable({ providedIn: "root" })
 export class ConfigService {
   private http = inject(HttpClient);
 
-  // ✅ Cache la réponse HTTP, partagée entre tous les subscribers
+  // ✅ Caches the HTTP response, shared across all subscribers
   private config$ = this.http.get<Config>("/api/config").pipe(shareReplay({ bufferSize: 1, refCount: true }));
 
   getConfig(): Observable<Config> {
-    return this.config$; // Réutilise la même requête
+    return this.config$; // Reuses the same request
   }
 }
 ```
 
-**Explication :**
+**Explanation:**
 
-- `bufferSize: 1` : Garde en cache la dernière valeur
-- `refCount: true` : Libère le cache quand plus aucun subscriber
+- `bufferSize: 1`: Keeps the latest value in cache
+- `refCount: true`: Releases the cache when there are no subscribers left
 
-### Exemple avec Invalidation
+### Example with Cache Invalidation
 
 ```ts
 @Injectable({ providedIn: "root" })
@@ -31,7 +31,7 @@ export class CachedDataService {
   private http = inject(HttpClient);
   private cacheInvalidator$ = new Subject<void>();
 
-  // Cache qui se recrée à chaque invalidation
+  // Cache recreated on each invalidation
   private data$ = this.cacheInvalidator$.pipe(
     startWith(undefined),
     switchMap(() => this.http.get<Data[]>("/api/data").pipe(shareReplay({ bufferSize: 1, refCount: true })))
@@ -42,14 +42,14 @@ export class CachedDataService {
   }
 
   invalidateCache(): void {
-    this.cacheInvalidator$.next(); // Force un nouveau fetch
+    this.cacheInvalidator$.next(); // Force a new fetch
   }
 }
 ```
 
-## distinctUntilChanged : Éviter les Émissions Redondantes
+## distinctUntilChanged: Avoid Redundant Emissions
 
-### Cas d'Usage Simple
+### Simple Use Case
 
 ```ts
 @Component({...})
@@ -60,17 +60,17 @@ export class OptimizedComponent {
     this.userService.currentUser$
       .pipe(
         map(user => user.id),
-        distinctUntilChanged(), // N'émet que si l'ID change
+        distinctUntilChanged(), // Only emits if ID changes
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(userId => {
-        this.loadUserData(userId); // Appelé seulement si userId change
+        this.loadUserData(userId); // Only called if userId changes
       });
   }
 }
 ```
 
-### Avec Comparateur Personnalisé
+### With Custom Comparator
 
 ```ts
 interface User {
@@ -86,7 +86,7 @@ export class CustomComparatorComponent {
   ngOnInit(): void {
     this.userService.currentUser$
       .pipe(
-        // Compare seulement l'ID, ignore les autres changements
+        // Compares only the ID, ignores other changes
         distinctUntilChanged((prev, curr) => prev.id === curr.id),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -97,14 +97,14 @@ export class CustomComparatorComponent {
 }
 ```
 
-## Optimiser les Listes avec trackBy
+## Optimizing Lists with trackBy
 
-### Sans trackBy (Lent)
+### Without trackBy (Slow)
 
 ```ts
 @Component({
   template: `
-    <!-- ❌ Recrée tous les éléments DOM à chaque changement -->
+    <!-- ❌ Recreates all DOM elements on each change -->
     <div *ngFor="let item of items$ | async">
       {{ item.name }}
     </div>
@@ -115,12 +115,12 @@ export class SlowListComponent {
 }
 ```
 
-### Avec trackBy (Rapide)
+### With trackBy (Fast)
 
 ```ts
 @Component({
   template: `
-    <!-- ✅ Met à jour seulement les éléments modifiés -->
+    <!-- ✅ Updates only changed elements -->
     <div *ngFor="let item of items$ | async; trackBy: trackById">
       {{ item.name }}
     </div>
@@ -135,7 +135,7 @@ export class FastListComponent {
 
 ## auditTime vs debounceTime
 
-### debounceTime : Attendre la fin de l'activité
+### debounceTime: Wait for Activity to Stop
 
 ```ts
 @Component({...})
@@ -144,10 +144,10 @@ export class SearchComponent {
   searchControl = new FormControl('');
 
   ngOnInit(): void {
-    // ✅ Attend 300ms après le dernier keystroke
+    // ✅ Waits 300ms after the last keystroke
     this.searchControl.valueChanges
       .pipe(
-        debounceTime(300), // Parfait pour la recherche
+        debounceTime(300), // Perfect for search
         distinctUntilChanged(),
         switchMap(term => this.searchService.search(term)),
         takeUntilDestroyed(this.destroyRef)
@@ -157,7 +157,7 @@ export class SearchComponent {
 }
 ```
 
-### auditTime : Échantillonner périodiquement
+### auditTime: Sample Periodically
 
 ```ts
 @Component({...})
@@ -165,10 +165,10 @@ export class ScrollComponent {
   private destroyRef = inject(DestroyRef);
 
   ngOnInit(): void {
-    // ✅ Émet au maximum toutes les 100ms pendant le scroll
+    // ✅ Emits at most every 100ms while scrolling
     fromEvent(window, 'scroll')
       .pipe(
-        auditTime(100), // Plus performant que throttleTime
+        auditTime(100), // More performant than throttleTime
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
@@ -180,14 +180,14 @@ export class ScrollComponent {
 
 ## OnPush Change Detection
 
-### Combinaison avec Observables
+### Combining with Observables
 
 ```ts
 @Component({
   selector: "app-optimized",
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: `
-    <!-- ✅ async pipe déclenche change detection automatiquement -->
+    <!-- ✅ async pipe triggers change detection automatically -->
     <div *ngIf="data$ | async as data">
       {{ data.name }}
     </div>
@@ -198,7 +198,7 @@ export class OptimizedComponent {
 }
 ```
 
-### Avec markForCheck pour subscriptions manuelles
+### With markForCheck for Manual Subscriptions
 
 ```ts
 @Component({
@@ -214,18 +214,18 @@ export class ManualCheckComponent {
   ngOnInit(): void {
     this.service.data$.pipe(takeUntilDestroyed(this.destroyRef)).subscribe((data) => {
       this.data = data;
-      this.cdr.markForCheck(); // ✅ Déclenche change detection
+      this.cdr.markForCheck(); // ✅ Triggers change detection
     });
   }
 }
 ```
 
-## Limiter la Concurrence avec mergeMap
+## Limiting Concurrency with mergeMap
 
-### Sans Limite (Problématique)
+### Without Limit (Problematic)
 
 ```ts
-// ❌ Peut lancer 1000 requêtes simultanées
+// ❌ Could fire 1000 simultaneous requests
 from(items)
   .pipe(
     mergeMap((item) => this.http.get(`/api/items/${item.id}`)),
@@ -234,15 +234,15 @@ from(items)
   .subscribe((results) => console.log(results));
 ```
 
-### Avec Limite de Concurrence
+### With Concurrency Limit
 
 ```ts
-// ✅ Maximum 5 requêtes simultanées
+// ✅ Maximum 5 simultaneous requests
 from(items)
   .pipe(
     mergeMap(
       (item) => this.http.get(`/api/items/${item.id}`),
-      5 // Concurrence max
+      5 // Max concurrency
     ),
     toArray(),
     takeUntilDestroyed(this.destroyRef)
@@ -250,15 +250,15 @@ from(items)
   .subscribe((results) => (this.results = results));
 ```
 
-## Unsubscribe Stratégique avec take
+## Strategic Unsubscribe with take
 
-### Cas : Premier Résultat Suffisant
+### Case: First Result is Enough
 
 ```ts
 @Component({...})
 export class FirstResultComponent {
   loadInitialData(): void {
-    // ✅ Se désabonne automatiquement après 1 valeur
+    // ✅ Automatically unsubscribes after 1 value
     this.service.getData()
       .pipe(take(1))
       .subscribe(data => this.data = data);
@@ -266,7 +266,7 @@ export class FirstResultComponent {
 }
 ```
 
-### Cas : N Premières Valeurs
+### Case: First N Values
 
 ```ts
 @Component({...})
@@ -274,7 +274,7 @@ export class LimitedResultsComponent {
   private destroyRef = inject(DestroyRef);
 
   loadRecentNotifications(): void {
-    // ✅ Prend seulement les 10 premières notifications
+    // ✅ Takes only the first 10 notifications
     this.notificationService.stream$
       .pipe(
         take(10),
@@ -288,9 +288,9 @@ export class LimitedResultsComponent {
 }
 ```
 
-## Batching avec bufferTime
+## Batching with bufferTime
 
-### Grouper les Émissions
+### Grouping Emissions
 
 ```ts
 @Injectable({ providedIn: "root" })
@@ -299,7 +299,7 @@ export class BatchedLoggerService {
   private logSubject = new Subject<LogEntry>();
 
   constructor() {
-    // ✅ Envoie les logs par batch toutes les 5 secondes
+    // ✅ Sends logs in batches every 5 seconds
     this.logSubject
       .pipe(
         bufferTime(5000),
@@ -316,14 +316,14 @@ export class BatchedLoggerService {
 }
 ```
 
-## Lazy Loading avec defer
+## Lazy Loading with defer
 
-### Créer l'Observable à la Demande
+### Create the Observable on Demand
 
 ```ts
 @Injectable({ providedIn: "root" })
 export class LazyDataService {
-  // ✅ La factory n'est exécutée qu'à la subscription
+  // ✅ The factory runs only on subscription
   getData(): Observable<Data> {
     return defer(() => {
       console.log("Creating observable NOW");
@@ -333,22 +333,22 @@ export class LazyDataService {
 }
 ```
 
-## Éviter les Fuites avec share
+## Avoid Leaks with share
 
-### Problème : Multiples Subscriptions
+### Problem: Multiple Subscriptions
 
 ```ts
-// ❌ Crée 2 requêtes HTTP distinctes
+// ❌ Creates 2 distinct HTTP requests
 const data$ = this.http.get("/api/data");
 
 data$.subscribe((d) => console.log("Subscriber 1:", d));
 data$.subscribe((d) => console.log("Subscriber 2:", d));
 ```
 
-### Solution : share() ou shareReplay()
+### Solution: share() or shareReplay()
 
 ```ts
-// ✅ Une seule requête HTTP partagée
+// ✅ A single shared HTTP request
 const data$ = this.http.get("/api/data").pipe(shareReplay({ bufferSize: 1, refCount: true }));
 
 data$.subscribe((d) => console.log("Subscriber 1:", d));
@@ -357,10 +357,10 @@ data$.subscribe((d) => console.log("Subscriber 2:", d));
 
 ## Memory Profiling
 
-### Vérifier les Memory Leaks
+### Check for Memory Leaks
 
 ```ts
-// En développement, monitorer les subscriptions
+// In development, monitor subscriptions
 @Component({...})
 export class MonitoredComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
@@ -379,32 +379,32 @@ export class MonitoredComponent implements OnInit, OnDestroy {
     console.log('Component destroyed');
     this.subscriptions.unsubscribe();
 
-    // Vérifier que closed = true
+    // Verify that closed = true
     console.log('Subscriptions closed:', this.subscriptions.closed);
   }
 }
 ```
 
-## Comparaison des Stratégies de Performance
+## Performance Strategy Comparison
 
-| Technique                | Cas d'Usage               | Gain de Performance           |
-| ------------------------ | ------------------------- | ----------------------------- |
-| `shareReplay()`          | Cache HTTP                | Évite requêtes dupliquées     |
-| `distinctUntilChanged()` | Filtrer redondances       | Réduit les calculs/re-renders |
-| `debounceTime()`         | Input utilisateur         | Réduit les appels API         |
-| `auditTime()`            | Events fréquents (scroll) | Limite la fréquence           |
-| `take(1)`                | One-shot observable       | Désabonnement immédiat        |
-| `mergeMap(_, n)`         | Requêtes parallèles       | Limite la charge serveur      |
-| `trackBy`                | ngFor                     | Optimise le DOM               |
-| OnPush                   | Change detection          | Réduit les cycles CD          |
+| Technique                | Use Case                 | Performance Gain                |
+| ------------------------ | ------------------------ | ------------------------------- |
+| `shareReplay()`          | HTTP cache               | Avoids duplicate requests       |
+| `distinctUntilChanged()` | Filter duplicates        | Reduces calculations/re-renders |
+| `debounceTime()`         | User input               | Reduces API calls               |
+| `auditTime()`            | Frequent events (scroll) | Limits frequency                |
+| `take(1)`                | One-shot observable      | Immediate unsubscribe           |
+| `mergeMap(_, n)`         | Parallel requests        | Limits server load              |
+| `trackBy`                | ngFor                    | Optimizes DOM updates           |
+| OnPush                   | Change detection         | Reduces CD cycles               |
 
 ## Best Practices
 
-1. **Cache avec `shareReplay()`** pour les données rarement modifiées
-2. **`distinctUntilChanged()`** systématiquement sur les streams fréquents
-3. **`debounceTime()` pour les inputs** (recherche, filtres)
-4. **`auditTime()` pour les events** (scroll, resize, mousemove)
-5. **`trackBy` obligatoire** dans les ngFor avec observables
-6. **OnPush + async pipe** pour les components purs
-7. **Limiter la concurrence** dans `mergeMap` pour les batches
-8. **`take(1)` ou `first()`** pour les one-shot observables
+1. **Cache with `shareReplay()`** for rarely changing data
+2. **Use `distinctUntilChanged()`** systematically on frequent streams
+3. **Use `debounceTime()` for inputs** (search, filters)
+4. **Use `auditTime()` for events** (scroll, resize, mouse move)
+5. **Require `trackBy`** in ngFor with observables
+6. **OnPush + async pipe** for pure components
+7. **Limit concurrency** in `mergeMap` for batches
+8. **Use `take(1)` or `first()`** for one-shot observables

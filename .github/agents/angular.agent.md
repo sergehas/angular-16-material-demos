@@ -15,15 +15,8 @@ You are an expert Angular 21 Tech Lead for this project, you also have strong sk
 
 ## Project knowledge
 
-- **Tech Stack:** Angular 16, TypeScript, RxJS, Keycloak (Auth), Angular Material
-- **File Structure:**
-  - `src/app/` – Application source code
-    - `core/` – Singleton services, interceptors, guards, models
-    - `shared/` – Reusable components, pipes, directives, utilities
-    - `features/` – Feature modules and page components
-  - `src/environments/` – Environment-specific configuration
-  - `src/styles/` – Global styles, themes, and SCSS variables
-  - `src/assets/` – Static resources (i18n, images, icons, mock data)
+- **Tech Stack:** Angular 21, TypeScript, RxJS, Angular Material, OIDC (auth)
+- **File Structure:** see [`copilot-instructions.md`](../copilot-instructions.md)
 
 ## Angular 21 Architecture Principles
 
@@ -51,44 +44,45 @@ You are an expert Angular 21 Tech Lead for this project, you also have strong sk
 
 ## Project-Specific Guidelines
 
-### State Management
-
 - Evaluate when local component state is sufficient vs. when to use a service
-- Share state through services with BehaviorSubject/ReplaySubject patterns
+- Share state through services with `BehaviorSubject`/`ReplaySubject` or signals
+- For comprehensive RxJS patterns see [rxjs-best-practices](../skills/rxjs-best-practices/SKILL.md)
 
-## Commands you can use
+## Code Review
 
-- Build: `npm run build`
-- Serve dev: `npm start`
-- Run tests: or `npm test`
-- Run tests of a single file: `ng test` or `npm test -- --include=path/to/file.spec.ts --watch=false`
-- Lint: `npm run lint`
-- Build prod: `npm run build --configuration production`
-
-## Code Review Checklist
-
-When reviewing or writing code, ensure:
+For code review, use the [code-review](../skills/code-review/SKILL.md) skill. Key checklist:
 
 - ✅ `ChangeDetectionStrategy.OnPush` on new components
-- ✅ No memory leaks (subscriptions managed)
-- ✅ No nested subscriptions (use RxJS operators)
+- ✅ No memory leaks (subscriptions managed with `takeUntilDestroyed`)
+- ✅ No nested subscriptions
 - ✅ TypeScript strict mode compliance
-- ✅ Accessibility attributes (ARIA, semantic HTML)
+- ✅ Accessibility (ARIA, semantic HTML)
 - ✅ Error handling for HTTP calls
-- ✅ Loading and empty states in UI
 - ✅ Responsive design considerations
-- ✅ i18n support (translations in `assets/i18n/`)
+- ✅ i18n support (`assets/i18n/`)
 - ✅ Unit tests for business logic
 
 ## CSS/SCSS Guidelines
 
 - Use agent [`css_expert`](./css.agent.md)
 
+## Commands
+
+- Serve dev: `npm start`
+- Build: `npm run build`
+- Build prod: `npm run build --configuration production`
+- Unit tests: `npm test`
+- Single test file: `npm test -- --include=path/to/file.spec.ts --watch=false`
+- Lint: `npm run lint`
+
 ## SKILLS TO USE
 
 - [code-review](../skills/code-review/SKILL.md) — For code review
 - [rxjs-best-practices](../skills/rxjs-best-practices/SKILL.md) — For RxJS best practices
 - [angular-material](../skills/angular-material/SKILL.md) — For Angular Material best practices
+- [testing](../skills/testing/SKILL.md) — For unit & E2E testing patterns
+- [angular-forms](../skills/angular-forms/SKILL.md) — For reactive forms and ControlValueAccessor
+- [performance](../skills/performance/SKILL.md) — For performance optimization
 
 ## Boundaries
 

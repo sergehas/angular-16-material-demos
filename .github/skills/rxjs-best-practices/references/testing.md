@@ -1,8 +1,8 @@
 # Testing RxJS Code
 
-## Mock Observables dans les Tests
+## Mocking Observables in Tests
 
-### Mock Service Simple
+### Simple Service Mock
 
 ```ts
 import { of, throwError } from "rxjs";
@@ -12,7 +12,7 @@ describe("DataComponent", () => {
   let mockService: jasmine.SpyObj<DataService>;
 
   beforeEach(() => {
-    // ✅ Créer un mock du service
+    // ✅ Create a service mock
     mockService = jasmine.createSpyObj("DataService", ["getData", "saveData"]);
 
     TestBed.configureTestingModule({
@@ -44,9 +44,9 @@ describe("DataComponent", () => {
 });
 ```
 
-## Test avec fakeAsync et tick
+## Testing with fakeAsync and tick
 
-### Tester debounceTime
+### Testing debounceTime
 
 ```ts
 import { fakeAsync, tick } from "@angular/core/testing";
@@ -70,7 +70,7 @@ describe("SearchComponent", () => {
     mockSearchService.search.and.returnValue(of([]));
 
     component.searchControl.setValue("test");
-    tick(100); // Moins que debounceTime(300)
+    tick(100); // Less than debounceTime(300)
     expect(searchSpy).not.toHaveBeenCalled();
 
     tick(200); // Total 300ms = debounceTime
@@ -86,14 +86,14 @@ describe("SearchComponent", () => {
     component.searchControl.setValue("second");
     tick(300);
 
-    // Seulement le dernier search doit être appelé
+    // Only the last search should be called
     expect(mockSearchService.search).toHaveBeenCalledTimes(1);
     expect(mockSearchService.search).toHaveBeenCalledWith("second");
   }));
 });
 ```
 
-## Test avec TestScheduler (Marbles)
+## Testing with TestScheduler (Marbles)
 
 ### Configuration
 
@@ -134,13 +134,13 @@ describe("DataService", () => {
 });
 ```
 
-### Test avec retry
+### Testing with retry
 
 ```ts
 it("should retry on error", () => {
   scheduler.run(({ cold, expectObservable }) => {
     const input$ = cold("  --#", null, new Error("Fail"));
-    const expected = "     ----#"; // Retry une fois après 2 frames
+    const expected = "     ----#"; // Retry once after 2 frames
 
     const result$ = input$.pipe(retry({ count: 1, delay: 2 }));
     expectObservable(result$).toBe(expected);
@@ -148,7 +148,7 @@ it("should retry on error", () => {
 });
 ```
 
-## Test de Subjects
+## Testing Subjects
 
 ### BehaviorSubject
 
@@ -193,9 +193,9 @@ describe("StateService", () => {
 });
 ```
 
-## Test de HTTP avec HttpClientTestingModule
+## HTTP Testing with HttpClientTestingModule
 
-### Configuration
+### HTTP Testing Configuration
 
 ```ts
 import { HttpClientTestingModule, HttpTestingController } from "@angular/common/http/testing";
@@ -215,7 +215,7 @@ describe("DataHttpService", () => {
   });
 
   afterEach(() => {
-    httpMock.verify(); // Vérifie qu'il n'y a pas de requêtes en attente
+    httpMock.verify(); // Verify no pending requests
   });
 
   it("should fetch data", () => {
@@ -256,7 +256,7 @@ describe("DataHttpService", () => {
 });
 ```
 
-## Test de switchMap
+## Testing switchMap
 
 ```ts
 describe("ProductDetailComponent", () => {
@@ -303,7 +303,7 @@ describe("ProductDetailComponent", () => {
 });
 ```
 
-## Test de forkJoin
+## forkJoin Test
 
 ```ts
 describe("BatchLoadingService", () => {
@@ -333,10 +333,10 @@ describe("BatchLoadingService", () => {
       loadedItems = items;
     });
 
-    // Vérifier que 3 requêtes ont été faites
+    // Verify that 3 requests were made
     const requests = ids.map((id) => httpMock.expectOne(`/api/items/${id}`));
 
-    // Répondre à toutes les requêtes
+    // Respond to all requests
     requests.forEach((req, index) => {
       req.flush(results[index]);
     });
@@ -348,7 +348,7 @@ describe("BatchLoadingService", () => {
 });
 ```
 
-## Test de Cleanup (Memory Leaks)
+## Cleanup Test (Memory Leaks)
 
 ```ts
 describe("Component cleanup", () => {
@@ -357,7 +357,7 @@ describe("Component cleanup", () => {
 
   beforeEach(() => {
     mockService = jasmine.createSpyObj("DataService", ["getData"]);
-    mockService.getData.and.returnValue(new Subject()); // Observable qui ne complete jamais
+    mockService.getData.and.returnValue(new Subject()); // Observable that never completes
 
     TestBed.configureTestingModule({
       providers: [{ provide: DataService, useValue: mockService }],
@@ -376,13 +376,13 @@ describe("Component cleanup", () => {
     // Trigger destroy
     fixture.destroy();
 
-    // La subscription devrait être unsubscribed
+    // The subscription should be unsubscribed
     expect(subscription.closed).toBeTruthy();
   });
 });
 ```
 
-## Test d'Error Handling
+## Error Handling Test
 
 ```ts
 describe("ErrorHandlingComponent", () => {
@@ -407,7 +407,7 @@ describe("ErrorHandlingComponent", () => {
 
     component.saveData({ test: "data" });
 
-    expect(component.showError).toHaveBeenCalledWith("Sauvegarde KO", undefined);
+    expect(component.showError).toHaveBeenCalledWith("Save failed", undefined);
     expect(component.loading).toBeFalsy();
   });
 
@@ -422,12 +422,12 @@ describe("ErrorHandlingComponent", () => {
 });
 ```
 
-## Best Practices pour les Tests
+## Best Practices for Tests
 
-1. **Toujours utiliser `httpMock.verify()`** dans `afterEach()` pour HttpClient
-2. **fakeAsync + tick** pour tester le temps (debounce, delay, retry)
-3. **TestScheduler (marbles)** pour les scénarios complexes avec timing
-4. **Mock les services** avec `jasmine.createSpyObj`
-5. **Tester le cleanup** : vérifier que les subscriptions sont bien unsubscribed
-6. **Tester les erreurs** : vérifier le comportement en cas d'échec
-7. **done()** pour les tests asynchrones qui ne sont pas fakeAsync
+1. **Always use `httpMock.verify()`** in `afterEach()` for HttpClient
+2. **fakeAsync + tick** to test timing behavior (debounce, delay, retry)
+3. **TestScheduler (marbles)** for complex timing scenarios
+4. **Mock services** with `jasmine.createSpyObj`
+5. **Test cleanup**: verify that subscriptions are properly unsubscribed
+6. **Test errors**: verify behavior in failure scenarios
+7. **done()** for async tests that do not use fakeAsync

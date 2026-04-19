@@ -1,8 +1,8 @@
-# State Management avec RxJS
+# State Management with RxJS
 
-## Service avec BehaviorSubject
+## Service with BehaviorSubject
 
-### Pattern Complet
+### Complete Pattern
 
 ```ts
 import { Injectable, OnDestroy } from "@angular/core";
@@ -10,17 +10,17 @@ import { BehaviorSubject, Observable } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class ProductLineStateService implements OnDestroy {
-  // ✅ BehaviorSubject privé avec valeur initiale
+  // ✅ Private BehaviorSubject with initial value
   private readonly _productLine$ = new BehaviorSubject<ProductLine | null>(null);
   private readonly _loading$ = new BehaviorSubject<boolean>(false);
   private readonly _error$ = new BehaviorSubject<string | null>(null);
 
-  // ✅ Observables publics en lecture seule
+  // ✅ Read-only public observables
   readonly productLine$: Observable<ProductLine | null> = this._productLine$.asObservable();
   readonly loading$: Observable<boolean> = this._loading$.asObservable();
   readonly error$: Observable<string | null> = this._error$.asObservable();
 
-  // ✅ Getter synchrone si nécessaire
+  // ✅ Synchronous getter when needed
   get currentProductLine(): ProductLine | null {
     return this._productLine$.getValue();
   }
@@ -50,7 +50,7 @@ export class ProductLineStateService implements OnDestroy {
   }
 
   ngOnDestroy(): void {
-    // ✅ OBLIGATOIRE - Compléter tous les subjects
+    // ✅ REQUIRED - Complete all subjects
     this._productLine$.complete();
     this._loading$.complete();
     this._error$.complete();
@@ -58,7 +58,7 @@ export class ProductLineStateService implements OnDestroy {
 }
 ```
 
-## Service avec Actions Async
+## Service with Async Actions
 
 ```ts
 @Injectable({ providedIn: "root" })
@@ -74,7 +74,7 @@ export class DataStateService implements OnDestroy {
   readonly selectedId$ = this._selectedId$.asObservable();
   readonly loading$ = this._loading$.asObservable();
 
-  // Computed observable : selected item
+  // Computed observable: selected item
   readonly selectedItem$ = combineLatest([this.data$, this.selectedId$]).pipe(map(([data, id]) => data.find((item) => item.id === id) ?? null));
 
   loadData(): void {
@@ -119,9 +119,9 @@ export class DataStateService implements OnDestroy {
 }
 ```
 
-## Utilisation dans les Components
+## Usage in Components
 
-### Avec async pipe (Recommandé)
+### With async pipe (Recommended)
 
 ```ts
 @Component({
@@ -144,7 +144,7 @@ export class DataStateService implements OnDestroy {
   `,
 })
 export class ProductListComponent {
-  // ✅ Expose directement pour async pipe (pas de subscription manuelle)
+  // ✅ Exposed directly for async pipe (no manual subscription)
   productLine$ = this.stateService.productLine$;
   loading$ = this.stateService.loading$;
   error$ = this.stateService.error$;
@@ -157,7 +157,7 @@ export class ProductListComponent {
 }
 ```
 
-### Avec subscription (si nécessaire)
+### With subscription (if needed)
 
 ```ts
 @Component({...})
@@ -168,7 +168,7 @@ export class ProductDetailComponent {
   productLine: ProductLine | null = null;
 
   ngOnInit(): void {
-    // ✅ Avec takeUntilDestroyed pour le cleanup
+    // ✅ With takeUntilDestroyed for cleanup
     this.stateService.productLine$
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(productLine => {
@@ -179,12 +179,12 @@ export class ProductDetailComponent {
 }
 ```
 
-## ReplaySubject : Rejouer les N dernières valeurs
+## ReplaySubject: Replay the Last N Values
 
 ```ts
 @Injectable({ providedIn: "root" })
 export class NotificationService implements OnDestroy {
-  // ReplaySubject garde les 5 dernières notifications
+  // ReplaySubject keeps the last 5 notifications
   private readonly _notifications$ = new ReplaySubject<Notification>(5);
   readonly notifications$ = this._notifications$.asObservable();
 
@@ -198,12 +198,12 @@ export class NotificationService implements OnDestroy {
 }
 ```
 
-## AsyncSubject : Valeur finale uniquement
+## AsyncSubject: Final Value Only
 
 ```ts
 @Injectable({ providedIn: "root" })
 export class ConfigLoaderService implements OnDestroy {
-  // AsyncSubject émet uniquement la dernière valeur quand complete() est appelé
+  // AsyncSubject emits only the last value when complete() is called
   private readonly _config$ = new AsyncSubject<Config>();
   readonly config$ = this._config$.asObservable();
 
@@ -211,7 +211,7 @@ export class ConfigLoaderService implements OnDestroy {
     this.http.get<Config>("/api/config").subscribe({
       next: (config) => {
         this._config$.next(config);
-        this._config$.complete(); // Émet maintenant la valeur
+        this._config$.complete(); // Emits the value now
       },
       error: (err) => this._config$.error(err),
     });
@@ -225,7 +225,7 @@ export class ConfigLoaderService implements OnDestroy {
 }
 ```
 
-## Pattern Facade : Combiner plusieurs sources
+## Facade Pattern: Combine Multiple Sources
 
 ```ts
 @Injectable({ providedIn: "root" })
@@ -234,7 +234,7 @@ export class DashboardFacadeService {
   private statisticsService = inject(StatisticsService);
   private notificationService = inject(NotificationService);
 
-  // ✅ Combine plusieurs sources en un seul état
+  // ✅ Combine multiple sources into one state
   readonly dashboardState$ = combineLatest({
     user: this.userService.currentUser$,
     stats: this.statisticsService.stats$,
@@ -250,13 +250,13 @@ export class DashboardFacadeService {
   );
 }
 
-// Usage dans component
+// Usage in component
 @Component({
   template: `
     <div *ngIf="dashboard$ | async as dashboard">
-      <h1>Bonjour {{ dashboard.userName }}</h1>
-      <p>Total : {{ dashboard.totalItems }}</p>
-      <p>Non lus : {{ dashboard.unreadCount }}</p>
+      <h1>Hello {{ dashboard.userName }}</h1>
+      <p>Total: {{ dashboard.totalItems }}</p>
+      <p>Unread: {{ dashboard.unreadCount }}</p>
     </div>
   `,
 })
@@ -267,7 +267,7 @@ export class DashboardComponent {
 }
 ```
 
-## Computed Values avec distinctUntilChanged
+## Computed Values with distinctUntilChanged
 
 ```ts
 @Injectable({ providedIn: "root" })
@@ -275,10 +275,10 @@ export class CartService implements OnDestroy {
   private readonly _items$ = new BehaviorSubject<CartItem[]>([]);
   readonly items$ = this._items$.asObservable();
 
-  // ✅ Valeurs calculées avec distinctUntilChanged
+  // ✅ Computed values with distinctUntilChanged
   readonly totalPrice$ = this.items$.pipe(
     map((items) => items.reduce((sum, item) => sum + item.price * item.quantity, 0)),
-    distinctUntilChanged() // N'émet que si le total change
+    distinctUntilChanged() // Emits only when the total changes
   );
 
   readonly itemCount$ = this.items$.pipe(
@@ -317,7 +317,7 @@ export class CartService implements OnDestroy {
 }
 ```
 
-## Store avec Actions (Redux-like sans NgRx)
+## Store with Actions (Redux-like without NgRx)
 
 ```ts
 interface AppState {
@@ -349,7 +349,7 @@ export class SimpleStoreService implements OnDestroy {
     distinctUntilChanged()
   );
 
-  // Helpers privés
+  // Private helpers
   private setState(updates: Partial<AppState>): void {
     const current = this._state$.getValue();
     this._state$.next({ ...current, ...updates });
@@ -384,11 +384,11 @@ export class SimpleStoreService implements OnDestroy {
 
 ## Best Practices
 
-1. **BehaviorSubject privé**, Observable public
-2. **Toujours compléter les Subjects** dans ngOnDestroy
-3. **asObservable()** pour empêcher l'accès à .next() de l'extérieur
-4. **Immutabilité** : créer de nouveaux objets/tableaux lors des updates
-5. **distinctUntilChanged()** pour éviter les émissions redondantes
-6. **shareReplay()** pour les computed values coûteux
-7. **Préférer async pipe** aux subscriptions manuelles
-8. **combineLatest** pour composer plusieurs sources
+1. **Private BehaviorSubject**, public Observable
+2. **Always complete Subjects** in ngOnDestroy
+3. **asObservable()** to prevent outside access to .next()
+4. **Immutability**: create new objects/arrays when updating
+5. **distinctUntilChanged()** to avoid redundant emissions
+6. **shareReplay()** for expensive computed values
+7. **Prefer async pipe** over manual subscriptions
+8. **combineLatest** to compose multiple sources
