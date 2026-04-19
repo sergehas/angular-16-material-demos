@@ -4,6 +4,10 @@ import { Theme, ThemeScheme } from "./theme.model";
 @Injectable({
   providedIn: "root",
 })
+/**
+ * Service for managing application themes and color schemes.
+ * Handles theme discovery from CSS, theme switching, and scheme management (light/dark/auto).
+ */
 export class ThemeService {
   static readonly THEME_CLASS_SUFFIX = "-theme";
   static readonly THEME_REGEX = new RegExp(

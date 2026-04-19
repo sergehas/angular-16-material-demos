@@ -269,6 +269,20 @@ then, to display the test report
 npx playwright show-report
 ```
 
+## Tips
+
+to server html coverage report as a web site, run
+
+```shell
+caddy  file-server --root ./coverage/angular-16-material-starter --listen localhost:4201
+```
+
+> the sub path `angular-16-material-starter` correspond to the `name` of the project in `package.json`
+
+then navigate to <http://locahost:4201>
+
+Prerequisite : instal [caddy](https://caddyserver.com/docs/install)
+
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
