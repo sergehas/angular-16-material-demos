@@ -7,55 +7,76 @@ metadata:
 
 # Angular Material Skill
 
-## Overview
+## When to Use
 
-Build beautiful, accessible Angular applications using Angular Material component library with custom theming and responsive layouts.
+Load this skill when: creating a new component with Angular Material UI, using Material theming tokens, working with CDK utilities, or auditing accessibility of Material components.
 
-## Topics Covered
+## How to Create a Material Component
 
-### Component Library
+1. Import the specific Material module (never `MatAllModule`):
 
-- [Form controls (inputs, selects, checkboxes)](https://v21.material.angular.dev/components/form-field/overview)
-- [Navigation (toolbar, sidenav, menus)](https://v21.material.angular.dev/components/sidenav/overview)
-- [Navigation menu](https://v21.material.angular.dev/components/menu/overview)
-- [Cards](https://v21.material.angular.dev/components/card/overview)
-- [Lists](https://v21.material.angular.dev/components/list/overview)
-- [Grids](https://v21.material.angular.dev/components/grid-list/overview)
-- [Data tables and pagination](https://v21.material.angular.dev/components/table/overview)
-- [Dialogs and snackbars](https://v21.material.angular.dev/components/dialog/overview)
-- [snackbars](https://v21.material.angular.dev/components/snack-bar/overview)
+```typescript
+import { MatButtonModule } from "@angular/material/button";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
-### Theming
+@Component({
+  standalone: true,
+  imports: [MatButtonModule, MatFormFieldModule],
+})
+```
 
-- [Custom theme creation](https://material.angular.dev/guide/theming)
-- [ Typography](https://material.angular.dev/guide/theming#typography)
-- Dark mode implementation
-- [Component customization](https://v21.material.angular.dev/guide/theming-your-components)
-- [CSS variables integration](https://material.angular.dev/guide/theming#component-tokens)
+2. Use the Angular Material component selector in the template:
 
-### CDK (Component Dev Kit)
+```html
+<mat-form-field appearance="outline">
+  <mat-label>Label</mat-label>
+  <input matInput placeholder="Value" />
+</mat-form-field>
+<button mat-raised-button color="primary">Save</button>
+```
 
-- [Overlay system](https://v21.material.angular.dev/cdk/overlay/overview)
-- [Drag and drop](https://v21.material.angular.dev/cdk/drag-drop/overview)
-- [Virtual scrolling](https://v21.material.angular.dev/cdk/scrolling/overview)
-- [Accessibility utilities](https://v21.material.angular.dev/cdk/a11y/overview)
-- Custom component creation
+## Theming — Use Tokens, Never Hardcode Colors
 
-### Best Practices
+```scss
+// ✅ Use Material M3 tokens
+color: var(--mat-sys-primary);
+background: var(--mat-sys-surface);
 
-- Responsive design patterns
-- [Accessibility compliance (a11y)](https://v21.material.angular.dev/cdk/a11y/overview)
-- Performance optimization
-- Lazy loading Material modules
+// ❌ Never hardcode
+color: #1976d2;
+```
 
-## Prerequisites
+## Key Component Patterns
 
-- Angular Core fundamentals
-- CSS/SCSS basics
-- Component architecture
+| Need       | Component                       | Import                                 |
+| ---------- | ------------------------------- | -------------------------------------- |
+| Text input | `<mat-form-field>` + `matInput` | `MatFormFieldModule`, `MatInputModule` |
+| Select     | `<mat-select>`                  | `MatSelectModule`                      |
+| Table      | `<mat-table>`                   | `MatTableModule`                       |
+| Dialog     | `MatDialog.open()`              | `MatDialogModule`                      |
+| Snackbar   | `MatSnackBar.open()`            | `MatSnackBarModule`                    |
+| Icons      | `<mat-icon>`                    | `MatIconModule`                        |
+| Sidenav    | `<mat-sidenav-container>`       | `MatSidenavModule`                     |
 
-## Learning Outcomes
+## Accessibility Checklist
 
-- Build consistent Material UI interfaces
-- Implement accessible components
-- Use CDK for advanced features
+- [ ] All form fields have `<mat-label>` or `aria-label`
+- [ ] Interactive elements are keyboard-reachable
+- [ ] Color contrast meets WCAG AA (use Material M3 tokens — they comply by default)
+- [ ] `mat-icon` buttons have `aria-label`
+- [ ] Use `MatRipple` or `mat-button` variants for interactive surfaces (not raw `<div>`)
+
+## CDK Quick Reference
+
+- **Overlay**: `Overlay` service — for custom positioned panels
+- **Drag & Drop**: `CdkDragDrop`, `cdkDrag` directive
+- **Virtual Scroll**: `<cdk-virtual-scroll-viewport>` for large lists
+- **A11y**: `FocusTrap`, `LiveAnnouncer` for accessible interactions
+
+## Reference Documentation
+
+- [Angular Material Components](https://v21.material.angular.dev/components)
+- [Theming Guide](https://material.angular.dev/guide/theming)
+- [CDK Overview](https://v21.material.angular.dev/cdk)
+- [Accessibility](https://v21.material.angular.dev/cdk/a11y/overview)
+- [Component Tokens](https://material.angular.dev/guide/theming#component-tokens)

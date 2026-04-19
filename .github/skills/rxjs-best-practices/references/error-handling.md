@@ -1,8 +1,8 @@
-# Gestion des Erreurs avec RxJS
+# Error Handling with RxJS
 
-## catchError : Gestion dans le Pipeline
+## catchError: Handling in the Pipeline
 
-### Pattern de Base
+### Basic Pattern
 
 ```ts
 import { EMPTY, catchError, throwError, of } from 'rxjs';
@@ -16,73 +16,73 @@ export class ErrorHandlingComponent {
     this.service.save(payload)
       .pipe(
         catchError(err => {
-          this.notificationService.showError('Sauvegarde KO', err?.code);
-          return EMPTY; // Arrête le stream silencieusement
+          this.notificationService.showError('Save failed', err?.code);
+          return EMPTY; // Silently stop the stream
         }),
         takeUntilDestroyed(this.destroyRef)
       )
       .subscribe(() => {
-        this.notificationService.showSuccess('Sauvegarde OK');
+        this.notificationService.showSuccess('Save successful');
       });
   }
 }
 ```
 
-## Stratégies de Gestion d'Erreur
+## Error Handling Strategies
 
-### 1. EMPTY : Arrêter le stream silencieusement
+### 1. EMPTY: Silently stop the stream
 
 ```ts
 this.service
   .getData()
   .pipe(
     catchError((err) => {
-      console.error("Erreur lors du chargement:", err);
+      console.error("Error while loading:", err);
       this.showErrorMessage(err);
-      return EMPTY; // Complete le stream sans valeur
+      return EMPTY; // Complete the stream without a value
     }),
     takeUntilDestroyed(this.destroyRef)
   )
-  .subscribe((data) => (this.data = data)); // Ne sera pas appelé en cas d'erreur
+  .subscribe((data) => (this.data = data)); // Will not be called on error
 ```
 
-### 2. of() : Fournir une valeur par défaut
+### 2. of(): Provide a default value
 
 ```ts
 this.userService
   .getUserPreferences()
   .pipe(
     catchError((err) => {
-      console.error("Impossible de charger les préférences:", err);
-      return of(this.getDefaultPreferences()); // Retourne des préférences par défaut
+      console.error("Unable to load preferences:", err);
+      return of(this.getDefaultPreferences()); // Returns default preferences
     }),
     takeUntilDestroyed(this.destroyRef)
   )
   .subscribe((preferences) => this.applyPreferences(preferences));
 ```
 
-### 3. throwError : Propager l'erreur au subscriber
+### 3. throwError: Propagate the error to the subscriber
 
 ```ts
 this.service
   .criticalOperation()
   .pipe(
     catchError((err) => {
-      console.error("Erreur critique:", err);
+      console.error("Critical error:", err);
       this.logError(err);
-      return throwError(() => new Error(`Opération critique échouée: ${err.message}`));
+      return throwError(() => new Error(`Critical operation failed: ${err.message}`));
     }),
     takeUntilDestroyed(this.destroyRef)
   )
   .subscribe({
     next: (result) => this.handleSuccess(result),
-    error: (err) => this.handleCriticalError(err), // Sera appelé
+    error: (err) => this.handleCriticalError(err), // Will be called
   });
 ```
 
-## Retry avec Backoff
+## Retry with Backoff
 
-### retry : Réessayer automatiquement
+### retry: Retry automatically
 
 ```ts
 import { retry, timer } from 'rxjs';
@@ -96,11 +96,11 @@ export class RetryComponent {
       .pipe(
         retry({
           count: 3,
-          delay: 1000 // Attend 1s entre chaque tentative
+          delay: 1000 // Wait 1s between attempts
         }),
         catchError(err => {
-          this.showError('Échec après 3 tentatives');
-          return of([]); // Valeur par défaut
+          this.showError('Failed after 3 attempts');
+          return of([]); // Default value
         }),
         takeUntilDestroyed(this.destroyRef)
       )
@@ -109,7 +109,7 @@ export class RetryComponent {
 }
 ```
 
-### retryWhen : Retry avec logique personnalisée
+### retryWhen: Retry with custom logic
 
 ```ts
 import { retryWhen, delayWhen, tap, take } from 'rxjs';
@@ -123,13 +123,13 @@ export class RetryWithBackoffComponent {
       .pipe(
         retryWhen(errors =>
           errors.pipe(
-            tap(err => console.log('Erreur, nouvelle tentative...', err)),
-            delayWhen((err, index) => timer(Math.pow(2, index) * 1000)), // Backoff exponentiel
-            take(3) // Max 3 tentatives
+            tap(err => console.log('Error, retrying...', err)),
+            delayWhen((err, index) => timer(Math.pow(2, index) * 1000)), // Exponential backoff
+            take(3) // Max 3 attempts
           )
         ),
         catchError(err => {
-          this.showError('Toutes les tentatives ont échoué');
+          this.showError('All retry attempts failed');
           return EMPTY;
         }),
         takeUntilDestroyed(this.destroyRef)
@@ -139,7 +139,7 @@ export class RetryWithBackoffComponent {
 }
 ```
 
-## Gestion d'Erreur par Type
+## Type-Based Error Handling
 
 ```ts
 import { HttpErrorResponse } from '@angular/common/http';
@@ -157,16 +157,16 @@ export class TypedErrorHandlingComponent {
               this.router.navigate(['/login']);
               return EMPTY;
             case 403:
-              this.showError('Accès refusé');
+              this.showError('Access denied');
               return of([]);
             case 404:
-              this.showError('Ressource introuvable');
+              this.showError('Resource not found');
               return of([]);
             case 500:
-              this.showError('Erreur serveur');
+              this.showError('Server error');
               return throwError(() => err);
             default:
-              this.showError('Une erreur est survenue');
+              this.showError('An error occurred');
               return EMPTY;
           }
         }),
@@ -177,9 +177,9 @@ export class TypedErrorHandlingComponent {
 }
 ```
 
-## Erreur dans les Pipelines Complexes
+## Errors in Complex Pipelines
 
-### catchError à différents niveaux
+### catchError at Different Levels
 
 ```ts
 @Component({...})
@@ -189,17 +189,17 @@ export class MultilevelErrorHandlingComponent {
   loadComplexData(id: string): void {
     this.service.getMainData(id)
       .pipe(
-        // Erreur au niveau principal
+        // Error at the main level
         catchError(err => {
-          this.showError('Impossible de charger les données principales');
+          this.showError('Unable to load main data');
           return throwError(() => err);
         }),
         switchMap(mainData =>
           this.service.getDetails(mainData.id).pipe(
-            // Erreur au niveau des détails - fournir valeur par défaut
+            // Error at details level - provide default value
             catchError(err => {
-              console.warn('Détails non disponibles:', err);
-              return of({ details: 'Non disponible' });
+              console.warn('Details unavailable:', err);
+              return of({ details: 'Unavailable' });
             }),
             map(details => ({ mainData, details }))
           )
@@ -219,7 +219,7 @@ export class MultilevelErrorHandlingComponent {
 }
 ```
 
-## finalize : Exécuter du code après succès OU erreur
+## finalize: Run code after success OR error
 
 ```ts
 @Component({...})
@@ -237,7 +237,7 @@ export class FinalizeComponent {
           return of([]);
         }),
         finalize(() => {
-          this.loading = false; // Exécuté dans tous les cas
+          this.loading = false; // Executed in all cases
           this.cdr.markForCheck();
         }),
         takeUntilDestroyed(this.destroyRef)
@@ -247,7 +247,7 @@ export class FinalizeComponent {
 }
 ```
 
-## Pattern Complet : Loading + Error + Success
+## Complete Pattern: Loading + Error + Success
 
 ```ts
 @Component({...})
@@ -266,7 +266,7 @@ export class CompletePatternComponent {
     this.dataService.getData()
       .pipe(
         catchError(err => {
-          this.error = err.message || 'Une erreur est survenue';
+          this.error = err.message || 'An error occurred';
           return of([]);
         }),
         finalize(() => {
@@ -285,7 +285,7 @@ export class CompletePatternComponent {
 }
 ```
 
-## tapResponse : Helper pour gérer next/error
+## tapResponse: Helper to handle next/error
 
 ```ts
 import { tapResponse } from '@ngrx/operators';
@@ -299,22 +299,22 @@ export class TapResponseComponent {
       .pipe(
         tapResponse(
           result => {
-            this.showSuccess('Sauvegarde réussie');
+            this.showSuccess('Save succeeded');
             this.onSaveSuccess(result);
           },
           err => {
-            this.showError('Erreur lors de la sauvegarde');
+            this.showError('Error while saving');
             console.error(err);
           }
         ),
         takeUntilDestroyed(this.destroyRef)
       )
-      .subscribe(); // Pas besoin de handlers ici
+      .subscribe(); // No handlers needed here
   }
 }
 ```
 
-## Erreurs dans les Boucles (forkJoin)
+## Errors in Loops (forkJoin)
 
 ```ts
 @Component({...})
@@ -322,13 +322,13 @@ export class ParallelErrorHandlingComponent {
   private destroyRef = inject(DestroyRef);
 
   loadMultipleItems(ids: string[]): void {
-    // Si UNE requête échoue, forkJoin échoue complètement
-    // Solution : catchError individuel
+    // If ONE request fails, forkJoin fails completely
+    // Solution: per-request catchError
     const requests = ids.map(id =>
       this.service.getById(id).pipe(
         catchError(err => {
-          console.warn(`Impossible de charger l'item ${id}:`, err);
-          return of(null); // Retourne null pour les items en erreur
+          console.warn(`Unable to load item ${id}:`, err);
+          return of(null); // Return null for failed items
         })
       )
     );
@@ -336,7 +336,7 @@ export class ParallelErrorHandlingComponent {
     forkJoin(requests)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe(results => {
-        this.items = results.filter(item => item !== null); // Filtre les erreurs
+        this.items = results.filter(item => item !== null); // Filter out failures
       });
   }
 }
@@ -344,9 +344,9 @@ export class ParallelErrorHandlingComponent {
 
 ## Best Practices
 
-1. **Toujours utiliser catchError** dans les pipelines HTTP
-2. **catchError avant takeUntilDestroyed** dans le pipe
-3. **finalize pour le cleanup** (loading = false, etc.)
-4. **tapResponse** pour la simplicité avec @ngrx/operators
-5. **catchError individuel** dans forkJoin pour éviter l'échec total
-6. **of() pour valeurs par défaut**, EMPTY pour arrêter, throwError pour propager
+1. **Always use catchError** in HTTP pipelines
+2. **catchError before takeUntilDestroyed** in the pipe
+3. **Use finalize for cleanup** (loading = false, etc.)
+4. **Use tapResponse** for simplicity with @ngrx/operators
+5. **Use per-request catchError** in forkJoin to avoid total failure
+6. **Use of() for defaults**, EMPTY to stop, throwError to propagate
