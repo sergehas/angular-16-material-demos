@@ -1,4 +1,4 @@
-# <type>[optional scope]: <description>
+<type>[optional scope]: <description>
 #
 # TYPES: feat, fix, docs, style, refactor, perf, test, chore, ci, build
 #
@@ -16,16 +16,16 @@
 #
 # Scopes (optional): core, shared, demo, art-institute, list-of-values, nav
 #
-# <SUBJECT>
+<SUBJECT>
 # - Use imperative mood ("add feature" not "added feature")
 # - Don't capitalize first letter
 # - No period at the end
 # - Maximum 100 characters
 #
-# <BODY (optional)>
+<BODY (optional)>
 # Explain what and why, not how (how is in code).
 # Wrap at 100 characters.
 #
-# <FOOTER (optional)>
+<FOOTER (optional)>
 # Mention breaking changes:
-# BREAKING CHANGE: <description>
+BREAKING CHANGE: <description>

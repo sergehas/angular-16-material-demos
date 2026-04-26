@@ -196,15 +196,29 @@ As services (& associated models) could be related to feature module ( i.e. `Ord
 
 ---
 
-## Development server
+## install, build, run
+
+### Environment setup
+
+prerequisites :
+
+- installed `nodejs` > 22 (24+ recommended)
+
+setup:
+
+- git config : `git config commit.template ~/.gitmessage` (exec. once)
+- install recommended extension (for VScode)
+- install : `npm i`
+
+### Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
 
-## Build
+### Build
 
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
 
-## Running unit tests
+### Running unit tests
 
 Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
 
@@ -215,13 +229,13 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 > $env:CHROME_BIN="E:\tools\scoop\apps\chromium\current\chrome.exe"
 > ```
 
-## end-to-end tests
+### end-to-end tests
 
-### Recording e2e test
+#### Recording e2e test
 
-#### Local development
+##### Local development
 
-If you whish to recode a test with the local development app, you need to start the app. in a dedicated console (as usual)
+If you whish to record a test with the local development app, you need to start the app. in a dedicated console (as usual)
 
 ```shell
 npm start
@@ -229,7 +243,7 @@ npm start
 
 by default, the app is accessible at <http://localhost:4200>
 
-#### Prerequisites
+##### Prerequisites
 
 This project uses playwright for e2e test. Ensure local browser are installed
 
@@ -237,7 +251,7 @@ This project uses playwright for e2e test. Ensure local browser are installed
 npx playwright install
 ```
 
-#### Recording a test
+##### Recording a test
 
 Adapt the URL of the following command, according to where the app is accessible.
 
@@ -249,11 +263,11 @@ then, follow [Recording a test](https://playwright.dev/docs/codegen#recording-a-
 
 Once you test is recorded, add teh source code to a new or existing to a TypeScript file in `e2e` folder (or subfolder)
 
-### Running e2e tests (angular)
+#### Running e2e tests (angular)
 
 Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
 
-### Running e2e tests (standalone)
+#### Running e2e tests (standalone)
 
 In this context, the app **must** be started. For local startup, see [Local development](#local-development)
 
